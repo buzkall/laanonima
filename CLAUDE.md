@@ -406,3 +406,44 @@ that an implementing agent can write code without making decisions.
 required sections, and what to clarify with the user before planning.
 
 </laravel-boost-guidelines>
+
+## Running tests
+
+Every test boots the full app, so pick the narrowest rung that proves the change:
+
+1. **While iterating** — one file or one filter:
+   `php artisan test --compact tests/Feature/Foo/BarTest.php`
+   `php artisan test --compact --filter='it creates a draft post'`
+2. **After a failure** — re-runs the non-passing tests first, stops at the first:
+   `vendor/bin/pest --retry` (serial only; `--retry` is rejected under
+   `--parallel` with *"The [--retry] option is not supported when running in
+   parallel."*)
+3. **Before finishing** — the whole suite: `composer test`
+
+`composer test` is `pest --parallel --tia --compact`: it runs across all cores
+and, thanks to Test Impact Analysis, only executes the tests your changes affect
+while replaying the cached result of the rest. It still reports the whole suite.
+
+- The **first** run on a machine, or after `--tia --fresh`, records the baseline
+  dependency graph and costs a full-suite run. Every run after is fast.
+- **TIA needs the `pcov` extension.** Without it Pest silently records nothing
+  and runs the whole suite with no warning — if `composer test` is suddenly slow,
+  check `php -m | grep pcov` first.
+- `composer test:full` runs every test for real, in parallel. Use before a
+  release, or whenever you don't trust the cache.
+- **`--tia` must go through `vendor/bin/pest`.** `php artisan test --parallel
+  --tia` fails with *"The `--tia` option does not exist."* — paratest parses
+  options strictly. That is why the `test` script does not go through Artisan.
+- Passing an explicit path or `--filter` bypasses TIA automatically, so narrow
+  runs are unaffected by it.
+- Rebuild the graph after a large refactor, or if a result looks stale:
+  `vendor/bin/pest --parallel --tia --fresh`
+
+Never run the bare serial suite to verify a change. `composer test:serial` exists
+only to debug a failure that appears under `--parallel` but not when the file is
+run alone — that means test-order dependence or a race on a shared path (a real
+`storage/` or `public/` write, a fixed port), not a parallelism bug. Reach for
+`Storage::fake()` or per-token paths via `ParallelTesting::token()`.
+
+`composer ci:check` is what CI runs: config clear, Pint, PHPStan, then
+`test:full`. TIA is deliberately not in that path — CI has no cached graph.

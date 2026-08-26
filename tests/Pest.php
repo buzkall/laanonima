@@ -20,6 +20,24 @@ pest()->extend(TestCase::class)
 
 /*
 |--------------------------------------------------------------------------
+| Test Impact Analysis
+|--------------------------------------------------------------------------
+|
+| TIA diffs the working tree against git to decide which tests to execute. It
+| resolves the default branch from "origin/HEAD", which is unavailable while the
+| repository has no remote, so pin it explicitly.
+|
+| No "watch" patterns are needed here: pcov already records config/, routes/ and
+| bootstrap/ as real edges because they execute on every boot, and Pest's Laravel
+| defaults cover the files coverage cannot see (views, lang, migrations). Adding
+| globs for those would only make selection less precise.
+|
+*/
+
+pest()->tia()->defaultBranch('main');
+
+/*
+|--------------------------------------------------------------------------
 | Expectations
 |--------------------------------------------------------------------------
 |
@@ -29,7 +47,7 @@ pest()->extend(TestCase::class)
 |
 */
 
-expect()->extend('toBeOne', function () {
+expect()->extend('toBeOne', function() {
     return $this->toBe(1);
 });
 

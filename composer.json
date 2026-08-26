@@ -10,6 +10,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "bugsnag/bugsnag-laravel": "^2.30",
         "filament/filament": "^5.0",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
@@ -25,6 +26,7 @@
         "filament/blueprint": "^2.2",
         "larastan/larastan": "^3.10",
         "laravel/boost": "^2.5",
+        "laravel/doctor": "^0.1.0",
         "laravel/pail": "^1.2.5",
         "laravel/pao": "^1.0.6",
         "laravel/pint": "^1.30",
@@ -68,16 +70,24 @@
         ],
         "ci:check": [
             "Composer\\Config::disableProcessTimeout",
-            "@test"
+            "@php artisan config:clear --ansi",
+            "@lint:check",
+            "@types:check",
+            "@test:full"
         ],
         "types:check": [
             "phpstan analyse"
         ],
         "test": [
-            "@php artisan config:clear --ansi",
-            "@lint:check",
-            "@types:check",
-            "@php artisan test"
+            "vendor/bin/pest --parallel --tia --compact"
+        ],
+        "test:full": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php artisan test --parallel --compact"
+        ],
+        "test:serial": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php artisan test --compact"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
