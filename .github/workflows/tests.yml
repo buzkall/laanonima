@@ -31,10 +31,20 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Setup Application
+      - name: Install PHP dependencies
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-        run: composer setup
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Build frontend
+        run: |
+          npm ci
+          npm run build
 
       - name: Run CI Checks
         run: composer ci:check
