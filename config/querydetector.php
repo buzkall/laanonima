@@ -1,5 +1,8 @@
 <?php
 
+use BeyondCode\QueryDetector\Outputs\Alert;
+use BeyondCode\QueryDetector\Outputs\Log;
+
 return [
     /*
      * Enable or disable the query detection.
@@ -11,7 +14,7 @@ return [
      * Threshold level for the N+1 query detection. If a relation query will be
      * executed more than this amount, the detector will notify you about it.
      */
-    'threshold' => (int) env('QUERY_DETECTOR_THRESHOLD', 1),
+    'threshold' => (int)env('QUERY_DETECTOR_THRESHOLD', 1),
 
     /*
      * Here you can whitelist model relations.
@@ -21,10 +24,10 @@ return [
      * the "posts" attribute and the "Post::class", since the relation can get resolved in multiple ways.
      */
     'except' => [
-        //Author::class => [
+        // Author::class => [
         //    Post::class,
         //    'posts',
-        //]
+        // ]
     ],
 
     /*
@@ -63,7 +66,7 @@ return [
      * \BeyondCode\QueryDetector\Outputs\Log::class
      */
     'output' => [
-        \BeyondCode\QueryDetector\Outputs\Alert::class,
-        \BeyondCode\QueryDetector\Outputs\Log::class,
+        Alert::class,
+        Log::class,
     ]
 ];
