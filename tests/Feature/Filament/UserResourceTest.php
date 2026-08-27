@@ -204,3 +204,11 @@ it('skips the authenticated user when bulk deleting', function(): void {
 
     $others->each(fn(User $user) => assertModelMissing($user));
 });
+
+it('renders the send magic link action on every row', function(): void {
+    $other = User::factory()->create();
+
+    Livewire::test(ListUsers::class)
+        ->assertActionVisible(TestAction::make('sendMagicLink')->table($other))
+        ->assertSeeHtml("mountAction('sendMagicLink'");
+});

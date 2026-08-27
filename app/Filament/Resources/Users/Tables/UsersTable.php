@@ -11,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Arzcode\FilamentMagicLogin\Actions\SendMagicLinkAction;
 
 class UsersTable
 {
@@ -67,6 +68,7 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make()->iconButton(),
+                SendMagicLinkAction::make(),
                 DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([
