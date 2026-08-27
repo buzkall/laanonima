@@ -32,6 +32,8 @@ jobs:
           node-version: '22'
 
       - name: Setup Application
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         run: composer setup
 
       - name: Run CI Checks
