@@ -2,11 +2,11 @@
 
 use Illuminate\Support\Arr;
 
-it('runs in Spanish by default', function() {
+it('runs in Spanish by default', function(): void {
     expect(config('app.locale'))->toBe('es');
 });
 
-it('translates every language file into Spanish', function(string $file) {
+it('translates every language file into Spanish', function(string $file): void {
     $spanish = require lang_path("es/{$file}.php");
     $english = require lang_path("en/{$file}.php");
 
@@ -16,13 +16,13 @@ it('translates every language file into Spanish', function(string $file) {
     ->map(fn(string $file): string => basename($file, '.php'))
     ->all());
 
-it('resolves the user resource labels in Spanish', function() {
+it('resolves the user resource labels in Spanish', function(): void {
     expect(__('user.fields.name'))->toBe('Nombre')
         ->and(__('user.fields.email'))->toBe('Correo electrónico')
         ->and(__('user.policy.cannot_delete_self.all'))->toBe('No puedes eliminar tu propia cuenta.');
 });
 
-it('translates validation messages into Spanish', function() {
+it('translates validation messages into Spanish', function(): void {
     expect(__('validation.required', ['attribute' => 'nombre']))
         ->toBe('El campo nombre es obligatorio.');
 });

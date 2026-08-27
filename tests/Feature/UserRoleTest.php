@@ -3,29 +3,29 @@
 use App\Enums\UserRole;
 use App\Models\User;
 
-it('only has the admin and client roles', function() {
+it('only has the admin and client roles', function(): void {
     expect(UserRole::cases())->toBe([UserRole::Admin, UserRole::Client]);
 });
 
-it('translates the role labels into Spanish', function(UserRole $role, string $label) {
+it('translates the role labels into Spanish', function(UserRole $role, string $label): void {
     expect($role->getLabel())->toBe($label);
 })->with([
     'admin'  => [UserRole::Admin, 'Administrador'],
     'client' => [UserRole::Client, 'Cliente'],
 ]);
 
-it('gives every role a colour and an icon', function(UserRole $role) {
+it('gives every role a colour and an icon', function(UserRole $role): void {
     expect($role->getColor())->not->toBeNull()
         ->and($role->getIcon())->not->toBeNull();
 })->with(UserRole::cases());
 
-it('casts the role column to the enum', function() {
+it('casts the role column to the enum', function(): void {
     $user = User::factory()->admin()->create();
 
     expect($user->refresh()->role)->toBe(UserRole::Admin);
 });
 
-it('stores new users as clients by default', function() {
+it('stores new users as clients by default', function(): void {
     $user = User::query()->create([
         'name'     => 'Ada Lovelace',
         'email'    => 'ada@example.com',

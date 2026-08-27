@@ -7,7 +7,7 @@ use Filament\Facades\Filament;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
-it('lets administrators into the admin panel', function() {
+it('lets administrators into the admin panel', function(): void {
     $admin = User::factory()->admin()->create();
 
     expect($admin->canAccessPanel(Filament::getPanel('admin')))->toBeTrue();
@@ -17,7 +17,7 @@ it('lets administrators into the admin panel', function() {
         ->assertOk();
 });
 
-it('keeps clients out of the admin panel', function() {
+it('keeps clients out of the admin panel', function(): void {
     $client = User::factory()->create();
 
     expect($client->role)->toBe(UserRole::Client)
@@ -28,6 +28,6 @@ it('keeps clients out of the admin panel', function() {
         ->assertForbidden();
 });
 
-it('redirects guests to the login page', function() {
+it('redirects guests to the login page', function(): void {
     get('/admin/users')->assertRedirect('/admin/login');
 });
