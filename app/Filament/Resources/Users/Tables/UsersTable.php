@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Tables;
 
 use App\Enums\UserRole;
+use Arzcode\FilamentMagicLogin\Actions\SendMagicLinkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -11,7 +12,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
-use Arzcode\FilamentMagicLogin\Actions\SendMagicLinkAction;
 
 class UsersTable
 {
@@ -68,7 +68,8 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make()->iconButton(),
-                SendMagicLinkAction::make(),
+                SendMagicLinkAction::make()
+                    ->anyPanel(),
                 DeleteAction::make()->iconButton(),
             ])
             ->toolbarActions([

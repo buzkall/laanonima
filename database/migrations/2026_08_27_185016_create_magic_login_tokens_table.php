@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->tableName(), function (Blueprint $table) {
+        Schema::create($this->tableName(), function(Blueprint $table): void {
             $table->id();
             $table->morphs('authenticatable');
             $table->string('token_hash', 64)->unique();

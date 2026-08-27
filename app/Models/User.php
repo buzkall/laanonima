@@ -48,11 +48,12 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Only administrators are allowed into the Filament panel.
+     * Each role gets its own panel: administrators the admin panel, clients the
+     * client panel. Any other panel is denied.
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role === UserRole::Admin;
+        return $panel->getId() === $this->role->panelId();
     }
 
     /**

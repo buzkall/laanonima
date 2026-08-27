@@ -28,6 +28,29 @@ it('keeps clients out of the admin panel', function(): void {
         ->assertForbidden();
 });
 
-it('redirects guests to the login page', function(): void {
-    get('/admin/users')->assertRedirect('/admin/login');
+it('lets clients into the client panel', function(): void {
+    $client = User::factory()->create();
+
+    expect($client->canAccessPanel(Filament::getPanel('client')))->toBeTrue();
+
+    actingAs($client)
+        ->get('/client')
+        ->assertOk();
 });
+
+it('keeps administrators out of the client panel', function(): void {
+    $admin = User::factory()->admin()->create();
+
+    expect($admin->canAccessPanel(Filament::getPanel('client')))->toBeFalse();
+
+    actingAs($admin)
+        ->get('/client')
+        ->assertForbidden();
+});
+
+it('redirects guests to the login page of each panel', function(string $url, string $login): void {
+    get($url)->assertRedirect($login);
+})->with([
+    'admin'  => ['/admin/users', '/admin/login'],
+    'client' => ['/client', '/client/login'],
+]);

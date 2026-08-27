@@ -5,4 +5,6 @@ Before planning or editing, find the row whose globs match the file's path and r
 | Applies to | Rule file |
 | --- | --- |
 | app/** | .ai/rules/app.md |
+| app/Filament/Auth/** | .ai/rules/auth.md |
 | ** | .ai/rules/general.md |
+| app/Providers/** | .ai/rules/providers.md |

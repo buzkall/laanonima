@@ -18,6 +18,18 @@ enum UserRole: string implements HasColor, HasIcon, HasLabel
         return __("user.roles.{$this->value}");
     }
 
+    /**
+     * The Filament panel this role is allowed into. Each role owns exactly one
+     * panel, and no role may enter another's.
+     */
+    public function panelId(): string
+    {
+        return match ($this) {
+            self::Admin  => 'admin',
+            self::Client => 'client',
+        };
+    }
+
     public function getColor(): string
     {
         return match ($this) {
