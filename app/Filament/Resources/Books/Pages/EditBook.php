@@ -33,11 +33,8 @@ class EditBook extends EditRecord
         /** @var Book $book */
         $book = $this->record;
 
-        if (! $book->wasChanged('cover_source_url')) {
-            return;
-        }
-
-        if (app(AttachBookCover::class)($book) === BookCoverOutcome::Failed) {
+        if ($book->wasChanged('cover_source_url')
+            && app(AttachBookCover::class)($book) === BookCoverOutcome::Failed) {
             Notification::make()
                 ->warning()
                 ->title(__('books.cover_download.failed_title'))
@@ -45,5 +42,13 @@ class EditBook extends EditRecord
                 ->persistent()
                 ->send();
         }
+
+        /*
+         | Always, not just on the download path: cover_color is derived from
+         | the media, which is attached after the form was filled, so uploading
+         | an image would otherwise leave the swatch showing the old colour
+         | until the page was reloaded.
+         */
+        $this->refreshFormData(['cover_color']);
     }
 }

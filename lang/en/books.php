@@ -65,6 +65,7 @@ return [
         'cover'                  => 'Cover',
         'covers'                 => 'Images',
         'cover_source_url'       => 'Cover source',
+        'cover_color'            => 'Cover colour',
         'price_cents'            => 'Price',
         'vat_rate'               => 'VAT (%)',
         'currency'               => 'Currency',
@@ -84,6 +85,7 @@ return [
         'slug'             => 'Generated from the title if left blank.',
         'covers'           => 'The first image is the cover. Drag to reorder them.',
         'cover_source_url' => 'Address of the image. Only these sources are accepted: :hosts',
+        'cover_color'      => 'Read from the cover when the book is saved.',
     ],
 
     'lookup' => [

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Actions\Books\SyncCoverColor;
 use App\Http\Responses\LoginResponse;
 use App\Support\BookMetadata\BookMetadataProvider;
 use App\Support\BookMetadata\ChainedBookMetadataProvider;
@@ -14,8 +15,11 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAddedEvent;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +42,43 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->syncBookCoverColors();
+    }
+
+    /**
+     * Keep books.cover_color in step with the cover it is derived from.
+     *
+     * It cannot be done in the model: media library attaches a cover after the
+     * book row is written, so a saving hook only ever sees the state before the
+     * cover arrived. These three are the ways the leading image can change.
+     *
+     * MediaHasBeenAddedEvent rather than Media::created, because the row is
+     * inserted before the file is copied to the disk and there would be nothing
+     * to read. Reordering comes through as an ordinary update, filtered down to
+     * order_column so that writing a conversion does not trigger a re-read.
+     */
+    protected function syncBookCoverColors(): void
+    {
+        $sync = function(Media $media): void {
+            $syncCoverColor = app(SyncCoverColor::class);
+            $book = $syncCoverColor->bookFor($media);
+
+            if ($book !== null) {
+                $syncCoverColor($book);
+            }
+        };
+
+        Event::listen(MediaHasBeenAddedEvent::class, function(MediaHasBeenAddedEvent $event) use ($sync): void {
+            $sync($event->media);
+        });
+
+        Media::deleted($sync);
+
+        Media::updated(function(Media $media) use ($sync): void {
+            if ($media->wasChanged('order_column')) {
+                $sync($media);
+            }
+        });
     }
 
     /**

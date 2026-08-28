@@ -11,6 +11,7 @@ use App\Filament\Resources\Books\Actions\LookupIsbnAction;
 use App\Models\Book;
 use App\Rules\Isbn;
 use App\Support\Isbn as IsbnHelper;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
@@ -293,6 +294,13 @@ class BookForm
                     ->openable()
                     ->imageEditor()
                     ->hintAction(DownloadCoverAction::make())
+                    ->columnSpanFull(),
+
+                /** Read from the cover when the book is saved, never typed in. */
+                ColorPicker::make('cover_color')
+                    ->label(__('books.fields.cover_color'))
+                    ->helperText(__('books.hints.cover_color'))
+                    ->disabled()
                     ->columnSpanFull(),
 
                 Textarea::make('synopsis')

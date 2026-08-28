@@ -65,6 +65,7 @@ return [
         'cover'                  => 'Cubierta',
         'covers'                 => 'Imágenes',
         'cover_source_url'       => 'Origen de la cubierta',
+        'cover_color'            => 'Color de la cubierta',
         'price_cents'            => 'Precio venta público',
         'vat_rate'               => 'IVA (%)',
         'currency'               => 'Moneda',
@@ -84,6 +85,7 @@ return [
         'slug'             => 'Se genera a partir del título si lo dejas en blanco.',
         'covers'           => 'La primera imagen es la cubierta. Arrastra para reordenarlas.',
         'cover_source_url' => 'Dirección de la imagen. Solo se aceptan estas fuentes: :hosts',
+        'cover_color'      => 'Se calcula a partir de la cubierta al guardar.',
     ],
 
     'lookup' => [
