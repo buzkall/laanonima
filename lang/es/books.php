@@ -1,0 +1,140 @@
+<?php
+
+return [
+
+    'resource' => [
+        'label'            => 'Libro',
+        'plural_label'     => 'Libros',
+        'navigation_label' => 'Libros',
+        'navigation_group' => 'Catálogo',
+    ],
+
+    'publisher' => [
+        'label'        => 'Editorial',
+        'plural_label' => 'Editoriales',
+        'create'       => 'Nueva editorial',
+    ],
+
+    'sections' => [
+        'identification' => 'Identificación',
+        'record'         => 'Ficha',
+        'edition'        => 'Edición',
+        'physical'       => 'Características físicas',
+        'content'        => 'Contenido',
+        'commercial'     => 'Venta',
+    ],
+
+    'fields' => [
+        'isbn13'                 => 'ISBN',
+        'isbn10'                 => 'ISBN-10',
+        'ean13'                  => 'EAN',
+        'slug'                   => 'URL',
+        'external_reference'     => 'Referencia interna',
+        'title'                  => 'Título',
+        'subtitle'               => 'Subtítulo',
+        'original_title'         => 'Título original',
+        'contributors'           => 'Autoría y colaboraciones',
+        'contributor_name'       => 'Nombre',
+        'contributor_role'       => 'Función',
+        'authors_line'           => 'Autoría',
+        'publisher_id'           => 'Editorial',
+        'imprint'                => 'Sello',
+        'collection_name'        => 'Colección',
+        'collection_number'      => 'Número en la colección',
+        'published_on'           => 'Fecha de publicación',
+        'published_year'         => 'Año',
+        'edition_number'         => 'Número de edición',
+        'edition_statement'      => 'Mención de edición',
+        'country_of_publication' => 'País de publicación',
+        'city_of_publication'    => 'Ciudad de publicación',
+        'legal_deposit'          => 'Depósito legal',
+        'binding'                => 'Encuadernación',
+        'pages'                  => 'Páginas',
+        'height_mm'              => 'Alto (mm)',
+        'width_mm'               => 'Ancho (mm)',
+        'thickness_mm'           => 'Grosor (mm)',
+        'weight_grams'           => 'Peso (g)',
+        'language'               => 'Idioma',
+        'original_language'      => 'Idioma original',
+        'subjects'               => 'Materias',
+        'subject_scheme'         => 'Sistema',
+        'subject_code'           => 'Código',
+        'subject_heading'        => 'Materia',
+        'synopsis'               => 'Sinopsis',
+        'back_cover_text'        => 'Texto de contracubierta',
+        'cover_path'             => 'Cubierta',
+        'cover_source_url'       => 'Origen de la cubierta',
+        'price_cents'            => 'Precio venta público',
+        'vat_rate'               => 'IVA (%)',
+        'currency'               => 'Moneda',
+        'stock'                  => 'Existencias',
+        'availability'           => 'Disponibilidad',
+        'is_featured'            => 'Destacado',
+        'is_active'              => 'Visible en la web',
+        'metadata_source'        => 'Origen de los datos',
+        'metadata_synced_at'     => 'Datos actualizados el',
+        'created_at'             => 'Alta',
+        'updated_at'             => 'Última modificación',
+    ],
+
+    'hints' => [
+        'isbn13'      => 'Escribe el ISBN y pulsa la lupa para rellenar la ficha automáticamente.',
+        'price_cents' => 'PVP, IVA incluido.',
+        'slug'        => 'Se genera a partir del título si lo dejas en blanco.',
+    ],
+
+    'lookup' => [
+        'label'           => 'Buscar por ISBN',
+        'found_title'     => 'Ficha encontrada',
+        'found_body'      => 'Hemos rellenado los datos de :title. Revísalos antes de guardar.',
+        'not_found_title' => 'No hemos encontrado este ISBN',
+        'not_found_body'  => 'Ninguna de las fuentes consultadas tiene este libro. Rellena la ficha a mano.',
+        'invalid_title'   => 'ISBN no válido',
+        'invalid_body'    => 'Revisa el número: el dígito de control no cuadra.',
+    ],
+
+    'filters' => [
+        'featured' => 'Destacados',
+        'active'   => 'Visibles en la web',
+    ],
+
+    'binding' => [
+        'rustica'    => 'Rústica',
+        'tapa_dura'  => 'Tapa dura',
+        'bolsillo'   => 'Bolsillo',
+        'carton'     => 'Cartoné',
+        'espiral'    => 'Espiral',
+        'ebook'      => 'Libro electrónico',
+        'audiolibro' => 'Audiolibro',
+    ],
+
+    'availability' => [
+        'disponible'    => 'Disponible',
+        'bajo_pedido'   => 'Bajo pedido',
+        'agotado'       => 'Agotado',
+        'descatalogado' => 'Descatalogado',
+        'no_publicado'  => 'Aún no publicado',
+    ],
+
+    'language' => [
+        'spa' => 'Castellano',
+        'cat' => 'Catalán',
+        'eus' => 'Euskera',
+        'glg' => 'Gallego',
+        'eng' => 'Inglés',
+        'fra' => 'Francés',
+        'por' => 'Portugués',
+        'ita' => 'Italiano',
+        'deu' => 'Alemán',
+    ],
+
+    'contributor_role' => [
+        'autor'            => 'Autoría',
+        'traductor'        => 'Traducción',
+        'ilustrador'       => 'Ilustración',
+        'editor_literario' => 'Edición literaria',
+        'prologuista'      => 'Prólogo',
+        'fotografo'        => 'Fotografía',
+    ],
+
+];

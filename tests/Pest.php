@@ -60,7 +60,35 @@ expect()->extend('toBeOne', fn() => $this->toBe(1));
 |
 */
 
-function something(): void
+/**
+ * Decode a committed API fixture, captured from the real endpoint.
+ *
+ * Pest's own fixture() resolves the path; this decodes it.
+ *
+ * @return array<string, mixed>
+ */
+function apiFixture(string $file): array
 {
-    // ..
+    return json_decode(
+        (string)file_get_contents(fixture("{$file}.json")),
+        true,
+        flags: JSON_THROW_ON_ERROR,
+    );
+}
+
+/**
+ * A real JPEG of the given size, for faking a cover download.
+ *
+ * The covers pipeline decodes and measures what it receives, so a one-pixel
+ * stub will not do: tests have to hand it a genuine image.
+ */
+function fakeCover(int $width = 800, int $height = 1200): string
+{
+    $image = imagecreatetruecolor($width, $height);
+    imagefill($image, 0, 0, imagecolorallocate($image, 200, 30, 30));
+
+    ob_start();
+    imagejpeg($image);
+
+    return (string)ob_get_clean();
 }

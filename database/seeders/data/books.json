@@ -1,0 +1,222 @@
+[
+    {
+        "isbn13": "9791387748586",
+        "title": "Instrucción de novicias",
+        "subtitle": "Vidas del convento barroco para guiar tu presente",
+        "contributors": [
+            {
+                "name": "Ana Garriga",
+                "role": "autor"
+            },
+            {
+                "name": "Carmen Urbita",
+                "role": "autor"
+            }
+        ],
+        "publisher": "Blackie Books",
+        "published_on": "2026-02-04",
+        "published_year": 2026,
+        "pages": 288,
+        "binding": "carton",
+        "language": "spa",
+        "city_of_publication": "Barcelona",
+        "price_cents": 2200,
+        "stock": 5,
+        "is_featured": true,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/86/9791387748586.jpg",
+        "synopsis": "Ana Garriga y Carmen Urbita, doctoras por Brown University y autoras del pódcast «Las Hijas de Felipe», llevan más de quince años leyendo cartas, tratados y papeles de archivo escritos dentro de los conventos españoles de los siglos XVI y XVII. Lo que encontraron no fue silencio ni renuncia, sino un entramado social densísimo: trabajo, dinero, política, moda, creatividad y estrategias de resistencia. Un recorrido por aquellas vidas que resulta, sin proponérselo, un manual muy práctico para la nuestra."
+    },
+    {
+        "isbn13": "9788410352186",
+        "title": "El pensamiento erótico",
+        "contributors": [
+            {
+                "name": "Sara Torres",
+                "role": "autor"
+            }
+        ],
+        "publisher": "Reservoir Books",
+        "collection_name": "Reservoir Narrativa",
+        "published_on": "2026-01-15",
+        "published_year": 2026,
+        "pages": 192,
+        "binding": "rustica",
+        "language": "spa",
+        "city_of_publication": "Barcelona",
+        "price_cents": 2190,
+        "stock": 3,
+        "is_featured": true,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/86/9788410352186.jpg",
+        "synopsis": "Después de «Lo que hay» y «La seducción», Sara Torres se pregunta cómo pensar el deseo fuera del binarismo heterosexual, esa «fantasía hetero-real» que nos enseña a entender el erotismo como un combate entre opuestos. Frente a ella propone cuerpos orientados al encuentro y una dimensión ética del gozo. El ensayo cruza psicoanálisis, nuevos materialismos y estudios queer sin dejar nunca de escribirse como literatura."
+    },
+    {
+        "isbn13": "9788499989860",
+        "title": "El descontento",
+        "contributors": [
+            {
+                "name": "Beatriz Serrano",
+                "role": "autor"
+            }
+        ],
+        "publisher": "Ediciones Temas de Hoy",
+        "collection_name": "Temas de Hoy",
+        "published_on": "2023-10-04",
+        "published_year": 2023,
+        "pages": 240,
+        "binding": "rustica",
+        "height_mm": 215,
+        "width_mm": 140,
+        "thickness_mm": 16,
+        "weight_grams": 316,
+        "language": "spa",
+        "city_of_publication": "Barcelona",
+        "price_cents": 1890,
+        "stock": 7,
+        "is_featured": false,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/60/9788499989860.jpg",
+        "synopsis": "Marisa tiene treinta y pocos, trabaja en una agencia de publicidad y sobrelleva sus días a base de orfidales y vídeos de YouTube. Odia su trabajo y no puede dejarlo: le gustan demasiado las cosas bonitas. La semana previa a un «team building» de la empresa, la fachada social que lleva años puliendo empieza a resquebrajarse. Una novela de humor muy negro sobre la precariedad emocional de las oficinas."
+    },
+    {
+        "isbn13": "9788495587176",
+        "title": "Muerte en Persia",
+        "original_title": "Tod in Persien",
+        "contributors": [
+            {
+                "name": "Annemarie Schwarzenbach",
+                "role": "autor"
+            },
+            {
+                "name": "Richard Gross",
+                "role": "traductor"
+            },
+            {
+                "name": "María Esperanza Romero",
+                "role": "traductor"
+            }
+        ],
+        "publisher": "Editorial Minúscula",
+        "collection_name": "Paisajes narrados",
+        "collection_number": "13",
+        "published_on": "2003-11-01",
+        "published_year": 2003,
+        "pages": 178,
+        "binding": "rustica",
+        "language": "spa",
+        "original_language": "deu",
+        "city_of_publication": "Barcelona",
+        "price_cents": 1300,
+        "stock": 2,
+        "is_featured": false,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/76/9788495587176.jpg",
+        "synopsis": "Escrito en 1936, este «diario impersonal» —así lo llamó ella— mezcla autobiografía, crónica de viaje y ficción. Schwarzenbach volvió una y otra vez a Persia atraída por los desiertos, los jardines y los valles solitarios, y aquí los paisajes acaban siendo el espejo de su miedo, su soledad y su amor por una joven turca. De belleza rara y vida trágica, no dejó indiferente a nadie que la conociera: ni a Thomas Mann y sus hijos, ni a Carson McCullers, que le dedicó «Reflejos en un ojo dorado»."
+    },
+    {
+        "isbn13": "9788419812742",
+        "title": "Quiero",
+        "subtitle": "Qué piensan y sienten las mujeres sobre el sexo cuando tienen la libertad de ser ellas mismas",
+        "contributors": [
+            {
+                "name": "Gillian Anderson",
+                "role": "autor"
+            },
+            {
+                "name": "Esther Cruz Santaella",
+                "role": "traductor"
+            }
+        ],
+        "publisher": "Ediciones Temas de Hoy",
+        "published_on": "2024-09-10",
+        "published_year": 2024,
+        "pages": 544,
+        "binding": "tapa_dura",
+        "language": "spa",
+        "original_language": "eng",
+        "original_title": "Want",
+        "city_of_publication": "Barcelona",
+        "price_cents": 2190,
+        "stock": 4,
+        "is_featured": true,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/42/9788419812742.jpg",
+        "synopsis": "Gillian Anderson lanzó una pregunta abierta y anónima —¿qué es lo que deseas?— y recibió cartas de mujeres de todo el mundo. El resultado es una recopilación de fantasías sexuales escritas sin firma y sin filtro, ordenadas por temas y precedidas por la propia carta de la actriz. Un retrato coral de lo que las mujeres piensan y sienten sobre el sexo cuando nadie las está mirando."
+    },
+    {
+        "isbn13": "9788492917174",
+        "title": "Pageboy",
+        "contributors": [
+            {
+                "name": "Elliot Page",
+                "role": "autor"
+            },
+            {
+                "name": "Carla Bataller Estruch",
+                "role": "traductor"
+            }
+        ],
+        "publisher": "Tendencias",
+        "published_on": "2023-06-06",
+        "published_year": 2023,
+        "pages": 250,
+        "binding": "rustica",
+        "language": "spa",
+        "original_language": "eng",
+        "original_title": "Pageboy: A Memoir",
+        "city_of_publication": "Barcelona",
+        "price_cents": 1800,
+        "stock": 3,
+        "is_featured": false,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/74/9788492917174.jpg",
+        "synopsis": "Las memorias del actor nominado al Oscar por «Juno», escritas después de anunciar públicamente que es un hombre trans. Page recorre la infancia en Nueva Escocia, la fama repentina siendo adolescente y los años de vivir dentro de un armario que la industria le ayudaba a mantener cerrado. Un libro sobre el amor, el deseo y el precio de habitar un cuerpo que no se reconoce como propio."
+    },
+    {
+        "isbn13": "9788426433190",
+        "title": "La chica más lista que conozco",
+        "contributors": [
+            {
+                "name": "Sara Barquinero",
+                "role": "autor"
+            }
+        ],
+        "publisher": "Lumen",
+        "published_on": "2026-03-12",
+        "published_year": 2026,
+        "pages": 500,
+        "binding": "rustica",
+        "language": "spa",
+        "city_of_publication": "Barcelona",
+        "price_cents": 2290,
+        "stock": 6,
+        "is_featured": true,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/90/9788426433190.jpg",
+        "synopsis": "Alicia deja su ciudad natal para estudiar Filosofía en Madrid, convencida de que allí encontrará compañeros con los que hablar de libros y profesores capaces de cambiarle la vida. La seduce un grupo de estudiantes tan inteligentes como crueles, y pronto descubre que el saber no siempre es sinónimo de virtud: en las aulas la brillantez convive con la arrogancia, la precariedad y el cinismo. La nueva novela de la autora de «Los Escorpiones»."
+    },
+    {
+        "isbn13": "9788466363402",
+        "title": "Dune",
+        "contributors": [
+            {
+                "name": "Frank Herbert",
+                "role": "autor"
+            },
+            {
+                "name": "Domingo Santos",
+                "role": "traductor"
+            }
+        ],
+        "publisher": "Debolsillo",
+        "collection_name": "Las crónicas de Dune",
+        "collection_number": "1",
+        "published_on": "2023-11-16",
+        "published_year": 2023,
+        "pages": 784,
+        "binding": "tapa_dura",
+        "language": "spa",
+        "original_language": "eng",
+        "original_title": "Dune",
+        "city_of_publication": "Barcelona",
+        "price_cents": 1695,
+        "stock": 5,
+        "is_featured": false,
+        "cover_source_url": "https://imagessl3.casadellibro.com/a/l/t0/02/9788466363402.jpg",
+        "synopsis": "En Arrakis, un planeta desértico donde el agua es el bien más escaso, se extrae la melange: la especia que hace posible la navegación interestelar y por la que las grandes casas están dispuestas a matar. Cuando los Atreides reciben el feudo del planeta, el joven Paul se ve arrastrado a una guerra de traiciones entre su familia, los Harkonnen y los fremen del desierto. Primera entrega de la saga de ciencia ficción más influyente del siglo XX."
+    }
+]

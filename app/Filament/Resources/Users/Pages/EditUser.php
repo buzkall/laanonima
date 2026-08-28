@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use Arzcode\FilamentMagicLogin\Actions\SendMagicLinkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
-use Arzcode\FilamentMagicLogin\Actions\SendMagicLinkAction;
 
 class EditUser extends EditRecord
 {
