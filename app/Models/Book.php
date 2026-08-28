@@ -55,6 +55,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string|null $synopsis
  * @property string|null $back_cover_text
  * @property string|null $cover_source_url
+ * @property string|null $cover_color
  * @property int|null $price_cents
  * @property string $vat_rate
  * @property string $currency
