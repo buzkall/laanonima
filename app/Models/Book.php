@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @property int $id
@@ -49,7 +53,6 @@ use Illuminate\Support\Str;
  * @property array<int, array{scheme?: string, code?: string|null, heading?: string|null}>|null $subjects
  * @property string|null $synopsis
  * @property string|null $back_cover_text
- * @property string|null $cover_path
  * @property string|null $cover_source_url
  * @property int|null $price_cents
  * @property string $vat_rate
@@ -70,14 +73,22 @@ use Illuminate\Support\Str;
     'contributors', 'authors_line', 'publisher_id', 'imprint', 'collection_name', 'collection_number',
     'published_on', 'published_year', 'edition_number', 'edition_statement', 'country_of_publication',
     'city_of_publication', 'legal_deposit', 'binding', 'pages', 'height_mm', 'width_mm', 'thickness_mm', 'weight_grams',
-    'language', 'original_language', 'subjects', 'synopsis', 'back_cover_text', 'cover_path', 'cover_source_url',
+    'language', 'original_language', 'subjects', 'synopsis', 'back_cover_text', 'cover_source_url',
     'price_cents', 'vat_rate', 'currency', 'stock', 'availability', 'is_featured', 'is_active',
     'metadata_source', 'metadata_synced_at', 'raw_metadata',
 ])]
-class Book extends Model
+class Book extends Model implements HasMedia
 {
+    /**
+     * Every picture of a book lives here, ordered: the front, the back, a
+     * spread, a detail of the binding. The first one is *the* cover -- what the
+     * listing and the shop show -- so reordering in the panel is how a
+     * bookseller picks which image leads.
+     */
+    public const COVERS_COLLECTION = 'covers';
+
     /** @use HasFactory<BookFactory> */
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     /**
      * @return array<string, string>
@@ -121,6 +132,49 @@ class Book extends Model
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(Publisher::class);
+    }
+
+    /**
+     * Covers arrive at whatever size the source served, and are shown a few
+     * hundred pixels wide at most, so a thumbnail is generated for every image.
+     *
+     * The conversion runs inline rather than through the queue: no worker sits
+     * in front of the panel, and a bookseller who uploads a cover expects it in
+     * the listing on the next page load.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::COVERS_COLLECTION)
+            ->registerMediaConversions(function(): void {
+                $this->addMediaConversion('thumb')
+                    ->nonQueued()
+                    ->fit(Fit::Contain, 400, 600);
+            });
+    }
+
+    /**
+     * The image that leads the collection, which is the cover.
+     */
+    public function cover(): ?Media
+    {
+        return $this->getFirstMedia(self::COVERS_COLLECTION);
+    }
+
+    public function coverUrl(string $conversion = ''): ?string
+    {
+        return $this->cover()?->getAvailableUrl([$conversion]);
+    }
+
+    /**
+     * File a downloaded cover, named after the ISBN so the same book twice over
+     * is recognizable on the disk.
+     */
+    public function addCoverFromString(string $jpeg): Media
+    {
+        return $this->addMediaFromString($jpeg)
+            ->usingFileName("{$this->isbn13}.jpg")
+            ->usingName($this->title)
+            ->toMediaCollection(self::COVERS_COLLECTION);
     }
 
     /**

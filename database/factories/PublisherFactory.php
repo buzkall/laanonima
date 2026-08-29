@@ -25,8 +25,14 @@ class PublisherFactory extends Factory
         ]) . ' ' . Str::upper(fake()->unique()->lexify('??'));
 
         return [
-            'name'        => $name,
-            'slug'        => Str::slug($name),
+            'name' => $name,
+
+            /*
+             | Derived from whatever name the caller ends up with, not from the
+             | one above: a test that overrides the name would otherwise leave a
+             | slug quoting a different publisher, which the listing searches.
+             */
+            'slug'        => fn(array $attributes): string => Str::slug($attributes['name']),
             'description' => fake()->optional()->paragraph(),
             'website'     => fake()->optional()->url(),
         ];

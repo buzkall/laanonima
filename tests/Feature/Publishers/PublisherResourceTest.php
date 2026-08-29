@@ -6,10 +6,13 @@ use App\Filament\Resources\Publishers\Pages\ListPublishers;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 use function Pest\Livewire\livewire;
 
 beforeEach(function(): void {
+    Storage::fake('public');
     $this->actingAs(User::factory()->create());
 });
 
@@ -96,4 +99,52 @@ it('edits a publisher', function(): void {
         ->assertHasNoFormErrors();
 
     expect($publisher->refresh()->name)->toBe('Nombre corregido');
+});
+
+it('files the logotype in the media library', function(): void {
+    $publisher = Publisher::factory()->create();
+
+    livewire(EditPublisher::class, ['record' => $publisher->getRouteKey()])
+        ->fillForm(['logo' => [UploadedFile::fake()->image('logo.png', 400, 400)]])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    $logo = $publisher->refresh()->getFirstMedia(Publisher::LOGO_COLLECTION);
+
+    expect($logo)->not->toBeNull()
+        ->and($logo->hasGeneratedConversion('thumb'))->toBeTrue()
+        ->and($publisher->logoUrl('thumb'))->toContain('thumb');
+
+    Storage::disk('public')->assertExists($logo->getPathRelativeToRoot());
+});
+
+/*
+ | A publisher has one logotype, not a history of them: uploading a new one has
+ | to leave the old file behind on the disk as well as out of the collection.
+ */
+it('replaces the logotype rather than collecting them', function(): void {
+    $publisher = Publisher::factory()->create();
+    $first = $publisher->addMediaFromString(fakeCover(400, 400))
+        ->usingFileName('viejo.jpg')
+        ->toMediaCollection(Publisher::LOGO_COLLECTION);
+
+    livewire(EditPublisher::class, ['record' => $publisher->getRouteKey()])
+        ->fillForm(['logo' => [UploadedFile::fake()->image('nuevo.png', 400, 400)]])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect($publisher->refresh()->getMedia(Publisher::LOGO_COLLECTION))->toHaveCount(1)
+        ->and($publisher->getFirstMedia(Publisher::LOGO_COLLECTION)->id)->not->toBe($first->id);
+
+    Storage::disk('public')->assertMissing($first->getPathRelativeToRoot());
+});
+
+it('shows the logotype in the listing', function(): void {
+    $publisher = Publisher::factory()->create();
+    $logo = $publisher->addMediaFromString(fakeCover(400, 400))
+        ->usingFileName('logo.jpg')
+        ->toMediaCollection(Publisher::LOGO_COLLECTION);
+
+    livewire(ListPublishers::class)
+        ->assertTableColumnStateSet('logo', [$logo->uuid], $publisher);
 });

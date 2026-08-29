@@ -104,13 +104,6 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
-=== herd rules ===
-
-# Laravel Herd
-
-- The application is served by Laravel Herd at `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs. Never run commands to serve the site. It is always available.
-- Use the `herd` CLI to manage services, PHP versions, and sites (e.g. `herd sites`, `herd services:start <service>`, `herd php:list`). Run `herd list` to discover all available commands.
-
 === tests rules ===
 
 # Test Enforcement
@@ -470,7 +463,6 @@ run alone — that means test-order dependence or a race on a shared path (a rea
 
 `composer ci:check` is what CI runs: config clear, Pint, PHPStan, then
 `test:full`. TIA is deliberately not in that path — CI has no cached graph.
-
 
 ## grepai - Semantic Code Search
 

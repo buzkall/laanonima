@@ -62,7 +62,8 @@ return [
         'subject_heading'        => 'Subject',
         'synopsis'               => 'Synopsis',
         'back_cover_text'        => 'Back cover text',
-        'cover_path'             => 'Cover',
+        'cover'                  => 'Cover',
+        'covers'                 => 'Images',
         'cover_source_url'       => 'Cover source',
         'price_cents'            => 'Price',
         'vat_rate'               => 'VAT (%)',
@@ -81,6 +82,7 @@ return [
         'isbn13'      => 'Type the ISBN and press the magnifier to fill the record in automatically.',
         'price_cents' => 'Retail price, VAT included.',
         'slug'        => 'Generated from the title if left blank.',
+        'covers'      => 'The first image is the cover. Drag to reorder them.',
     ],
 
     'lookup' => [

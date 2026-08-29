@@ -6,7 +6,7 @@ use App\Models\Publisher;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\TernaryFilter;
@@ -19,9 +19,10 @@ class PublishersTable
     {
         return $table
             ->columns([
-                ImageColumn::make('logo_path')
-                    ->label(__('publishers.fields.logo_path'))
-                    ->disk(config('books.logos.disk'))
+                SpatieMediaLibraryImageColumn::make('logo')
+                    ->label(__('publishers.fields.logo'))
+                    ->collection(Publisher::LOGO_COLLECTION)
+                    ->conversion('thumb')
                     ->imageHeight(40)
                     ->sortable(false),
 

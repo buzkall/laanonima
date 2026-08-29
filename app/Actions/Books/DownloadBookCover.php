@@ -5,7 +5,6 @@ namespace App\Actions\Books;
 use GdImage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
@@ -19,18 +18,19 @@ use Throwable;
  *
  * Whatever a source serves is normalised on the way in: decoded, measured
  * against a floor that rejects placeholders, downscaled, and re-encoded as
- * JPEG.
+ * JPEG. Filing it is somebody else's job: this hands the bytes back and the
+ * caller attaches them to a book's media collection.
  */
 class DownloadBookCover
 {
     /**
-     * Every stored cover is re-encoded to JPEG, so callers can look one up on
-     * the disk without guessing at the source's format.
+     * Every cover is re-encoded to JPEG, so callers can name the file without
+     * guessing at the source's format.
      */
     public const EXTENSION = 'jpg';
 
     /**
-     * @return string|null the stored path, relative to the covers disk
+     * @return string|null the normalised JPEG bytes
      */
     public function __invoke(?string $url, string $isbn13): ?string
     {
@@ -87,11 +87,7 @@ class DownloadBookCover
             return null;
         }
 
-        $path = config('books.covers.directory') . "/{$isbn13}." . self::EXTENSION;
-
-        Storage::disk(config('books.covers.disk'))->put($path, $this->encode($image), 'public');
-
-        return $path;
+        return $this->encode($image);
     }
 
     /**

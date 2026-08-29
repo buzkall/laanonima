@@ -59,18 +59,18 @@ class BookSeeder extends Seeder
      * without an explicit URL falls back to the metadata providers, and
      * offline the book simply ends up with no cover.
      *
-     * A cover already sitting on the disk from an earlier seed is reused, so a
-     * migrate:fresh does not lose every cover whose source is unreachable that
-     * afternoon.
+     * A cover left on the disk by an earlier seed is reused rather than
+     * downloaded again, so re-seeding does not lose every cover whose source is
+     * unreachable that afternoon.
      */
     private function attachCover(Book $book): void
     {
-        if (filled($book->cover_path)) {
+        if ($book->hasMedia(Book::COVERS_COLLECTION)) {
             return;
         }
 
-        if ($path = $this->coverOnDisk($book->isbn13)) {
-            $book->update(['cover_path' => $path]);
+        if ($jpeg = $this->coverOnDisk($book->isbn13)) {
+            $book->addCoverFromString($jpeg);
 
             return;
         }
@@ -78,26 +78,25 @@ class BookSeeder extends Seeder
         $sourceUrl = $book->cover_source_url
             ?? ($this->fetchMetadata)($book->isbn13)?->coverSourceUrl;
 
-        $path = ($this->downloadCover)($sourceUrl, $book->isbn13);
+        $jpeg = ($this->downloadCover)($sourceUrl, $book->isbn13);
 
-        if ($path === null) {
+        if ($jpeg === null) {
             return;
         }
 
-        $book->update([
-            'cover_path'       => $path,
-            'cover_source_url' => $sourceUrl,
-        ]);
+        $book->update(['cover_source_url' => $sourceUrl]);
+        $book->addCoverFromString($jpeg);
     }
 
     /**
-     * The path of a previously downloaded cover for this ISBN, if any.
+     * A previously downloaded cover for this ISBN, if one is still on the disk.
      */
     private function coverOnDisk(string $isbn13): ?string
     {
-        $path = config('books.covers.directory') . "/{$isbn13}." . DownloadBookCover::EXTENSION;
+        $disk = Storage::disk(config('books.covers.seed_disk'));
+        $path = config('books.covers.seed_directory') . "/{$isbn13}." . DownloadBookCover::EXTENSION;
 
-        return Storage::disk(config('books.covers.disk'))->exists($path) ? $path : null;
+        return $disk->exists($path) ? $disk->get($path) : null;
     }
 
     /**

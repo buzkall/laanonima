@@ -62,7 +62,8 @@ return [
         'subject_heading'        => 'Materia',
         'synopsis'               => 'Sinopsis',
         'back_cover_text'        => 'Texto de contracubierta',
-        'cover_path'             => 'Cubierta',
+        'cover'                  => 'Cubierta',
+        'covers'                 => 'Imágenes',
         'cover_source_url'       => 'Origen de la cubierta',
         'price_cents'            => 'Precio venta público',
         'vat_rate'               => 'IVA (%)',
@@ -81,6 +82,7 @@ return [
         'isbn13'      => 'Escribe el ISBN y pulsa la lupa para rellenar la ficha automáticamente.',
         'price_cents' => 'PVP, IVA incluido.',
         'slug'        => 'Se genera a partir del título si lo dejas en blanco.',
+        'covers'      => 'La primera imagen es la cubierta. Arrastra para reordenarlas.',
     ],
 
     'lookup' => [

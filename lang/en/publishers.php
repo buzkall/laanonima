@@ -20,7 +20,7 @@ return [
         'slug'        => 'URL',
         'website'     => 'Website',
         'description' => 'Description',
-        'logo_path'   => 'Logotype',
+        'logo'        => 'Logotype',
         'books_count' => 'Books',
         'created_at'  => 'Created',
         'updated_at'  => 'Last modified',

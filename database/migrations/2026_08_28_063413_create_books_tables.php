@@ -13,7 +13,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('logo_path')->nullable();
             $table->string('website')->nullable();
             $table->timestamps();
         });
@@ -63,7 +62,6 @@ return new class extends Migration
             $table->text('synopsis')->nullable();
             $table->text('back_cover_text')->nullable();
 
-            $table->string('cover_path')->nullable();
             $table->string('cover_source_url')->nullable();
 
             $table->integer('price_cents')->nullable();

@@ -84,8 +84,12 @@ it('downloads a cover for every book, including the ones no free API knows', fun
     $this->seed(BookSeeder::class);
 
     Book::all()->each(function(Book $book) {
-        expect($book->cover_path)->not->toBeNull("{$book->title} has no cover");
-        Storage::disk('public')->assertExists($book->cover_path);
+        $cover = $book->cover();
+
+        expect($cover)->not->toBeNull("{$book->title} has no cover")
+            ->and($cover->file_name)->toBe("{$book->isbn13}.jpg");
+
+        Storage::disk('public')->assertExists("{$cover->id}/{$cover->file_name}");
     });
 });
 
@@ -107,8 +111,13 @@ it('seeds books with a slug when run through the default seeder', function() {
     ));
 });
 
-it('reuses a cover already on disk instead of downloading it again', function() {
-    Storage::disk('public')->put('covers/9788419812742.jpg', 'ya descargada');
+/*
+ | Covers downloaded by an earlier seed are still on the disk after the move to
+ | the media library, so they are filed rather than fetched a second time.
+ */
+it('files a cover already on disk instead of downloading it again', function() {
+    $onDisk = fakeCover(500, 700);
+    Storage::disk('public')->put('covers/9788419812742.jpg', $onDisk);
 
     Http::fake([
         'openlibrary.org/api/books*' => Http::response([], 500),
@@ -117,10 +126,11 @@ it('reuses a cover already on disk instead of downloading it again', function() 
 
     $this->seed(BookSeeder::class);
 
-    expect(Book::firstWhere('isbn13', '9788419812742')->cover_path)
-        ->toBe('covers/9788419812742.jpg')
-        ->and(Storage::disk('public')->get('covers/9788419812742.jpg'))
-        ->toBe('ya descargada');
+    $cover = Book::firstWhere('isbn13', '9788419812742')->cover();
+
+    expect($cover)->not->toBeNull()
+        ->and(Storage::disk('public')->get("{$cover->id}/{$cover->file_name}"))->toBe($onDisk)
+        ->and(Storage::disk('public')->exists('covers/9788419812742.jpg'))->toBeTrue();
 });
 
 it('leaves a book without a cover when every source is unreachable', function() {
@@ -129,7 +139,17 @@ it('leaves a book without a cover when every source is unreachable', function() 
     $this->seed(BookSeeder::class);
 
     expect(Book::count())->toBe(8)
-        ->and(Book::whereNotNull('cover_path')->count())->toBe(0);
+        ->and(Book::has('media')->count())->toBe(0);
+});
+
+it('does not attach a second copy of a cover when seeded twice', function() {
+    $this->seed(BookSeeder::class);
+    $this->seed(BookSeeder::class);
+
+    Book::all()->each(fn(Book $book) => expect($book->getMedia(Book::COVERS_COLLECTION))->toHaveCount(
+        1,
+        "{$book->title} has more than one cover",
+    ));
 });
 
 it('needs no metadata provider to cover the catalogue', function() {
@@ -141,7 +161,7 @@ it('needs no metadata provider to cover the catalogue', function() {
 
     $this->seed(BookSeeder::class);
 
-    expect(Book::whereNull('cover_path')->count())->toBe(0);
+    expect(Book::doesntHave('media')->count())->toBe(0);
 
     Http::assertNotSent(fn(Request $request) => str_contains($request->url(), 'openlibrary.org'));
 });

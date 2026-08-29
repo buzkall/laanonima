@@ -42,29 +42,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Publisher logos
-    |--------------------------------------------------------------------------
-    |
-    | Uploaded by hand in the panel, never fetched: no source hands out a
-    | publisher logo, so there is nothing to validate or downscale here.
-    |
-    */
-
-    'logos' => [
-        'disk'      => 'public',
-        'directory' => 'publisher-logos',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Covers
     |--------------------------------------------------------------------------
+    |
+    | Books and publishers keep their images in spatie/laravel-medialibrary, so
+    | nothing here decides where a file ends up. What is left is the rules a
+    | downloaded cover has to satisfy before it is attached.
+    |
     */
 
     'covers' => [
-        'disk'      => 'public',
-        'directory' => 'covers',
         'max_bytes' => 5 * 1024 * 1024,
+
+        /*
+         | Where the seeder looks for a cover it downloaded on an earlier run,
+         | so re-seeding does not re-fetch eight images -- and works offline.
+         | Files found here are copied into the media library, not moved.
+         */
+        'seed_disk'      => 'public',
+        'seed_directory' => 'covers',
 
         /*
          | Sources answer a miss with a "no image" placeholder and a 200 rather

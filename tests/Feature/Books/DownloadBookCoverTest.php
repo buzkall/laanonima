@@ -2,11 +2,6 @@
 
 use App\Actions\Books\DownloadBookCover;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-
-beforeEach(function() {
-    Storage::fake('public');
-});
 
 /** The action under test, which is invokable. */
 function download(): DownloadBookCover
@@ -14,19 +9,12 @@ function download(): DownloadBookCover
     return new DownloadBookCover;
 }
 
-function storedCover(string $isbn13): string
-{
-    return (string)Storage::disk('public')->get("covers/{$isbn13}.jpg");
-}
-
 it('downscales an oversized cover into the configured box', function() {
     Http::fake(['*' => Http::response(fakeCover(2000, 3207), 200, ['Content-Type' => 'image/jpeg'])]);
 
-    $path = download()('https://covers.openlibrary.org/cover.jpg', '9788433920423');
+    $jpeg = download()('https://covers.openlibrary.org/cover.jpg', '9788433920423');
 
-    expect($path)->toBe('covers/9788433920423.jpg');
-
-    [$width, $height] = getimagesizefromstring(storedCover('9788433920423'));
+    [$width, $height] = getimagesizefromstring((string)$jpeg);
 
     expect($width)->toBe(748)
         ->and($height)->toBe(1200);
@@ -35,15 +23,15 @@ it('downscales an oversized cover into the configured box', function() {
 it('leaves a cover that already fits at its own size', function() {
     Http::fake(['*' => Http::response(fakeCover(563, 788), 200, ['Content-Type' => 'image/jpeg'])]);
 
-    download()('https://covers.openlibrary.org/cover.jpg', '9788495587176');
+    $jpeg = download()('https://covers.openlibrary.org/cover.jpg', '9788495587176');
 
-    [$width, $height] = getimagesizefromstring(storedCover('9788495587176'));
+    [$width, $height] = getimagesizefromstring((string)$jpeg);
 
     expect($width)->toBe(563)
         ->and($height)->toBe(788);
 });
 
-it('stores every cover as jpeg whatever the source served', function() {
+it('hands back jpeg bytes whatever the source served', function() {
     $gif = (function() {
         $image = imagecreatetruecolor(600, 900);
         ob_start();
@@ -54,10 +42,9 @@ it('stores every cover as jpeg whatever the source served', function() {
 
     Http::fake(['*' => Http::response($gif, 200, ['Content-Type' => 'image/gif'])]);
 
-    $path = download()('https://covers.openlibrary.org/cover.gif', '9788478887200');
+    $jpeg = download()('https://covers.openlibrary.org/cover.gif', '9788478887200');
 
-    expect($path)->toEndWith('.jpg')
-        ->and(getimagesizefromstring(storedCover('9788478887200'))[2])->toBe(IMAGETYPE_JPEG);
+    expect(getimagesizefromstring((string)$jpeg)[2])->toBe(IMAGETYPE_JPEG);
 });
 
 /*
@@ -67,10 +54,7 @@ it('stores every cover as jpeg whatever the source served', function() {
 it('rejects a cover-shaped placeholder served with a 200', function() {
     Http::fake(['*' => Http::response(fakeCover(250, 375), 200, ['Content-Type' => 'image/jpeg'])]);
 
-    $path = download()('https://covers.openlibrary.org/cover.jpg', '9788433920423');
-
-    expect($path)->toBeNull();
-    Storage::disk('public')->assertMissing('covers/9788433920423.jpg');
+    expect(download()('https://covers.openlibrary.org/cover.jpg', '9788433920423'))->toBeNull();
 });
 
 it('rejects a body that is not an image at all', function() {
@@ -125,5 +109,5 @@ it('allows the redirect target Open Library actually uses', function() {
     Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
 
     expect(download()('https://ia600404.us.archive.org/view_archive.php', '9788478887200'))
-        ->toBe('covers/9788478887200.jpg');
+        ->not->toBeNull();
 });

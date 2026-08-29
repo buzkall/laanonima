@@ -2,7 +2,8 @@
 
 namespace App\Filament\Resources\Publishers\Schemas;
 
-use Filament\Forms\Components\FileUpload;
+use App\Models\Publisher;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
@@ -81,12 +82,14 @@ class PublisherForm
     {
         return Section::make(__('publishers.sections.logo'))
             ->schema([
-                FileUpload::make('logo_path')
-                    ->label(__('publishers.fields.logo_path'))
+                SpatieMediaLibraryFileUpload::make('logo')
+                    ->label(__('publishers.fields.logo'))
+                    ->collection(Publisher::LOGO_COLLECTION)
+                    ->conversion('thumb')
+                    /* Filament would otherwise upload to FILESYSTEM_DISK rather
+                       than the disk the media library reads back from. */
+                    ->disk(config('media-library.disk_name'))
                     ->image()
-                    ->disk(config('books.logos.disk'))
-                    ->directory(config('books.logos.directory'))
-                    ->visibility('public')
                     ->imageEditor()
                     ->columnSpanFull(),
             ])

@@ -11,13 +11,14 @@ return [
     ],
 
     'fields' => [
-        'name'              => 'Name',
-        'role'              => 'Role',
-        'email'             => 'Email address',
-        'password'          => 'Password',
-        'email_verified_at' => 'Verified at',
-        'created_at'        => 'Created at',
-        'updated_at'        => 'Updated at',
+        'name'                  => 'Name',
+        'role'                  => 'Role',
+        'email'                 => 'Email address',
+        'password'              => 'Password',
+        'password_confirmation' => 'Confirm password',
+        'email_verified_at'     => 'Verified at',
+        'created_at'            => 'Created at',
+        'updated_at'            => 'Updated at',
     ],
 
     'roles' => [
@@ -26,7 +27,14 @@ return [
     ],
 
     'helpers' => [
-        'password' => 'Leave empty to keep the current password.',
+        'password'              => 'Leave empty to keep the current password.',
+        'password_requirements' => 'Must be at least 12 characters long, with upper and lower case letters and numbers.',
+    ],
+
+    'actions' => [
+        'generate_password'        => 'Generate password',
+        'password_generated_title' => 'Password generated',
+        'password_generated_body'  => 'The password has been copied to your clipboard.',
     ],
 
     'placeholders' => [

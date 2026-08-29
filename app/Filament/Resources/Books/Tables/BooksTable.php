@@ -8,7 +8,7 @@ use App\Models\Book;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
@@ -23,15 +23,17 @@ class BooksTable
         return $table
             ->modifyQueryUsing(fn(Builder $query): Builder => $query->with('publisher'))
             ->columns([
-                ImageColumn::make('cover_path')
-                    ->label(__('books.fields.cover_path'))
-                    ->disk(config('books.covers.disk'))
+                SpatieMediaLibraryImageColumn::make('cover')
+                    ->label(__('books.fields.cover'))
+                    ->collection(Book::COVERS_COLLECTION)
+                    ->conversion('thumb')
+                    ->limit(1)
                     ->imageHeight(56)
                     ->sortable(false),
 
                 TextColumn::make('title')
                     ->label(__('books.fields.title'))
-                    ->description(fn(Book $record): ?string => $record->isbn13)
+                    ->description(fn(Book $record): string => $record->isbn13)
                     ->searchable(['title', 'isbn13'])
                     ->sortable()
                     ->wrap(),

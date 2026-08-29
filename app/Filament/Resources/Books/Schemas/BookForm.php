@@ -2,22 +2,22 @@
 
 namespace App\Filament\Resources\Books\Schemas;
 
-use App\Actions\Books\DownloadBookCover;
 use App\Actions\Books\FetchBookMetadata;
 use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
 use App\Enums\BookLanguage;
 use App\Enums\ContributorRole;
+use App\Models\Book;
 use App\Models\Publisher;
 use App\Rules\Isbn;
 use App\Support\Isbn as IsbnHelper;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -71,7 +71,9 @@ class BookForm
      *
      * Filament prunes form state down to the keys its components validate, so a
      * $set() on a path with no component of its own never reaches the record.
-     * These three exist purely so the lookup's bookkeeping survives the save.
+     * These three exist purely so the lookup's bookkeeping survives the save --
+     * cover_source_url especially, since AttachBookCover reads it back off the
+     * saved record to fetch the cover.
      *
      * @return array<int, Hidden>
      */
@@ -126,7 +128,7 @@ class BookForm
         return Action::make('lookup')
             ->label(__('books.lookup.label'))
             ->icon(Heroicon::MagnifyingGlass)
-            ->action(function(Get $get, Set $set, FetchBookMetadata $fetchMetadata, DownloadBookCover $downloadCover): void {
+            ->action(function(Get $get, Set $set, FetchBookMetadata $fetchMetadata): void {
                 $isbn13 = IsbnHelper::toIsbn13($get('isbn13'));
 
                 if ($isbn13 === null) {
@@ -162,10 +164,6 @@ class BookForm
                         ['slug' => Str::slug($metadata->publisherName)],
                         ['name' => $metadata->publisherName],
                     )->id);
-                }
-
-                if (blank($get('cover_path'))) {
-                    $set('cover_path', $downloadCover($metadata->coverSourceUrl, $isbn13));
                 }
 
                 Notification::make()
@@ -344,12 +342,19 @@ class BookForm
     {
         return Section::make(__('books.sections.content'))
             ->schema([
-                FileUpload::make('cover_path')
-                    ->label(__('books.fields.cover_path'))
+                SpatieMediaLibraryFileUpload::make('covers')
+                    ->label(__('books.fields.covers'))
+                    ->helperText(__('books.hints.covers'))
+                    ->collection(Book::COVERS_COLLECTION)
+                    ->conversion('thumb')
+                    /* Filament would otherwise upload to FILESYSTEM_DISK, leaving
+                       uploaded images somewhere other than downloaded covers. */
+                    ->disk(config('media-library.disk_name'))
                     ->image()
-                    ->disk(config('books.covers.disk'))
-                    ->directory(config('books.covers.directory'))
-                    ->visibility('public')
+                    ->multiple()
+                    ->reorderable()
+                    ->appendFiles()
+                    ->openable()
                     ->imageEditor()
                     ->columnSpanFull(),
 
