@@ -14,7 +14,7 @@ use function Pest\Livewire\livewire;
  | silent revert to Filament's "M j, Y".
  */
 
-it('formats table dates as d/m/Y', function() {
+it('formats table dates as d/m/Y', function(): void {
     $this->actingAs(User::factory()->admin()->create());
 
     $table = livewire(ListBooks::class)->instance()->getTable();
@@ -23,7 +23,7 @@ it('formats table dates as d/m/Y', function() {
         ->and($table->getDefaultDateTimeDisplayFormat())->toBe('d/m/Y H:i');
 });
 
-it('formats picker dates as d/m/Y', function() {
+it('formats picker dates as d/m/Y', function(): void {
     expect(DatePicker::make('published_on')->getDefaultDateDisplayFormat())
         ->toBe(AppServiceProvider::DATE_FORMAT)
         ->and(DateTimePicker::make('email_verified_at')->getDefaultDateTimeDisplayFormat())

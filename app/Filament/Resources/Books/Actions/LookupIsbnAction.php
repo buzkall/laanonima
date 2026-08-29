@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Books\Actions;
 
 use App\Actions\Books\FetchBookMetadata;
 use App\Models\Publisher;
+use App\Support\BookMetadata\BookMetadata;
 use App\Support\Isbn as IsbnHelper;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -52,7 +53,7 @@ class LookupIsbnAction extends Action
 
         $metadata = $fetchMetadata($isbn13);
 
-        if ($metadata === null) {
+        if (! $metadata instanceof BookMetadata) {
             Notification::make()
                 ->warning()
                 ->title(__('books.lookup.not_found_title'))

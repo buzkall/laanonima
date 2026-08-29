@@ -9,7 +9,7 @@ function download(): DownloadBookCover
     return new DownloadBookCover;
 }
 
-it('downscales an oversized cover into the configured box', function() {
+it('downscales an oversized cover into the configured box', function(): void {
     Http::fake(['*' => Http::response(fakeCover(2000, 3207), 200, ['Content-Type' => 'image/jpeg'])]);
 
     $jpeg = download()('https://covers.openlibrary.org/cover.jpg', '9788433920423');
@@ -20,7 +20,7 @@ it('downscales an oversized cover into the configured box', function() {
         ->and($height)->toBe(1200);
 });
 
-it('leaves a cover that already fits at its own size', function() {
+it('leaves a cover that already fits at its own size', function(): void {
     Http::fake(['*' => Http::response(fakeCover(563, 788), 200, ['Content-Type' => 'image/jpeg'])]);
 
     $jpeg = download()('https://covers.openlibrary.org/cover.jpg', '9788495587176');
@@ -31,8 +31,8 @@ it('leaves a cover that already fits at its own size', function() {
         ->and($height)->toBe(788);
 });
 
-it('hands back jpeg bytes whatever the source served', function() {
-    $gif = (function() {
+it('hands back jpeg bytes whatever the source served', function(): void {
+    $gif = (function(): string {
         $image = imagecreatetruecolor(600, 900);
         ob_start();
         imagegif($image);
@@ -51,7 +51,7 @@ it('hands back jpeg bytes whatever the source served', function() {
  | The reason the guard exists: a source answers an unknown ISBN with a 200 and
  | a blank placeholder rather than a 404, so the status code proves nothing.
  */
-it('rejects a placeholder served with a 200', function() {
+it('rejects a placeholder served with a 200', function(): void {
     Http::fake(['*' => Http::response(fakeCover(1, 1), 200, ['Content-Type' => 'image/jpeg'])]);
 
     expect(download()('https://covers.openlibrary.org/cover.jpg', '9788433920423'))->toBeNull();
@@ -63,7 +63,7 @@ it('rejects a placeholder served with a 200', function() {
  | 400x600 floor threw those away without a word. A small cover the bookseller
  | can see and replace beats one that never arrived.
  */
-it('keeps a small but genuine cover', function() {
+it('keeps a small but genuine cover', function(): void {
     Http::fake(['*' => Http::response(fakeCover(229, 352), 200, ['Content-Type' => 'image/jpeg'])]);
 
     $jpeg = download()('https://covers.openlibrary.org/b/id/12498753-L.jpg', '9788420482767');
@@ -72,13 +72,13 @@ it('keeps a small but genuine cover', function() {
         ->and(getimagesizefromstring((string)$jpeg))->toMatchArray([0 => 229, 1 => 352]);
 });
 
-it('rejects a body that is not an image at all', function() {
+it('rejects a body that is not an image at all', function(): void {
     Http::fake(['*' => Http::response('<html>404 no encontrado</html>', 200, ['Content-Type' => 'image/jpeg'])]);
 
     expect(download()('https://covers.openlibrary.org/cover.jpg', '9788433920423'))->toBeNull();
 });
 
-it('keeps nothing when the source fails outright', function() {
+it('keeps nothing when the source fails outright', function(): void {
     Http::fake(['*' => Http::response('', 500)]);
 
     expect(download()('https://covers.openlibrary.org/cover.jpg', '9788433920423'))->toBeNull();
@@ -88,7 +88,7 @@ it('keeps nothing when the source fails outright', function() {
  | Cover URLs are read out of third-party API responses, so a provider that is
  | compromised or spoofed could otherwise aim the server at internal addresses.
  */
-it('refuses a host that is not an allowed cover source', function() {
+it('refuses a host that is not an allowed cover source', function(): void {
     Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
 
     expect(download()('https://evil.example/cover.jpg', '9788433920423'))->toBeNull();
@@ -96,7 +96,7 @@ it('refuses a host that is not an allowed cover source', function() {
     Http::assertNothingSent();
 });
 
-it('refuses to reach internal addresses', function() {
+it('refuses to reach internal addresses', function(): void {
     Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
 
     foreach ([
@@ -112,7 +112,7 @@ it('refuses to reach internal addresses', function() {
     Http::assertNothingSent();
 });
 
-it('refuses a plain http url', function() {
+it('refuses a plain http url', function(): void {
     Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
 
     expect(download()('http://covers.openlibrary.org/cover.jpg', '9788433920423'))->toBeNull();
@@ -120,7 +120,7 @@ it('refuses a plain http url', function() {
     Http::assertNothingSent();
 });
 
-it('allows the redirect target Open Library actually uses', function() {
+it('allows the redirect target Open Library actually uses', function(): void {
     Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
 
     expect(download()('https://ia600404.us.archive.org/view_archive.php', '9788478887200'))

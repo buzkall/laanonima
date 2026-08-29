@@ -37,6 +37,13 @@ return RectorConfig::configure()
         // Pint owns formatting; never let Rector fight it.
         __DIR__ . '/bootstrap/cache',
 
+        /*
+         | A gitignored, developer-local convenience file, and on at least one
+         | machine a symlink out to Dropbox -- Rector follows it and rewrites a
+         | file that is not in this repository and that CI never sees.
+         */
+        __DIR__ . '/routes/autologin.php',
+
         // Livewire/Filament hydrate public properties by reflection.
         ReadOnlyPropertyRector::class,
 

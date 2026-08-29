@@ -68,7 +68,7 @@ class DownloadCoverAction extends Action
 
         $set('cover_source_url', $url);
 
-        if ($record === null) {
+        if (! $record instanceof Book) {
             Notification::make()
                 ->success()
                 ->title(__('books.cover_download.deferred_title'))

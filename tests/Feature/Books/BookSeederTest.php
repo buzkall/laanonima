@@ -9,7 +9,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-beforeEach(function() {
+beforeEach(function(): void {
     Storage::fake('public');
 
     /*
@@ -34,7 +34,7 @@ beforeEach(function() {
     ]);
 });
 
-it('seeds the whole hand-curated catalogue', function() {
+it('seeds the whole hand-curated catalogue', function(): void {
     $this->seed(BookSeeder::class);
 
     // Temas de Hoy publishes two of them, hence seven publishers for eight books.
@@ -42,25 +42,25 @@ it('seeds the whole hand-curated catalogue', function() {
         ->and(Publisher::count())->toBe(7);
 });
 
-it('carries a check-digit-valid ISBN for every seeded book', function() {
+it('carries a check-digit-valid ISBN for every seeded book', function(): void {
     $this->seed(BookSeeder::class);
 
-    Book::pluck('isbn13')->each(
-        fn(string $isbn) => expect(Isbn::isValid($isbn))->toBeTrue("{$isbn} is not a valid ISBN-13"),
-    );
+    Book::pluck('isbn13')->each(function(string $isbn): void {
+        expect(Isbn::isValid($isbn))->toBeTrue("{$isbn} is not a valid ISBN-13");
+    });
 });
 
-it('gives every seeded book a real price, a publisher and a synopsis', function() {
+it('gives every seeded book a real price, a publisher and a synopsis', function(): void {
     $this->seed(BookSeeder::class);
 
-    Book::with('publisher')->get()->each(function(Book $book) {
+    Book::with('publisher')->get()->each(function(Book $book): void {
         expect($book->price_cents)->toBeGreaterThan(0, "{$book->title} has no price")
             ->and($book->publisher)->not->toBeNull("{$book->title} has no publisher")
             ->and($book->synopsis)->not->toBeEmpty("{$book->title} has no synopsis");
     });
 });
 
-it('records translators alongside authors', function() {
+it('records translators alongside authors', function(): void {
     $this->seed(BookSeeder::class);
 
     $schwarzenbach = Book::firstWhere('isbn13', '9788495587176');
@@ -73,17 +73,17 @@ it('records translators alongside authors', function() {
         ->and($schwarzenbach->original_title)->toBe('Tod in Persien');
 });
 
-it('joins co-authors into one authors line', function() {
+it('joins co-authors into one authors line', function(): void {
     $this->seed(BookSeeder::class);
 
     expect(Book::firstWhere('isbn13', '9791387748586')->authors_line)
         ->toBe('Ana Garriga, Carmen Urbita');
 });
 
-it('downloads a cover for every book, including the ones no free API knows', function() {
+it('downloads a cover for every book, including the ones no free API knows', function(): void {
     $this->seed(BookSeeder::class);
 
-    Book::all()->each(function(Book $book) {
+    Book::all()->each(function(Book $book): void {
         $cover = $book->cover();
 
         expect($cover)->not->toBeNull("{$book->title} has no cover")
@@ -93,7 +93,7 @@ it('downloads a cover for every book, including the ones no free API knows', fun
     });
 });
 
-it('can be run twice without duplicating anything', function() {
+it('can be run twice without duplicating anything', function(): void {
     $this->seed(BookSeeder::class);
     $this->seed(BookSeeder::class);
 
@@ -101,21 +101,21 @@ it('can be run twice without duplicating anything', function() {
         ->and(Publisher::count())->toBe(7);
 });
 
-it('seeds books with a slug when run through the default seeder', function() {
+it('seeds books with a slug when run through the default seeder', function(): void {
     $this->seed();
 
     expect(Book::count())->toBe(8);
 
-    Book::all()->each(fn(Book $book) => expect($book->slug)->not->toBeEmpty(
-        "{$book->title} has no slug",
-    ));
+    Book::all()->each(function(Book $book): void {
+        expect($book->slug)->not->toBeEmpty("{$book->title} has no slug");
+    });
 });
 
 /*
  | Covers downloaded by an earlier seed are still on the disk after the move to
  | the media library, so they are filed rather than fetched a second time.
  */
-it('files a cover already on disk instead of downloading it again', function() {
+it('files a cover already on disk instead of downloading it again', function(): void {
     $onDisk = fakeCover(500, 700);
     Storage::disk('public')->put('covers/9788419812742.jpg', $onDisk);
 
@@ -133,7 +133,7 @@ it('files a cover already on disk instead of downloading it again', function() {
         ->and(Storage::disk('public')->exists('covers/9788419812742.jpg'))->toBeTrue();
 });
 
-it('leaves a book without a cover when every source is unreachable', function() {
+it('leaves a book without a cover when every source is unreachable', function(): void {
     Http::fake(fn() => throw new ConnectionException('Connection reset by peer'));
 
     $this->seed(BookSeeder::class);
@@ -142,17 +142,19 @@ it('leaves a book without a cover when every source is unreachable', function() 
         ->and(Book::has('media')->count())->toBe(0);
 });
 
-it('does not attach a second copy of a cover when seeded twice', function() {
+it('does not attach a second copy of a cover when seeded twice', function(): void {
     $this->seed(BookSeeder::class);
     $this->seed(BookSeeder::class);
 
-    Book::all()->each(fn(Book $book) => expect($book->getMedia(Book::COVERS_COLLECTION))->toHaveCount(
-        1,
-        "{$book->title} has more than one cover",
-    ));
+    Book::all()->each(function(Book $book): void {
+        expect($book->getMedia(Book::COVERS_COLLECTION))->toHaveCount(
+            1,
+            "{$book->title} has more than one cover",
+        );
+    });
 });
 
-it('needs no metadata provider to cover the catalogue', function() {
+it('needs no metadata provider to cover the catalogue', function(): void {
     Http::fake([
         'openlibrary.org/*'    => Http::response([], 500),
         'www.googleapis.com/*' => Http::response([], 500),
@@ -163,5 +165,5 @@ it('needs no metadata provider to cover the catalogue', function() {
 
     expect(Book::doesntHave('media')->count())->toBe(0);
 
-    Http::assertNotSent(fn(Request $request) => str_contains($request->url(), 'openlibrary.org'));
+    Http::assertNotSent(fn(Request $request): bool => str_contains($request->url(), 'openlibrary.org'));
 });

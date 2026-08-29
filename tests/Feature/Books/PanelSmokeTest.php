@@ -4,7 +4,7 @@ use App\Filament\Resources\Books\BookResource;
 use App\Models\Book;
 use App\Models\User;
 
-beforeEach(function() {
+beforeEach(function(): void {
     /*
      | The admin panel only admits users whose role maps to it, so the books
      | pages are reachable to an administrator and to nobody else.
@@ -12,7 +12,7 @@ beforeEach(function() {
     $this->actingAs(User::factory()->admin()->create());
 });
 
-it('renders every books panel page', function() {
+it('renders every books panel page', function(): void {
     $book = Book::factory()->create(['title' => 'La conjura de los necios']);
 
     $this->get(BookResource::getUrl('index'))->assertOk()->assertSee('La conjura de los necios');
@@ -20,7 +20,7 @@ it('renders every books panel page', function() {
     $this->get(BookResource::getUrl('edit', ['record' => $book]))->assertOk();
 });
 
-it('labels the panel in Spanish', function() {
+it('labels the panel in Spanish', function(): void {
     app()->setLocale('es');
 
     $this->get(BookResource::getUrl('create'))
@@ -30,7 +30,7 @@ it('labels the panel in Spanish', function() {
         ->assertSee('Depósito legal', escape: false);
 });
 
-it('falls back to English for a locale we do not ship', function() {
+it('falls back to English for a locale we do not ship', function(): void {
     app()->setLocale('en');
 
     $this->get(BookResource::getUrl('create'))
@@ -42,7 +42,7 @@ it('falls back to English for a locale we do not ship', function() {
  | The cover download has to be reachable from the page. It was not, once, and
  | a bookseller had no way to tell a provider with no cover from a broken one.
  */
-it('offers the cover download on both book pages', function() {
+it('offers the cover download on both book pages', function(): void {
     app()->setLocale('es');
 
     $book = Book::factory()->create();

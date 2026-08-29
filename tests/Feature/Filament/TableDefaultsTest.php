@@ -11,7 +11,7 @@ use function Pest\Livewire\livewire;
  | silent revert to Filament's deferred, unstriped defaults.
  */
 
-it('applies table filters without an apply button', function() {
+it('applies table filters without an apply button', function(): void {
     $this->actingAs(User::factory()->admin()->create());
 
     $table = livewire(ListBooks::class)->instance()->getTable();
@@ -19,7 +19,7 @@ it('applies table filters without an apply button', function() {
     expect($table->hasDeferredFilters())->toBeFalse();
 });
 
-it('stripes table rows', function() {
+it('stripes table rows', function(): void {
     $this->actingAs(User::factory()->admin()->create());
 
     $table = livewire(ListBooks::class)->instance()->getTable();

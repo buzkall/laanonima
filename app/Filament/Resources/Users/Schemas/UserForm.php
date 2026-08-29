@@ -18,7 +18,7 @@ use Livewire\Component;
 
 class UserForm
 {
-    private const PASSWORD_LENGTH = 12;
+    private const int PASSWORD_LENGTH = 12;
 
     public static function configure(Schema $schema): Schema
     {

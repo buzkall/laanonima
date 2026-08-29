@@ -20,8 +20,8 @@ use Throwable;
  */
 class OpenLibraryProvider implements BookMetadataProvider
 {
-    private const ENDPOINT = 'https://openlibrary.org/api/books';
-    private const COVERS_ENDPOINT = 'https://covers.openlibrary.org/b/isbn';
+    private const string ENDPOINT = 'https://openlibrary.org/api/books';
+    private const string COVERS_ENDPOINT = 'https://covers.openlibrary.org/b/isbn';
 
     public function find(string $isbn13): ?BookMetadata
     {
@@ -84,7 +84,7 @@ class OpenLibraryProvider implements BookMetadataProvider
      */
     private function contributors(array $data): array
     {
-        $names = array_filter(Arr::wrap(data_get($data, 'authors.*.name')), 'is_string');
+        $names = array_filter(Arr::wrap(data_get($data, 'authors.*.name')), is_string(...));
 
         return array_values(array_map(
             fn(string $name): array => ['name' => $name, 'role' => 'autor'],

@@ -91,7 +91,7 @@ it('deletes the images along with the book', function(): void {
 
 describe('the cover the ISBN lookup finds', function(): void {
     beforeEach(function(): void {
-        config()->set('books.metadata.google_books.key', null);
+        config()->set('books.metadata.google_books.key');
 
         Http::fake([
             'openlibrary.org/api/books*' => Http::response(apiFixture('book-metadata/open-library-hit')),
@@ -220,7 +220,7 @@ describe('downloading a cover from an address', function(): void {
  | but no cover for plenty of ISBNs, and a silent success looked like a bug.
  */
 it('says so when the lookup found a record but no cover', function(): void {
-    config()->set('books.metadata.google_books.key', null);
+    config()->set('books.metadata.google_books.key');
 
     Http::fake([
         'openlibrary.org/api/books*' => Http::response([

@@ -83,7 +83,7 @@ class DownloadBookCover
 
         $image = $this->decode($body, $isbn13);
 
-        if ($image === null) {
+        if (! $image instanceof GdImage) {
             return null;
         }
 

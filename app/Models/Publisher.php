@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Database\Factories\PublisherFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,6 +24,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property Carbon|null $updated_at
  */
 #[Fillable(['name', 'slug', 'description', 'website'])]
+#[RouteKey('slug')]
 class Publisher extends Model implements HasMedia
 {
     /**
@@ -35,16 +37,11 @@ class Publisher extends Model implements HasMedia
 
     protected static function booted(): void
     {
-        static::saving(function(self $publisher) {
+        static::saving(function(self $publisher): void {
             if (blank($publisher->slug)) {
                 $publisher->slug = Str::slug($publisher->name);
             }
         });
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
     }
 
     /**

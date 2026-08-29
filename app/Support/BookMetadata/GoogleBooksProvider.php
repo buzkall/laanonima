@@ -19,7 +19,7 @@ use Throwable;
  */
 class GoogleBooksProvider implements BookMetadataProvider
 {
-    private const ENDPOINT = 'https://www.googleapis.com/books/v1/volumes';
+    private const string ENDPOINT = 'https://www.googleapis.com/books/v1/volumes';
 
     public function find(string $isbn13): ?BookMetadata
     {
@@ -103,7 +103,7 @@ class GoogleBooksProvider implements BookMetadataProvider
      */
     private function contributors(array $volume): array
     {
-        $names = array_filter(Arr::wrap($volume['authors'] ?? []), 'is_string');
+        $names = array_filter(Arr::wrap($volume['authors'] ?? []), is_string(...));
 
         return array_values(array_map(
             fn(string $name): array => ['name' => $name, 'role' => 'autor'],
@@ -119,7 +119,7 @@ class GoogleBooksProvider implements BookMetadataProvider
      */
     private function subjects(array $volume): array
     {
-        $categories = array_filter(Arr::wrap($volume['categories'] ?? []), 'is_string');
+        $categories = array_filter(Arr::wrap($volume['categories'] ?? []), is_string(...));
 
         return array_values(array_map(
             fn(string $category): array => ['scheme' => 'text', 'code' => null, 'heading' => $category],

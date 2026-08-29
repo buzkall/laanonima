@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function registerBookMetadataProvider(): void
     {
-        $this->app->singleton(BookMetadataProvider::class, function(): BookMetadataProvider {
+        $this->app->singleton(function(): BookMetadataProvider {
             $available = [
                 'open_library' => OpenLibraryProvider::class,
                 'google_books' => GoogleBooksProvider::class,

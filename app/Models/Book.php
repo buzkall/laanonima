@@ -7,6 +7,7 @@ use App\Enums\BookBinding;
 use App\Enums\BookLanguage;
 use Database\Factories\BookFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -77,6 +78,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
     'price_cents', 'vat_rate', 'currency', 'stock', 'availability', 'is_featured', 'is_active',
     'metadata_source', 'metadata_synced_at', 'raw_metadata',
 ])]
+#[RouteKey('slug')]
 class Book extends Model implements HasMedia
 {
     /**
@@ -112,18 +114,13 @@ class Book extends Model implements HasMedia
 
     protected static function booted(): void
     {
-        static::saving(function(self $book) {
+        static::saving(function(self $book): void {
             $book->authors_line = self::buildAuthorsLine($book->contributors);
 
             if (blank($book->slug)) {
                 $book->slug = Str::slug(Str::limit($book->title, 80, '')) . '-' . $book->isbn13;
             }
         });
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
     }
 
     /**
