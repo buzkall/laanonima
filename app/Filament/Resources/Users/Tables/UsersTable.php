@@ -8,6 +8,8 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -28,7 +30,10 @@ class UsersTable
                     ->label(__('user.fields.email'))
                     ->searchable()
                     ->sortable()
-                    ->copyable(),
+                    ->copyable()
+                    ->icon(Heroicon::OutlinedClipboardDocument)
+                    ->iconPosition(IconPosition::After)
+                    ->iconColor('gray'),
 
                 TextColumn::make('role')
                     ->label(__('user.fields.role'))

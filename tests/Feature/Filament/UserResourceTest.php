@@ -7,6 +7,8 @@ use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\UserResource;
 use App\Models\User;
 use Filament\Actions\Testing\TestAction;
+use Filament\Support\Enums\IconPosition;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
@@ -67,9 +69,10 @@ it('filters users by role', function(): void {
 it('creates a user with a hashed password', function(): void {
     Livewire::test(CreateUser::class)
         ->fillForm([
-            'name'     => 'Ada Lovelace',
-            'email'    => 'ada@example.com',
-            'password' => 'secret-password',
+            'name'                  => 'Ada Lovelace',
+            'email'                 => 'ada@example.com',
+            'password'              => 'Sup3r-Secret-Passw0rd',
+            'password_confirmation' => 'Sup3r-Secret-Passw0rd',
         ])
         ->call('create')
         ->assertNotified()
@@ -82,8 +85,42 @@ it('creates a user with a hashed password', function(): void {
 
     $user = User::query()->where('email', 'ada@example.com')->sole();
 
-    expect($user->password)->not->toBe('secret-password')
-        ->and(Hash::check('secret-password', $user->password))->toBeTrue();
+    expect($user->password)->not->toBe('Sup3r-Secret-Passw0rd')
+        ->and(Hash::check('Sup3r-Secret-Passw0rd', $user->password))->toBeTrue();
+});
+
+it('does not store the password confirmation', function(): void {
+    Livewire::test(CreateUser::class)
+        ->fillForm([
+            'name'                  => 'Ada Lovelace',
+            'email'                 => 'ada@example.com',
+            'password'              => 'Sup3r-Secret-Passw0rd',
+            'password_confirmation' => 'Sup3r-Secret-Passw0rd',
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    expect(User::query()->where('email', 'ada@example.com')->sole()->getAttributes())
+        ->not->toHaveKey('password_confirmation');
+});
+
+it('generates a password that fills both fields and passes validation', function(): void {
+    $component = Livewire::test(CreateUser::class)
+        ->fillForm([
+            'name'  => 'Ada Lovelace',
+            'email' => 'ada@example.com',
+        ])
+        ->callAction(TestAction::make('generatePassword')->schemaComponent('password'))
+        ->assertNotified();
+
+    $password = $component->get('data.password');
+
+    expect($password)->toBeString()->toHaveLength(16)
+        ->and($component->get('data.password_confirmation'))->toBe($password);
+
+    $component->call('create')->assertHasNoFormErrors();
+
+    expect(Hash::check($password, User::query()->where('email', 'ada@example.com')->sole()->password))->toBeTrue();
 });
 
 it('defaults new users to the client role', function(): void {
@@ -94,10 +131,11 @@ it('defaults new users to the client role', function(): void {
 it('creates a user with the selected role', function(): void {
     Livewire::test(CreateUser::class)
         ->fillForm([
-            'name'     => 'Grace Hopper',
-            'email'    => 'grace@example.com',
-            'password' => 'secret-password',
-            'role'     => UserRole::Admin,
+            'name'                  => 'Grace Hopper',
+            'email'                 => 'grace@example.com',
+            'password'              => 'Sup3r-Secret-Passw0rd',
+            'password_confirmation' => 'Sup3r-Secret-Passw0rd',
+            'role'                  => UserRole::Admin,
         ])
         ->call('create')
         ->assertHasNoFormErrors();
@@ -109,21 +147,27 @@ it('creates a user with the selected role', function(): void {
 it('validates the create form', function(array $data, array $errors): void {
     Livewire::test(CreateUser::class)
         ->fillForm([
-            'name'     => 'Ada Lovelace',
-            'email'    => 'ada@example.com',
-            'password' => 'secret-password',
+            'name'                  => 'Ada Lovelace',
+            'email'                 => 'ada@example.com',
+            'password'              => 'Sup3r-Secret-Passw0rd',
+            'password_confirmation' => 'Sup3r-Secret-Passw0rd',
             ...$data,
         ])
         ->call('create')
         ->assertHasFormErrors($errors)
         ->assertNotNotified();
 })->with([
-    '`name` is required'               => [['name' => null], ['name' => 'required']],
-    '`name` is max 255 characters'     => [['name' => Str::random(256)], ['name' => 'max']],
-    '`email` is required'              => [['email' => null], ['email' => 'required']],
-    '`email` is a valid email address' => [['email' => 'not-an-email'], ['email' => 'email']],
-    '`password` is required'           => [['password' => null], ['password' => 'required']],
-    '`role` is required'               => [['role' => null], ['role' => 'required']],
+    '`name` is required'                  => [['name' => null], ['name' => 'required']],
+    '`name` is max 255 characters'        => [['name' => Str::random(256)], ['name' => 'max']],
+    '`email` is required'                 => [['email' => null], ['email' => 'required']],
+    '`email` is a valid email address'    => [['email' => 'not-an-email'], ['email' => 'email']],
+    '`password` is required'              => [['password' => null, 'password_confirmation' => null], ['password' => 'required']],
+    '`password` is at least 12 chars'     => [['password' => 'Sh0rt-Pass', 'password_confirmation' => 'Sh0rt-Pass'], ['password']],
+    '`password` needs mixed case'         => [['password' => 'sup3r-secret-passw0rd', 'password_confirmation' => 'sup3r-secret-passw0rd'], ['password']],
+    '`password` needs a number'           => [['password' => 'Super-Secret-Password', 'password_confirmation' => 'Super-Secret-Password'], ['password']],
+    '`password` must be confirmed'        => [['password_confirmation' => 'Other-Secret-Passw0rd'], ['password' => 'confirmed']],
+    '`password_confirmation` is required' => [['password_confirmation' => null], ['password_confirmation' => 'required']],
+    '`role` is required'                  => [['role' => null], ['role' => 'required']],
 ]);
 
 it('requires the email address to be unique', function(): void {
@@ -131,9 +175,10 @@ it('requires the email address to be unique', function(): void {
 
     Livewire::test(CreateUser::class)
         ->fillForm([
-            'name'     => 'Ada Lovelace',
-            'email'    => $existing->email,
-            'password' => 'secret-password',
+            'name'                  => 'Ada Lovelace',
+            'email'                 => $existing->email,
+            'password'              => 'Sup3r-Secret-Passw0rd',
+            'password_confirmation' => 'Sup3r-Secret-Passw0rd',
         ])
         ->call('create')
         ->assertHasFormErrors(['email' => 'unique']);
@@ -159,11 +204,14 @@ it('updates the password when one is provided', function(): void {
     $user = User::factory()->create();
 
     Livewire::test(EditUser::class, ['record' => $user->getKey()])
-        ->fillForm(['password' => 'brand-new-password'])
+        ->fillForm([
+            'password'              => 'Brand-New-Passw0rd',
+            'password_confirmation' => 'Brand-New-Passw0rd',
+        ])
         ->call('save')
         ->assertHasNoFormErrors();
 
-    expect(Hash::check('brand-new-password', $user->refresh()->password))->toBeTrue();
+    expect(Hash::check('Brand-New-Passw0rd', $user->refresh()->password))->toBeTrue();
 });
 
 it('allows the email address of the record being edited', function(): void {
@@ -183,6 +231,17 @@ it('does not register a view page', function(): void {
 
 it('capitalises the navigation label', function(): void {
     expect(UserResource::getNavigationLabel())->toBe('Usuarios');
+});
+
+it('marks the email column as copyable with an icon', function(): void {
+    $column = Livewire::test(ListUsers::class)
+        ->instance()
+        ->getTable()
+        ->getColumn('email');
+
+    expect($column->isCopyable(null))->toBeTrue()
+        ->and($column->getIcon(null))->toBe(Heroicon::OutlinedClipboardDocument)
+        ->and($column->getIconPosition())->toBe(IconPosition::After);
 });
 
 it('hides the delete action for the authenticated user', function(): void {
