@@ -136,3 +136,26 @@ it('does not reach the network for an ISBN that cannot be valid', function() {
 
     Http::assertNothingSent();
 });
+
+/*
+ | Open Library's "subjects" are reader-contributed tags, not a classification.
+ | One real record (Momo, 9788420482767) yields "Girls", "Time", "tortoises",
+ | "lilies", "interest" -- fifteen rows of noise in the Materias table.
+ */
+it('imports no subjects from Open Library', function() {
+    Http::fake([
+        'openlibrary.org/api/books*' => Http::response([
+            'ISBN:9788420482767' => [
+                'title'    => 'Momo',
+                'subjects' => [
+                    ['name' => 'Girls'],
+                    ['name' => 'tortoises'],
+                    ['name' => 'lilies'],
+                ],
+            ],
+        ]),
+        'covers.openlibrary.org/*' => Http::response('', 404),
+    ]);
+
+    expect(app(FetchBookMetadata::class)('9788420482767')->subjects)->toBe([]);
+});

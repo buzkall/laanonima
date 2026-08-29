@@ -2,6 +2,7 @@
 
 namespace App\Actions\Books;
 
+use App\Enums\BookCoverOutcome;
 use App\Models\Book;
 
 /**
@@ -19,24 +20,21 @@ class AttachBookCover
 {
     public function __construct(private DownloadBookCover $downloadCover) {}
 
-    /**
-     * @return bool whether a cover was attached
-     */
-    public function __invoke(Book $book): bool
+    public function __invoke(Book $book): BookCoverOutcome
     {
         if (blank($book->cover_source_url) || $this->hasImages($book)) {
-            return false;
+            return BookCoverOutcome::Skipped;
         }
 
         $jpeg = ($this->downloadCover)($book->cover_source_url, $book->isbn13);
 
         if ($jpeg === null) {
-            return false;
+            return BookCoverOutcome::Failed;
         }
 
         $book->addCoverFromString($jpeg);
 
-        return true;
+        return BookCoverOutcome::Attached;
     }
 
     /**

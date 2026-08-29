@@ -79,10 +79,11 @@ return [
     ],
 
     'hints' => [
-        'isbn13'      => 'Escribe el ISBN y pulsa la lupa para rellenar la ficha automáticamente.',
-        'price_cents' => 'PVP, IVA incluido.',
-        'slug'        => 'Se genera a partir del título si lo dejas en blanco.',
-        'covers'      => 'La primera imagen es la cubierta. Arrastra para reordenarlas.',
+        'isbn13'           => 'Escribe el ISBN y pulsa la lupa para rellenar la ficha automáticamente.',
+        'price_cents'      => 'PVP, IVA incluido.',
+        'slug'             => 'Se genera a partir del título si lo dejas en blanco.',
+        'covers'           => 'La primera imagen es la cubierta. Arrastra para reordenarlas.',
+        'cover_source_url' => 'Dirección de la imagen. Solo se aceptan estas fuentes: :hosts',
     ],
 
     'lookup' => [
@@ -93,6 +94,20 @@ return [
         'not_found_body'  => 'Ninguna de las fuentes consultadas tiene este libro. Rellena la ficha a mano.',
         'invalid_title'   => 'ISBN no válido',
         'invalid_body'    => 'Revisa el número: el dígito de control no cuadra.',
+
+        'found_without_cover' => 'No hemos encontrado cubierta: descárgala desde una dirección o sube la imagen a mano.',
+    ],
+
+    'cover_download' => [
+        'label'             => 'Descargar cubierta',
+        'heading'           => 'Descargar la cubierta desde una dirección',
+        'submit'            => 'Descargar',
+        'done_title'        => 'Cubierta descargada',
+        'deferred_title'    => 'Dirección guardada',
+        'deferred_body'     => 'Descargaremos la cubierta al guardar la ficha.',
+        'failed_after_save' => 'La fuente no ha servido una imagen que podamos usar. Pulsa «Descargar cubierta» para probar con otra dirección, o sube la imagen a mano.',
+        'failed_title'      => 'No hemos podido descargar la imagen',
+        'failed_body'       => 'Comprueba que la dirección apunta a una imagen de una fuente aceptada y que mide al menos :width × :height píxeles.',
     ],
 
     'filters' => [

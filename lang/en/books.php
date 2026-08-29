@@ -79,10 +79,11 @@ return [
     ],
 
     'hints' => [
-        'isbn13'      => 'Type the ISBN and press the magnifier to fill the record in automatically.',
-        'price_cents' => 'Retail price, VAT included.',
-        'slug'        => 'Generated from the title if left blank.',
-        'covers'      => 'The first image is the cover. Drag to reorder them.',
+        'isbn13'           => 'Type the ISBN and press the magnifier to fill the record in automatically.',
+        'price_cents'      => 'Retail price, VAT included.',
+        'slug'             => 'Generated from the title if left blank.',
+        'covers'           => 'The first image is the cover. Drag to reorder them.',
+        'cover_source_url' => 'Address of the image. Only these sources are accepted: :hosts',
     ],
 
     'lookup' => [
@@ -93,6 +94,20 @@ return [
         'not_found_body'  => 'None of the sources we consulted has this book. Fill the record in by hand.',
         'invalid_title'   => 'Invalid ISBN',
         'invalid_body'    => 'Check the number: the check digit does not add up.',
+
+        'found_without_cover' => 'No cover was found: download one from an address, or upload the image by hand.',
+    ],
+
+    'cover_download' => [
+        'label'             => 'Download cover',
+        'heading'           => 'Download the cover from an address',
+        'submit'            => 'Download',
+        'done_title'        => 'Cover downloaded',
+        'deferred_title'    => 'Address saved',
+        'deferred_body'     => 'The cover will be downloaded when the record is saved.',
+        'failed_after_save' => 'The source did not serve an image we can use. Press "Download cover" to try another address, or upload the image by hand.',
+        'failed_title'      => 'The image could not be downloaded',
+        'failed_body'       => 'Check that the address points at an image from an accepted source and that it is at least :width × :height pixels.',
     ],
 
     'filters' => [

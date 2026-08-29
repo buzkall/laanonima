@@ -1,10 +1,13 @@
 <?php
 
+use App\Actions\Books\AttachBookCover;
+use App\Enums\BookCoverOutcome;
 use App\Filament\Resources\Books\Pages\CreateBook;
 use App\Filament\Resources\Books\Pages\EditBook;
 use App\Filament\Resources\Books\Pages\ListBooks;
 use App\Models\Book;
 use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -157,5 +160,124 @@ describe('the cover the ISBN lookup finds', function(): void {
             ->assertHasNoFormErrors();
 
         expect($book->refresh()->cover())->toBeNull();
+    });
+});
+
+describe('downloading a cover from an address', function(): void {
+    it('attaches it to the book there and then', function(): void {
+        Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
+
+        $book = Book::factory()->create(['isbn13' => '9788433920423']);
+
+        livewire(EditBook::class, ['record' => $book->getRouteKey()])
+            ->callFormComponentAction('covers', 'downloadCover', [
+                'url' => 'https://imagessl3.casadellibro.com/a/l/t0/23/9788433920423.jpg',
+            ])
+            ->assertNotified();
+
+        expect($book->refresh()->cover())->not->toBeNull()
+            ->and($book->cover_source_url)->toBe('https://imagessl3.casadellibro.com/a/l/t0/23/9788433920423.jpg');
+    });
+
+    it('refuses an address that is not an accepted source', function(): void {
+        Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
+
+        $book = Book::factory()->create();
+
+        livewire(EditBook::class, ['record' => $book->getRouteKey()])
+            ->callFormComponentAction('covers', 'downloadCover', ['url' => 'https://evil.example/cover.jpg'])
+            ->assertNotified();
+
+        expect($book->refresh()->cover())->toBeNull();
+        Http::assertNothingSent();
+    });
+
+    /*
+     | On a create page there is no record to attach to, so the address is held
+     | on the form and AttachBookCover fetches it once the book has an id.
+     */
+    it('waits for the save when the book does not exist yet', function(): void {
+        Http::fake(['*' => Http::response(fakeCover(), 200, ['Content-Type' => 'image/jpeg'])]);
+
+        livewire(CreateBook::class)
+            ->fillForm([
+                'isbn13'       => '9788433920423',
+                'title'        => 'A mano',
+                'contributors' => [['name' => 'Alguien', 'role' => 'autor']],
+            ])
+            ->callFormComponentAction('covers', 'downloadCover', [
+                'url' => 'https://imagessl3.casadellibro.com/a/l/t0/23/9788433920423.jpg',
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        expect(Book::firstWhere('isbn13', '9788433920423')->cover())->not->toBeNull();
+    });
+});
+
+/*
+ | The gap that made all of this necessary: Open Library answers with a record
+ | but no cover for plenty of ISBNs, and a silent success looked like a bug.
+ */
+it('says so when the lookup found a record but no cover', function(): void {
+    config()->set('books.metadata.google_books.key', null);
+
+    Http::fake([
+        'openlibrary.org/api/books*' => Http::response([
+            'ISBN:9781846048548' => ['title' => 'Briefly Perfectly Human'],
+        ]),
+    ]);
+
+    livewire(CreateBook::class)
+        ->fillForm(['isbn13' => '9781846048548'])
+        ->callFormComponentAction('isbn13', 'lookup')
+        ->assertNotified(
+            Notification::make()
+                ->success()
+                ->title(__('books.lookup.found_title'))
+                ->body(__('books.lookup.found_body', ['title' => 'Briefly Perfectly Human'])
+                    . ' ' . __('books.lookup.found_without_cover')),
+        );
+});
+
+/*
+ | Twice a bookseller added a book, got no cover and no explanation, and could
+ | not tell a source with nothing to offer from a broken feature.
+ */
+describe('a cover that cannot be fetched after the save', function(): void {
+    it('says so instead of failing quietly', function(): void {
+        Http::fake(['*' => Http::response('<html>no</html>', 200, ['Content-Type' => 'image/jpeg'])]);
+
+        $book = Book::factory()->create([
+            'cover_source_url' => 'https://covers.openlibrary.org/b/id/1-L.jpg',
+        ]);
+
+        livewire(EditBook::class, ['record' => $book->getRouteKey()])
+            ->fillForm(['cover_source_url' => 'https://covers.openlibrary.org/b/id/2-L.jpg'])
+            ->call('save')
+            ->assertNotified(
+                Notification::make()
+                    ->warning()
+                    ->title(__('books.cover_download.failed_title'))
+                    ->body(__('books.cover_download.failed_after_save'))
+                    ->persistent(),
+            );
+
+        expect($book->refresh()->cover())->toBeNull();
+    });
+
+    it('stays quiet for a book that never named a source', function(): void {
+        $book = Book::factory()->create(['cover_source_url' => null]);
+
+        expect(app(AttachBookCover::class)($book))->toBe(BookCoverOutcome::Skipped);
+    });
+
+    it('stays quiet for a book that already has images', function(): void {
+        $book = Book::factory()->create([
+            'cover_source_url' => 'https://covers.openlibrary.org/b/id/1-L.jpg',
+        ]);
+        $book->addCoverFromString(fakeCover());
+
+        expect(app(AttachBookCover::class)($book))->toBe(BookCoverOutcome::Skipped);
     });
 });

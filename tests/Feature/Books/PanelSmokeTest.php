@@ -37,3 +37,16 @@ it('falls back to English for a locale we do not ship', function() {
         ->assertOk()
         ->assertSee('Legal deposit');
 });
+
+/*
+ | The cover download has to be reachable from the page. It was not, once, and
+ | a bookseller had no way to tell a provider with no cover from a broken one.
+ */
+it('offers the cover download on both book pages', function() {
+    app()->setLocale('es');
+
+    $book = Book::factory()->create();
+
+    $this->get(BookResource::getUrl('create'))->assertOk()->assertSee('Descargar cubierta');
+    $this->get(BookResource::getUrl('edit', ['record' => $book]))->assertOk()->assertSee('Descargar cubierta');
+});

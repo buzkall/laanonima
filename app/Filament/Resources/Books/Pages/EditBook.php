@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\Books\Pages;
 
 use App\Actions\Books\AttachBookCover;
+use App\Enums\BookCoverOutcome;
 use App\Filament\Resources\Books\BookResource;
 use App\Models\Book;
 use Filament\Actions\DeleteAction;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
 class EditBook extends EditRecord
@@ -35,6 +37,13 @@ class EditBook extends EditRecord
             return;
         }
 
-        app(AttachBookCover::class)($book);
+        if (app(AttachBookCover::class)($book) === BookCoverOutcome::Failed) {
+            Notification::make()
+                ->warning()
+                ->title(__('books.cover_download.failed_title'))
+                ->body(__('books.cover_download.failed_after_save'))
+                ->persistent()
+                ->send();
+        }
     }
 }

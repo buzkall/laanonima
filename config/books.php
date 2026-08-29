@@ -64,12 +64,17 @@ return [
 
         /*
          | Sources answer a miss with a "no image" placeholder and a 200 rather
-         | than a 404, and those placeholders are cover-shaped: cegal's is
-         | 250x375. A floor rejects them along with the thumbnails that are too
-         | small to put in front of a customer.
+         | than a 404, so the status code proves nothing and a floor is what
+         | rejects them.
+         |
+         | Keep it low. It is there to catch blank and one-pixel placeholders,
+         | not to judge quality: Open Library's "-L" is frequently around
+         | 230x350 for older scans, and an earlier 400x600 floor silently threw
+         | away real covers. A small cover beats no cover -- the bookseller can
+         | see it and replace it, which is not true of one that never arrived.
          */
-        'min_width'  => 400,
-        'min_height' => 600,
+        'min_width'  => 200,
+        'min_height' => 300,
 
         /*
          | Covers are shown a few hundred pixels wide, so the 2000px originals

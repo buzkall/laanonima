@@ -63,7 +63,14 @@ class OpenLibraryProvider implements BookMetadataProvider
             cityOfPublication: Arr::first(Arr::wrap(data_get($data, 'publish_places.*.name'))),
             pages: is_int($data['number_of_pages'] ?? null) ? $data['number_of_pages'] : null,
             language: BookLanguage::Spa,
-            subjects: $this->subjects($data),
+            /*
+             | Open Library's "subjects" are reader-contributed tags, not a
+             | classification: a single record yields "Girls", "Time",
+             | "tortoises", "lilies", "interest". Fifteen rows of that in the
+             | Materias table is worse than none, so nothing is imported here.
+             | Google Books' BISAC-style categories are kept; they are real.
+             */
+            subjects: [],
             synopsis: $this->synopsis($data),
             coverSourceUrl: $this->coverUrl($data, $isbn13),
             source: 'open_library',
@@ -82,20 +89,6 @@ class OpenLibraryProvider implements BookMetadataProvider
         return array_values(array_map(
             fn(string $name): array => ['name' => $name, 'role' => 'autor'],
             $names,
-        ));
-    }
-
-    /**
-     * @param  array<string, mixed>  $data
-     * @return array<int, array{scheme: string, code: string|null, heading: string|null}>
-     */
-    private function subjects(array $data): array
-    {
-        $names = array_filter(Arr::wrap(data_get($data, 'subjects.*.name')), 'is_string');
-
-        return array_values(array_map(
-            fn(string $name): array => ['scheme' => 'text', 'code' => null, 'heading' => $name],
-            array_slice($names, 0, 15),
         ));
     }
 

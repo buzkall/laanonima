@@ -48,13 +48,28 @@ it('hands back jpeg bytes whatever the source served', function() {
 });
 
 /*
- | The reason the guard exists: cegal answers an unknown ISBN with a 200 and a
- | cover-shaped 250x375 placeholder, so the status code proves nothing.
+ | The reason the guard exists: a source answers an unknown ISBN with a 200 and
+ | a blank placeholder rather than a 404, so the status code proves nothing.
  */
-it('rejects a cover-shaped placeholder served with a 200', function() {
-    Http::fake(['*' => Http::response(fakeCover(250, 375), 200, ['Content-Type' => 'image/jpeg'])]);
+it('rejects a placeholder served with a 200', function() {
+    Http::fake(['*' => Http::response(fakeCover(1, 1), 200, ['Content-Type' => 'image/jpeg'])]);
 
     expect(download()('https://covers.openlibrary.org/cover.jpg', '9788433920423'))->toBeNull();
+});
+
+/*
+ | And the reason it is no higher than that. Open Library's "-L" is often around
+ | 230x350 for an older scan -- Momo, 9788420482767, is exactly 229x352 -- and a
+ | 400x600 floor threw those away without a word. A small cover the bookseller
+ | can see and replace beats one that never arrived.
+ */
+it('keeps a small but genuine cover', function() {
+    Http::fake(['*' => Http::response(fakeCover(229, 352), 200, ['Content-Type' => 'image/jpeg'])]);
+
+    $jpeg = download()('https://covers.openlibrary.org/b/id/12498753-L.jpg', '9788420482767');
+
+    expect($jpeg)->not->toBeNull()
+        ->and(getimagesizefromstring((string)$jpeg))->toMatchArray([0 => 229, 1 => 352]);
 });
 
 it('rejects a body that is not an image at all', function() {
