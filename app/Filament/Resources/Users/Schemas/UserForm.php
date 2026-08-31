@@ -40,6 +40,11 @@ class UserForm
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
 
+                        TextInput::make('phone')
+                            ->label(__('user.fields.phone'))
+                            ->tel()
+                            ->maxLength(60),
+
                         self::passwordField(),
 
                         self::passwordConfirmationField(),

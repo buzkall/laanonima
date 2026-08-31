@@ -223,7 +223,6 @@ return [
             'heading' => '¿No lo tenemos en tienda? Pídenoslo.',
             'body'    => 'Lo encargamos y te avisamos cuando llegue. Suele tardar dos días.',
             'cta'     => 'Quiero que me lo encarguéis',
-            'subject' => 'Encargo: :title',
         ],
     ],
 

@@ -14,6 +14,7 @@ return [
         'name'                  => 'Nombre',
         'role'                  => 'Rol',
         'email'                 => 'Correo electrónico',
+        'phone'                 => 'Teléfono',
         'password'              => 'Contraseña',
         'password_confirmation' => 'Confirmar contraseña',
         'email_verified_at'     => 'Verificado el',

@@ -78,6 +78,22 @@ it('keeps an intended URL inside the user own panel', function(): void {
     signIn('admin', $admin)->assertRedirect(url('/admin/users'));
 });
 
+it('follows a page of the shop remembered before signing in', function(): void {
+    $client = User::factory()->create();
+
+    session(['url.intended' => url('/pedir-libro')]);
+
+    signIn('client', $client)->assertRedirect(url('/pedir-libro'));
+});
+
+it('keeps a page of the shop while the reader signs in', function(): void {
+    session(['url.intended' => url('/pedir-libro')]);
+
+    get('/client/login')->assertOk();
+
+    expect(session('url.intended'))->toBe(url('/pedir-libro'));
+});
+
 it('forgets an intended URL from another panel when visiting a panel', function(): void {
     session(['url.intended' => url('/admin/users')]);
 

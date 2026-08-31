@@ -223,7 +223,6 @@ return [
             'heading' => 'Not in the shop? Ask us for it.',
             'body'    => 'We order it and let you know when it arrives. It usually takes two days.',
             'cta'     => 'Order it for me',
-            'subject' => 'Order: :title',
         ],
     ],
 

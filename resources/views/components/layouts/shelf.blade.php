@@ -1,4 +1,4 @@
-@props(['title', 'description', 'palette'])
+@props(['title', 'description', 'palette', 'footerCta' => true])
 
 {{-- A shelf of books: the home page, an author's page, an imprint's page.
      None of them belongs to a single book, so all three wear the house
@@ -36,6 +36,6 @@
 
 {{ $slot }}
 
-<x-site-footer />
+<x-site-footer :cta="$footerCta" />
 </body>
 </html>

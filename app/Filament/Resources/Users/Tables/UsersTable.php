@@ -35,6 +35,12 @@ class UsersTable
                     ->iconPosition(IconPosition::After)
                     ->iconColor('gray'),
 
+                TextColumn::make('phone')
+                    ->label(__('user.fields.phone'))
+                    ->placeholder('—')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('role')
                     ->label(__('user.fields.role'))
                     ->badge()

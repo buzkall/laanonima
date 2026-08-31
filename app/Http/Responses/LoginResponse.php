@@ -15,7 +15,9 @@ use Illuminate\Http\RedirectResponse;
  * Filament's own response redirects to the intended URL, falling back to the panel
  * being looked at. Both are wrong here: a client signing in at `/client/login` with
  * `/admin` still remembered from an earlier visit would be sent somewhere their role
- * cannot go, and land on a 403 instead of their dashboard.
+ * cannot go, and land on a 403 instead of their dashboard. A remembered page of
+ * the shop itself is followed whoever signs in: it is open to every role, and it
+ * is what a reader was doing when we asked them to sign in.
  */
 class LoginResponse implements LoginResponseContract
 {
@@ -31,7 +33,7 @@ class LoginResponse implements LoginResponseContract
 
         $intended = session()->pull('url.intended');
 
-        return redirect(PanelUrl::belongsTo($intended, $panel)
+        return redirect(PanelUrl::belongsTo($intended, $panel) || PanelUrl::isPublic($intended)
             ? (string)$intended
             : ($panel->getUrl() ?? '/'));
     }

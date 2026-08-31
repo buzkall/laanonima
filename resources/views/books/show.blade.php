@@ -4,12 +4,19 @@
     $inStock = $book->stock > 0;
     $stock = $inStock ? 'in_stock' : 'out_of_stock';
 
+    /* Only the in-stock "keep it for me" is still an email; ordering goes
+       through the form below. */
     $mailto = 'mailto:' . config('site.contact_email')
-        . '?subject=' . rawurlencode(__("books.public.{$stock}.subject", ['title' => $book->title]));
+        . '?subject=' . rawurlencode(__('books.public.in_stock.subject', ['title' => $book->title]));
+
+    /* A book we have is still put aside by writing to us; one we have run out
+       of goes through the request form, which reaches the panel with this book
+       already attached. */
+    $orderUrl = route('book-requests.create.book', $book);
 
     $cta = $inStock
         ? ['label' => __('books.public.buy'), 'href' => '#comprar', 'note' => __('books.public.in_stock_note')]
-        : ['label' => __('books.public.out_of_stock.cta'), 'href' => $mailto, 'note' => __('books.public.out_of_stock_note')];
+        : ['label' => __('books.public.out_of_stock.cta'), 'href' => $orderUrl, 'note' => __('books.public.out_of_stock_note')];
 
     $publishedOn = $book->published_on
         ?->locale(app()->getLocale())
@@ -303,7 +310,7 @@
             {{ __('books.public.in_stock.cta') }}
         </a>
     @else
-        <a href="{{ $mailto }}" class="mt-[34px] inline-block bg-[var(--accent)] px-6 py-3 text-[18px] font-semibold uppercase tracking-[0.08em] text-paper transition-opacity duration-150 hover:opacity-85">
+        <a href="{{ $orderUrl }}" class="mt-[34px] inline-block bg-[var(--accent)] px-6 py-3 text-[18px] font-semibold uppercase tracking-[0.08em] text-paper transition-opacity duration-150 hover:opacity-85">
             {{ __('books.public.out_of_stock.cta') }}
         </a>
     @endif

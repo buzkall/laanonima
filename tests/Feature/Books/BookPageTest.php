@@ -67,7 +67,7 @@ it('offers to order a book that is not on the table', function(): void {
     $this->get(route('books.show', $book))
         ->assertOk()
         ->assertSee(__('books.public.out_of_stock.cta'))
-        ->assertSee(rawurlencode(__('books.public.out_of_stock.subject', ['title' => $book->title])), escape: false)
+        ->assertSee(route('book-requests.create.book', $book))
         ->assertDontSee(__('books.public.in_stock.cta'));
 });
 

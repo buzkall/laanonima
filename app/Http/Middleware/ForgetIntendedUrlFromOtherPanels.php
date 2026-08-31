@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
  * `redirect()->intended()` on another panel — signing in, consuming a magic link —
  * would follow it there and be refused. A request on this panel's routes has no use
  * for another panel's URL, so it is forgotten before it can be followed.
+ *
+ * A page of the shop itself is not another panel's and is kept: a reader sent
+ * here to sign in before asking us for a book is meant to go back to the form.
  */
 class ForgetIntendedUrlFromOtherPanels
 {
@@ -27,7 +30,9 @@ class ForgetIntendedUrlFromOtherPanels
 
         $intended = $request->session()->get('url.intended');
 
-        if (filled($intended) && ! PanelUrl::belongsTo($intended, Filament::getCurrentOrDefaultPanel())) {
+        if (filled($intended)
+            && ! PanelUrl::isPublic($intended)
+            && ! PanelUrl::belongsTo($intended, Filament::getCurrentOrDefaultPanel())) {
             $request->session()->forget('url.intended');
         }
 
