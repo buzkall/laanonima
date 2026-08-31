@@ -54,6 +54,7 @@ return [
         'width_mm'               => 'Ancho (mm)',
         'thickness_mm'           => 'Grosor (mm)',
         'weight_grams'           => 'Peso (g)',
+        'measures'               => 'Medidas',
         'language'               => 'Idioma',
         'original_language'      => 'Idioma original',
         'subjects'               => 'Materias',
@@ -159,6 +160,69 @@ return [
         'editor_literario' => 'Edición literaria',
         'prologuista'      => 'Prólogo',
         'fotografo'        => 'Fotografía',
+    ],
+
+    'actions' => [
+        'view_on_site' => 'Ver en la web',
+    ],
+
+    'public' => [
+        'tagline'           => 'Librería · Madrid',
+        'buy'               => 'Comprar',
+        'in_stock_note'     => 'disponible en la mesa de novedades',
+        'out_of_stock_note' => 'agotado en tienda',
+        'no_cover'          => 'Sin cubierta',
+        'synopsis_kicker'   => 'De qué va',
+        'object_kicker'     => 'El objeto',
+        'published_format'  => 'MMMM [de] YYYY',
+        'measures'          => ':height × :width cm',
+        'authors_kicker'    => 'Quién lo escribe',
+        'also_by_them'      => 'De ellas y ellos también',
+        'also_note'         => 'Si sacan algo nuevo, lo pedimos el primer día.',
+        'publisher_kicker'  => 'Publicado por :publisher',
+        'publisher_intro'   => 'Si este te gusta, del mismo sello solemos tener en mesa:',
+        'footer_line'       => ':name · Librería independiente · Madrid',
+
+        'shelf_back' => 'Ver toda la estantería',
+
+        'author' => [
+            'kicker' => 'Libros de',
+            'intro'  => 'Todo lo que tenemos de :name en la librería. Si falta algo suyo, pídenoslo y lo encargamos.',
+        ],
+
+        'publisher' => [
+            'kicker'  => 'Editorial',
+            'intro'   => 'Lo que tenemos en la librería publicado por :publisher.',
+            'empty'   => 'Ahora mismo no tenemos nada de :publisher en la web. Pregúntanos: casi siempre podemos encargarlo.',
+            'website' => 'Su web',
+            'all'     => 'Ver todo de :publisher',
+        ],
+
+        'home' => [
+            'heading'      => 'Todo lo que hay hoy en la mesa',
+            'intro'        => 'Esto es lo que tenemos en la librería ahora mismo. Lo que no esté aquí, casi siempre lo conseguimos en un par de días.',
+            'count'        => '{1} :count libro en la estantería|[2,*] :count libros en la estantería',
+            'featured'     => 'Recomendado',
+            'in_stock'     => 'En la mesa',
+            'out_of_stock' => 'Por encargo',
+            'empty'        => 'Todavía no hemos subido ningún libro a la web. Pásate por la librería y te enseñamos lo que hay.',
+            'prev'         => 'Anterior',
+            'next'         => 'Siguiente',
+        ],
+
+        'in_stock' => [
+            'heading' => 'Lo tenemos en la mesa de novedades.',
+            'body'    => 'Pásate y hojéalo, o te lo guardamos con tu nombre en un papelito.',
+            'cta'     => 'Guardádmelo',
+            'subject' => 'Reservar :title',
+        ],
+
+        'out_of_stock' => [
+            'heading' => '¿No lo tenemos en tienda? Pídenoslo.',
+            'body'    => 'Lo encargamos y te avisamos cuando llegue. Suele tardar dos días.',
+            'cta'     => 'Quiero que me lo encarguéis',
+            'subject' => 'Encargo: :title',
+        ],
     ],
 
 ];

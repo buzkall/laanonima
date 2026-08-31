@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
@@ -32,6 +33,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string|null $original_title
  * @property array<int, array{name?: string, role?: string}>|null $contributors
  * @property string|null $authors_line
+ * @property array<int, string>|null $author_slugs
  * @property int|null $publisher_id
  * @property string|null $imprint
  * @property string|null $collection_name
@@ -72,7 +74,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  */
 #[Fillable([
     'isbn13', 'isbn10', 'ean13', 'slug', 'external_reference', 'title', 'subtitle', 'original_title',
-    'contributors', 'authors_line', 'publisher_id', 'imprint', 'collection_name', 'collection_number',
+    'contributors', 'authors_line', 'author_slugs', 'publisher_id', 'imprint', 'collection_name', 'collection_number',
     'published_on', 'published_year', 'edition_number', 'edition_statement', 'country_of_publication',
     'city_of_publication', 'legal_deposit', 'binding', 'pages', 'height_mm', 'width_mm', 'thickness_mm', 'weight_grams',
     'language', 'original_language', 'subjects', 'synopsis', 'back_cover_text', 'cover_source_url', 'cover_color',
@@ -100,6 +102,7 @@ class Book extends Model implements HasMedia
     {
         return [
             'contributors'       => 'array',
+            'author_slugs'       => 'array',
             'subjects'           => 'array',
             'raw_metadata'       => 'array',
             'binding'            => BookBinding::class,
@@ -117,6 +120,7 @@ class Book extends Model implements HasMedia
     {
         static::saving(function(self $book): void {
             $book->authors_line = self::buildAuthorsLine($book->contributors);
+            $book->author_slugs = self::buildAuthorSlugs($book->contributors);
 
             if (blank($book->slug)) {
                 $book->slug = Str::slug(Str::limit($book->title, 80, '')) . '-' . $book->isbn13;
@@ -164,6 +168,17 @@ class Book extends Model implements HasMedia
     }
 
     /**
+     * Everything else in the collection: the back, a spread, a detail of the
+     * binding. The cover leads and is shown on its own, so it is dropped here.
+     *
+     * @return MediaCollection<int, Media>
+     */
+    public function gallery(): MediaCollection
+    {
+        return $this->getMedia(self::COVERS_COLLECTION)->skip(1)->values();
+    }
+
+    /**
      * File a downloaded cover, named after the ISBN so the same book twice over
      * is recognizable on the disk.
      */
@@ -201,6 +216,31 @@ class Book extends Model implements HasMedia
     }
 
     /**
+     * The authors as name and slug, so each one can be linked to its own page.
+     *
+     * @return array<int, array{name: string, slug: string}>
+     */
+    public function authors(): array
+    {
+        return array_map(
+            fn(string $name): array => ['name' => $name, 'slug' => self::authorSlug($name)],
+            $this->contributorNames('autor'),
+        );
+    }
+
+    /**
+     * How a person's name becomes the last segment of their page's address.
+     *
+     * There is no authors table: the slug is the key, and `books.author_slugs`
+     * is the denormalized index it is looked up in. Everything that builds or
+     * resolves an author link goes through here, so the two never drift.
+     */
+    public static function authorSlug(string $name): string
+    {
+        return Str::slug($name);
+    }
+
+    /**
      * @param  Builder<$this>  $query
      */
     #[Scope]
@@ -219,6 +259,21 @@ class Book extends Model implements HasMedia
     }
 
     /**
+     * The slug of every author, so an author's page is one indexed lookup
+     * rather than a scan that has to slug each row in PHP.
+     *
+     * @param  array<int, array{name?: string, role?: string}>|null  $contributors
+     * @return array<int, string>
+     */
+    private static function buildAuthorSlugs(?array $contributors): array
+    {
+        return array_values(array_unique(array_map(
+            self::authorSlug(...),
+            self::authorsAmong($contributors),
+        )));
+    }
+
+    /**
      * Denormalize the authors out of the contributors JSON so search and sorting
      * run against a plain indexed column rather than a JSON path.
      *
@@ -226,16 +281,26 @@ class Book extends Model implements HasMedia
      */
     private static function buildAuthorsLine(?array $contributors): ?string
     {
-        $authors = array_filter(
-            $contributors ?? [],
-            fn(array $contributor): bool => ($contributor['role'] ?? null) === 'autor'
-                && filled($contributor['name'] ?? null),
-        );
+        $authors = self::authorsAmong($contributors);
 
-        if ($authors === []) {
-            return null;
-        }
+        return $authors === [] ? null : implode(', ', $authors);
+    }
 
-        return implode(', ', array_map(fn(array $contributor): string => trim($contributor['name']), $authors));
+    /**
+     * The names filed as authors, trimmed, in the order they were entered.
+     *
+     * @param  array<int, array{name?: string, role?: string}>|null  $contributors
+     * @return array<int, string>
+     */
+    private static function authorsAmong(?array $contributors): array
+    {
+        return array_values(array_map(
+            fn(array $contributor): string => trim($contributor['name']),
+            array_filter(
+                $contributors ?? [],
+                fn(array $contributor): bool => ($contributor['role'] ?? null) === 'autor'
+                    && filled($contributor['name'] ?? null),
+            ),
+        ));
     }
 }

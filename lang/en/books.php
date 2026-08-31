@@ -54,6 +54,7 @@ return [
         'width_mm'               => 'Width (mm)',
         'thickness_mm'           => 'Thickness (mm)',
         'weight_grams'           => 'Weight (g)',
+        'measures'               => 'Measurements',
         'language'               => 'Language',
         'original_language'      => 'Original language',
         'subjects'               => 'Subjects',
@@ -159,6 +160,69 @@ return [
         'editor_literario' => 'Editor',
         'prologuista'      => 'Foreword',
         'fotografo'        => 'Photographer',
+    ],
+
+    'actions' => [
+        'view_on_site' => 'See it on the site',
+    ],
+
+    'public' => [
+        'tagline'           => 'Bookshop · Madrid',
+        'buy'               => 'Buy',
+        'in_stock_note'     => 'on the new releases table',
+        'out_of_stock_note' => 'out of stock in the shop',
+        'no_cover'          => 'No cover',
+        'synopsis_kicker'   => 'What it is about',
+        'object_kicker'     => 'The object',
+        'published_format'  => 'MMMM YYYY',
+        'measures'          => ':height × :width cm',
+        'authors_kicker'    => 'Who wrote it',
+        'also_by_them'      => 'Also by them',
+        'also_note'         => 'If they publish something new, we order it on day one.',
+        'publisher_kicker'  => 'Published by :publisher',
+        'publisher_intro'   => 'If you like this one, from the same imprint we usually stock:',
+        'footer_line'       => ':name · Independent bookshop · Madrid',
+
+        'shelf_back' => 'See the whole shelf',
+
+        'author' => [
+            'kicker' => 'Books by',
+            'intro'  => 'Everything we have by :name in the shop. If something of theirs is missing, ask us and we will order it.',
+        ],
+
+        'publisher' => [
+            'kicker'  => 'Imprint',
+            'intro'   => 'What we have in the shop published by :publisher.',
+            'empty'   => 'We have nothing by :publisher on the web right now. Ask us: we can almost always order it.',
+            'website' => 'Their website',
+            'all'     => 'See everything from :publisher',
+        ],
+
+        'home' => [
+            'heading'      => 'Everything on the table today',
+            'intro'        => 'This is what we have in the shop right now. Whatever is not here, we can usually get hold of in a couple of days.',
+            'count'        => '{1} :count book on the shelf|[2,*] :count books on the shelf',
+            'featured'     => 'Recommended',
+            'in_stock'     => 'On the table',
+            'out_of_stock' => 'To order',
+            'empty'        => 'We have not put any books on the web yet. Come by the shop and we will show you what we have.',
+            'prev'         => 'Previous',
+            'next'         => 'Next',
+        ],
+
+        'in_stock' => [
+            'heading' => 'It is on the new releases table.',
+            'body'    => 'Come by and leaf through it, or we will keep it aside with your name on it.',
+            'cta'     => 'Keep it for me',
+            'subject' => 'Reserve :title',
+        ],
+
+        'out_of_stock' => [
+            'heading' => 'Not in the shop? Ask us for it.',
+            'body'    => 'We order it and let you know when it arrives. It usually takes two days.',
+            'cta'     => 'Order it for me',
+            'subject' => 'Order: :title',
+        ],
     ],
 
 ];
