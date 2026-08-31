@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use BackedEnum;
+use Filament\Facades\Filament;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
@@ -28,6 +29,23 @@ enum UserRole: string implements HasColor, HasIcon, HasLabel
             self::Admin  => 'admin',
             self::Client => 'client',
         };
+    }
+
+    /**
+     * The home URL of the panel this role owns, where a signed-in user of this
+     * role finds their own pages.
+     */
+    public function panelUrl(): string
+    {
+        return Filament::getPanel($this->panelId())->getUrl() ?? url('/');
+    }
+
+    /**
+     * Where a user of this role signs in.
+     */
+    public function loginUrl(): string
+    {
+        return Filament::getPanel($this->panelId())->getLoginUrl() ?? url('/');
     }
 
     public function getColor(): string

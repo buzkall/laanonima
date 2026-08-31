@@ -168,6 +168,8 @@ return [
 
     'public' => [
         'tagline'           => 'Bookshop · Madrid',
+        'login'             => 'Log in',
+        'account'           => 'Your account',
         'buy'               => 'Buy',
         'in_stock_note'     => 'on the new releases table',
         'out_of_stock_note' => 'out of stock in the shop',

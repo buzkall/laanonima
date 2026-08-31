@@ -168,6 +168,8 @@ return [
 
     'public' => [
         'tagline'           => 'Librería · Madrid',
+        'login'             => 'Entrar',
+        'account'           => 'Tu cuenta',
         'buy'               => 'Comprar',
         'in_stock_note'     => 'disponible en la mesa de novedades',
         'out_of_stock_note' => 'agotado en tienda',
