@@ -124,21 +124,21 @@ return [
     ],
 
     'binding' => [
-        'rustica'    => 'Rústica',
-        'tapa_dura'  => 'Tapa dura',
-        'bolsillo'   => 'Bolsillo',
-        'carton'     => 'Cartoné',
-        'espiral'    => 'Espiral',
+        'paperback'  => 'Rústica',
+        'hardback'   => 'Tapa dura',
+        'pocket'     => 'Bolsillo',
+        'board_book' => 'Cartoné',
+        'spiral'     => 'Espiral',
         'ebook'      => 'Libro electrónico',
-        'audiolibro' => 'Audiolibro',
+        'audiobook'  => 'Audiolibro',
     ],
 
     'availability' => [
-        'disponible'    => 'Disponible',
-        'bajo_pedido'   => 'Bajo pedido',
-        'agotado'       => 'Agotado',
-        'descatalogado' => 'Descatalogado',
-        'no_publicado'  => 'Aún no publicado',
+        'available'         => 'Disponible',
+        'to_order'          => 'Bajo pedido',
+        'out_of_stock'      => 'Agotado',
+        'out_of_print'      => 'Descatalogado',
+        'not_yet_published' => 'Aún no publicado',
     ],
 
     'language' => [
@@ -154,12 +154,12 @@ return [
     ],
 
     'contributor_role' => [
-        'autor'            => 'Autoría',
-        'traductor'        => 'Traducción',
-        'ilustrador'       => 'Ilustración',
-        'editor_literario' => 'Edición literaria',
-        'prologuista'      => 'Prólogo',
-        'fotografo'        => 'Fotografía',
+        'author'       => 'Autoría',
+        'translator'   => 'Traducción',
+        'illustrator'  => 'Ilustración',
+        'editor'       => 'Edición literaria',
+        'foreword'     => 'Prólogo',
+        'photographer' => 'Fotografía',
     ],
 
     'actions' => [

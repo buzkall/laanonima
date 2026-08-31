@@ -2,7 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\EditProfile;
 use App\Filament\Auth\Login;
+use App\Filament\Auth\Register;
 use App\Http\Middleware\ForgetIntendedUrlFromOtherPanels;
 use Arzcode\FilamentMagicLogin\MagicLoginPlugin;
 use Filament\Http\Middleware\Authenticate;
@@ -29,6 +31,8 @@ class ClientPanelProvider extends PanelProvider
             ->id('client')
             ->path('client')
             ->login(Login::class)
+            ->registration(Register::class)
+            ->profile(EditProfile::class)
             ->colors([
                 'primary' => Color::Amber,
             ])

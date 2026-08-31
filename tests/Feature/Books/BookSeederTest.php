@@ -67,7 +67,7 @@ it('records translators alongside authors', function(): void {
 
     expect($schwarzenbach->title)->toBe('Muerte en Persia')
         ->and($schwarzenbach->authors_line)->toBe('Annemarie Schwarzenbach')
-        ->and($schwarzenbach->contributorNames('traductor'))
+        ->and($schwarzenbach->contributorNames('translator'))
         ->toBe(['Richard Gross', 'María Esperanza Romero'])
         ->and($schwarzenbach->original_language->value)->toBe('deu')
         ->and($schwarzenbach->original_title)->toBe('Tod in Persien');

@@ -203,7 +203,7 @@ describe('downloading a cover from an address', function(): void {
             ->fillForm([
                 'isbn13'       => '9788433920423',
                 'title'        => 'A mano',
-                'contributors' => [['name' => 'Alguien', 'role' => 'autor']],
+                'contributors' => [['name' => 'Alguien', 'role' => 'author']],
             ])
             ->callFormComponentAction('covers', 'downloadCover', [
                 'url' => 'https://imagessl3.casadellibro.com/a/l/t0/23/9788433920423.jpg',

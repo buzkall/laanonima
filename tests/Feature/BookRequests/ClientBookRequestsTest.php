@@ -54,7 +54,7 @@ it('lets a reader call an order off and tells the shop', function(): void {
         ->callAction(TestAction::make('withdraw')->table($mine))
         ->assertNotified();
 
-    expect($mine->refresh()->status)->toBe(BookRequestStatus::Descartado);
+    expect($mine->refresh()->status)->toBe(BookRequestStatus::Dropped);
 
     Mail::assertSent(BookRequestWithdrawn::class, fn(BookRequestWithdrawn $mail): bool => $mail->hasTo(config('site.contact_email'))
         && $mail->bookRequest->is($mine));

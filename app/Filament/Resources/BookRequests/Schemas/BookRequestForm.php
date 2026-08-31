@@ -121,7 +121,7 @@ class BookRequestForm
                 Select::make('status')
                     ->label(__('book_requests.fields.status'))
                     ->options(BookRequestStatus::class)
-                    ->default(BookRequestStatus::Pendiente)
+                    ->default(BookRequestStatus::Pending)
                     ->selectablePlaceholder(false)
                     ->required(),
 

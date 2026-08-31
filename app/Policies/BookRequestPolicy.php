@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Enums\UserRole;
 use App\Models\BookRequest;
 use App\Models\User;
 
@@ -20,27 +19,27 @@ class BookRequestPolicy
 
     public function view(User $user, BookRequest $bookRequest): bool
     {
-        return $this->isBookseller($user) || $bookRequest->user_id === $user->id;
+        return $user->isBookseller() || $bookRequest->user_id === $user->id;
     }
 
     public function create(User $user): bool
     {
-        return $this->isBookseller($user);
+        return $user->isBookseller();
     }
 
     public function update(User $user, BookRequest $bookRequest): bool
     {
-        return $this->isBookseller($user);
+        return $user->isBookseller();
     }
 
     public function delete(User $user, BookRequest $bookRequest): bool
     {
-        return $this->isBookseller($user);
+        return $user->isBookseller();
     }
 
     public function deleteAny(User $user): bool
     {
-        return $this->isBookseller($user);
+        return $user->isBookseller();
     }
 
     /**
@@ -50,10 +49,5 @@ class BookRequestPolicy
     public function withdraw(User $user, BookRequest $bookRequest): bool
     {
         return $bookRequest->user_id === $user->id && $bookRequest->isOpen();
-    }
-
-    private function isBookseller(User $user): bool
-    {
-        return $user->role === UserRole::Admin;
     }
 }

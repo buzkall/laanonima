@@ -32,18 +32,18 @@ class BookFactory extends Factory
             'title'        => $title,
             'subtitle'     => fake()->optional(0.3)->sentence(4),
             'contributors' => [
-                ['name' => fake()->name(), 'role' => 'autor'],
+                ['name' => fake()->name(), 'role' => 'author'],
             ],
             'publisher_id'    => Publisher::factory(),
             'published_on'    => $publishedOn,
             'published_year'  => (int)$publishedOn->format('Y'),
-            'binding'         => fake()->randomElement([BookBinding::Rustica, BookBinding::TapaDura, BookBinding::Bolsillo]),
+            'binding'         => fake()->randomElement([BookBinding::Paperback, BookBinding::Hardback, BookBinding::Pocket]),
             'pages'           => fake()->numberBetween(80, 900),
             'language'        => BookLanguage::Spa,
             'synopsis'        => fake()->paragraph(),
             'price_cents'     => fake()->numberBetween(750, 3500),
             'stock'           => fake()->numberBetween(0, 12),
-            'availability'    => BookAvailability::Disponible,
+            'availability'    => BookAvailability::Available,
             'is_featured'     => false,
             'is_active'       => true,
             'metadata_source' => 'manual',
@@ -59,7 +59,7 @@ class BookFactory extends Factory
     {
         return $this->state(fn(): array => [
             'stock'        => 0,
-            'availability' => BookAvailability::Agotado,
+            'availability' => BookAvailability::OutOfStock,
         ]);
     }
 
@@ -68,7 +68,7 @@ class BookFactory extends Factory
         return $this->state(fn(array $attributes): array => [
             'contributors' => [
                 ...$attributes['contributors'],
-                ['name' => fake()->name(), 'role' => 'traductor'],
+                ['name' => fake()->name(), 'role' => 'translator'],
             ],
         ]);
     }

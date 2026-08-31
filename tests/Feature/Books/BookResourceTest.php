@@ -27,7 +27,7 @@ it('lists books', function(): void {
 
 it('searches by author, not just by title', function(): void {
     $book = Book::factory()->create([
-        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'autor']],
+        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']],
     ]);
     $other = Book::factory()->create();
 
@@ -68,11 +68,11 @@ it('creates a book', function(): void {
             'publisher_id'           => $publisher->id,
             'language'               => 'spa',
             'country_of_publication' => 'ES',
-            'availability'           => BookAvailability::Disponible->value,
+            'availability'           => BookAvailability::Available->value,
             'vat_rate'               => 4,
             'stock'                  => 3,
             'price_cents'            => '12.90',
-            'contributors'           => [['name' => 'John Kennedy Toole', 'role' => 'autor']],
+            'contributors'           => [['name' => 'John Kennedy Toole', 'role' => 'author']],
         ])
         ->call('create')
         ->assertHasNoFormErrors();

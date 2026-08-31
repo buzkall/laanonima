@@ -2,31 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRole;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Support\CoverPalette;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
 {
-    /** How many books fit on the shelf before a reader has to ask for the next page. */
-    private const int PER_PAGE = 24;
-
     /**
-     * The shop window: everything we have put on the web, newest first.
-     *
-     * What the bookseller has flagged as recommended leads the grid; after
-     * that it is by publication date. A record with no date is pushed to the
-     * back explicitly, because a NULL sorts first in a descending order on
-     * Postgres and last on SQLite, and the shelf should not depend on that.
+     * The shop window: everything we have put on the web, in shelf order.
      */
     public function index(): View
     {
-        $books = $this->shelf()->paginate(self::PER_PAGE);
+        $books = Book::query()->onShelf()->paginate($this->perPage());
 
         return view('books.index', [
             'books'   => $books,
@@ -44,9 +34,9 @@ class BookController extends Controller
      */
     public function author(string $author): View
     {
-        $books = $this->shelf()
+        $books = Book::query()->onShelf()
             ->whereJsonContains('author_slugs', $author)
-            ->paginate(self::PER_PAGE);
+            ->paginate($this->perPage());
 
         abort_if($books->total() === 0, 404);
 
@@ -70,7 +60,7 @@ class BookController extends Controller
 
         return view('books.publisher', [
             'publisher' => $publisher,
-            'books'     => $this->shelf()->whereBelongsTo($publisher)->paginate(self::PER_PAGE),
+            'books'     => Book::query()->onShelf()->whereBelongsTo($publisher)->paginate($this->perPage()),
             'palette'   => CoverPalette::fromCover(null),
         ]);
     }
@@ -78,39 +68,30 @@ class BookController extends Controller
     /**
      * The shop window for one book: one page, painted in its own cover colour.
      *
-     * A book that is not visible on the web is a 404 for everyone except an
-     * administrator, who reaches this page from the "see it on the web" button
-     * on the edit screen -- which is precisely when the record is not ready to
-     * be published yet.
+     * Who may see it is `BookPolicy::view`, which 404s a book that is not on
+     * the web yet for everyone but a bookseller.
      */
     public function show(Book $book): View
     {
-        abort_unless($book->is_active || $this->mayPreview(), 404);
+        Gate::authorize('view', $book);
 
         $book->load(['publisher.media', 'media']);
 
         return view('books.show', [
             'book'          => $book,
             'palette'       => CoverPalette::fromCover($book->cover_color),
-            'alsoByAuthors' => $this->alsoByAuthors($book),
-            'fromPublisher' => $this->fromPublisher($book),
+            'alsoByAuthors' => $book->alsoByAuthors(),
+            'fromPublisher' => $book->fromSamePublisher(),
         ]);
     }
 
     /**
-     * Every listing is the same shelf, only filtered differently.
-     *
-     * @return Builder<Book>
+     * How many books fit on the shelf before a reader has to ask for the next
+     * page. The same length on every listing, from config/site.php.
      */
-    private function shelf(): Builder
+    private function perPage(): int
     {
-        return Book::query()
-            ->active()
-            ->with('media')
-            ->orderByDesc('is_featured')
-            ->orderByRaw('published_on is null')
-            ->orderByDesc('published_on')
-            ->orderByDesc('id');
+        return (int)config('site.shelf.per_page');
     }
 
     /**
@@ -125,7 +106,7 @@ class BookController extends Controller
     private function authorName(LengthAwarePaginator $books, string $slug): string
     {
         foreach ($books->items() as $book) {
-            foreach ($book->contributorNames('autor') as $name) {
+            foreach ($book->contributorNames('author') as $name) {
                 if (Book::authorSlug($name) === $slug) {
                     return $name;
                 }
@@ -133,59 +114,5 @@ class BookController extends Controller
         }
 
         return str($slug)->headline()->value();
-    }
-
-    private function mayPreview(): bool
-    {
-        return auth()->user()?->role === UserRole::Admin;
-    }
-
-    /**
-     * Other books on the shelf by any of the same people.
-     *
-     * Matched on the denormalized authors line rather than the contributors
-     * JSON, so a co-written book is found from either name.
-     *
-     * @return Collection<int, Book>
-     */
-    private function alsoByAuthors(Book $book): Collection
-    {
-        $authors = $book->contributorNames('autor');
-
-        if ($authors === []) {
-            return new Collection;
-        }
-
-        return Book::query()
-            ->active()
-            ->whereKeyNot($book->getKey())
-            ->where(function(Builder $query) use ($authors): void {
-                foreach ($authors as $author) {
-                    $query->orWhere('authors_line', 'like', '%' . $author . '%');
-                }
-            })
-            ->orderByDesc('published_on')
-            ->limit(4)
-            ->get();
-    }
-
-    /**
-     * What else we stock from the same imprint.
-     *
-     * @return Collection<int, Book>
-     */
-    private function fromPublisher(Book $book): Collection
-    {
-        if ($book->publisher_id === null) {
-            return new Collection;
-        }
-
-        return Book::query()
-            ->active()
-            ->whereKeyNot($book->getKey())
-            ->where('publisher_id', $book->publisher_id)
-            ->orderByDesc('published_on')
-            ->limit(3)
-            ->get();
     }
 }

@@ -109,3 +109,60 @@ function expectColorNear(?string $color, string $expected): void
             ->and($channel)->toBeLessThanOrEqual(hexdec(substr($expected, $offset, 2)) + 8);
     }
 }
+
+/**
+ * Where the partial translation overrides live.
+ *
+ * Spelled out rather than read from `lang_path()`, because a Pest dataset is
+ * resolved before the application is booted and the helper is not there yet.
+ */
+function langVendorPath(): string
+{
+    return dirname(__DIR__) . '/lang/vendor';
+}
+
+/**
+ * Every partial translation override committed under lang/vendor.
+ *
+ * Nested groups mean the tree is arbitrarily deep -- `auth/pages/login.php`
+ * lives three levels under the locale -- so it is walked rather than globbed.
+ *
+ * @return list<string>
+ */
+function translationOverrideFiles(): array
+{
+    $files = [];
+
+    $tree = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator(langVendorPath(), FilesystemIterator::SKIP_DOTS),
+    );
+
+    foreach ($tree as $file) {
+        if ($file instanceof SplFileInfo && $file->getExtension() === 'php') {
+            $files[] = $file->getPathname();
+        }
+    }
+
+    sort($files);
+
+    return $files;
+}
+
+/**
+ * Split a lang/vendor override path into the package it overrides and the
+ * group inside it: `lang/vendor/filament-panels/es/auth/pages/login.php` is
+ * `filament-panels` and `auth/pages/login`.
+ *
+ * @return array{0: string, 1: string}
+ */
+function translationOverrideTarget(string $file): array
+{
+    $relative = str($file)
+        ->after(langVendorPath() . '/')
+        ->before('.php');
+
+    return [
+        (string)$relative->before('/'),
+        (string)$relative->after('/es/'),
+    ];
+}

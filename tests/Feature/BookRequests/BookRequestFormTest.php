@@ -55,7 +55,7 @@ it('writes down the request and tells the shop about it', function(): void {
 
     expect($request->title)->toBe('El maestro y Margarita')
         ->and($request->user->is($this->reader))->toBeTrue()
-        ->and($request->status)->toBe(BookRequestStatus::Pendiente)
+        ->and($request->status)->toBe(BookRequestStatus::Pending)
         ->and($request->book_id)->toBeNull();
 
     Mail::assertSent(BookRequestReceived::class, fn(BookRequestReceived $mail): bool => $mail->hasTo(config('site.contact_email'))

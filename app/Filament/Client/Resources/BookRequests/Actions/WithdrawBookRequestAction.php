@@ -39,7 +39,7 @@ class WithdrawBookRequestAction extends Action
             ->modalSubmitActionLabel(__('book_requests.actions.withdraw_confirm'))
             ->authorize(fn(BookRequest $record): bool => auth()->user()?->can('withdraw', $record) ?? false)
             ->action(function(BookRequest $record): void {
-                $record->update(['status' => BookRequestStatus::Descartado]);
+                $record->update(['status' => BookRequestStatus::Dropped]);
 
                 Mail::to(config('site.contact_email'))->send(new BookRequestWithdrawn($record));
 

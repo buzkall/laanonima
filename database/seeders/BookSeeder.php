@@ -41,7 +41,7 @@ class BookSeeder extends Seeder
                     ...collect($data)->except(['publisher', 'contributors'])->all(),
                     'contributors'           => $data['contributors'],
                     'publisher_id'           => $publisher->id,
-                    'availability'           => $data['availability'] ?? BookAvailability::Disponible->value,
+                    'availability'           => $data['availability'] ?? BookAvailability::Available->value,
                     'country_of_publication' => 'ES',
                     'metadata_source'        => 'manual',
                 ],

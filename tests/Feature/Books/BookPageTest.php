@@ -5,7 +5,6 @@ use App\Filament\Resources\Books\Pages\EditBook;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\User;
-use App\Support\CoverPalette;
 use Illuminate\Support\Facades\Storage;
 
 use function Pest\Livewire\livewire;
@@ -15,8 +14,8 @@ it('shows the record a bookseller catalogued', function(): void {
         'title'        => 'Instrucción de novicias',
         'subtitle'     => 'Vidas del convento barroco para guiar tu presente',
         'contributors' => [
-            ['name' => 'Ana Garriga', 'role' => 'autor'],
-            ['name' => 'Carmen Urbita', 'role' => 'autor'],
+            ['name' => 'Ana Garriga', 'role' => 'author'],
+            ['name' => 'Carmen Urbita', 'role' => 'author'],
         ],
         'synopsis'    => 'Detrás de los muros de un convento reina el silencio.',
         'pages'       => 288,
@@ -48,7 +47,7 @@ it('falls back to the house red for a book with no cover', function(): void {
 
     $this->get(route('books.show', $book))
         ->assertOk()
-        ->assertSee('--cover: ' . CoverPalette::FALLBACK, escape: false);
+        ->assertSee('--cover: ' . config('site.palette.fallback'), escape: false);
 });
 
 it('offers to keep a book aside while it is in stock', function(): void {
@@ -114,15 +113,15 @@ it('has nothing to show beside the object when the cover is the only picture', f
 
 it('points at other books by the same people', function(): void {
     $book = Book::factory()->create([
-        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'autor']],
+        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']],
     ]);
     $sameAuthor = Book::factory()->create([
         'title'        => 'Las tres bodas de Manolita',
-        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'autor']],
+        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']],
     ]);
     $someoneElse = Book::factory()->create([
         'title'        => 'La conjura de los necios',
-        'contributors' => [['name' => 'John Kennedy Toole', 'role' => 'autor']],
+        'contributors' => [['name' => 'John Kennedy Toole', 'role' => 'author']],
     ]);
 
     $this->get(route('books.show', $book))
@@ -192,7 +191,7 @@ it('keeps a client out of a book that is not visible on the web', function(): vo
 });
 
 it('links to the page from the edit screen', function(): void {
-    $book = Book::factory()->create(['availability' => BookAvailability::Disponible]);
+    $book = Book::factory()->create(['availability' => BookAvailability::Available]);
 
     $this->actingAs(User::factory()->admin()->create());
 

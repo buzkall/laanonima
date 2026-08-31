@@ -124,21 +124,21 @@ return [
     ],
 
     'binding' => [
-        'rustica'    => 'Paperback',
-        'tapa_dura'  => 'Hardback',
-        'bolsillo'   => 'Pocket',
-        'carton'     => 'Board book',
-        'espiral'    => 'Spiral bound',
+        'paperback'  => 'Paperback',
+        'hardback'   => 'Hardback',
+        'pocket'     => 'Pocket',
+        'board_book' => 'Board book',
+        'spiral'     => 'Spiral bound',
         'ebook'      => 'Ebook',
-        'audiolibro' => 'Audiobook',
+        'audiobook'  => 'Audiobook',
     ],
 
     'availability' => [
-        'disponible'    => 'In stock',
-        'bajo_pedido'   => 'To order',
-        'agotado'       => 'Out of stock',
-        'descatalogado' => 'Out of print',
-        'no_publicado'  => 'Not yet published',
+        'available'         => 'In stock',
+        'to_order'          => 'To order',
+        'out_of_stock'      => 'Out of stock',
+        'out_of_print'      => 'Out of print',
+        'not_yet_published' => 'Not yet published',
     ],
 
     'language' => [
@@ -154,12 +154,12 @@ return [
     ],
 
     'contributor_role' => [
-        'autor'            => 'Author',
-        'traductor'        => 'Translator',
-        'ilustrador'       => 'Illustrator',
-        'editor_literario' => 'Editor',
-        'prologuista'      => 'Foreword',
-        'fotografo'        => 'Photographer',
+        'author'       => 'Author',
+        'translator'   => 'Translator',
+        'illustrator'  => 'Illustrator',
+        'editor'       => 'Editor',
+        'foreword'     => 'Foreword',
+        'photographer' => 'Photographer',
     ],
 
     'actions' => [

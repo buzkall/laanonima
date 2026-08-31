@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Actions\Books\SyncCoverColor;
 use App\Http\Responses\LoginResponse;
+use App\Http\Responses\RegistrationResponse;
 use App\Support\BookMetadata\BookMetadataProvider;
 use App\Support\BookMetadata\ChainedBookMetadataProvider;
 use App\Support\BookMetadata\GoogleBooksProvider;
 use App\Support\BookMetadata\OpenLibraryProvider;
 use Carbon\CarbonImmutable;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as LoginResponseContract;
+use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as RegistrationResponseContract;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
+        $this->app->bind(RegistrationResponseContract::class, RegistrationResponse::class);
 
         $this->registerBookMetadataProvider();
     }

@@ -58,6 +58,16 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
+     * A bookseller is whoever runs the shop. Everything the shop keeps to
+     * itself -- the requests readers send in, a book still being catalogued --
+     * is theirs to see, and nobody else's.
+     */
+    public function isBookseller(): bool
+    {
+        return $this->role === UserRole::Admin;
+    }
+
+    /**
      * Get the user's initials
      */
     public function initials(): string

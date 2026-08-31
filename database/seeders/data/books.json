@@ -6,18 +6,18 @@
         "contributors": [
             {
                 "name": "Ana Garriga",
-                "role": "autor"
+                "role": "author"
             },
             {
                 "name": "Carmen Urbita",
-                "role": "autor"
+                "role": "author"
             }
         ],
         "publisher": "Blackie Books",
         "published_on": "2026-02-04",
         "published_year": 2026,
         "pages": 288,
-        "binding": "carton",
+        "binding": "board_book",
         "language": "spa",
         "city_of_publication": "Barcelona",
         "price_cents": 2200,
@@ -32,7 +32,7 @@
         "contributors": [
             {
                 "name": "Sara Torres",
-                "role": "autor"
+                "role": "author"
             }
         ],
         "publisher": "Reservoir Books",
@@ -40,7 +40,7 @@
         "published_on": "2026-01-15",
         "published_year": 2026,
         "pages": 192,
-        "binding": "rustica",
+        "binding": "paperback",
         "language": "spa",
         "city_of_publication": "Barcelona",
         "price_cents": 2190,
@@ -55,7 +55,7 @@
         "contributors": [
             {
                 "name": "Beatriz Serrano",
-                "role": "autor"
+                "role": "author"
             }
         ],
         "publisher": "Ediciones Temas de Hoy",
@@ -63,7 +63,7 @@
         "published_on": "2023-10-04",
         "published_year": 2023,
         "pages": 240,
-        "binding": "rustica",
+        "binding": "paperback",
         "height_mm": 215,
         "width_mm": 140,
         "thickness_mm": 16,
@@ -83,15 +83,15 @@
         "contributors": [
             {
                 "name": "Annemarie Schwarzenbach",
-                "role": "autor"
+                "role": "author"
             },
             {
                 "name": "Richard Gross",
-                "role": "traductor"
+                "role": "translator"
             },
             {
                 "name": "María Esperanza Romero",
-                "role": "traductor"
+                "role": "translator"
             }
         ],
         "publisher": "Editorial Minúscula",
@@ -100,7 +100,7 @@
         "published_on": "2003-11-01",
         "published_year": 2003,
         "pages": 178,
-        "binding": "rustica",
+        "binding": "paperback",
         "language": "spa",
         "original_language": "deu",
         "city_of_publication": "Barcelona",
@@ -117,18 +117,18 @@
         "contributors": [
             {
                 "name": "Gillian Anderson",
-                "role": "autor"
+                "role": "author"
             },
             {
                 "name": "Esther Cruz Santaella",
-                "role": "traductor"
+                "role": "translator"
             }
         ],
         "publisher": "Ediciones Temas de Hoy",
         "published_on": "2024-09-10",
         "published_year": 2024,
         "pages": 544,
-        "binding": "tapa_dura",
+        "binding": "hardback",
         "language": "spa",
         "original_language": "eng",
         "original_title": "Want",
@@ -145,18 +145,18 @@
         "contributors": [
             {
                 "name": "Elliot Page",
-                "role": "autor"
+                "role": "author"
             },
             {
                 "name": "Carla Bataller Estruch",
-                "role": "traductor"
+                "role": "translator"
             }
         ],
         "publisher": "Tendencias",
         "published_on": "2023-06-06",
         "published_year": 2023,
         "pages": 250,
-        "binding": "rustica",
+        "binding": "paperback",
         "language": "spa",
         "original_language": "eng",
         "original_title": "Pageboy: A Memoir",
@@ -173,14 +173,14 @@
         "contributors": [
             {
                 "name": "Sara Barquinero",
-                "role": "autor"
+                "role": "author"
             }
         ],
         "publisher": "Lumen",
         "published_on": "2026-03-12",
         "published_year": 2026,
         "pages": 500,
-        "binding": "rustica",
+        "binding": "paperback",
         "language": "spa",
         "city_of_publication": "Barcelona",
         "price_cents": 2290,
@@ -195,11 +195,11 @@
         "contributors": [
             {
                 "name": "Frank Herbert",
-                "role": "autor"
+                "role": "author"
             },
             {
                 "name": "Domingo Santos",
-                "role": "traductor"
+                "role": "translator"
             }
         ],
         "publisher": "Debolsillo",
@@ -208,7 +208,7 @@
         "published_on": "2023-11-16",
         "published_year": 2023,
         "pages": 784,
-        "binding": "tapa_dura",
+        "binding": "hardback",
         "language": "spa",
         "original_language": "eng",
         "original_title": "Dune",

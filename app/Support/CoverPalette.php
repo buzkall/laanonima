@@ -3,38 +3,23 @@
 namespace App\Support;
 
 /**
- * The colours a book's page is painted with, derived from its cover.
+ * The colors a book's page is painted with, derived from its cover.
  *
- * The design is one flat colour taken off the cover plus cream and ink, so the
- * only thing that varies from book to book is that colour -- and the two
+ * The design is one flat color taken off the cover plus cream and ink, so the
+ * only thing that varies from book to book is that color -- and the two
  * decisions that follow from it: what to write on top of it, and how dark it
  * has to get before it reads as a link on the cream.
  *
  * Both decisions are made by contrast ratio rather than by a lightness
- * threshold, because the averaged colours the covers produce land all over the
+ * threshold, because the averaged colors the covers produce land all over the
  * place: a washed pink for one book, a near-black brown for the next.
+ *
+ * The fixed colors and the two thresholds are `site.palette` in config.
  */
 final readonly class CoverPalette
 {
-    /** The red of the reference design, for a book with no cover to read. */
-    public const string FALLBACK = '#e22314';
-
-    /** Cream page and ink text: the two colours never derived from a cover. */
-    public const string PAPER = '#f4efe4';
-
-    public const string INK = '#211511';
-
-    /** Cream over a colour, a shade warmer than the page. */
-    public const string CREAM = '#f7f0e1';
-
-    /** WCAG AA for body text. */
-    private const float MIN_CONTRAST = 4.5;
-
-    /** How much of the colour survives each darkening step. */
-    private const float DARKEN_STEP = 0.88;
-
     private function __construct(
-        /** The flat colour behind the hero, the top bar and the publisher band. */
+        /** The flat color behind the hero, the top bar and the publisher band. */
         public string $background,
         /** Cream or ink, whichever can be read over the background. */
         public string $foreground,
@@ -44,7 +29,7 @@ final readonly class CoverPalette
 
     public static function fromCover(?string $color): self
     {
-        $background = self::normalize($color) ?? self::FALLBACK;
+        $background = self::normalize($color) ?? self::color('fallback');
 
         return new self(
             background: $background,
@@ -54,7 +39,7 @@ final readonly class CoverPalette
     }
 
     /**
-     * A colour to draw rules and muted text with, over the background.
+     * A color to draw rules and muted text with, over the background.
      */
     public function foregroundFaded(float $opacity = 0.45): string
     {
@@ -74,13 +59,13 @@ final readonly class CoverPalette
 
     private static function mostReadableOver(string $background): string
     {
-        return self::contrast($background, self::CREAM) >= self::contrast($background, self::INK)
-            ? self::CREAM
-            : self::INK;
+        return self::contrast($background, self::color('cream')) >= self::contrast($background, self::color('ink'))
+            ? self::color('cream')
+            : self::color('ink');
     }
 
     /**
-     * Walk the colour towards black until it stands out on the cream page.
+     * Walk the color towards black until it stands out on the cream page.
      *
      * Scaling all three channels by the same factor keeps the hue, so a pale
      * pink cover yields a deep rose rather than a generic dark grey. The loop
@@ -91,11 +76,15 @@ final readonly class CoverPalette
     {
         [$red, $green, $blue] = self::channels($color);
 
-        while (self::contrast(self::hex($red, $green, $blue), self::PAPER) < self::MIN_CONTRAST) {
-            $darker = array_map(fn(int $channel): int => (int)floor($channel * self::DARKEN_STEP), [$red, $green, $blue]);
+        $paper = self::color('paper');
+        $minContrast = (float)config('site.palette.min_contrast');
+        $step = (float)config('site.palette.darken_step');
+
+        while (self::contrast(self::hex($red, $green, $blue), $paper) < $minContrast) {
+            $darker = array_map(fn(int $channel): int => (int)floor($channel * $step), [$red, $green, $blue]);
 
             if ($darker === [$red, $green, $blue]) {
-                return self::INK;
+                return self::color('ink');
             }
 
             [$red, $green, $blue] = $darker;
@@ -105,7 +94,7 @@ final readonly class CoverPalette
     }
 
     /**
-     * WCAG 2.1 relative contrast between two colours, from 1 to 21.
+     * WCAG 2.1 relative contrast between two colors, from 1 to 21.
      */
     private static function contrast(string $first, string $second): float
     {
@@ -145,5 +134,13 @@ final readonly class CoverPalette
     private static function hex(int $red, int $green, int $blue): string
     {
         return sprintf('#%02x%02x%02x', $red, $green, $blue);
+    }
+
+    /**
+     * One of the fixed colours the site is painted with, from config/site.php.
+     */
+    private static function color(string $name): string
+    {
+        return (string)config("site.palette.{$name}");
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -191,6 +192,47 @@ class Book extends Model implements HasMedia
     }
 
     /**
+     * Other books on the shelf by any of the same people.
+     *
+     * Matched on the denormalized authors line rather than the contributors
+     * JSON, so a co-written book is found from either name.
+     *
+     * @return Collection<int, self>
+     */
+    public function alsoByAuthors(int $limit = 4): Collection
+    {
+        $authors = $this->contributorNames('author');
+
+        if ($authors === []) {
+            return new Collection;
+        }
+
+        return $this->alongside($limit)
+            ->where(function(Builder $query) use ($authors): void {
+                foreach ($authors as $author) {
+                    $query->orWhere('authors_line', 'like', '%' . $author . '%');
+                }
+            })
+            ->get();
+    }
+
+    /**
+     * What else we stock from the same imprint.
+     *
+     * @return Collection<int, self>
+     */
+    public function fromSamePublisher(int $limit = 3): Collection
+    {
+        if ($this->publisher_id === null) {
+            return new Collection;
+        }
+
+        return $this->alongside($limit)
+            ->where('publisher_id', $this->publisher_id)
+            ->get();
+    }
+
+    /**
      * PVP in euros. Storage stays in integer cents.
      */
     public function priceInEuros(): ?float
@@ -224,7 +266,7 @@ class Book extends Model implements HasMedia
     {
         return array_map(
             fn(string $name): array => ['name' => $name, 'slug' => self::authorSlug($name)],
-            $this->contributorNames('autor'),
+            $this->contributorNames('author'),
         );
     }
 
@@ -250,12 +292,52 @@ class Book extends Model implements HasMedia
     }
 
     /**
+     * Every public listing is the same shelf, only filtered differently.
+     *
+     * What the bookseller has flagged as recommended leads; after that it is by
+     * publication date. A record with no date is pushed to the back explicitly,
+     * because a NULL sorts first in descending order on Postgres and last on
+     * SQLite, and the shelf should not depend on that.
+     *
+     * @param  Builder<$this>  $query
+     */
+    #[Scope]
+    protected function onShelf(Builder $query): void
+    {
+        $query->active()
+            ->with('media')
+            ->orderByDesc('is_featured')
+            ->orderByRaw('published_on is null')
+            ->orderByDesc('published_on')
+            ->orderByDesc('id');
+    }
+
+    /**
      * @param  Builder<$this>  $query
      */
     #[Scope]
     protected function featured(Builder $query): void
     {
         $query->where('is_featured', true);
+    }
+
+    /**
+     * The start of any "you might also want" list beside this book: what is on
+     * the web, this book itself left out, newest first.
+     *
+     * These lists are not the shelf -- no featured book leads them and a
+     * record with no date is not pushed anywhere in particular, because a
+     * handful of titles beside a page is a suggestion rather than a listing.
+     *
+     * @return Builder<self>
+     */
+    private function alongside(int $limit): Builder
+    {
+        return self::query()
+            ->active()
+            ->whereKeyNot($this->getKey())
+            ->orderByDesc('published_on')
+            ->limit($limit);
     }
 
     /**
@@ -298,7 +380,7 @@ class Book extends Model implements HasMedia
             fn(array $contributor): string => trim($contributor['name']),
             array_filter(
                 $contributors ?? [],
-                fn(array $contributor): bool => ($contributor['role'] ?? null) === 'autor'
+                fn(array $contributor): bool => ($contributor['role'] ?? null) === 'author'
                     && filled($contributor['name'] ?? null),
             ),
         ));

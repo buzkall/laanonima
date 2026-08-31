@@ -13,10 +13,10 @@ use Filament\Support\Icons\Heroicon;
  */
 enum BookRequestStatus: string implements HasColor, HasIcon, HasLabel
 {
-    case Pendiente = 'pendiente';
-    case EnCurso = 'en_curso';
-    case Conseguido = 'conseguido';
-    case Descartado = 'descartado';
+    case Pending = 'pending';
+    case InProgress = 'in_progress';
+    case Obtained = 'obtained';
+    case Dropped = 'dropped';
 
     public function getLabel(): string
     {
@@ -30,26 +30,26 @@ enum BookRequestStatus: string implements HasColor, HasIcon, HasLabel
      */
     public static function open(): array
     {
-        return [self::Pendiente, self::EnCurso];
+        return [self::Pending, self::InProgress];
     }
 
     public function getColor(): string
     {
         return match ($this) {
-            self::Pendiente  => 'warning',
-            self::EnCurso    => 'info',
-            self::Conseguido => 'success',
-            self::Descartado => 'gray',
+            self::Pending    => 'warning',
+            self::InProgress => 'info',
+            self::Obtained   => 'success',
+            self::Dropped    => 'gray',
         };
     }
 
     public function getIcon(): BackedEnum
     {
         return match ($this) {
-            self::Pendiente  => Heroicon::OutlinedInbox,
-            self::EnCurso    => Heroicon::OutlinedTruck,
-            self::Conseguido => Heroicon::OutlinedCheckCircle,
-            self::Descartado => Heroicon::OutlinedXCircle,
+            self::Pending    => Heroicon::OutlinedInbox,
+            self::InProgress => Heroicon::OutlinedTruck,
+            self::Obtained   => Heroicon::OutlinedCheckCircle,
+            self::Dropped    => Heroicon::OutlinedXCircle,
         };
     }
 }

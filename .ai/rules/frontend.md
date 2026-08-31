@@ -13,15 +13,21 @@ paths:
 `books.cover_color` is not decoration: `CoverPalette::fromCover()` turns it into the
 three colours the whole page is built from, emitted as custom properties on `<body>`
 (`--cover`, `--on-cover`, `--accent`, `--rule`) and read back through Tailwind
-arbitrary values (`bg-[var(--cover)]`). Only cream (`--color-paper`) and ink
-(`--color-ink`) are fixed, in `@theme`.
+arbitrary values (`bg-[var(--cover)]`). Only cream and ink are fixed.
+
+Every colour that is not read off a cover, and the two thresholds that derive the
+other two, live in `config/site.php` under `site.palette` — `CoverPalette` holds no
+colour constants any more. Cream and ink are the exception that is written twice:
+Tailwind cannot read PHP, so `--color-paper` and `--color-ink` in the `@theme` block
+of `resources/css/app.css` repeat `site.palette.paper` and `site.palette.ink`. Change
+one and change the other.
 
 Both derived colours are decided by WCAG contrast, not by a lightness threshold,
 because the averaged colours `ExtractCoverColor` produces land anywhere from a washed
 pink to a near-black brown: the foreground is whichever of cream/ink reads better over
 the cover colour, and the accent is that colour walked towards black until it clears
-4.5:1 against the cream page. Never hardcode the reference red — a book with no cover
-gets `CoverPalette::FALLBACK`.
+`site.palette.min_contrast` against the cream page. Never hardcode the reference red —
+a book with no cover gets `site.palette.fallback`.
 
 The colour is only *derived* while the column is empty: a bookseller can pick it by
 hand in the panel, and whatever is stored is then left alone (see `.ai/rules/app.md`).

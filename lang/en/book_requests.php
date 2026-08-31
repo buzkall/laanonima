@@ -37,10 +37,10 @@ return [
     ],
 
     'status' => [
-        'pendiente'  => 'Pending',
-        'en_curso'   => 'In progress',
-        'conseguido' => 'Got it',
-        'descartado' => 'Dropped',
+        'pending'     => 'Pending',
+        'in_progress' => 'In progress',
+        'obtained'    => 'Got it',
+        'dropped'     => 'Dropped',
     ],
 
     'filters' => [

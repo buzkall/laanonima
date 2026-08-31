@@ -5,11 +5,11 @@ use App\Models\Book;
 it('lists everything on the shelf by one author', function(): void {
     $hers = Book::factory()->create([
         'title'        => 'Las tres bodas de Manolita',
-        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'autor']],
+        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']],
     ]);
     Book::factory()->create([
         'title'        => 'La conjura de los necios',
-        'contributors' => [['name' => 'John Kennedy Toole', 'role' => 'autor']],
+        'contributors' => [['name' => 'John Kennedy Toole', 'role' => 'author']],
     ]);
 
     $this->get(route('authors.show', 'almudena-grandes'))
@@ -21,7 +21,7 @@ it('lists everything on the shelf by one author', function(): void {
 });
 
 it('writes the name the way it is printed on the book, accents and all', function(): void {
-    Book::factory()->create(['contributors' => [['name' => 'Ramón J. Sénder', 'role' => 'autor']]]);
+    Book::factory()->create(['contributors' => [['name' => 'Ramón J. Sénder', 'role' => 'author']]]);
 
     $this->get(route('authors.show', 'ramon-j-sender'))
         ->assertOk()
@@ -32,8 +32,8 @@ it('finds a co-writer from either name', function(): void {
     Book::factory()->create([
         'title'        => 'Instrucción de novicias',
         'contributors' => [
-            ['name' => 'Ana Garriga', 'role' => 'autor'],
-            ['name' => 'Carmen Urbita', 'role' => 'autor'],
+            ['name' => 'Ana Garriga', 'role' => 'author'],
+            ['name' => 'Carmen Urbita', 'role' => 'author'],
         ],
     ]);
 
@@ -47,8 +47,8 @@ it('finds a co-writer from either name', function(): void {
 it('keeps translators off the author shelf', function(): void {
     Book::factory()->create([
         'contributors' => [
-            ['name' => 'Gillian Anderson', 'role' => 'autor'],
-            ['name' => 'Esther Cruz Santaella', 'role' => 'traductor'],
+            ['name' => 'Gillian Anderson', 'role' => 'author'],
+            ['name' => 'Esther Cruz Santaella', 'role' => 'translator'],
         ],
     ]);
 
@@ -59,7 +59,7 @@ it('never shows a book that is hidden from the web', function(): void {
     Book::factory()->create([
         'title'        => 'Todavía sin publicar',
         'is_active'    => false,
-        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'autor']],
+        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']],
     ]);
 
     $this->get(route('authors.show', 'almudena-grandes'))->assertNotFound();
@@ -72,8 +72,8 @@ it('is a 404 for an author we have nothing by', function(): void {
 it('links to the author from the book page', function(): void {
     $book = Book::factory()->create([
         'contributors' => [
-            ['name' => 'Ana Garriga', 'role' => 'autor'],
-            ['name' => 'Esther Cruz Santaella', 'role' => 'traductor'],
+            ['name' => 'Ana Garriga', 'role' => 'author'],
+            ['name' => 'Esther Cruz Santaella', 'role' => 'translator'],
         ],
     ]);
 
@@ -84,11 +84,11 @@ it('links to the author from the book page', function(): void {
 });
 
 it('keeps the slugs in step with the contributors when a book is edited', function(): void {
-    $book = Book::factory()->create(['contributors' => [['name' => 'Ana Garriga', 'role' => 'autor']]]);
+    $book = Book::factory()->create(['contributors' => [['name' => 'Ana Garriga', 'role' => 'author']]]);
 
     expect($book->author_slugs)->toBe(['ana-garriga']);
 
-    $book->update(['contributors' => [['name' => 'Carmen Urbita', 'role' => 'autor']]]);
+    $book->update(['contributors' => [['name' => 'Carmen Urbita', 'role' => 'author']]]);
 
     expect($book->refresh()->author_slugs)->toBe(['carmen-urbita']);
 

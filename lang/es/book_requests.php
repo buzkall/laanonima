@@ -37,10 +37,10 @@ return [
     ],
 
     'status' => [
-        'pendiente'  => 'Pendiente',
-        'en_curso'   => 'En curso',
-        'conseguido' => 'Conseguido',
-        'descartado' => 'Descartado',
+        'pending'     => 'Pendiente',
+        'in_progress' => 'En curso',
+        'obtained'    => 'Conseguido',
+        'dropped'     => 'Descartado',
     ],
 
     'filters' => [

@@ -1,6 +1,14 @@
 <?php
 
 use App\Support\CoverPalette;
+use Tests\TestCase;
+
+/*
+ | The palette is read from config/site.php, so these need a booted
+ | application. Bound here rather than in tests/Pest.php: the rest of
+ | tests/Unit is free of the framework and should stay that way.
+ */
+uses(TestCase::class);
 
 /**
  * WCAG 2.1 contrast between two colours, computed independently of the class
@@ -29,7 +37,7 @@ it('paints a book in the colour read off its cover', function(): void {
 });
 
 it('falls back to the house red when there is no colour to read', function(?string $stored): void {
-    expect(CoverPalette::fromCover($stored)->background)->toBe(CoverPalette::FALLBACK);
+    expect(CoverPalette::fromCover($stored)->background)->toBe(config('site.palette.fallback'));
 })->with([
     'never derived'   => [null],
     'blank'           => [''],
@@ -39,12 +47,12 @@ it('falls back to the house red when there is no colour to read', function(?stri
 ]);
 
 it('writes cream over a dark cover and ink over a pale one', function(): void {
-    expect(CoverPalette::fromCover('#211511')->foreground)->toBe(CoverPalette::CREAM)
-        ->and(CoverPalette::fromCover('#ecb9bc')->foreground)->toBe(CoverPalette::INK);
+    expect(CoverPalette::fromCover('#211511')->foreground)->toBe(config('site.palette.cream'))
+        ->and(CoverPalette::fromCover('#ecb9bc')->foreground)->toBe(config('site.palette.ink'));
 });
 
 it('darkens the accent until it can be read on the cream page', function(string $cover) use ($contrast): void {
-    expect($contrast(CoverPalette::fromCover($cover)->accent, CoverPalette::PAPER))
+    expect($contrast(CoverPalette::fromCover($cover)->accent, config('site.palette.paper')))
         ->toBeGreaterThanOrEqual(4.5);
 })->with([
     'a washed pink' => ['#ecb9bc'],
@@ -66,5 +74,5 @@ it('leaves a colour that already reads on the cream page alone', function(): voi
 
 it('fades the foreground for rules drawn over the cover colour', function(): void {
     expect(CoverPalette::fromCover('#211511')->foregroundFaded())
-        ->toBe('color-mix(in srgb, ' . CoverPalette::CREAM . ' 45%, transparent)');
+        ->toBe('color-mix(in srgb, ' . config('site.palette.cream') . ' 45%, transparent)');
 });

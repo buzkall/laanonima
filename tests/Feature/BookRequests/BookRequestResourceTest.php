@@ -54,7 +54,7 @@ it('filters by status', function(): void {
     $done = BookRequest::factory()->handled()->create();
 
     livewire(ListBookRequests::class)
-        ->filterTable('status', [BookRequestStatus::Pendiente->value])
+        ->filterTable('status', [BookRequestStatus::Pending->value])
         ->assertCanSeeTableRecords([$pending])
         ->assertCanNotSeeTableRecords([$done]);
 });
@@ -83,14 +83,14 @@ it('follows a request up to its status and internal notes', function(): void {
 
     livewire(EditBookRequest::class, ['record' => $request->id])
         ->fillForm([
-            'status'      => BookRequestStatus::Conseguido->value,
+            'status'      => BookRequestStatus::Obtained->value,
             'admin_notes' => 'Pedido a la distribuidora el lunes.',
         ])
         ->call('save')
         ->assertNotified()
         ->assertHasNoFormErrors();
 
-    expect($request->refresh()->status)->toBe(BookRequestStatus::Conseguido)
+    expect($request->refresh()->status)->toBe(BookRequestStatus::Obtained)
         ->and($request->admin_notes)->toBe('Pedido a la distribuidora el lunes.');
 });
 

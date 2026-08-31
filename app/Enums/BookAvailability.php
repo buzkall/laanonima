@@ -10,11 +10,11 @@ use Filament\Support\Contracts\HasLabel;
  */
 enum BookAvailability: string implements HasColor, HasLabel
 {
-    case Disponible = 'disponible';
-    case BajoPedido = 'bajo_pedido';
-    case Agotado = 'agotado';
-    case Descatalogado = 'descatalogado';
-    case NoPublicado = 'no_publicado';
+    case Available = 'available';
+    case ToOrder = 'to_order';
+    case OutOfStock = 'out_of_stock';
+    case OutOfPrint = 'out_of_print';
+    case NotYetPublished = 'not_yet_published';
 
     public function getLabel(): string
     {
@@ -24,11 +24,11 @@ enum BookAvailability: string implements HasColor, HasLabel
     public function getColor(): string
     {
         return match ($this) {
-            self::Disponible    => 'success',
-            self::BajoPedido    => 'warning',
-            self::Agotado       => 'danger',
-            self::Descatalogado => 'gray',
-            self::NoPublicado   => 'info',
+            self::Available       => 'success',
+            self::ToOrder         => 'warning',
+            self::OutOfStock      => 'danger',
+            self::OutOfPrint      => 'gray',
+            self::NotYetPublished => 'info',
         };
     }
 
@@ -38,22 +38,22 @@ enum BookAvailability: string implements HasColor, HasLabel
     public function onixCode(): string
     {
         return match ($this) {
-            self::Disponible    => '20',
-            self::BajoPedido    => '21',
-            self::Agotado       => '31',
-            self::Descatalogado => '40',
-            self::NoPublicado   => '10',
+            self::Available       => '20',
+            self::ToOrder         => '21',
+            self::OutOfStock      => '31',
+            self::OutOfPrint      => '40',
+            self::NotYetPublished => '10',
         };
     }
 
     public static function fromOnixCode(?string $code): ?self
     {
         return match ($code) {
-            '20', '11', '12'       => self::Disponible,
-            '21', '22', '23'       => self::BajoPedido,
-            '30', '31', '32'       => self::Agotado,
-            '40', '41', '42', '43' => self::Descatalogado,
-            '10'                   => self::NoPublicado,
+            '20', '11', '12'       => self::Available,
+            '21', '22', '23'       => self::ToOrder,
+            '30', '31', '32'       => self::OutOfStock,
+            '40', '41', '42', '43' => self::OutOfPrint,
+            '10'                   => self::NotYetPublished,
             default                => null,
         };
     }

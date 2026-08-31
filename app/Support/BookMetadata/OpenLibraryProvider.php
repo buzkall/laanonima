@@ -87,7 +87,7 @@ class OpenLibraryProvider implements BookMetadataProvider
         $names = array_filter(Arr::wrap(data_get($data, 'authors.*.name')), is_string(...));
 
         return array_values(array_map(
-            fn(string $name): array => ['name' => $name, 'role' => 'autor'],
+            fn(string $name): array => ['name' => $name, 'role' => 'author'],
             $names,
         ));
     }

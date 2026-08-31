@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('isbn')->nullable();
             $table->text('notes')->nullable();
 
-            $table->string('status')->default('pendiente')->index();
+            $table->string('status')->default('pending')->index();
             $table->text('admin_notes')->nullable();
 
             $table->timestamps();

@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Book;
-use App\Support\CoverPalette;
 
 it('lists the books that are visible on the web', function(): void {
     $onTheShelf = Book::factory()->create(['title' => 'Cuaderno de faros']);
@@ -17,7 +16,7 @@ it('lists the books that are visible on the web', function(): void {
 it('shows the author, the price and where to find each book', function(): void {
     Book::factory()->create([
         'title'        => 'Instrucción de novicias',
-        'contributors' => [['name' => 'Ana Garriga', 'role' => 'autor']],
+        'contributors' => [['name' => 'Ana Garriga', 'role' => 'author']],
         'price_cents'  => 2200,
         'stock'        => 3,
     ]);
@@ -54,7 +53,7 @@ it('sorts the rest by publication date, with the undated ones last', function():
 it('paints the shelf in the house red', function(): void {
     $this->get(route('home'))
         ->assertOk()
-        ->assertSee('--cover: ' . CoverPalette::FALLBACK, escape: false);
+        ->assertSee('--cover: ' . config('site.palette.fallback'), escape: false);
 });
 
 it('says so when there is nothing on the shelf yet', function(): void {

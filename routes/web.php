@@ -8,15 +8,17 @@ if (file_exists(__DIR__ . '/autologin.php')) {
     require __DIR__ . '/autologin.php';
 }
 
-Route::get('/', [BookController::class, 'index'])->name('home');
+Route::controller(BookController::class)->group(function(): void {
+    Route::get('/', 'index')->name('home');
 
-Route::get('/libro/{book}', [BookController::class, 'show'])->name('books.show');
+    Route::get('/libro/{book}', 'show')->name('books.show');
 
-Route::get('/autor/{author}', [BookController::class, 'author'])->name('authors.show');
-Route::get('/editorial/{publisher}', [BookController::class, 'publisher'])->name('publishers.show');
+    Route::get('/autor/{author}', 'author')->name('authors.show');
+    Route::get('/editorial/{publisher}', 'publisher')->name('publishers.show');
+});
 
-Route::middleware('auth')->group(function(): void {
-    Route::get('/pedir-libro', [BookRequestController::class, 'create'])->name('book-requests.create');
-    Route::post('/pedir-libro', [BookRequestController::class, 'store'])->name('book-requests.store');
-    Route::get('/libro/{book}/pedir', [BookRequestController::class, 'create'])->name('book-requests.create.book');
+Route::middleware('auth')->controller(BookRequestController::class)->group(function(): void {
+    Route::get('/pedir-libro', 'create')->name('book-requests.create');
+    Route::post('/pedir-libro', 'store')->name('book-requests.store');
+    Route::get('/libro/{book}/pedir', 'create')->name('book-requests.create.book');
 });

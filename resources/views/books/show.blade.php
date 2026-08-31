@@ -49,7 +49,7 @@
         ->filter(fn (array $person): bool => filled($person['name'] ?? null))
         ->map(fn (array $person): array => [
             ...$person,
-            'href' => ($person['role'] ?? null) === 'autor'
+            'href' => ($person['role'] ?? null) === 'author'
                 ? route('authors.show', Book::authorSlug($person['name']))
                 : null,
         ]);

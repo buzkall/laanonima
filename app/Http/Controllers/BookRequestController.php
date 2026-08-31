@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRole;
 use App\Http\Requests\StoreBookRequest;
 use App\Mail\BookRequestReceived;
 use App\Models\Book;
@@ -11,6 +10,7 @@ use App\Models\User;
 use App\Support\CoverPalette;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
 
 class BookRequestController extends Controller
@@ -29,9 +29,9 @@ class BookRequestController extends Controller
      */
     public function create(?Book $book = null): View
     {
-        /* Same rule as the book page: a record still being catalogued is a 404
-           for everyone but an administrator, who reaches it while previewing. */
-        abort_if($book !== null && ! $book->is_active && auth()->user()?->role !== UserRole::Admin, 404);
+        if ($book !== null) {
+            Gate::authorize('view', $book);
+        }
 
         return view('books.request', [
             'book'    => $book,

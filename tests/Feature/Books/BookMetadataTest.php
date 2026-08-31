@@ -33,7 +33,7 @@ it('maps an Open Library record onto book columns', function(): void {
         ->and($metadata->publishedYear)->toBe(2002)
         ->and($metadata->language)->toBe(BookLanguage::Spa)
         ->and($metadata->source)->toBe('open_library')
-        ->and($metadata->contributors)->toBe([['name' => 'John Kennedy Toole', 'role' => 'autor']]);
+        ->and($metadata->contributors)->toBe([['name' => 'John Kennedy Toole', 'role' => 'author']]);
 });
 
 it('picks up the depósito legal that Open Library files under identifiers', function(): void {

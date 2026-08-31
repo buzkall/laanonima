@@ -68,7 +68,7 @@ return new class extends Migration
             $table->decimal('vat_rate', 5, 2)->default(4);
             $table->char('currency', 3)->default('EUR');
             $table->integer('stock')->default(0);
-            $table->string('availability')->default('disponible');
+            $table->string('availability')->default('available');
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_active')->default(true);
 

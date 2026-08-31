@@ -146,7 +146,7 @@ class BookForm
                         Select::make('role')
                             ->label(__('books.fields.contributor_role'))
                             ->options(ContributorRole::class)
-                            ->default(ContributorRole::Autor->value)
+                            ->default(ContributorRole::Author->value)
                             ->required(),
                     ])
                     ->defaultItems(1)
@@ -381,7 +381,7 @@ class BookForm
                 Select::make('availability')
                     ->label(__('books.fields.availability'))
                     ->options(BookAvailability::class)
-                    ->default(BookAvailability::Disponible->value)
+                    ->default(BookAvailability::Available->value)
                     ->required(),
 
                 Toggle::make('is_featured')

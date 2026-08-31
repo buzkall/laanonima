@@ -27,17 +27,17 @@ class BookRequestFactory extends Factory
             'publisher' => fake()->optional()->company(),
             'isbn'      => fake()->optional()->isbn13(),
             'notes'     => fake()->optional()->sentence(),
-            'status'    => BookRequestStatus::Pendiente,
+            'status'    => BookRequestStatus::Pending,
         ];
     }
 
     public function handled(): static
     {
-        return $this->state(['status' => BookRequestStatus::Conseguido]);
+        return $this->state(['status' => BookRequestStatus::Obtained]);
     }
 
     public function withdrawn(): static
     {
-        return $this->state(['status' => BookRequestStatus::Descartado]);
+        return $this->state(['status' => BookRequestStatus::Dropped]);
     }
 }
