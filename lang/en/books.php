@@ -85,7 +85,7 @@ return [
         'slug'             => 'Generated from the title if left blank.',
         'covers'           => 'The first image is the cover. Drag to reorder them.',
         'cover_source_url' => 'Address of the image. Only these sources are accepted: :hosts',
-        'cover_color'      => 'Read from the cover when the book is saved.',
+        'cover_color'      => 'Read from the cover only while it is empty. Pick one by hand and it is left alone.',
     ],
 
     'lookup' => [
@@ -110,6 +110,11 @@ return [
         'failed_after_save' => 'The source did not serve an image we can use. Press "Download cover" to try another address, or upload the image by hand.',
         'failed_title'      => 'The image could not be downloaded',
         'failed_body'       => 'Check that the address points at an image from an accepted source and that it is at least :width × :height pixels.',
+    ],
+
+    'cover_color' => [
+        'reset'   => 'Read it from the cover again',
+        'invalid' => 'Enter a colour in #rrggbb format.',
     ],
 
     'filters' => [

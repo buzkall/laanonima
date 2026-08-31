@@ -8,6 +8,7 @@ use App\Enums\BookLanguage;
 use App\Enums\ContributorRole;
 use App\Filament\Resources\Books\Actions\DownloadCoverAction;
 use App\Filament\Resources\Books\Actions\LookupIsbnAction;
+use App\Filament\Resources\Books\Actions\ResetCoverColorAction;
 use App\Models\Book;
 use App\Rules\Isbn;
 use App\Support\Isbn as IsbnHelper;
@@ -296,11 +297,23 @@ class BookForm
                     ->hintAction(DownloadCoverAction::make())
                     ->columnSpanFull(),
 
-                /** Read from the cover when the book is saved, never typed in. */
+                /*
+                 | Whatever stands here wins: SyncCoverColor only fills the
+                 | column while it is empty, so a colour typed in survives every
+                 | later upload. Clear the field to have the cover read again,
+                 | or press the hint action to read it now.
+                 |
+                 | The state is normalized on the way out because CoverPalette
+                 | only accepts lowercase "#rrggbb" and silently falls back to
+                 | the reference red for anything else.
+                 */
                 ColorPicker::make('cover_color')
                     ->label(__('books.fields.cover_color'))
                     ->helperText(__('books.hints.cover_color'))
-                    ->disabled()
+                    ->rule('regex:/^#[0-9a-fA-F]{6}$/')
+                    ->validationMessages(['regex' => __('books.cover_color.invalid')])
+                    ->dehydrateStateUsing(fn(?string $state): ?string => blank($state) ? null : mb_strtolower(trim($state)))
+                    ->hintAction(ResetCoverColorAction::make())
                     ->columnSpanFull(),
 
                 Textarea::make('synopsis')

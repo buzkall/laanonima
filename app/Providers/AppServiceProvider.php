@@ -46,16 +46,24 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Keep books.cover_color in step with the cover it is derived from.
+     * Fill books.cover_color from the cover, for a book that has no colour yet.
      *
      * It cannot be done in the model: media library attaches a cover after the
      * book row is written, so a saving hook only ever sees the state before the
-     * cover arrived. These three are the ways the leading image can change.
+     * cover arrived.
      *
      * MediaHasBeenAddedEvent rather than Media::created, because the row is
      * inserted before the file is copied to the disk and there would be nothing
-     * to read. Reordering comes through as an ordinary update, filtered down to
-     * order_column so that writing a conversion does not trigger a re-read.
+     * to read.
+     *
+     * Reordering used to be a third trigger, and is not one any more: a stored
+     * colour is never written over, so dragging an image to the front cannot
+     * change it. The listener could only ever have fired for a book whose
+     * colour had been emptied by hand, and unreliably at that -- setNewOrder
+     * writes one row at a time and each write raises its own event, so the
+     * first of them reads the collection while two images still share an
+     * order_column. Reading a specific cover's colour is what the "read it from
+     * the cover again" action on the form is for.
      */
     protected function syncBookCoverColors(): void
     {
@@ -73,12 +81,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Media::deleted($sync);
-
-        Media::updated(function(Media $media) use ($sync): void {
-            if ($media->wasChanged('order_column')) {
-                $sync($media);
-            }
-        });
     }
 
     /**

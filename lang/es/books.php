@@ -85,7 +85,7 @@ return [
         'slug'             => 'Se genera a partir del título si lo dejas en blanco.',
         'covers'           => 'La primera imagen es la cubierta. Arrastra para reordenarlas.',
         'cover_source_url' => 'Dirección de la imagen. Solo se aceptan estas fuentes: :hosts',
-        'cover_color'      => 'Se calcula a partir de la cubierta al guardar.',
+        'cover_color'      => 'Se toma de la cubierta solo mientras está vacío. Elígelo a mano y no se tocará más.',
     ],
 
     'lookup' => [
@@ -110,6 +110,11 @@ return [
         'failed_after_save' => 'La fuente no ha servido una imagen que podamos usar. Pulsa «Descargar cubierta» para probar con otra dirección, o sube la imagen a mano.',
         'failed_title'      => 'No hemos podido descargar la imagen',
         'failed_body'       => 'Comprueba que la dirección apunta a una imagen de una fuente aceptada y que mide al menos :width × :height píxeles.',
+    ],
+
+    'cover_color' => [
+        'reset'   => 'Recalcular desde la cubierta',
+        'invalid' => 'Escribe un color en formato #rrggbb.',
     ],
 
     'filters' => [

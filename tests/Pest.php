@@ -92,3 +92,20 @@ function fakeCover(int $width = 800, int $height = 1200): string
 
     return (string)ob_get_clean();
 }
+
+/**
+ * GD's resampler does not land on the source colour to the byte, and JPEG costs
+ * another point or two, so a colour read off a cover is compared channel by
+ * channel with a tolerance rather than as a hex string.
+ */
+function expectColorNear(?string $color, string $expected): void
+{
+    expect($color)->toMatch('/^#[0-9a-f]{6}$/');
+
+    foreach ([1, 3, 5] as $offset) {
+        $channel = hexdec(substr((string)$color, $offset, 2));
+
+        expect($channel)->toBeGreaterThanOrEqual(hexdec(substr($expected, $offset, 2)) - 8)
+            ->and($channel)->toBeLessThanOrEqual(hexdec(substr($expected, $offset, 2)) + 8);
+    }
+}

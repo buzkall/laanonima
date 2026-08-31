@@ -75,7 +75,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
     'contributors', 'authors_line', 'publisher_id', 'imprint', 'collection_name', 'collection_number',
     'published_on', 'published_year', 'edition_number', 'edition_statement', 'country_of_publication',
     'city_of_publication', 'legal_deposit', 'binding', 'pages', 'height_mm', 'width_mm', 'thickness_mm', 'weight_grams',
-    'language', 'original_language', 'subjects', 'synopsis', 'back_cover_text', 'cover_source_url',
+    'language', 'original_language', 'subjects', 'synopsis', 'back_cover_text', 'cover_source_url', 'cover_color',
     'price_cents', 'vat_rate', 'currency', 'stock', 'availability', 'is_featured', 'is_active',
     'metadata_source', 'metadata_synced_at', 'raw_metadata',
 ])]

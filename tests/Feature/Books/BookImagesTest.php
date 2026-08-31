@@ -281,3 +281,43 @@ describe('a cover that cannot be fetched after the save', function(): void {
         expect(app(AttachBookCover::class)($book))->toBe(BookCoverOutcome::Skipped);
     });
 });
+
+describe('the cover colour', function(): void {
+    it('keeps the colour the bookseller picks, in lowercase', function(): void {
+        $book = Book::factory()->create();
+
+        livewire(EditBook::class, ['record' => $book->getRouteKey()])
+            ->fillForm(['cover_color' => '#3A7B86'])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        expect($book->refresh()->cover_color)->toBe('#3a7b86');
+    });
+
+    it('rejects anything that is not a hex triplet', function(): void {
+        $book = Book::factory()->create(['cover_color' => '#3a7b86']);
+
+        livewire(EditBook::class, ['record' => $book->getRouteKey()])
+            ->fillForm(['cover_color' => 'rojo'])
+            ->call('save')
+            ->assertHasFormErrors(['cover_color']);
+
+        expect($book->refresh()->cover_color)->toBe('#3a7b86');
+    });
+
+    /*
+     | Nothing else reads the cover once a colour is stored, so this action is
+     | the only way back to it.
+     */
+    it('reads the colour off the cover again when the bookseller asks', function(): void {
+        $book = Book::factory()->create(['cover_color' => '#3a7b86']);
+        $book->addCoverFromString(fakeCover());
+
+        livewire(EditBook::class, ['record' => $book->getRouteKey()])
+            ->callFormComponentAction('cover_color', 'resetCoverColor')
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        expectColorNear($book->refresh()->cover_color, '#c81e1e');
+    });
+});
