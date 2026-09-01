@@ -17,6 +17,14 @@
 .shelf {
     --shelf-scale: 1.7;
     --shelf-gap: 3px;
+
+    /* How long a book takes to turn towards the reader. Shared, because the
+       cover has to appear and disappear around that turn rather than during
+       it. */
+    --shelf-turn: 0.4s;
+
+    /* And how long each book takes to arrive, once the row is laid out. */
+    --shelf-arrive: 0.5s;
     --shelf-board-h: 14px;
     --shelf-board: var(--color-ink);
     --shelf-board-hi: color-mix(in srgb, var(--color-ink) 68%, white);
@@ -113,6 +121,31 @@
     background: linear-gradient(0deg, color-mix(in srgb, var(--color-ink) 20%, transparent), transparent);
 }
 
+/* The shelf fills up left to right when the script lays it out.
+
+   Opacity only: the element's transform belongs to the physics loop, which
+   writes it every frame, so anything that moved would be fighting it. And an
+   animation rather than a transition, because it must not depend on the script
+   getting a frame to remove a class in -- a tab opened in the background gets
+   none, and the shelf would stay invisible.
+
+   Scoped to .is-live, so a reader with no JavaScript sees the row at once
+   rather than a blank board. */
+.shelf__stage.is-arriving .shelf__book {
+    animation: shelf-arrive var(--shelf-arrive) ease both;
+    animation-delay: var(--arrive-delay, 0ms);
+}
+
+@keyframes shelf-arrive {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 /* --- one book ------------------------------------------------------------ */
 
 .shelf__book {
@@ -160,8 +193,11 @@
     width: 0;
     height: 0;
     transform-style: preserve-3d;
-    transform: rotateY(var(--ry)) translateY(var(--lift, 0px));
-    transition: transform 0.4s cubic-bezier(0.2, 0.75, 0.2, 1);
+    /* --rise is applied before the turn, so it is measured in the frame of the
+       book element itself. For a book rolled a quarter turn into a pile that
+       axis points up the screen, which is what lifts it clear of the stack. */
+    transform: translateX(var(--rise, 0px)) rotateY(var(--ry)) translateY(var(--lift, 0px));
+    transition: transform var(--shelf-turn) cubic-bezier(0.2, 0.75, 0.2, 1);
 }
 
 .shelf__book.is-dragging .shelf__box {
@@ -193,19 +229,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-/* A book with no cover on file is set in the display face over its own colour,
-   the same answer the grid on the home page gives. */
-.shelf__untitled {
-    display: flex;
-    align-items: flex-end;
-    height: 100%;
-    padding: 8%;
-    font-family: var(--font-display);
-    font-size: clamp(11px, calc(var(--bw) * 0.1), 22px);
-    line-height: 1.1;
-    color: var(--spine-ink);
 }
 
 .shelf__face--spine {
@@ -268,6 +291,27 @@
     background: repeating-linear-gradient(0deg, var(--shelf-page) 0 1px, var(--shelf-page-shade) 1px 2px);
 }
 
+/* A book standing on its spine is showing you its spine. Its cover is edge-on
+   -- 266px of picture crushed into about 13 of screen -- and the compositor
+   resamples that into a band of noise beside every spine. Nothing is lost by
+   not drawing it: what you see along the edge of a real book there is the edge
+   of its cover board, which is exactly what the face's own colour becomes.
+
+   The delay is the point of the second rule. Appearing is instant, because at
+   the moment a turn begins the face is a dozen pixels wide and nobody sees it
+   arrive. Disappearing has to wait for the turn back to finish, or the cover
+   blinks out while the book is still half-turned and 150px of it are showing. */
+.shelf__book[data-face='0'] .shelf__face--front img {
+    visibility: hidden;
+    transition: visibility 0s linear var(--shelf-turn);
+}
+
+.shelf__book[data-face='0']:hover .shelf__face--front img,
+.shelf__book[data-face='0']:focus-visible .shelf__face--front img {
+    visibility: visible;
+    transition-delay: 0s;
+}
+
 /* Pulling a book half out to look at it, which is what a hand does.
 
    The z-index is not decoration. Each book carries its own 3-D context, so the
@@ -279,10 +323,28 @@
     z-index: 10;
 }
 
-.shelf__stage.is-live .shelf__book:hover .shelf__box,
-.shelf__stage.is-live .shelf__book:focus-visible .shelf__box {
+/* Only a book standing on its spine is turned. The box pivots about its own
+   centre on an axis that is vertical for a standing book -- the door-opening
+   motion of pulling one out -- but a book lying in a pile has been rolled a
+   quarter turn, so that same axis is now horizontal and half the book swings
+   down through the board and through whatever it is resting on. A book in a
+   pile is therefore lifted off the pile first; see below. */
+.shelf__stage.is-live .shelf__book:not([data-stack]):hover .shelf__box,
+.shelf__stage.is-live .shelf__book:not([data-stack]):focus-visible .shelf__box {
     --ry: 56deg;
     --lift: -10px;
+}
+
+/* A book in a pile is lifted off it before it is turned. Tilting it in place
+   would pivot it about its own centre, dropping its near edge through the book
+   underneath -- the same geometry that made this look broken when it shared
+   the standing books' rule. Off the pile there is nothing to pass through. */
+.shelf__stage.is-live .shelf__book[data-stack]:hover .shelf__box,
+.shelf__stage.is-live .shelf__book[data-stack]:focus-visible .shelf__box {
+    /* Half a hand's width off the pile, in millimetres like everything else,
+       so the gesture holds at whatever scale the shelf is drawn. */
+    --rise: calc(50 * var(--shelf-scale) * 1px);
+    --ry: 50deg;
 }
 
 .shelf__stage.is-live .shelf__book.is-dragging .shelf__box {
@@ -338,6 +400,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .shelf {
+        --shelf-turn: 0s;
+        --shelf-arrive: 0s;
+    }
+
+    .shelf__stage.is-arriving .shelf__book {
+        animation-delay: 0ms;
+    }
+
     .shelf__box {
         transition: none;
     }

@@ -15,12 +15,14 @@
 {{-- No side padding: a shelf runs wall to wall, so the board reaches both
      edges of the window and the row is scrolled rather than inset. --}}
 <main class="bg-paper pt-[clamp(28px,3vw,48px)] pb-[clamp(48px,6vw,88px)] text-ink">
-    @if ($shelved->isEmpty())
+    @if ($arrangement->books->isEmpty())
         <p class="mx-auto my-[clamp(40px,6vw,88px)] max-w-[520px] px-[clamp(22px,5vw,80px)] text-center text-balance text-[22px] italic">
             {{ __('books.public.home.empty') }}
         </p>
     @else
-        <div data-shelf>
+        {{-- The seed reproduces this exact shelf: a row that came out badly can
+             be put back the way it was rather than described from memory. --}}
+        <div data-shelf data-seed="{{ $arrangement->seed }}">
         <div class="shelf">
             <div class="shelf__scroll" data-shelf-scroll>
                 <div class="shelf__floor" data-shelf-floor>
@@ -29,9 +31,10 @@
                      the physics loop switched off, and with no JavaScript at
                      all. The script only writes positions onto it. --}}
                 <ul class="shelf__stage" data-shelf-stage>
-                    @foreach ($shelved as $shelfBook)
+                    @foreach ($arrangement->books as $shelfBook)
                         @php($book = $shelfBook->book)
                         @php($cover = $book->coverUrl('thumb'))
+                        @php($retina = $book->coverUrl('retina'))
 
                         <li>
                             <a
@@ -40,6 +43,7 @@
                                 draggable="false"
                                 data-face="{{ $shelfBook->facesOut ? '1' : '0' }}"
                                 data-measured="{{ $shelfBook->isMeasured ? '1' : '0' }}"
+                                @if ($shelfBook->liesFlat()) data-stack="{{ $shelfBook->stack }}" @endif
                                 data-title="{{ $book->title }}"
                                 data-author="{{ $book->authors_line }}"
                                 data-note="{{ $book->priceInEuros() === null
@@ -48,16 +52,17 @@
                                 style="--mm-w: {{ $shelfBook->widthMm }}; --mm-h: {{ $shelfBook->heightMm }}; --mm-d: {{ $shelfBook->thicknessMm }}; --spine: {{ $shelfBook->palette->background }}; --spine-ink: {{ $shelfBook->palette->foreground }}"
                             >
                                 <span class="shelf__box">
+                                    {{-- Every book on the shelf has a cover: the
+                                         query will not hand over one without. --}}
                                     <span class="shelf__face shelf__face--front">
-                                        @if ($cover)
-                                            <img
-                                                src="{{ $cover }}"
-                                                alt="{{ __('books.fields.cover') }}: {{ $book->title }}"
-                                                draggable="false"
-                                            />
-                                        @else
-                                            <span class="shelf__untitled">{{ $book->title }}</span>
-                                        @endif
+                                        <img
+                                            src="{{ $cover }}"
+                                            @if ($retina && $retina !== $cover)
+                                                srcset="{{ $cover }} 1x, {{ $retina }} 2x"
+                                            @endif
+                                            alt="{{ __('books.fields.cover') }}: {{ $book->title }}"
+                                            draggable="false"
+                                        />
                                     </span>
 
                                     <span class="shelf__face shelf__face--spine" aria-hidden="true">

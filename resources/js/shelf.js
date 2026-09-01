@@ -24,6 +24,18 @@ const DROP_BACK_PX = 40;
 
 /** A book that will not settle in this many passes is left where it lies. */
 const MAX_TIDY_PASSES = 2;
+
+/** How long the solver is given to push the row apart once it is set down. */
+const WARM_MS = 600;
+
+/** How far apart the books arrive, so the row fills from the left. */
+const ARRIVE_STEP_MS = 45;
+
+/** How long one book takes to arrive. Mirrors --shelf-arrive in shelf.css. */
+const ARRIVE_MS = 500;
+
+/** Past this much of a lean a book has fallen over rather than settled. */
+const MAX_TILT = 0.35;
 const BOARD_PX = 14;
 
 /** A dragged book stops colliding with its neighbours, so it comes out clean. */
@@ -47,6 +59,8 @@ export default function mountShelf(root) {
         },
         facesOut: el.dataset.face === '1',
         isMeasured: el.dataset.measured === '1',
+        /* Books sharing a pile share one place on the board, bottom one first. */
+        stack: el.dataset.stack === undefined ? null : el.dataset.stack,
     }));
 
     if (books.length === 0) {
@@ -79,7 +93,6 @@ class Shelf {
         this.books = books;
         this.running = false;
         this.wasDrag = false;
-        this.held = matchMedia('(prefers-reduced-motion: reduce)').matches;
         this.touch = matchMedia('(hover: none)').matches;
 
         addEventListener('resize', () => {
@@ -87,9 +100,9 @@ class Shelf {
             this.resizeTimer = setTimeout(() => this.build(), 240);
         });
 
-        /* A tab hidden mid-fall stops getting frames while the settle timer
-           keeps counting in wall-clock, which would freeze the books in the
-           air. Coming back to the tab restarts both. */
+        /* A tab hidden while the reader is rummaging stops getting frames while
+           the settle timer keeps counting in wall-clock. Coming back to the tab
+           restarts both, so a book left mid-air is put down. */
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState !== 'visible' || !this.engine) {
                 return;
@@ -114,10 +127,6 @@ class Shelf {
             return;
         }
 
-        /* Nothing is dropped onto a shelf nobody is looking at: a background
-           tab gets no animation frames, so the books would hang where they
-           were released and the settle timer would freeze them there. */
-        await whenVisible();
         await this.fitCoversToFaces();
 
         this.build();
@@ -191,36 +200,143 @@ class Shelf {
         this.scale();
 
         const gap = 3;
-        const sizes = this.books.map((book) => ({
-            ...book,
-            w: (book.facesOut ? book.mm.w : book.mm.d) * this.pxPerMm,
-            h: book.mm.h * this.pxPerMm,
-        }));
 
-        const used = sizes.reduce((total, book) => total + book.w + gap, 0) - gap;
+        /* A book lying flat is a spine-out book rolled a quarter turn: what it
+           takes up along the board is its height, and what it stands is its
+           thickness. The element's own box never changes -- the rotation is the
+           body's angle, which sync() writes out as --rot -- so w and h stay the
+           unrotated box that --tx and --ty are measured against. */
+        this.items = this.books.map((book) => {
+            const flat = book.stack !== null;
+            const w = (book.facesOut ? book.mm.w : book.mm.d) * this.pxPerMm;
+            const h = book.mm.h * this.pxPerMm;
 
-        this.items = sizes;
+            return {
+                ...book, w, h, flat,
+                footprint: flat ? h : w,
+                rise: flat ? w : h,
+                /* Anticlockwise, not clockwise. The spine is set in
+                   writing-mode: vertical-rl, which has already turned the
+                   glyphs a quarter turn clockwise to read top to bottom; a
+                   second clockwise quarter turn leaves the title upside down.
+                   This one puts it back upright, reading left to right, which
+                   is how the spine of a book lying flat is read. */
+                angle: flat ? -Math.PI / 2 : 0,
+            };
+        });
+
+        const slots = this.intoSlots();
+        const width = (slot) => Math.max(...slot.map((item) => item.footprint));
+        const used = slots.reduce((total, slot) => total + width(slot) + gap, 0) - gap;
+
         this.stageW = Math.max(this.scroll.clientWidth, Math.ceil(used + 52));
         this.stageH = this.stage.clientHeight;
         this.stage.style.width = `${this.stageW}px`;
         this.stage.classList.add('is-live');
 
         const floorY = this.stageH - BOARD_PX;
-        this.floorY = floorY;
         let x = (this.stageW - used) / 2;
 
-        this.items.forEach((item) => {
-            item.x = x + item.w / 2;
-            x += item.w + gap;
-            item.el.style.setProperty('--tx', `${(item.x - item.w / 2).toFixed(1)}px`);
-            item.el.style.setProperty('--ty', `${(floorY - item.h).toFixed(1)}px`);
-        });
+        this.arrive(slots);
+
+        for (const slot of slots) {
+            const centre = x + width(slot) / 2;
+            let stacked = 0;
+
+            /* Down the pile from the board up, each book on the one below. */
+            for (const item of slot) {
+                item.x = centre;
+                item.restY = floorY - stacked - item.rise / 2;
+                stacked += item.rise;
+
+                item.el.style.setProperty('--tx', `${(item.x - item.w / 2).toFixed(1)}px`);
+                item.el.style.setProperty('--ty', `${(item.restY - item.h / 2).toFixed(1)}px`);
+                item.el.style.setProperty('--rot', `${item.angle.toFixed(4)}rad`);
+            }
+
+            x += width(slot) + gap;
+        }
 
         try {
             this.simulate(floorY);
         } catch {
             /* A shelf that cannot be pushed is still a shelf. */
         }
+    }
+
+    /**
+     * Let the row fill up left to right, once and only once.
+     *
+     * A place on the board arrives at a time, so the three books of a pile come
+     * in together rather than one after another. The delays are set here
+     * because only the layout knows the order books stand in, and a rebuild --
+     * a resize -- neither replays the entrance nor re-hides anything.
+     *
+     * The class is taken off again at the end. That is not tidiness: an
+     * animation does not advance in a tab nobody is looking at, so its filled
+     * `from` state would leave the whole shelf at zero opacity until someone
+     * looked. A timer still runs there, throttled but running, so this is what
+     * guarantees the books are visible either way.
+     *
+     * @param {Array<Array<object>>} slots
+     */
+    arrive(slots) {
+        if (this.arriving) {
+            return;
+        }
+
+        this.arriving = true;
+        let place = 0;
+
+        for (const slot of slots) {
+            for (const item of slot) {
+                item.el.style.setProperty('--arrive-delay', `${place * ARRIVE_STEP_MS}ms`);
+            }
+
+            place++;
+        }
+
+        this.stage.classList.add('is-arriving');
+
+        const lastArrival = (place - 1) * ARRIVE_STEP_MS + ARRIVE_MS;
+
+        setTimeout(() => this.stage.classList.remove('is-arriving'), lastArrival + 400);
+    }
+
+    /**
+     * The places along the board: one standing book each, or one pile.
+     *
+     * The pile is re-sorted here rather than trusted as it arrives. The server
+     * orders it by footprint too, but it can only do so from the sizes it has,
+     * and an unmeasured book is estimated at the ordinary size for its binding
+     * -- so a shelf of paperbacks ties on every book and the order comes out
+     * arbitrary. By this point `fitCoversToFaces` has taken each book's real
+     * proportions off its cover, so the biggest one can actually be put at the
+     * bottom, which is both what holds a pile up and what anyone stacking
+     * books does.
+     *
+     * @return {Array<Array<object>>}
+     */
+    intoSlots() {
+        const slots = [];
+
+        for (const item of this.items) {
+            const open = slots.at(-1);
+
+            if (item.flat && open?.at(-1)?.flat && open.at(-1).stack === item.stack) {
+                open.push(item);
+            } else {
+                slots.push([item]);
+            }
+        }
+
+        for (const slot of slots) {
+            if (slot.length > 1) {
+                slot.sort((a, b) => footprintOf(b) - footprintOf(a));
+            }
+        }
+
+        return slots;
     }
 
     simulate(floorY) {
@@ -248,38 +364,32 @@ class Shelf {
             Bodies.rectangle(this.stageW + 40, this.stageH / 2, 80, this.stageH * 4, wall),
         ]);
 
-        this.items.forEach((item, index) => {
-            const lean = (Math.random() - 0.5) * (item.facesOut ? 0.18 : 0.05);
-
-            item.body = Bodies.rectangle(
-                item.x,
-                this.held ? floorY - item.h / 2 : -item.h - index * 10,
-                item.w,
-                item.h,
-                {
-                    friction: 0.58,
-                    frictionStatic: 1.4,
-                    frictionAir: 0.012,
-                    /* A book that bounces reads as a toy. */
-                    restitution: 0.015,
-                    density: 0.0016,
-                    slop: 0.015,
-                    angle: this.held ? 0 : lean,
-                    chamfer: { radius: Math.min(2, item.w * 0.08) },
-                    collisionFilter: { category: CATEGORY.book, mask: CATEGORY.book | CATEGORY.world },
-                },
-            );
+        /* Every book is set down where it belongs. Nothing is dropped: books
+           rained onto a board land on each other's corners, and a spine 25px
+           wide and 400 tall topples from the lightest knock -- over half of
+           shelves built that way ended up with a book lying flat, most often
+           the first or the last to arrive, which has a neighbour on one side
+           only. Bookends do not save it either; falling books simply land on
+           those instead. So the shelf arrives already standing, and the
+           physics is there for what the reader does to it. */
+        for (const item of this.items) {
+            item.body = Bodies.rectangle(item.x, item.restY, item.w, item.h, {
+                friction: 0.58,
+                frictionStatic: 1.4,
+                frictionAir: 0.012,
+                /* A book that bounces reads as a toy. */
+                restitution: 0.015,
+                density: 0.0016,
+                slop: 0.015,
+                angle: item.angle,
+                chamfer: { radius: Math.min(2, item.w * 0.08) },
+                collisionFilter: { category: CATEGORY.book, mask: CATEGORY.book | CATEGORY.world },
+            });
 
             item.body.plugin = { item };
-        });
-
-        if (this.held) {
-            Composite.add(this.engine.world, this.items.map((item) => item.body));
-        } else {
-            this.items.forEach((item, index) => {
-                item.timer = setTimeout(() => Composite.add(this.engine.world, item.body), 80 + index * 60);
-            });
         }
+
+        Composite.add(this.engine.world, this.items.map((item) => item.body));
 
         this.mountDragging();
 
@@ -289,7 +399,10 @@ class Shelf {
         Runner.run(this.runner, this.engine);
         this.running = true;
         this.tidyPasses = 0;
-        this.settleTimer = setTimeout(() => this.settle(), 3400 + this.items.length * 60);
+
+        /* Long enough to let the solver push out the last micron of overlap
+           between books that were placed touching, and no longer. */
+        this.settleTimer = setTimeout(() => this.settle(), WARM_MS);
     }
 
     mountDragging() {
@@ -397,18 +510,24 @@ class Shelf {
                 continue;
             }
 
-            const shelved = this.floorY - item.h / 2;
+            /* Two ways to be out of place, and a book only needs one.
 
-            /* Height above the board is the only workable test: a book leaning
-               on its neighbours sits a little low rather than high, so only one
-               that is genuinely above the row is touched. */
-            if (body.position.y > shelved - STRAY_PX) {
+               Too high: measured against its own place rather than the board,
+               because a book part way up a pile belongs above the board by
+               exactly the thickness of what is under it.
+
+               Too far over: a book knocked flat comes to rest *below* where it
+               should be, not above, so height alone never catches it. A lean is
+               ordinary; a quarter turn is a book lying down. */
+            const upright = turnedFrom(body.angle, item.angle) <= MAX_TILT;
+
+            if (upright && body.position.y > item.restY - STRAY_PX) {
                 continue;
             }
 
             Sleeping.set(body, false);
-            Body.setPosition(body, { x: item.x, y: shelved - DROP_BACK_PX });
-            Body.setAngle(body, 0);
+            Body.setPosition(body, { x: item.x, y: item.restY - DROP_BACK_PX });
+            Body.setAngle(body, item.angle);
             Body.setVelocity(body, { x: 0, y: 0 });
             Body.setAngularVelocity(body, 0);
             item.parked = false;
@@ -459,7 +578,6 @@ class Shelf {
     }
 
     destroy() {
-        this.items?.forEach((item) => clearTimeout(item.timer));
         clearTimeout(this.settleTimer);
 
         if (this.runner) {
@@ -525,6 +643,25 @@ function mountPeek(scroll, stage, peek, suppressed) {
  * is parsed, whereas decoding is rendering work a browser is free to put off
  * indefinitely in a tab nobody is looking at.
  */
+/**
+ * How far one angle is from another, the short way round, in radians.
+ *
+ * A body's angle accumulates: a book spun twice reads as 4pi rather than 0, so
+ * the difference has to be wrapped before it can be compared to a tolerance.
+ */
+/**
+ * How much board a book covers lying on its back, in square millimetres.
+ */
+function footprintOf(item) {
+    return item.mm.w * item.mm.h;
+}
+
+function turnedFrom(angle, from) {
+    const difference = angle - from;
+
+    return Math.abs(Math.atan2(Math.sin(difference), Math.cos(difference)));
+}
+
 function whenLoaded(img) {
     if (img.complete) {
         return Promise.resolve();
@@ -533,21 +670,6 @@ function whenLoaded(img) {
     return new Promise((resolve) => {
         img.addEventListener('load', resolve, { once: true });
         img.addEventListener('error', resolve, { once: true });
-    });
-}
-
-function whenVisible() {
-    if (document.visibilityState === 'visible') {
-        return Promise.resolve();
-    }
-
-    return new Promise((resolve) => {
-        document.addEventListener('visibilitychange', function onChange() {
-            if (document.visibilityState === 'visible') {
-                document.removeEventListener('visibilitychange', onChange);
-                resolve();
-            }
-        });
     });
 }
 

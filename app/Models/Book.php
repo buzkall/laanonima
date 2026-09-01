@@ -152,6 +152,16 @@ class Book extends Model implements HasMedia
                 $this->addMediaConversion('thumb')
                     ->nonQueued()
                     ->fit(Fit::Contain, 400, 600);
+
+                /* The shelf draws a cover at up to about 300 CSS pixels wide,
+                   so `thumb` is right for a plain screen and soft on a dense
+                   one. This is that same picture at twice the density, offered
+                   as the 2x of a srcset -- x descriptors rather than w, because
+                   the size a book is drawn at follows from its millimetres and
+                   not from the width of the window. */
+                $this->addMediaConversion('retina')
+                    ->nonQueued()
+                    ->fit(Fit::Contain, 800, 1200);
             });
     }
 
@@ -313,22 +323,39 @@ class Book extends Model implements HasMedia
     }
 
     /**
-     * The shelf at /estanteria, which is not a listing and is not ordered.
+     * The books that stand on /estanteria.
      *
-     * A physical shelf has no first place to give a book, so there is nothing
-     * for `is_featured` or a publication date to win: the row is shuffled on
-     * every visit, and the couple of books turned face out are picked the same
-     * way. Two readers see different shelves, and so does the same reader
-     * twice, which is the point of a shelf you can rummage in.
+     * The shelf is not paginated: it is one row a reader scrolls along, and
+     * every book on it is a rigid body in a physics loop, so what limits it is
+     * the row rather than the page. `site.shelf.on_stage` is that ceiling.
      *
      * @param  Builder<$this>  $query
      */
     #[Scope]
     protected function onStage(Builder $query): void
     {
-        $query->active()
-            ->with('media')
-            ->inRandomOrder();
+        $query->onShelf()
+            ->withCover()
+            ->limit((int)config('site.shelf.on_stage'));
+    }
+
+    /**
+     * Only the books there is a picture of.
+     *
+     * The grid on the home page is happy without one -- it sets the title over
+     * the book's own colour, which reads as a deliberate cover. The shelf is
+     * not: a book there is an object seen from the front, and a blank coloured
+     * board among real covers reads as a missing image rather than as a book.
+     *
+     * @param  Builder<$this>  $query
+     */
+    #[Scope]
+    protected function withCover(Builder $query): void
+    {
+        $query->whereHas('media', fn(Builder $media): Builder => $media->where(
+            'collection_name',
+            self::COVERS_COLLECTION,
+        ));
     }
 
     /**

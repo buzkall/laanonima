@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Support\CoverPalette;
-use App\Support\ShelfBook;
+use App\Support\ShelfArrangement;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
@@ -29,18 +27,12 @@ class BookController extends Controller
 
     /**
      * The same catalogue, stood up on a shelf and drawn to scale.
-     *
-     * Not paginated: the shelf is one row a reader scrolls along, and every
-     * book on it is a rigid body in a physics loop, so what limits it is the
-     * row rather than the page. `site.shelf.on_stage` is the ceiling.
      */
     public function shelf(): View
     {
-        $books = Book::query()->onStage()->limit((int)config('site.shelf.on_stage'))->get();
-
         return view('books.shelf', [
-            'shelved' => $this->turnSomeFaceOut($books),
-            'palette' => CoverPalette::fromCover(null),
+            'arrangement' => ShelfArrangement::of(Book::query()->onStage()->get()),
+            'palette'     => CoverPalette::fromCover(null),
         ]);
     }
 
@@ -112,33 +104,6 @@ class BookController extends Controller
     private function perPage(): int
     {
         return (int)config('site.shelf.per_page');
-    }
-
-    /**
-     * Turn a couple of the books cover-first, the way a bookseller does.
-     *
-     * Picked by position rather than off the front of the row, so the two that
-     * face out are somewhere along the shelf instead of always at its left
-     * end. `is_featured` deliberately has no say: the row is already shuffled,
-     * so a shelf that always turned the same two books round would look less
-     * like a shelf and more like a list with pictures.
-     *
-     * @param  EloquentCollection<int, Book>  $books
-     * @return Collection<int, ShelfBook>
-     */
-    private function turnSomeFaceOut(EloquentCollection $books): Collection
-    {
-        $facingOut = $books->keys()
-            ->shuffle()
-            ->take((int)config('site.shelf.facing_out'))
-            ->all();
-
-        return $books->map(
-            fn(Book $book, int $position): ShelfBook => ShelfBook::from(
-                $book,
-                in_array($position, $facingOut, true),
-            ),
-        );
     }
 
     /**

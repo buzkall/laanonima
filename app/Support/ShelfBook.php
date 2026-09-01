@@ -31,11 +31,13 @@ final readonly class ShelfBook
         public bool $isMeasured,
         /** Whether this one is turned cover-first rather than spine-first. */
         public bool $facesOut,
+        /** The pile it lies in, if it is lying flat rather than standing. */
+        public ?int $stack,
         /** The cover colour, and what can be read over it: the spine's paint. */
         public CoverPalette $palette,
     ) {}
 
-    public static function from(Book $book, bool $facesOut = false): self
+    public static function from(Book $book): self
     {
         [$width, $height, $measured] = self::sides($book);
 
@@ -45,9 +47,45 @@ final readonly class ShelfBook
             heightMm: $height,
             thicknessMm: self::thickness($book),
             isMeasured: $measured,
-            facesOut: $facesOut,
+            facesOut: false,
+            stack: null,
             palette: CoverPalette::fromCover($book->cover_color),
         );
+    }
+
+    /**
+     * The same book, once the shelf has decided where it goes.
+     *
+     * Measuring has to come first -- a pile is ordered by how much of the board
+     * each book covers -- so the size is settled in `from()` and the placement
+     * is added here, rather than both being guessed at once.
+     */
+    public function placed(bool $facesOut, ?int $stack): self
+    {
+        return new self(
+            book: $this->book,
+            widthMm: $this->widthMm,
+            heightMm: $this->heightMm,
+            thicknessMm: $this->thicknessMm,
+            isMeasured: $this->isMeasured,
+            facesOut: $facesOut,
+            stack: $stack,
+            palette: $this->palette,
+        );
+    }
+
+    public function liesFlat(): bool
+    {
+        return $this->stack !== null;
+    }
+
+    /**
+     * The area this book covers when it is lying on its back, which is what
+     * decides where it goes in a pile: the biggest one holds up the rest.
+     */
+    public function footprintArea(): int
+    {
+        return $this->widthMm * $this->heightMm;
     }
 
     /**

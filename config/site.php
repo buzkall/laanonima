@@ -96,6 +96,21 @@ return [
         'facing_out' => 2,
 
         /*
+         | Piles of books lying flat, which is how a shelf looks when it is used
+         | rather than dressed. A pile takes a slot of its own in the row -- it
+         | is as long as the books are tall, so it is much wider than a spine --
+         | and the biggest book goes on the bottom.
+         */
+        'stacks'     => 1,
+        'stack_size' => [2, 3],
+
+        /*
+         | Below this there is nothing to make a pile out of: a shelf of five
+         | with three of them lying down reads as a mess rather than a shelf.
+         */
+        'stack_needs' => 6,
+
+        /*
          | A shelf drawn to scale needs three measurements, and today most
          | records have none: the ISBN lookup only fills them in when the source
          | has them, which for Spanish editions is the minority. So a book with
