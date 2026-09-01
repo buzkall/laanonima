@@ -30,6 +30,10 @@ return [
         'slug' => 'Generated from the name if you leave it blank.',
     ],
 
+    'relations' => [
+        'books' => 'Books in the catalogue',
+    ],
+
     'filters' => [
         'with_books' => 'With books in the catalogue',
     ],

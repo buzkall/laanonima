@@ -55,7 +55,9 @@ it('searches by publisher, shown under the author', function(): void {
     livewire(ListBooks::class)
         ->searchTable('Anagrama')
         ->assertCanSeeTableRecords([$book])
-        ->assertCanNotSeeTableRecords([$other]);
+        ->assertCanNotSeeTableRecords([$other])
+        ->assertTableColumnHasDescription('authors_line', 'Anagrama', $book)
+        ->assertTableFilterVisible('publisher');
 });
 
 it('creates a book', function(): void {

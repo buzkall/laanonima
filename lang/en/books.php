@@ -200,6 +200,12 @@ return [
             'all'     => 'See everything from :publisher',
         ],
 
+        'shelf' => [
+            'title'   => 'The shelf',
+            'heading' => 'The shelf, at actual size',
+            'intro'   => 'The same books that are in the shop, each one at its real measurements. Pick one up, turn it round, have a proper look.',
+        ],
+
         'home' => [
             'heading'      => 'Everything on the table today',
             'intro'        => 'This is what we have in the shop right now. Whatever is not here, we can usually get hold of in a couple of days.',

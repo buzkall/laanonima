@@ -1,0 +1,344 @@
+/* =============================================================================
+   The shelf at /estanteria.
+
+   Every book here is drawn at the size it is in the shop: the record's
+   millimetres go in as unitless custom properties and one scale factor on the
+   stage turns them into pixels, so a resize is a single property to rewrite
+   rather than four per book.
+
+   This is real CSS rather than utility classes because almost none of it is
+   utilities: interlocking custom properties, four 3-D faces per book and a
+   stage that changes layout mode under the physics loop.
+
+   Colours come from the site's own paper and ink. What a book is painted with
+   is its own cover colour, handed in as --spine / --spine-ink per record.
+   ========================================================================== */
+
+.shelf {
+    --shelf-scale: 1.7;
+    --shelf-gap: 3px;
+    --shelf-board-h: 14px;
+    --shelf-board: var(--color-ink);
+    --shelf-board-hi: color-mix(in srgb, var(--color-ink) 68%, white);
+    --shelf-board-lo: color-mix(in srgb, var(--color-ink) 62%, black);
+
+    /* The cut page block and the head of the book: cream, a shade off paper. */
+    --shelf-page: color-mix(in srgb, var(--color-paper) 88%, white);
+    --shelf-page-shade: color-mix(in srgb, var(--color-paper) 78%, var(--color-ink));
+
+    position: relative;
+}
+
+/* The shelf runs off the right edge rather than shrinking to fit: a book is
+   the size it is, and the row is scrolled. */
+.shelf::after {
+    content: '';
+    position: absolute;
+    inset: 0 -1px 0 auto;
+    width: clamp(28px, 7vw, 64px);
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, var(--color-paper));
+}
+
+.shelf__scroll {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+
+.shelf__scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* The board has to run the whole length of the row, not the width of the
+   window, or it stops halfway along a shelf that is scrolled. */
+.shelf__floor {
+    position: relative;
+    width: max-content;
+    min-width: 100%;
+}
+
+/* One vanishing point for the whole row, so the books at either end are seen
+   three-quarters on without being rotated individually. */
+.shelf__stage {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: var(--shelf-gap);
+    height: clamp(300px, 52vh, 520px);
+    margin: 0;
+    min-width: 100%;
+    padding: 0 0 var(--shelf-board-h);
+    list-style: none;
+    perspective: 2600px;
+    perspective-origin: 50% 40%;
+}
+
+.shelf__stage > li {
+    flex: 0 0 auto;
+    list-style: none;
+}
+
+/* Under the physics loop the row is written as transforms instead. */
+.shelf__stage.is-live {
+    display: block;
+    padding: 0;
+}
+
+.shelf__stage.is-live > li {
+    height: 0;
+}
+
+.shelf__board {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: var(--shelf-board-h);
+    width: 100%;
+    background: linear-gradient(180deg, var(--shelf-board-hi) 0 2px, var(--shelf-board) 2px, var(--shelf-board-lo));
+    box-shadow: 0 -26px 40px -30px color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+
+.shelf__board::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 44px;
+    pointer-events: none;
+    background: linear-gradient(0deg, color-mix(in srgb, var(--color-ink) 20%, transparent), transparent);
+}
+
+/* --- one book ------------------------------------------------------------ */
+
+.shelf__book {
+    --bw: calc(var(--mm-w) * var(--shelf-scale) * 1px);
+    --bh: calc(var(--mm-h) * var(--shelf-scale) * 1px);
+    --bd: calc(var(--mm-d) * var(--shelf-scale) * 1px);
+
+    /* Standing on its spine, the footprint on the board is the thickness. */
+    --fw: var(--bd);
+    --ry: 89.5deg;
+
+    position: relative;
+    display: block;
+    width: var(--fw);
+    height: var(--bh);
+    text-decoration: none;
+    transform-style: preserve-3d;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* The ones the bookseller has flagged are turned face out, as on a table. */
+.shelf__book[data-face='1'] {
+    --fw: var(--bw);
+    --ry: 0deg;
+}
+
+.shelf__book:active {
+    cursor: grabbing;
+}
+
+.shelf__stage.is-live .shelf__book {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate3d(var(--tx, 0px), var(--ty, 0px), 0) rotate(var(--rot, 0rad));
+}
+
+.shelf__box {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    transform: rotateY(var(--ry)) translateY(var(--lift, 0px));
+    transition: transform 0.4s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.shelf__book.is-dragging .shelf__box {
+    transition: none;
+}
+
+.shelf__face {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    backface-visibility: hidden;
+}
+
+.shelf__face--front {
+    width: var(--bw);
+    height: var(--bh);
+    margin-left: calc(var(--bw) / -2);
+    margin-top: calc(var(--bh) / -2);
+    transform: translateZ(calc(var(--bd) / 2));
+    background: var(--spine);
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--color-ink) 20%, transparent),
+        inset 3px 0 7px -4px color-mix(in srgb, var(--color-ink) 55%, transparent);
+}
+
+.shelf__face--front img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* A book with no cover on file is set in the display face over its own colour,
+   the same answer the grid on the home page gives. */
+.shelf__untitled {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    padding: 8%;
+    font-family: var(--font-display);
+    font-size: clamp(11px, calc(var(--bw) * 0.1), 22px);
+    line-height: 1.1;
+    color: var(--spine-ink);
+}
+
+.shelf__face--spine {
+    width: var(--bd);
+    height: var(--bh);
+    margin-left: calc(var(--bd) / -2);
+    margin-top: calc(var(--bh) / -2);
+    transform: rotateY(-90deg) translateZ(calc(var(--bw) / 2));
+    background: var(--spine);
+    color: var(--spine-ink);
+    display: grid;
+    align-content: space-between;
+    justify-items: center;
+    padding: 9px 0 7px;
+    box-shadow:
+        inset -4px 0 9px -5px color-mix(in srgb, var(--color-ink) 65%, transparent),
+        inset 3px 0 8px -5px rgb(255 255 255 / 0.22);
+}
+
+.shelf__spine-text {
+    writing-mode: vertical-rl;
+    max-height: calc(var(--bh) - 32px);
+    overflow: hidden;
+    font-family: var(--font-sans);
+    font-size: clamp(7px, calc(var(--bd) * 0.4), 12px);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.shelf__spine-mark {
+    flex: none;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: currentcolor;
+    opacity: 0.5;
+}
+
+/* The cut edge of the paper block, and the head of the book. */
+.shelf__face--edge {
+    width: var(--bd);
+    height: var(--bh);
+    margin-left: calc(var(--bd) / -2);
+    margin-top: calc(var(--bh) / -2);
+    transform: rotateY(90deg) translateZ(calc(var(--bw) / 2));
+    background:
+        repeating-linear-gradient(90deg, var(--shelf-page) 0 1px, var(--shelf-page-shade) 1px 2px),
+        linear-gradient(90deg, var(--shelf-page-shade), var(--shelf-page) 40%, var(--shelf-page-shade));
+}
+
+.shelf__face--top {
+    width: var(--bw);
+    height: var(--bd);
+    margin-left: calc(var(--bw) / -2);
+    margin-top: calc(var(--bd) / -2);
+    transform: rotateX(90deg) translateZ(calc(var(--bh) / 2));
+    background: repeating-linear-gradient(0deg, var(--shelf-page) 0 1px, var(--shelf-page-shade) 1px 2px);
+}
+
+/* Pulling a book half out to look at it, which is what a hand does.
+
+   The z-index is not decoration. Each book carries its own 3-D context, so the
+   row is composited in document order and a book turned towards the reader is
+   sliced by whatever stands to its right. Raising it lifts the whole book out
+   of the row instead. */
+.shelf__stage.is-live .shelf__book:hover,
+.shelf__stage.is-live .shelf__book:focus-visible {
+    z-index: 10;
+}
+
+.shelf__stage.is-live .shelf__book:hover .shelf__box,
+.shelf__stage.is-live .shelf__book:focus-visible .shelf__box {
+    --ry: 56deg;
+    --lift: -10px;
+}
+
+.shelf__stage.is-live .shelf__book.is-dragging .shelf__box {
+    --lift: 0px;
+}
+
+/* --- the card that follows the pointer ------------------------------------ */
+
+.shelf__peek {
+    position: absolute;
+    z-index: 20;
+    transform: translate(-50%, -100%);
+    margin-top: -14px;
+    min-width: 170px;
+    max-width: 260px;
+    padding: 9px 13px 10px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--color-ink) 70%, transparent);
+}
+
+.shelf__peek.is-on {
+    opacity: 1;
+}
+
+.shelf__peek-title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 16px;
+    line-height: 1.14;
+}
+
+.shelf__peek-author {
+    display: block;
+    margin-top: 3px;
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.shelf__peek-note {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shelf__box {
+        transition: none;
+    }
+}

@@ -59,6 +59,7 @@ class GoogleBooksProvider implements BookMetadataProvider
         }
 
         $publishedDate = is_string($volume['publishedDate'] ?? null) ? $volume['publishedDate'] : null;
+        $dimensions = $this->dimensions($volume);
 
         return new BookMetadata(
             isbn13: $isbn13,
@@ -74,6 +75,9 @@ class GoogleBooksProvider implements BookMetadataProvider
                 ? (int)$matches[1]
                 : null,
             pages: is_int($volume['pageCount'] ?? null) && $volume['pageCount'] > 0 ? $volume['pageCount'] : null,
+            heightMm: $dimensions['height'],
+            widthMm: $dimensions['width'],
+            thicknessMm: $dimensions['thickness'],
             language: BookLanguage::fromIso6391(is_string($volume['language'] ?? null) ? $volume['language'] : null),
             subjects: $this->subjects($volume),
             synopsis: is_string($volume['description'] ?? null) ? $volume['description'] : null,
@@ -125,6 +129,25 @@ class GoogleBooksProvider implements BookMetadataProvider
             fn(string $category): array => ['scheme' => 'text', 'code' => null, 'heading' => $category],
             $categories,
         ));
+    }
+
+    /**
+     * How thick, wide and tall the volume is.
+     *
+     * Google labels each side, so unlike Open Library's single free-text string
+     * there is nothing to work out: only the unit has to be read, and it is
+     * usually but not always centimetres.
+     *
+     * @param  array<string, mixed>  $volume
+     * @return array{height: int|null, width: int|null, thickness: int|null}
+     */
+    private function dimensions(array $volume): array
+    {
+        return [
+            'height'    => PhysicalMeasure::lengthInMm(data_get($volume, 'dimensions.height')),
+            'width'     => PhysicalMeasure::lengthInMm(data_get($volume, 'dimensions.width')),
+            'thickness' => PhysicalMeasure::lengthInMm(data_get($volume, 'dimensions.thickness')),
+        ];
     }
 
     /**

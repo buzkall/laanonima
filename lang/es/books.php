@@ -200,6 +200,12 @@ return [
             'all'     => 'Ver todo de :publisher',
         ],
 
+        'shelf' => [
+            'title'   => 'La estantería',
+            'heading' => 'La estantería, a tamaño real',
+            'intro'   => 'Los mismos libros que hay en la librería, cada uno con sus medidas de verdad. Coge uno, gíralo y míralo de cerca.',
+        ],
+
         'home' => [
             'heading'      => 'Todo lo que hay hoy en la mesa',
             'intro'        => 'Esto es lo que tenemos en la librería ahora mismo. Lo que no esté aquí, casi siempre lo conseguimos en un par de días.',

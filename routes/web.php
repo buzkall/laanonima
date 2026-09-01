@@ -11,6 +11,8 @@ if (file_exists(__DIR__ . '/autologin.php')) {
 Route::controller(BookController::class)->group(function(): void {
     Route::get('/', 'index')->name('home');
 
+    Route::get('/estanteria', 'shelf')->name('books.shelf');
+
     Route::get('/libro/{book}', 'show')->name('books.show');
 
     Route::get('/autor/{author}', 'author')->name('authors.show');

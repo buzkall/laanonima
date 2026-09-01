@@ -30,6 +30,10 @@ return [
         'slug' => 'Se genera a partir del nombre si lo dejas en blanco.',
     ],
 
+    'relations' => [
+        'books' => 'Libros en catálogo',
+    ],
+
     'filters' => [
         'with_books' => 'Con libros en catálogo',
     ],

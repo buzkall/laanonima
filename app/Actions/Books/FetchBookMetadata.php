@@ -30,9 +30,15 @@ class FetchBookMetadata
          | unserializing classes out of the cache. A miss is cached too, as an
          | empty array, so a Spanish ISBN neither source knows about does not
          | mean a round trip on every keystroke.
+         |
+         | The key carries a version. The cached payload is the DTO's own array
+         | shape, so adding a field to BookMetadata leaves every live entry
+         | silently short of it for a whole TTL -- which is how the physical
+         | measurements would have arrived as null for a day. Bump the version
+         | whenever that shape changes.
          */
         $cached = Cache::remember(
-            "book-metadata:{$isbn13}",
+            "book-metadata:v2:{$isbn13}",
             config('books.metadata.cache_ttl'),
             fn(): array => $this->provider->find($isbn13)?->toArray() ?? [],
         );

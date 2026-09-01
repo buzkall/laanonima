@@ -7,16 +7,31 @@
             "volumeInfo": {
                 "title": "La conjura de los necios",
                 "subtitle": "Edición conmemorativa",
-                "authors": ["John Kennedy Toole"],
+                "authors": [
+                    "John Kennedy Toole"
+                ],
                 "publisher": "Editorial Anagrama",
                 "publishedDate": "2002-05-01",
                 "description": "Ignatius J. Reilly tiene treinta años y vive con su madre en Nueva Orleans.",
                 "industryIdentifiers": [
-                    {"type": "ISBN_13", "identifier": "9788433920423"},
-                    {"type": "ISBN_10", "identifier": "8433920421"}
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9788433920423"
+                    },
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "8433920421"
+                    }
                 ],
                 "pageCount": 380,
-                "categories": ["Fiction / Literary"],
+                "dimensions": {
+                    "height": "23.00 cm",
+                    "width": "15.50 cm",
+                    "thickness": "2.50 cm"
+                },
+                "categories": [
+                    "Fiction / Literary"
+                ],
                 "language": "es",
                 "imageLinks": {
                     "smallThumbnail": "http://books.google.com/books/content?id=0FUv&printsec=frontcover&img=1&zoom=5",

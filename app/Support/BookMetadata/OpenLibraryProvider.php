@@ -21,6 +21,7 @@ use Throwable;
 class OpenLibraryProvider implements BookMetadataProvider
 {
     private const string ENDPOINT = 'https://openlibrary.org/api/books';
+    private const string EDITION_ENDPOINT = 'https://openlibrary.org/isbn';
     private const string COVERS_ENDPOINT = 'https://covers.openlibrary.org/b/isbn';
 
     public function find(string $isbn13): ?BookMetadata
@@ -49,6 +50,7 @@ class OpenLibraryProvider implements BookMetadataProvider
         }
 
         $publishDate = is_string($data['publish_date'] ?? null) ? $data['publish_date'] : null;
+        $physical = $this->physical($isbn13);
 
         return new BookMetadata(
             isbn13: $isbn13,
@@ -62,6 +64,10 @@ class OpenLibraryProvider implements BookMetadataProvider
             legalDeposit: Arr::first(Arr::wrap(data_get($data, 'identifiers.depósito_legal'))),
             cityOfPublication: Arr::first(Arr::wrap(data_get($data, 'publish_places.*.name'))),
             pages: is_int($data['number_of_pages'] ?? null) ? $data['number_of_pages'] : null,
+            heightMm: $physical['height'],
+            widthMm: $physical['width'],
+            thicknessMm: $physical['thickness'],
+            weightGrams: $physical['weight'],
             language: BookLanguage::Spa,
             /*
              | Open Library's "subjects" are reader-contributed tags, not a
@@ -76,6 +82,47 @@ class OpenLibraryProvider implements BookMetadataProvider
             source: 'open_library',
             raw: $data,
         );
+    }
+
+    /**
+     * How big the book actually is, off the edition record.
+     *
+     * This is a second request, because the measurements are simply not in the
+     * jscmd=data view the rest of this class reads: "physical_dimensions" and
+     * "weight" only exist on the edition document. It is worth the round trip
+     * -- a shelf drawn to scale needs them and Google Books is inert without a
+     * key -- and FetchBookMetadata caches the merged result for a day, so it is
+     * one extra call per ISBN rather than one per lookup.
+     *
+     * A miss here never fails the lookup: most records have no measurements at
+     * all, which is an ordinary outcome rather than an error.
+     *
+     * @return array{height: int|null, width: int|null, thickness: int|null, weight: int|null}
+     */
+    private function physical(string $isbn13): array
+    {
+        $empty = ['height' => null, 'width' => null, 'thickness' => null, 'weight' => null];
+
+        try {
+            $response = $this->request()->get(self::EDITION_ENDPOINT . "/{$isbn13}.json");
+        } catch (Throwable $exception) {
+            Log::debug('Open Library edition lookup failed.', ['isbn13' => $isbn13, 'exception' => $exception->getMessage()]);
+
+            return $empty;
+        }
+
+        if (! $response->successful()) {
+            return $empty;
+        }
+
+        $dimensions = PhysicalMeasure::dimensionsInMm($response->json('physical_dimensions'));
+
+        return [
+            'height'    => $dimensions['height'] ?? null,
+            'width'     => $dimensions['width'] ?? null,
+            'thickness' => $dimensions['thickness'] ?? null,
+            'weight'    => PhysicalMeasure::weightInGrams($response->json('weight')),
+        ];
     }
 
     /**

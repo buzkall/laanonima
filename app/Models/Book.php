@@ -313,6 +313,25 @@ class Book extends Model implements HasMedia
     }
 
     /**
+     * The shelf at /estanteria, which is not a listing and is not ordered.
+     *
+     * A physical shelf has no first place to give a book, so there is nothing
+     * for `is_featured` or a publication date to win: the row is shuffled on
+     * every visit, and the couple of books turned face out are picked the same
+     * way. Two readers see different shelves, and so does the same reader
+     * twice, which is the point of a shelf you can rummage in.
+     *
+     * @param  Builder<$this>  $query
+     */
+    #[Scope]
+    protected function onStage(Builder $query): void
+    {
+        $query->active()
+            ->with('media')
+            ->inRandomOrder();
+    }
+
+    /**
      * @param  Builder<$this>  $query
      */
     #[Scope]
