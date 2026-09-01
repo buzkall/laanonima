@@ -3,10 +3,11 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\UserRole;
+use App\Models\User;
 use Filament\Actions\Action;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
@@ -25,6 +26,7 @@ class UserForm
         return $schema
             ->components([
                 Section::make(__('user.sections.account'))
+                    ->afterHeader([self::emailVerificationBadge()])
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
@@ -45,10 +47,6 @@ class UserForm
                             ->tel()
                             ->maxLength(60),
 
-                        self::passwordField(),
-
-                        self::passwordConfirmationField(),
-
                         ToggleButtons::make('role')
                             ->label(__('user.fields.role'))
                             ->options(UserRole::class)
@@ -56,9 +54,9 @@ class UserForm
                             ->required()
                             ->grouped(),
 
-                        DateTimePicker::make('email_verified_at')
-                            ->label(__('user.fields.email_verified_at'))
-                            ->seconds(false),
+                        self::passwordField(),
+
+                        self::passwordConfirmationField(),
                     ]),
             ]);
     }
@@ -98,8 +96,14 @@ class UserForm
     }
 
     /**
-     * Only demanded once a password is being set, and never saved: the column
-     * does not exist, the field is here for the `confirmed()` rule above.
+     * Only there once a password is being set, and never saved: the column does
+     * not exist, the field is here for the `confirmed()` rule above.
+     *
+     * The box appears from `visibleJs()` rather than a `visible()` closure, so
+     * it is in place on the first keystroke instead of after the password field
+     * loses focus -- otherwise Tab would carry you past where the field is
+     * about to appear. That is presentation only: `required()` below is the
+     * server's word on whether a confirmation was owed.
      */
     private static function passwordConfirmationField(): TextInput
     {
@@ -107,10 +111,37 @@ class UserForm
             ->label(__('user.fields.password_confirmation'))
             ->password()
             ->revealable()
+            ->visibleJs('($get(\'password\') ?? \'\').length > 0')
             ->required(fn(Get $get): bool => filled($get('password')))
             ->maxLength(255)
             ->saved(false)
             ->helperText(__('user.helpers.password_requirements'));
+    }
+
+    /**
+     * Whether this address has been confirmed, read rather than set.
+     *
+     * It sits in the section header, away from the fields, because it is not
+     * something an administrator fills in: verification happens when the reader
+     * follows the link we sent them.
+     */
+    private static function emailVerificationBadge(): TextEntry
+    {
+        return TextEntry::make('email_verified_at')
+            ->hiddenLabel()
+            ->badge()
+            ->state(function(?User $record): string {
+                $verifiedAt = $record?->email_verified_at;
+
+                if ($verifiedAt === null) {
+                    return __('user.placeholders.not_verified');
+                }
+
+                return __('user.badges.verified', ['date' => $verifiedAt->translatedFormat('d/m/Y')]);
+            })
+            ->color(fn(?User $record): string => $record?->email_verified_at === null ? 'gray' : 'success')
+            ->icon(fn(?User $record): Heroicon => $record?->email_verified_at === null ? Heroicon::OutlinedClock : Heroicon::OutlinedCheckBadge)
+            ->visibleOn('edit');
     }
 
     /**

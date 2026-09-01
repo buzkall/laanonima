@@ -9,7 +9,9 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -26,6 +28,7 @@ use Illuminate\Support\Str;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection<int, BookRequest> $bookRequests
  */
 #[Fillable(['name', 'email', 'phone', 'role', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -65,6 +68,20 @@ class User extends Authenticatable implements FilamentUser
     public function isBookseller(): bool
     {
         return $this->role === UserRole::Admin;
+    }
+
+    /**
+     * The books this reader has asked us for.
+     *
+     * A request belongs to whoever sent it and to nobody else, so the rows go
+     * with the account: `book_requests.user_id` cascades on delete, and closing
+     * an account takes its requests away with it.
+     *
+     * @return HasMany<BookRequest, $this>
+     */
+    public function bookRequests(): HasMany
+    {
+        return $this->hasMany(BookRequest::class);
     }
 
     /**

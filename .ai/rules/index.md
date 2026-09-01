@@ -12,5 +12,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | ** | .ai/rules/general.md |
 | app/Models/Book.php | .ai/rules/models.md |
 | app/Providers/** | .ai/rules/providers.md |
+| app/Filament/Resources/Users/Schemas/UserForm.php | .ai/rules/schemas.md |
 | resources/views/books/shelf.blade.php,resources/js/shelf.js,resources/css/shelf.css,app/Support/ShelfBook.php | .ai/rules/support.md |
+| app/Filament/Resources/Users/** | .ai/rules/users.md |
 | lang/vendor/** | .ai/rules/vendor.md |

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Users;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Filament\Resources\Users\RelationManagers\BookRequestsRelationManager;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
@@ -51,6 +52,17 @@ class UserResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'email'];
+    }
+
+    /**
+     * The requests a reader has sent in, on their own account. Keyed by the
+     * relationship name so the URL says which tab is open.
+     */
+    public static function getRelations(): array
+    {
+        return [
+            'bookRequests' => BookRequestsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

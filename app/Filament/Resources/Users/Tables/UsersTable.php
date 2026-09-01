@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
-use App\Enums\UserRole;
 use Arzcode\FilamentMagicLogin\Actions\SendMagicLinkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -11,7 +10,6 @@ use Filament\Actions\EditAction;
 use Filament\Support\Enums\IconPosition;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
@@ -41,11 +39,6 @@ class UsersTable
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('role')
-                    ->label(__('user.fields.role'))
-                    ->badge()
-                    ->sortable(),
-
                 TextColumn::make('email_verified_at')
                     ->label(__('user.fields.email_verified_at'))
                     ->dateTime()
@@ -66,10 +59,6 @@ class UsersTable
             ])
             ->defaultSort('name')
             ->filters([
-                SelectFilter::make('role')
-                    ->label(__('user.filters.role'))
-                    ->options(UserRole::class),
-
                 TernaryFilter::make('email_verified_at')
                     ->label(__('user.filters.email_verification.label'))
                     ->nullable()

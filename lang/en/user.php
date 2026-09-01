@@ -27,6 +27,18 @@ return [
         'client' => 'Client',
     ],
 
+    'tabs' => [
+        'client' => 'Clients',
+        'admin'  => 'Administrators',
+    ],
+
+    'relations' => [
+        'book_requests' => [
+            'empty'      => 'This client has not asked us for any book yet.',
+            'empty_hint' => 'The requests they send from the site will show up here.',
+        ],
+    ],
+
     'helpers' => [
         'password'              => 'Leave empty to keep the current password.',
         'password_requirements' => 'Must be at least 12 characters long, with upper and lower case letters and numbers.',
@@ -38,13 +50,15 @@ return [
         'password_generated_body'  => 'The password has been copied to your clipboard.',
     ],
 
+    'badges' => [
+        'verified' => 'Verified on :date',
+    ],
+
     'placeholders' => [
         'not_verified' => 'Not verified',
     ],
 
     'filters' => [
-        'role' => 'Role',
-
         'email_verification' => [
             'label'      => 'Email verification',
             'all'        => 'All users',

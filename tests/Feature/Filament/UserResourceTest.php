@@ -1,10 +1,13 @@
 <?php
 
 use App\Enums\UserRole;
+use App\Filament\Resources\BookRequests\BookRequestResource;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Filament\Resources\Users\RelationManagers\BookRequestsRelationManager;
 use App\Filament\Resources\Users\UserResource;
+use App\Models\BookRequest;
 use App\Models\User;
 use Filament\Actions\Testing\TestAction;
 use Filament\Support\Enums\IconPosition;
@@ -28,7 +31,7 @@ it('lists users', function(): void {
 
     Livewire::test(ListUsers::class)
         ->assertOk()
-        ->assertCanSeeTableRecords($users->push($this->admin));
+        ->assertCanSeeTableRecords($users);
 });
 
 it('searches users by name and email', function(string $attribute): void {
@@ -54,16 +57,38 @@ it('filters users by email verification', function(): void {
         ->assertCanNotSeeTableRecords([$verified]);
 });
 
-it('filters users by role', function(): void {
+it('splits users into one tab per role, clients first', function(): void {
+    expect(array_keys(Livewire::test(ListUsers::class)->instance()->getTabs()))
+        ->toBe([UserRole::Client->value, UserRole::Admin->value]);
+});
+
+it('shows the clients tab before anything is clicked', function(): void {
     $client = User::factory()->create();
 
     Livewire::test(ListUsers::class)
-        ->filterTable('role', UserRole::Admin->value)
-        ->assertCanSeeTableRecords([$this->admin])
-        ->assertCanNotSeeTableRecords([$client])
-        ->filterTable('role', UserRole::Client->value)
         ->assertCanSeeTableRecords([$client])
         ->assertCanNotSeeTableRecords([$this->admin]);
+});
+
+it('scopes each tab to its own role', function(): void {
+    $client = User::factory()->create();
+
+    Livewire::test(ListUsers::class)
+        ->set('activeTab', UserRole::Admin->value)
+        ->assertCanSeeTableRecords([$this->admin])
+        ->assertCanNotSeeTableRecords([$client])
+        ->set('activeTab', UserRole::Client->value)
+        ->assertCanSeeTableRecords([$client])
+        ->assertCanNotSeeTableRecords([$this->admin]);
+});
+
+it('counts the users of each role on its tab', function(): void {
+    User::factory()->count(2)->create();
+
+    $tabs = Livewire::test(ListUsers::class)->instance()->getTabs();
+
+    expect($tabs[UserRole::Client->value]->getBadge())->toBe('2')
+        ->and($tabs[UserRole::Admin->value]->getBadge())->toBe('1');
 });
 
 it('creates a user with a hashed password', function(): void {
@@ -245,9 +270,10 @@ it('marks the email column as copyable with an icon', function(): void {
 });
 
 it('hides the delete action for the authenticated user', function(): void {
-    $other = User::factory()->create();
+    $other = User::factory()->admin()->create();
 
     Livewire::test(ListUsers::class)
+        ->set('activeTab', UserRole::Admin->value)
         ->assertActionHidden(TestAction::make('delete')->table($this->admin))
         ->assertActionVisible(TestAction::make('delete')->table($other));
 });
@@ -270,4 +296,99 @@ it('renders the send magic link action on every row', function(): void {
     Livewire::test(ListUsers::class)
         ->assertActionVisible(TestAction::make('sendMagicLink')->table($other))
         ->assertSeeHtml("mountAction('sendMagicLink'");
+});
+
+it('lists the book requests of a client under their account', function(): void {
+    $client = User::factory()->create();
+    $requests = BookRequest::factory()->count(2)->for($client)->create();
+    $other = BookRequest::factory()->create();
+
+    Livewire::test(BookRequestsRelationManager::class, [
+        'ownerRecord' => $client,
+        'pageClass'   => EditUser::class,
+    ])
+        ->assertOk()
+        ->assertCanSeeTableRecords($requests)
+        ->assertCanNotSeeTableRecords([$other]);
+});
+
+it('renders the book requests relation manager on a client account', function(): void {
+    $client = User::factory()->create();
+
+    Livewire::test(EditUser::class, ['record' => $client->getKey()])
+        ->assertSeeLivewire(BookRequestsRelationManager::class);
+});
+
+it('does not offer book requests on an administrator account', function(): void {
+    expect(BookRequestsRelationManager::canViewForRecord($this->admin, EditUser::class))->toBeFalse()
+        ->and(BookRequestsRelationManager::canViewForRecord(User::factory()->create(), EditUser::class))->toBeTrue();
+});
+
+it('badges the client tab with the requests still open', function(): void {
+    $client = User::factory()->create();
+
+    expect(BookRequestsRelationManager::getBadge($client, EditUser::class))->toBeNull();
+
+    BookRequest::factory()->count(2)->for($client)->create();
+    BookRequest::factory()->handled()->for($client)->create();
+
+    expect(BookRequestsRelationManager::getBadge($client->fresh(), EditUser::class))->toBe('2');
+});
+
+it('sends the edit action to the book request resource', function(): void {
+    $client = User::factory()->create();
+    $request = BookRequest::factory()->for($client)->create();
+
+    Livewire::test(BookRequestsRelationManager::class, [
+        'ownerRecord' => $client,
+        'pageClass'   => EditUser::class,
+    ])
+        ->assertActionHasUrl(
+            TestAction::make('edit')->table($request),
+            BookRequestResource::getUrl('edit', ['record' => $request]),
+        );
+});
+
+it('only shows the password confirmation once a password is being typed', function(): void {
+    Livewire::test(CreateUser::class)
+        ->assertSeeHtml("'fi-hidden': ! ((\$get('password') ?? '').length > 0)");
+});
+
+it('still demands a confirmation for whatever password was typed', function(): void {
+    Livewire::test(CreateUser::class)
+        ->fillForm([
+            'name'                  => 'Ada Lovelace',
+            'email'                 => 'ada@example.com',
+            'password'              => 'Sup3r-Secret-Passw0rd',
+            'password_confirmation' => null,
+        ])
+        ->call('create')
+        ->assertHasFormErrors(['password_confirmation' => 'required']);
+});
+
+it('shows an unverified account as such in the section header', function(): void {
+    $user = User::factory()->unverified()->create();
+
+    Livewire::test(EditUser::class, ['record' => $user->getKey()])
+        ->assertOk()
+        ->assertSee(__('user.placeholders.not_verified'));
+});
+
+it('shows when a verified account was verified', function(): void {
+    $user = User::factory()->create(['email_verified_at' => now()->subDay()]);
+
+    Livewire::test(EditUser::class, ['record' => $user->getKey()])
+        ->assertOk()
+        ->assertSee(__('user.badges.verified', ['date' => $user->email_verified_at->translatedFormat('d/m/Y')]));
+});
+
+it('does not let the verification date be edited', function(): void {
+    $user = User::factory()->unverified()->create();
+
+    Livewire::test(EditUser::class, ['record' => $user->getKey()])
+        ->fillForm(['email_verified_at' => now()])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect($user->refresh()->email_verified_at)->toBeNull();
 });
