@@ -2,9 +2,11 @@
 
 use App\Enums\BookAvailability;
 use App\Filament\Resources\Books\Pages\EditBook;
+use App\Filament\Resources\Books\Pages\ListBooks;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\User;
+use Filament\Actions\Testing\TestAction;
 use Illuminate\Support\Facades\Storage;
 
 use function Pest\Livewire\livewire;
@@ -198,4 +200,14 @@ it('links to the page from the edit screen', function(): void {
     livewire(EditBook::class, ['record' => $book->getRouteKey()])
         ->assertActionExists('viewOnSite')
         ->assertActionHasUrl('viewOnSite', route('books.show', $book));
+});
+
+it('links to the page from the book table', function(): void {
+    $book = Book::factory()->create(['availability' => BookAvailability::Available]);
+
+    $this->actingAs(User::factory()->admin()->create());
+
+    livewire(ListBooks::class)
+        ->assertActionExists(TestAction::make('viewOnSite')->table($book))
+        ->assertActionHasUrl(TestAction::make('viewOnSite')->table($book), route('books.show', $book));
 });

@@ -96,3 +96,8 @@ it('keeps the shop out of nobody else pages, and the reader out of the shop', fu
         ->and($admin->can('withdraw', $request))->toBeFalse()
         ->and($this->reader->can('view', $request))->toBeTrue();
 });
+
+it('leaves the heading in sentence case instead of title casing it', function(): void {
+    expect(BookRequestResource::getTitleCasePluralModelLabel())
+        ->toBe(__('book_requests.client.plural_label'));
+});

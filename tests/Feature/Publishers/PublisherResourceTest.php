@@ -1,8 +1,10 @@
 <?php
 
+use App\Filament\Resources\Books\BookResource;
 use App\Filament\Resources\Publishers\Pages\CreatePublisher;
 use App\Filament\Resources\Publishers\Pages\EditPublisher;
 use App\Filament\Resources\Publishers\Pages\ListPublishers;
+use App\Filament\Resources\Publishers\RelationManagers\BooksRelationManager;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\User;
@@ -147,4 +149,50 @@ it('shows the logotype in the listing', function(): void {
 
     livewire(ListPublishers::class)
         ->assertTableColumnStateSet('logo', [$logo->uuid], $publisher);
+});
+
+/*
+ | The tab on the publisher's edit page lists only that publisher's shelf, and
+ | it borrows the books resource's own table, so a row leads to the full book
+ | form rather than to a modal.
+ */
+it('lists only the books of the publisher being edited', function(): void {
+    $publisher = Publisher::factory()->create();
+    $own = Book::factory()->count(2)->for($publisher)->create();
+    $foreign = Book::factory()->create();
+
+    livewire(BooksRelationManager::class, [
+        'ownerRecord' => $publisher,
+        'pageClass'   => EditPublisher::class,
+    ])
+        ->assertCanSeeTableRecords($own)
+        ->assertCanNotSeeTableRecords([$foreign]);
+});
+
+/*
+ | Every row in the tab belongs to the publisher being edited, so the filter and
+ | the publisher name under the author would both be answering a question nobody
+ | asked. They stay on the books listing, where they do mean something.
+ */
+it('drops the publisher filter and the publisher name inside the tab', function(): void {
+    $publisher = Publisher::factory()->create(['name' => 'Alfaguara']);
+    $book = Book::factory()->for($publisher)->create();
+
+    livewire(BooksRelationManager::class, [
+        'ownerRecord' => $publisher,
+        'pageClass'   => EditPublisher::class,
+    ])
+        ->assertTableFilterHidden('publisher')
+        ->assertTableColumnDoesNotHaveDescription('authors_line', 'Alfaguara', $book);
+});
+
+it('sends the edit action of a listed book to the books resource', function(): void {
+    $publisher = Publisher::factory()->create();
+    $book = Book::factory()->for($publisher)->create();
+
+    livewire(BooksRelationManager::class, [
+        'ownerRecord' => $publisher,
+        'pageClass'   => EditPublisher::class,
+    ])
+        ->assertTableActionHasUrl('edit', BookResource::getUrl('edit', ['record' => $book]), record: $book);
 });

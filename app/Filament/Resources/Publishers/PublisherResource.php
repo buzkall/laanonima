@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Publishers;
 use App\Filament\Resources\Publishers\Pages\CreatePublisher;
 use App\Filament\Resources\Publishers\Pages\EditPublisher;
 use App\Filament\Resources\Publishers\Pages\ListPublishers;
+use App\Filament\Resources\Publishers\RelationManagers\BooksRelationManager;
 use App\Filament\Resources\Publishers\Schemas\PublisherForm;
 use App\Filament\Resources\Publishers\Tables\PublishersTable;
 use App\Models\Publisher;
@@ -63,7 +64,7 @@ class PublisherResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            BooksRelationManager::class,
         ];
     }
 

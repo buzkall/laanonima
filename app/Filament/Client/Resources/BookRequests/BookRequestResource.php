@@ -26,6 +26,7 @@ class BookRequestResource extends Resource
     protected static ?string $model = BookRequest::class;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxArrowDown;
     protected static ?string $recordTitleAttribute = 'title';
+    protected static bool $hasTitleCaseModelLabel = false;
 
     public static function getModelLabel(): string
     {

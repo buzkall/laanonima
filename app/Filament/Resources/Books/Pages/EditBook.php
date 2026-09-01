@@ -4,33 +4,21 @@ namespace App\Filament\Resources\Books\Pages;
 
 use App\Actions\Books\AttachBookCover;
 use App\Enums\BookCoverOutcome;
+use App\Filament\Resources\Books\Actions\ViewOnSiteAction;
 use App\Filament\Resources\Books\BookResource;
 use App\Models\Book;
-use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Support\Icons\Heroicon;
 
 class EditBook extends EditRecord
 {
     protected static string $resource = BookResource::class;
 
-    /**
-     * The page reads is_active, not the panel: a book still being catalogued is
-     * a 404 for a reader but visible to an administrator, which is exactly when
-     * the bookseller wants to look at it.
-     */
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('viewOnSite')
-                ->label(__('books.actions.view_on_site'))
-                ->icon(Heroicon::ArrowTopRightOnSquare)
-                ->color('gray')
-                ->url(fn(Book $record): string => route('books.show', $record))
-                ->openUrlInNewTab(),
-
+            ViewOnSiteAction::make(),
             DeleteAction::make(),
         ];
     }

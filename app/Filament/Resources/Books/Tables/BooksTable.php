@@ -4,12 +4,15 @@ namespace App\Filament\Resources\Books\Tables;
 
 use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
+use App\Filament\Resources\Books\Actions\ViewOnSiteAction;
+use App\Filament\Resources\Publishers\RelationManagers\BooksRelationManager;
 use App\Models\Book;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -40,7 +43,9 @@ class BooksTable
 
                 TextColumn::make('authors_line')
                     ->label(__('books.fields.authors_line'))
-                    ->description(fn(Book $record): ?string => $record->publisher?->name)
+                    ->description(fn(Book $record, HasTable $livewire): ?string => $livewire instanceof BooksRelationManager
+                        ? null
+                        : $record->publisher?->name)
                     ->searchable(query: fn(Builder $query, string $search): Builder => $query
                         ->where('authors_line', 'like', "%{$search}%")
                         ->orWhereRelation('publisher', 'name', 'like', "%{$search}%"))
@@ -88,7 +93,8 @@ class BooksTable
                     ->label(__('books.fields.publisher_id'))
                     ->relationship('publisher', 'name')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->hiddenOn(BooksRelationManager::class),
 
                 SelectFilter::make('availability')
                     ->label(__('books.fields.availability'))
@@ -106,6 +112,7 @@ class BooksTable
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(5)
             ->recordActions([
+                ViewOnSiteAction::make()->iconButton(),
                 EditAction::make()->iconButton(),
             ])
             ->toolbarActions([
