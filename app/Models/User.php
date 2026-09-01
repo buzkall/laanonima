@@ -9,6 +9,8 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -58,6 +60,20 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return $panel->getId() === $this->role->panelId();
+    }
+
+    /**
+     * Everyone holding one given role.
+     *
+     * A user has exactly one role, so this is a plain equality on the column
+     * rather than a lookup through a pivot.
+     *
+     * @param  Builder<$this>  $query
+     */
+    #[Scope]
+    protected function hasRole(Builder $query, UserRole $role): void
+    {
+        $query->where('role', $role);
     }
 
     /**

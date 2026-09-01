@@ -34,3 +34,11 @@ it('stores new users as clients by default', function(): void {
 
     expect($user->refresh()->role)->toBe(UserRole::Client);
 });
+
+it('filters users by role with the hasRole scope', function(): void {
+    $admin = User::factory()->admin()->create();
+    $client = User::factory()->client()->create();
+
+    expect(User::query()->hasRole(UserRole::Admin)->pluck('id')->all())->toBe([$admin->id])
+        ->and(User::query()->hasRole(UserRole::Client)->pluck('id')->all())->toBe([$client->id]);
+});

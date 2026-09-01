@@ -46,10 +46,26 @@ class ListUsers extends ListRecords
             ->mapWithKeys(fn(UserRole $role): array => [
                 $role->value => Tab::make(__("user.tabs.{$role->value}"))
                     ->icon($role->getIcon())
-                    ->badge(User::query()->where('role', $role)->count())
+                    ->badge(User::query()->hasRole($role)->count())
                     ->badgeColor($role->getColor())
-                    ->modifyQueryUsing(fn(Builder $query): Builder => $query->where('role', $role)),
+                    ->modifyQueryUsing(fn(Builder $query): Builder => $this->onlyRole($query, $role)),
             ])
             ->all();
+    }
+
+    /**
+     * The page's own query narrowed to one role.
+     *
+     * The tab starts from the query Filament hands over rather than a fresh
+     * one, so whatever the resource already applied stays applied. It goes
+     * through here because the closure Filament calls cannot carry the `User`
+     * generic that the `hasRole` scope needs to resolve.
+     *
+     * @param  Builder<User>  $query
+     * @return Builder<User>
+     */
+    private function onlyRole(Builder $query, UserRole $role): Builder
+    {
+        return $query->hasRole($role);
     }
 }
