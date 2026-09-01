@@ -8,7 +8,14 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            // The wordmark is listed as an entry so Vite hashes it and
+            // `Vite::asset()` can resolve it from the manifest; it is not
+            // reachable from the CSS or JS entries.
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/images/brand/la-anonima-logo.png',
+            ],
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {
