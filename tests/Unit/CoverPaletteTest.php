@@ -8,7 +8,7 @@ use Tests\TestCase;
  | application. Bound here rather than in tests/Pest.php: the rest of
  | tests/Unit is free of the framework and should stay that way.
  */
-uses(TestCase::class);
+pest()->extend(TestCase::class);
 
 /**
  * WCAG 2.1 contrast between two colours, computed independently of the class

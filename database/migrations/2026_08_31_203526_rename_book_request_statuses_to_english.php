@@ -9,7 +9,7 @@ return new class extends Migration
 {
     /* The status column was seeded with Spanish values; the enum backing them
        is English now, so rows written before the rename must follow. */
-    private const RENAMES = [
+    private const array RENAMES = [
         'pendiente'  => 'pending',
         'en_curso'   => 'in_progress',
         'conseguido' => 'obtained',

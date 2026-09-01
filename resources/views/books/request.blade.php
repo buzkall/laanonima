@@ -76,7 +76,6 @@
                     <label for="title" class="{{ $label }}">{{ __('book_requests.fields.title') }}</label>
                     <input id="title" name="title" type="text" required maxlength="255"
                         value="{{ $defaults['title'] }}"
-                        placeholder="{{ __('book_requests.public.placeholders.title') }}"
                         class="{{ $field }}" />
                     @error('title') <p class="{{ $error }}">{{ $message }}</p> @enderror
                 </div>
@@ -87,7 +86,6 @@
                     </label>
                     <input id="author" name="author" type="text" maxlength="255"
                         value="{{ $defaults['author'] }}"
-                        placeholder="{{ __('book_requests.public.placeholders.author') }}"
                         class="{{ $field }}" />
                     @error('author') <p class="{{ $error }}">{{ $message }}</p> @enderror
                 </div>
@@ -98,7 +96,6 @@
                     </label>
                     <input id="publisher" name="publisher" type="text" maxlength="255"
                         value="{{ $defaults['publisher'] }}"
-                        placeholder="{{ __('book_requests.public.placeholders.publisher') }}"
                         class="{{ $field }}" />
                     @error('publisher') <p class="{{ $error }}">{{ $message }}</p> @enderror
                 </div>
@@ -109,7 +106,6 @@
                     </label>
                     <input id="isbn" name="isbn" type="text" inputmode="numeric" maxlength="20"
                         value="{{ $defaults['isbn'] }}"
-                        placeholder="{{ __('book_requests.public.placeholders.isbn') }}"
                         class="{{ $field }}" />
                     @error('isbn') <p class="{{ $error }}">{{ $message }}</p> @enderror
                 </div>
@@ -119,7 +115,6 @@
                         {{ __('book_requests.fields.notes') }} <span class="font-normal normal-case tracking-normal opacity-60">{{ __('book_requests.public.optional') }}</span>
                     </label>
                     <textarea id="notes" name="notes" rows="4" maxlength="2000"
-                        placeholder="{{ __('book_requests.public.placeholders.notes') }}"
                         class="{{ $field }}">{{ $defaults['notes'] }}</textarea>
                     @error('notes') <p class="{{ $error }}">{{ $message }}</p> @enderror
                 </div>

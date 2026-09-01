@@ -97,13 +97,6 @@ return [
             'heading' => 'Apuntado. Vamos a por él.',
             'body'    => 'Te escribiremos a tu correo en cuanto sepamos algo de «:title».',
         ],
-        'placeholders' => [
-            'title'     => 'El maestro y Margarita',
-            'author'    => 'Mijaíl Bulgákov',
-            'publisher' => 'Alianza',
-            'isbn'      => '9788491046332',
-            'notes'     => 'Si te vale de segunda mano, si lo necesitas para una fecha, si es un regalo…',
-        ],
     ],
 
 ];

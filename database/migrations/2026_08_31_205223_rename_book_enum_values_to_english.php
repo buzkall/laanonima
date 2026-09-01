@@ -10,14 +10,14 @@ return new class extends Migration
     /* BookAvailability, BookBinding and ContributorRole were backed by Spanish
        values; they are English now, so rows written before the rename follow.
        The ONIX mapping the enums carry is untouched — it never lived here. */
-    private const AVAILABILITY = [
+    private const array AVAILABILITY = [
         'disponible'    => 'available',
         'bajo_pedido'   => 'to_order',
         'agotado'       => 'out_of_stock',
         'descatalogado' => 'out_of_print',
         'no_publicado'  => 'not_yet_published',
     ];
-    private const BINDING = [
+    private const array BINDING = [
         'rustica'    => 'paperback',
         'tapa_dura'  => 'hardback',
         'bolsillo'   => 'pocket',
@@ -28,7 +28,7 @@ return new class extends Migration
 
     /* Roles are not a column: they sit under `role` inside each object of the
        `contributors` jsonb array, so they are rewritten element by element. */
-    private const ROLE = [
+    private const array ROLE = [
         'autor'            => 'author',
         'traductor'        => 'translator',
         'ilustrador'       => 'illustrator',

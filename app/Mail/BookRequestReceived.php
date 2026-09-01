@@ -27,8 +27,8 @@ class BookRequestReceived extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('book_requests.mail.received.subject', ['title' => $this->bookRequest->title]),
             replyTo: [$this->bookRequest->user->email],
+            subject: __('book_requests.mail.received.subject', ['title' => $this->bookRequest->title]),
         );
     }
 

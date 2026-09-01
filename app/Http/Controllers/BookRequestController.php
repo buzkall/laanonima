@@ -29,7 +29,7 @@ class BookRequestController extends Controller
      */
     public function create(?Book $book = null): View
     {
-        if ($book !== null) {
+        if ($book instanceof Book) {
             Gate::authorize('view', $book);
         }
 

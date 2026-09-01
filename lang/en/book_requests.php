@@ -97,13 +97,6 @@ return [
             'heading' => 'Noted. We are on it.',
             'body'    => 'We will write to you as soon as we know anything about “:title”.',
         ],
-        'placeholders' => [
-            'title'     => 'The Master and Margarita',
-            'author'    => 'Mikhail Bulgakov',
-            'publisher' => 'Alianza',
-            'isbn'      => '9788491046332',
-            'notes'     => 'Second-hand is fine, you need it by a date, it is a present…',
-        ],
     ],
 
 ];
