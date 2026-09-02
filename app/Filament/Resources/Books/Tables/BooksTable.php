@@ -4,12 +4,15 @@ namespace App\Filament\Resources\Books\Tables;
 
 use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
+use App\Filament\Resources\Authors\RelationManagers\BooksRelationManager as AuthorBooksRelationManager;
 use App\Filament\Resources\Books\Actions\ViewOnSiteAction;
 use App\Filament\Resources\Publishers\RelationManagers\BooksRelationManager;
+use App\Models\Author;
 use App\Models\Book;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
@@ -24,7 +27,12 @@ class BooksTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query): Builder => $query->with('publisher'))
+            ->modifyQueryUsing(fn(Builder $query, HasTable $livewire): Builder => $query
+                ->with('publisher')
+                ->when(
+                    $livewire instanceof AuthorBooksRelationManager,
+                    fn(Builder $query): Builder => $query->with('contributors'),
+                ))
             ->columns([
                 SpatieMediaLibraryImageColumn::make('cover')
                     ->label(__('books.fields.cover'))
@@ -51,6 +59,21 @@ class BooksTable
                         ->orWhereRelation('publisher', 'name', 'like', "%{$search}%"))
                     ->sortable()
                     ->toggleable(),
+
+                /* Inside an author's tab the book's own author is not the
+                   reason it is listed -- this says what that person did. */
+                TextColumn::make('contribution')
+                    ->label(__('books.fields.contributor_role'))
+                    ->badge()
+                    ->state(function(Book $record, HasTable $livewire): array {
+                        $owner = $livewire instanceof AuthorBooksRelationManager
+                            ? $livewire->getOwnerRecord()
+                            : null;
+
+                        return $owner instanceof Author ? $record->rolesFor($owner) : [];
+                    })
+                    ->visible(fn(HasTable $livewire): bool => $livewire instanceof AuthorBooksRelationManager)
+                    ->sortable(false),
 
                 TextColumn::make('stock')
                     ->label(__('books.fields.stock'))
@@ -89,6 +112,13 @@ class BooksTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                SelectFilter::make('authors')
+                    ->label(__('books.fields.authors_line'))
+                    ->relationship('authors', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->hiddenOn(AuthorBooksRelationManager::class),
+
                 SelectFilter::make('publisher')
                     ->label(__('books.fields.publisher_id'))
                     ->relationship('publisher', 'name')
@@ -110,7 +140,9 @@ class BooksTable
                 TernaryFilter::make('is_active')
                     ->label(__('books.filters.active')),
             ], layout: FiltersLayout::AboveContent)
-            ->filtersFormColumns(5)
+            /* Inside an author's or a publisher's tab one filter is hidden, so
+               the five that remain fill the row instead of leaving a gap. */
+            ->filtersFormColumns(fn(HasTable $livewire): int => $livewire instanceof RelationManager ? 5 : 6)
             ->recordActions([
                 ViewOnSiteAction::make()->iconButton(),
                 EditAction::make()->iconButton(),

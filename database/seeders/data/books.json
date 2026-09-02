@@ -6,11 +6,13 @@
         "contributors": [
             {
                 "name": "Ana Garriga",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Doctora por Brown University e investigadora de la vida conventual de los siglos XVI y XVII. Con Carmen Urbita conduce el pódcast «Las Hijas de Felipe».</p>"
             },
             {
                 "name": "Carmen Urbita",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Doctora por Brown University, especialista en la cultura escrita de los conventos del Siglo de Oro. Con Ana Garriga conduce el pódcast «Las Hijas de Felipe».</p>"
             }
         ],
         "publisher": "Blackie Books",
@@ -32,7 +34,8 @@
         "contributors": [
             {
                 "name": "Sara Torres",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Poeta y narradora asturiana. Su obra explora el deseo, el cuerpo y la escritura desde la teoría feminista.</p>"
             }
         ],
         "publisher": "Reservoir Books",
@@ -55,7 +58,8 @@
         "contributors": [
             {
                 "name": "Beatriz Serrano",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Periodista y escritora madrileña. «El descontento», su primera novela, retrata el hastío laboral de una generación.</p>"
             }
         ],
         "publisher": "Ediciones Temas de Hoy",
@@ -83,15 +87,18 @@
         "contributors": [
             {
                 "name": "Annemarie Schwarzenbach",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Escritora, periodista y fotógrafa suiza (1908-1942). Viajera incansable, dejó crónicas y diarios de Oriente Próximo y Asia Central.</p>"
             },
             {
                 "name": "Richard Gross",
-                "role": "translator"
+                "role": "translator",
+                "bio": "<p>Traductor del alemán al castellano.</p>"
             },
             {
                 "name": "María Esperanza Romero",
-                "role": "translator"
+                "role": "translator",
+                "bio": "<p>Traductora del alemán al castellano.</p>"
             }
         ],
         "publisher": "Editorial Minúscula",
@@ -117,11 +124,13 @@
         "contributors": [
             {
                 "name": "Gillian Anderson",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Actriz británico-estadounidense, conocida por «Expediente X» y «Sex Education». En «Quiero» reúne fantasías anónimas de mujeres de todo el mundo.</p>"
             },
             {
                 "name": "Esther Cruz Santaella",
-                "role": "translator"
+                "role": "translator",
+                "bio": "<p>Traductora del inglés al castellano.</p>"
             }
         ],
         "publisher": "Ediciones Temas de Hoy",
@@ -145,11 +154,13 @@
         "contributors": [
             {
                 "name": "Elliot Page",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Actor y productor canadiense, protagonista de «Juno» y «The Umbrella Academy». «Pageboy» son sus memorias.</p>"
             },
             {
                 "name": "Carla Bataller Estruch",
-                "role": "translator"
+                "role": "translator",
+                "bio": "<p>Traductora del inglés al castellano y al valenciano.</p>"
             }
         ],
         "publisher": "Tendencias",
@@ -173,7 +184,8 @@
         "contributors": [
             {
                 "name": "Sara Barquinero",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Escritora y filósofa zaragozana. Su novela «Los escorpiones» la situó entre las voces más comentadas de su generación.</p>"
             }
         ],
         "publisher": "Lumen",
@@ -195,11 +207,13 @@
         "contributors": [
             {
                 "name": "Frank Herbert",
-                "role": "author"
+                "role": "author",
+                "bio": "<p>Escritor estadounidense (1920-1986). «Dune» (1965) es una de las novelas fundacionales de la ciencia ficción moderna.</p>"
             },
             {
                 "name": "Domingo Santos",
-                "role": "translator"
+                "role": "translator",
+                "bio": "<p>Escritor, editor y traductor español (1941-2018), figura central de la ciencia ficción en castellano y primer traductor de «Dune».</p>"
             }
         ],
         "publisher": "Debolsillo",

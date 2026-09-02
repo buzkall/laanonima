@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Books\Actions;
 
 use App\Actions\Books\FetchBookMetadata;
+use App\Models\Author;
 use App\Models\Publisher;
 use App\Support\BookMetadata\BookMetadata;
 use App\Support\Isbn as IsbnHelper;
@@ -37,6 +38,30 @@ class LookupIsbnAction extends Action
             ->action($this->lookup(...));
     }
 
+    /**
+     * The people the source names become rows of the contributors repeater,
+     * each matched to (or filed as) a catalogued author, the way the
+     * publisher is. Rows the bookseller has already filled are left alone.
+     */
+    private function fillContributors(Get $get, Set $set, BookMetadata $metadata): void
+    {
+        $typed = array_filter(array_column($get('contributors') ?? [], 'author_id'));
+
+        if ($typed !== [] || $metadata->contributors === []) {
+            return;
+        }
+
+        $rows = collect($metadata->contributors)
+            ->filter(fn(array $person): bool => filled($person['name']))
+            ->mapWithKeys(fn(array $person): array => [(string)Str::uuid() => [
+                'author_id' => Author::named($person['name'])->id,
+                'role'      => $person['role'],
+            ]])
+            ->all();
+
+        $set('contributors', $rows);
+    }
+
     private function lookup(Get $get, Set $set, FetchBookMetadata $fetchMetadata): void
     {
         $isbn13 = IsbnHelper::toIsbn13($get('isbn13'));
@@ -68,6 +93,8 @@ class LookupIsbnAction extends Action
         }
 
         $set('metadata_synced_at', now());
+
+        $this->fillContributors($get, $set, $metadata);
 
         if (blank($get('publisher_id')) && filled($metadata->publisherName)) {
             $set('publisher_id', Publisher::firstOrCreate(

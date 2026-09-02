@@ -138,13 +138,15 @@ class AppServiceProvider extends ServiceProvider
      *
      * `deferFilters(false)` applies a filter the moment it changes, dropping
      * Filament's "Apply" button; `striped()` alternates the row background so
-     * long listings stay readable.
+     * long listings stay readable; 25 rows a page instead of Filament's 10,
+     * so a catalogue of a few dozen titles is one or two pages, not five.
      */
     protected function configureTableDefaults(): void
     {
         Table::configureUsing(fn(Table $table): Table => $table
             ->deferFilters(false)
-            ->striped());
+            ->striped()
+            ->defaultPaginationPageOption(25));
     }
 
     /**

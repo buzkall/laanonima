@@ -18,3 +18,63 @@
        the cover floats fixed beside the text. */
     --breakpoint-wide: 1000px;
 }
+
+/* Prose from the panel's rich editor (an author's biography). It inherits the
+   size and colour of wherever it is placed; this only spaces the paragraphs
+   and gives inline marks their look. */
+@layer components {
+    .rich-text > * + * {
+        margin-top: 0.75em;
+    }
+
+    .rich-text p {
+        margin: 0;
+    }
+
+    .rich-text p + p {
+        margin-top: 0.75em;
+    }
+
+    .rich-text a {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-decoration-thickness: 1px;
+        transition: opacity 150ms;
+    }
+
+    .rich-text a:hover {
+        opacity: 0.65;
+    }
+
+    .rich-text strong {
+        font-weight: 700;
+    }
+
+    .rich-text em {
+        font-style: italic;
+    }
+
+    .rich-text ul,
+    .rich-text ol {
+        margin: 0.75em 0 0;
+        padding-left: 1.4em;
+    }
+
+    .rich-text ul {
+        list-style: disc;
+    }
+
+    .rich-text ol {
+        list-style: decimal;
+    }
+
+    .rich-text li + li {
+        margin-top: 0.3em;
+    }
+
+    .rich-text blockquote {
+        margin: 0.75em 0 0;
+        padding-left: 1em;
+        border-left: 2px solid currentColor;
+    }
+}

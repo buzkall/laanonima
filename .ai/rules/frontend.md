@@ -81,4 +81,4 @@ The publisher band used to centre a 640px column in the window and lift it with 
 
 The cover carries a two-layer ink shadow at every width so it reads as a book lying on the page rather than as part of the flat band. That is why the cover column is no longer `overflow-hidden` below `wide:` and has `pb-12`: without the room the shadow was cut off at the container edge.
 
-Extra images (`Book::gallery()` — everything in the `covers` collection after the first) are shown as a small auto-fill grid at the top of the "El objeto" section, where the faked cover-detail crop used to be. Use `auto-fill`, not `auto-fit`: with one extra image `auto-fit` collapses the empty tracks and blows it up to the full column width.
+Extra images (`Book::gallery()` — everything in the `covers` collection after the first) are shown as a small auto-fill grid at the top of the "El libro" section, where the faked cover-detail crop used to be. Use `auto-fill`, not `auto-fit`: with one extra image `auto-fit` collapses the empty tracks and blows it up to the full column width.

@@ -6,6 +6,7 @@ use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
 use App\Enums\BookLanguage;
 use App\Enums\ContributorRole;
+use App\Filament\Resources\Authors\Schemas\AuthorForm;
 use App\Filament\Resources\Books\Actions\DownloadCoverAction;
 use App\Filament\Resources\Books\Actions\LookupIsbnAction;
 use App\Filament\Resources\Books\Actions\ResetCoverColorAction;
@@ -130,8 +131,15 @@ class BookForm
                     ->label(__('books.fields.original_title'))
                     ->maxLength(255),
 
+                /*
+                 | One row per person and role, saved as book_contributors.
+                 | The name is a catalogued author, and a person not yet on
+                 | file is added from the + beside the select without leaving
+                 | the book.
+                 */
                 Repeater::make('contributors')
                     ->label(__('books.fields.contributors'))
+                    ->relationship()
                     ->table([
                         TableColumn::make(__('books.fields.contributor_name'))
                             ->markAsRequired(),
@@ -140,15 +148,21 @@ class BookForm
                             ->width('12rem'),
                     ])
                     ->schema([
-                        TextInput::make('name')
+                        Select::make('author_id')
                             ->label(__('books.fields.contributor_name'))
-                            ->required(),
+                            ->relationship('author', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->createOptionForm(AuthorForm::quickCreateFields())
+                            ->createOptionModalHeading(__('books.author.create')),
                         Select::make('role')
                             ->label(__('books.fields.contributor_role'))
                             ->options(ContributorRole::class)
                             ->default(ContributorRole::Author->value)
                             ->required(),
                     ])
+                    ->orderColumn('position')
                     ->defaultItems(1)
                     ->reorderable()
                     ->columnSpanFull(),

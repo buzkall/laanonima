@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
 use App\Enums\BookLanguage;
+use App\Enums\ContributorRole;
 use Database\Factories\BookFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Spatie\Image\Enums\Fit;
@@ -32,9 +35,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string $title
  * @property string|null $subtitle
  * @property string|null $original_title
- * @property array<int, array{name?: string, role?: string}>|null $contributors
  * @property string|null $authors_line
- * @property array<int, string>|null $author_slugs
  * @property int|null $publisher_id
  * @property string|null $imprint
  * @property string|null $collection_name
@@ -72,10 +73,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read Publisher|null $publisher
+ * @property-read Collection<int, BookContributor> $contributors
+ * @property-read Collection<int, Author> $authors
  */
 #[Fillable([
     'isbn13', 'isbn10', 'ean13', 'slug', 'external_reference', 'title', 'subtitle', 'original_title',
-    'contributors', 'authors_line', 'author_slugs', 'publisher_id', 'imprint', 'collection_name', 'collection_number',
+    'authors_line', 'publisher_id', 'imprint', 'collection_name', 'collection_number',
     'published_on', 'published_year', 'edition_number', 'edition_statement', 'country_of_publication',
     'city_of_publication', 'legal_deposit', 'binding', 'pages', 'height_mm', 'width_mm', 'thickness_mm', 'weight_grams',
     'language', 'original_language', 'subjects', 'synopsis', 'back_cover_text', 'cover_source_url', 'cover_color',
@@ -102,8 +105,6 @@ class Book extends Model implements HasMedia
     protected function casts(): array
     {
         return [
-            'contributors'       => 'array',
-            'author_slugs'       => 'array',
             'subjects'           => 'array',
             'raw_metadata'       => 'array',
             'binding'            => BookBinding::class,
@@ -120,13 +121,35 @@ class Book extends Model implements HasMedia
     protected static function booted(): void
     {
         static::saving(function(self $book): void {
-            $book->authors_line = self::buildAuthorsLine($book->contributors);
-            $book->author_slugs = self::buildAuthorSlugs($book->contributors);
-
             if (blank($book->slug)) {
                 $book->slug = Str::slug(Str::limit($book->title, 80, '')) . '-' . $book->isbn13;
             }
         });
+    }
+
+    /**
+     * The title page, one row per person and role, in the order they are
+     * written. Ties on position fall back to insertion order so a row filed
+     * without one still lands after the ones before it.
+     *
+     * @return HasMany<BookContributor, $this>
+     */
+    public function contributors(): HasMany
+    {
+        return $this->hasMany(BookContributor::class)->orderBy('position')->orderBy('id');
+    }
+
+    /**
+     * Only the people filed as authors: the ones with a page of their own.
+     *
+     * @return BelongsToMany<Author, $this>
+     */
+    public function authors(): BelongsToMany
+    {
+        return $this->belongsToMany(Author::class, 'book_contributors')
+            ->wherePivot('role', ContributorRole::Author->value)
+            ->orderByPivot('position')
+            ->orderByPivot('id');
     }
 
     /**
@@ -202,27 +225,23 @@ class Book extends Model implements HasMedia
     }
 
     /**
-     * Other books on the shelf by any of the same people.
-     *
-     * Matched on the denormalized authors line rather than the contributors
-     * JSON, so a co-written book is found from either name.
+     * Other books on the shelf by any of the same people, so a co-written
+     * book is found from either name.
      *
      * @return Collection<int, self>
      */
     public function alsoByAuthors(int $limit = 4): Collection
     {
-        $authors = $this->contributorNames('author');
+        $authorIds = $this->authors->modelKeys();
 
-        if ($authors === []) {
+        if ($authorIds === []) {
             return new Collection;
         }
 
         return $this->alongside($limit)
-            ->where(function(Builder $query) use ($authors): void {
-                foreach ($authors as $author) {
-                    $query->orWhere('authors_line', 'like', '%' . $author . '%');
-                }
-            })
+            ->whereHas('contributors', fn(Builder $query): Builder => $query
+                ->whereIn('author_id', $authorIds)
+                ->where('role', ContributorRole::Author))
             ->get();
     }
 
@@ -251,45 +270,107 @@ class Book extends Model implements HasMedia
     }
 
     /**
-     * The contributor names for a given role, in the order they were entered.
+     * The names filed under one role, in the order they were entered.
      *
      * @return array<int, string>
      */
-    public function contributorNames(string $role): array
+    public function contributorNames(ContributorRole|string $role): array
     {
-        return array_values(array_map(
-            fn(array $contributor): string => $contributor['name'],
-            array_filter(
-                $this->contributors ?? [],
-                fn(array $contributor): bool => ($contributor['role'] ?? null) === $role
-                    && filled($contributor['name'] ?? null),
-            ),
-        ));
+        $role = $role instanceof ContributorRole ? $role : ContributorRole::from($role);
+
+        return $this->contributors
+            ->where('role', $role)
+            ->map(fn(BookContributor $contributor): string => $contributor->author->name)
+            ->values()
+            ->all();
     }
 
     /**
-     * The authors as name and slug, so each one can be linked to its own page.
+     * What one person did on this book, as labels.
      *
-     * @return array<int, array{name: string, slug: string}>
+     * A book listed on someone's own page shows its author, which says
+     * nothing about why it is there: this is what tells a translator's shelf
+     * apart from an author's.
+     *
+     * @return array<int, string>
      */
-    public function authors(): array
+    public function rolesFor(Author $author): array
     {
-        return array_map(
-            fn(string $name): array => ['name' => $name, 'slug' => self::authorSlug($name)],
-            $this->contributorNames('author'),
-        );
+        return $this->contributors
+            ->where('author_id', $author->getKey())
+            ->map(fn(BookContributor $contributor): string => $contributor->role->getLabel())
+            ->values()
+            ->all();
     }
 
     /**
-     * How a person's name becomes the last segment of their page's address.
+     * Replace the title page with these people, in this order.
      *
-     * There is no authors table: the slug is the key, and `books.author_slugs`
-     * is the denormalized index it is looked up in. Everything that builds or
-     * resolves an author link goes through here, so the two never drift.
+     * Names are matched to existing authors by slug, so the same person on
+     * two books stays one record. The same name twice under one role is kept
+     * once.
+     *
+     * @param  array<int, array{name: string, role: ContributorRole|string}>  $contributors
      */
-    public static function authorSlug(string $name): string
+    public function syncContributors(array $contributors): void
     {
-        return Str::slug($name);
+        $this->contributors()->get()->each->delete();
+
+        $filed = [];
+        $position = 0;
+
+        foreach ($contributors as $contributor) {
+            if (blank($contributor['name'])) {
+                continue;
+            }
+
+            $author = Author::named($contributor['name']);
+            $role = $contributor['role'] instanceof ContributorRole
+                ? $contributor['role']
+                : ContributorRole::from($contributor['role']);
+
+            if (isset($filed[$author->id][$role->value])) {
+                continue;
+            }
+
+            $filed[$author->id][$role->value] = true;
+
+            $this->contributors()->create([
+                'author_id' => $author->id,
+                'role'      => $role,
+                'position'  => ++$position,
+            ]);
+        }
+
+        $this->unsetRelation('contributors')->unsetRelation('authors');
+        $this->syncAuthorsLine();
+    }
+
+    /**
+     * Rewrite the denormalized authors line from the contributor rows, so
+     * search, sorting and the listings run against a plain indexed column
+     * rather than a join.
+     *
+     * Written straight to the row: this runs from a contributor's own model
+     * events, and a save on the book here would fire its hooks for nothing.
+     */
+    public function syncAuthorsLine(): void
+    {
+        $names = $this->contributors()
+            ->with('author')
+            ->where('role', ContributorRole::Author)
+            ->get()
+            ->map(fn(BookContributor $contributor): string => $contributor->author->name);
+
+        $line = $names->isEmpty() ? null : $names->implode(', ');
+
+        if ($line === $this->authors_line) {
+            return;
+        }
+
+        $this->newQuery()->whereKey($this->getKey())->update(['authors_line' => $line]);
+        $this->authors_line = $line;
+        $this->syncOriginalAttribute('authors_line');
     }
 
     /**
@@ -336,6 +417,7 @@ class Book extends Model implements HasMedia
     {
         $query->onShelf()
             ->withCover()
+            ->with('contributors.author')
             ->limit((int)config('site.shelf.on_stage'));
     }
 
@@ -384,51 +466,5 @@ class Book extends Model implements HasMedia
             ->whereKeyNot($this->getKey())
             ->orderByDesc('published_on')
             ->limit($limit);
-    }
-
-    /**
-     * The slug of every author, so an author's page is one indexed lookup
-     * rather than a scan that has to slug each row in PHP.
-     *
-     * @param  array<int, array{name?: string, role?: string}>|null  $contributors
-     * @return array<int, string>
-     */
-    private static function buildAuthorSlugs(?array $contributors): array
-    {
-        return array_values(array_unique(array_map(
-            self::authorSlug(...),
-            self::authorsAmong($contributors),
-        )));
-    }
-
-    /**
-     * Denormalize the authors out of the contributors JSON so search and sorting
-     * run against a plain indexed column rather than a JSON path.
-     *
-     * @param  array<int, array{name?: string, role?: string}>|null  $contributors
-     */
-    private static function buildAuthorsLine(?array $contributors): ?string
-    {
-        $authors = self::authorsAmong($contributors);
-
-        return $authors === [] ? null : implode(', ', $authors);
-    }
-
-    /**
-     * The names filed as authors, trimmed, in the order they were entered.
-     *
-     * @param  array<int, array{name?: string, role?: string}>|null  $contributors
-     * @return array<int, string>
-     */
-    private static function authorsAmong(?array $contributors): array
-    {
-        return array_values(array_map(
-            fn(array $contributor): string => trim($contributor['name']),
-            array_filter(
-                $contributors ?? [],
-                fn(array $contributor): bool => ($contributor['role'] ?? null) === 'author'
-                    && filled($contributor['name'] ?? null),
-            ),
-        ));
     }
 }

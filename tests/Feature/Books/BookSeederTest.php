@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Support\Isbn;
@@ -71,6 +72,13 @@ it('records translators alongside authors', function(): void {
         ->toBe(['Richard Gross', 'María Esperanza Romero'])
         ->and($schwarzenbach->original_language->value)->toBe('deu')
         ->and($schwarzenbach->original_title)->toBe('Tod in Persien');
+});
+
+it('says a word about every person on a title page', function(): void {
+    $this->seed(BookSeeder::class);
+
+    expect(Author::query()->whereNull('bio')->orWhere('bio', '')->count())->toBe(0)
+        ->and(Author::firstWhere('slug', 'annemarie-schwarzenbach')->bio)->toContain('1908');
 });
 
 it('joins co-authors into one authors line', function(): void {

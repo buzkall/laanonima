@@ -1,13 +1,16 @@
 <?php
 
 use App\Enums\BookAvailability;
+use App\Enums\ContributorRole;
 use App\Filament\Resources\Books\Pages\CreateBook;
 use App\Filament\Resources\Books\Pages\EditBook;
 use App\Filament\Resources\Books\Pages\ListBooks;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\User;
 use App\Rules\Isbn;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -62,6 +65,7 @@ it('searches by publisher, shown under the author', function(): void {
 
 it('creates a book', function(): void {
     $publisher = Publisher::factory()->create();
+    $author = Author::factory()->create(['name' => 'John Kennedy Toole']);
 
     livewire(CreateBook::class)
         ->fillForm([
@@ -74,7 +78,7 @@ it('creates a book', function(): void {
             'vat_rate'               => 4,
             'stock'                  => 3,
             'price_cents'            => '12.90',
-            'contributors'           => [['name' => 'John Kennedy Toole', 'role' => 'author']],
+            'contributors'           => [['author_id' => $author->id, 'role' => 'author']],
         ])
         ->call('create')
         ->assertHasNoFormErrors();
@@ -85,6 +89,86 @@ it('creates a book', function(): void {
         ->and($book->price_cents)->toBe(1290)
         ->and($book->authors_line)->toBe('John Kennedy Toole')
         ->and($book->slug)->toBe('la-conjura-de-los-necios-9788433920423');
+});
+
+it('files each person on the title page as a row with a role', function(): void {
+    $author = Author::factory()->create(['name' => 'Gillian Anderson']);
+    $translator = Author::factory()->create(['name' => 'Esther Cruz Santaella']);
+    $other = Author::factory()->create();
+
+    livewire(CreateBook::class)
+        ->fillForm([
+            'isbn13'       => '9788419812742',
+            'title'        => 'Quiero',
+            'contributors' => [
+                ['author_id' => $author->id, 'role' => 'author'],
+                ['author_id' => $translator->id, 'role' => 'translator'],
+            ],
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    $book = Book::firstWhere('isbn13', '9788419812742');
+
+    expect($book->authors_line)->toBe('Gillian Anderson')
+        ->and($book->contributorNames('translator'))->toBe(['Esther Cruz Santaella'])
+        ->and($book->contributors)->toHaveCount(2);
+
+    livewire(ListBooks::class)
+        ->filterTable('authors', $author->id)
+        ->assertCanSeeTableRecords([$book]);
+
+    livewire(ListBooks::class)
+        ->filterTable('authors', $other->id)
+        ->assertCanNotSeeTableRecords([$book]);
+});
+
+it('keeps the rows in the order the bookseller wrote them', function(): void {
+    $book = Book::factory()->create(['contributors' => [
+        ['name' => 'Ana Garriga', 'role' => 'author'],
+        ['name' => 'Carmen Urbita', 'role' => 'author'],
+    ]]);
+    [$garriga, $urbita] = $book->contributors;
+
+    livewire(EditBook::class, ['record' => $book->getRouteKey()])
+        ->fillForm([
+            'contributors' => [
+                ['author_id' => $urbita->author_id, 'role' => 'author'],
+                ['author_id' => $garriga->author_id, 'role' => 'author'],
+            ],
+        ])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect($book->refresh()->authors_line)->toBe('Carmen Urbita, Ana Garriga');
+});
+
+/*
+ | The bookseller must not have to leave a half-filled book form to file a new
+ | author: the select in each contributor row opens a modal with the same name
+ | and biography fields the authors resource asks for, and picks the new
+ | record when it closes.
+ */
+it('creates an author from a contributor row and selects it', function(): void {
+    Repeater::fake();
+
+    livewire(CreateBook::class)
+        ->fillForm(['contributors' => [['author_id' => null, 'role' => 'author']]])
+        ->callFormComponentAction('contributors.0.author_id', 'createOption', data: [
+            'name' => 'Almudena Grandes',
+            'bio'  => 'Escritora madrileña.',
+        ])
+        ->assertHasNoFormComponentActionErrors()
+        ->assertFormSet(fn(array $state): array => [
+            'contributors.0.author_id' => Author::firstWhere('name', 'Almudena Grandes')?->id,
+            'contributors.0.role'      => ContributorRole::Author,
+        ]);
+
+    $author = Author::firstWhere('name', 'Almudena Grandes');
+
+    expect($author)->not->toBeNull()
+        ->and($author->slug)->toBe('almudena-grandes')
+        ->and($author->bioExcerpt())->toBe('Escritora madrileña.');
 });
 
 it('rejects an ISBN whose check digit does not add up', function(): void {

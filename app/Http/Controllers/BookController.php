@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Support\CoverPalette;
 use App\Support\ShelfArrangement;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
@@ -37,23 +38,24 @@ class BookController extends Controller
     }
 
     /**
-     * Everything on the shelf by one person.
+     * Everything on the shelf one person had a hand in, whatever they did on
+     * it: every name in "Quién lo escribe" is a link, translators included,
+     * and they all lead here.
      *
-     * There is no authors table: the slug in the address is the key, matched
-     * against the denormalized `author_slugs` the model writes on every save.
-     * An author we have nothing by is a 404 rather than an empty shelf -- the
-     * address was either mistyped or the last book by them has been withdrawn.
+     * Someone with nothing of theirs on the web is a 404 rather than an empty
+     * shelf -- the last book they worked on has been withdrawn, or the
+     * address was mistyped.
      */
-    public function author(string $author): View
+    public function author(Author $author): View
     {
         $books = Book::query()->onShelf()
-            ->whereJsonContains('author_slugs', $author)
+            ->whereHas('contributors', fn(Builder $query): Builder => $query->whereBelongsTo($author))
             ->paginate($this->perPage());
 
         abort_if($books->total() === 0, 404);
 
         return view('books.author', [
-            'name'    => $this->authorName($books, $author),
+            'author'  => $author,
             'books'   => $books,
             'palette' => CoverPalette::fromCover(null),
         ]);
@@ -87,7 +89,7 @@ class BookController extends Controller
     {
         Gate::authorize('view', $book);
 
-        $book->load(['publisher.media', 'media']);
+        $book->load(['publisher.media', 'media', 'contributors.author', 'authors']);
 
         return view('books.show', [
             'book'          => $book,
@@ -104,27 +106,5 @@ class BookController extends Controller
     private function perPage(): int
     {
         return (int)config('site.shelf.per_page');
-    }
-
-    /**
-     * The author's name as it is written on the books, read back off the shelf.
-     *
-     * The slug is all the address carries, and slugging is lossy, so the name
-     * has to come from a record rather than from the URL. Every book on the
-     * page has this author, so the first one that slugs to it answers.
-     *
-     * @param  LengthAwarePaginator<int, Book>  $books
-     */
-    private function authorName(LengthAwarePaginator $books, string $slug): string
-    {
-        foreach ($books->items() as $book) {
-            foreach ($book->contributorNames('author') as $name) {
-                if (Book::authorSlug($name) === $slug) {
-                    return $name;
-                }
-            }
-        }
-
-        return str($slug)->headline()->value();
     }
 }

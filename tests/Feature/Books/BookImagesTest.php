@@ -5,6 +5,7 @@ use App\Enums\BookCoverOutcome;
 use App\Filament\Resources\Books\Pages\CreateBook;
 use App\Filament\Resources\Books\Pages\EditBook;
 use App\Filament\Resources\Books\Pages\ListBooks;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\User;
 use Filament\Notifications\Notification;
@@ -203,7 +204,7 @@ describe('downloading a cover from an address', function(): void {
             ->fillForm([
                 'isbn13'       => '9788433920423',
                 'title'        => 'A mano',
-                'contributors' => [['name' => 'Alguien', 'role' => 'author']],
+                'contributors' => [['author_id' => Author::factory()->create()->id, 'role' => 'author']],
             ])
             ->callFormComponentAction('covers', 'downloadCover', [
                 'url' => 'https://imagessl3.casadellibro.com/a/l/t0/23/9788433920423.jpg',

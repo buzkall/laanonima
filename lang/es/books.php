@@ -9,6 +9,10 @@ return [
         'navigation_group' => 'Catálogo',
     ],
 
+    'author' => [
+        'create' => 'Nuevo autor/a',
+    ],
+
     'publisher' => [
         'label'        => 'Editorial',
         'plural_label' => 'Editoriales',
@@ -175,7 +179,7 @@ return [
         'out_of_stock_note' => 'agotado en tienda',
         'no_cover'          => 'Sin cubierta',
         'synopsis_kicker'   => 'De qué va',
-        'object_kicker'     => 'El objeto',
+        'object_kicker'     => 'El libro',
         'published_format'  => 'MMMM [de] YYYY',
         'measures'          => ':height × :width cm',
         'authors_kicker'    => 'Quién lo escribe',

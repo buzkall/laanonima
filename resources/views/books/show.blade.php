@@ -1,4 +1,4 @@
-@use('App\Models\Book')
+@use('App\Models\BookContributor')
 @php
     $cover = $book->coverUrl();
     $inStock = $book->stock > 0;
@@ -42,17 +42,13 @@
     /* The cover leads on its own; the rest of the collection illustrates the object. */
     $gallery = $book->gallery();
 
-    /* Names that have a shelf of their own become links; the rest are text. */
-    $authors = $book->authors();
-
-    $contributors = collect($book->contributors ?? [])
-        ->filter(fn (array $person): bool => filled($person['name'] ?? null))
-        ->map(fn (array $person): array => [
-            ...$person,
-            'href' => ($person['role'] ?? null) === 'author'
-                ? route('authors.show', Book::authorSlug($person['name']))
-                : null,
-        ]);
+    /* Everyone on the title page has a shelf of their own, so every name links. */
+    $contributors = $book->contributors->map(fn (BookContributor $contributor): array => [
+        'name' => $contributor->author->name,
+        'bio'  => $contributor->author->bio,
+        'role' => $contributor->role,
+        'href' => route('authors.show', $contributor->author),
+    ]);
 
     $factLinks = array_filter([
         __('books.fields.publisher_id') => $book->publisher === null ? null : route('publishers.show', $book->publisher),
@@ -125,13 +121,13 @@
         >
             <h1 class="m-0 text-balance font-display text-[clamp(52px,6.4vw,104px)]/[0.92] font-normal tracking-[-0.01em]">{{ $book->title }}</h1>
 
-            @if ($authors !== [])
+            @if ($book->authors->isNotEmpty())
                 <p class="mt-6 mb-0 text-[clamp(22px,2.4vw,30px)]">
-                    @foreach ($authors as $author)
+                    @foreach ($book->authors as $author)
                         <a
-                            href="{{ route('authors.show', $author['slug']) }}"
+                            href="{{ route('authors.show', $author) }}"
                             class="underline decoration-[var(--rule)] decoration-1 underline-offset-[7px] transition-opacity duration-150 hover:opacity-65"
-                        >{{ $author['name'] }}</a>@unless ($loop->last),@endunless
+                        >{{ $author->name }}</a>@unless ($loop->last),@endunless
                     @endforeach
                 </p>
             @elseif ($book->authors_line)
@@ -225,14 +221,13 @@
         <div class="grid max-w-[860px] grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-start gap-x-12 gap-y-10">
             <ul class="m-0 flex list-none flex-col gap-3 p-0">
                 @foreach ($contributors as $person)
-                    <li class="flex items-baseline justify-between gap-4 border-b border-dotted border-ink pb-[10px]">
-                        @if ($person['href'])
+                    <li class="border-b border-dotted border-ink pb-[10px]">
+                        <div class="flex items-baseline justify-between gap-4">
                             <a href="{{ $person['href'] }}" class="font-display text-[26px] text-[var(--accent)] transition-opacity duration-150 hover:opacity-65">{{ $person['name'] }}</a>
-                        @else
-                            <span class="font-display text-[26px]">{{ $person['name'] }}</span>
-                        @endif
-                        @if (filled($person['role'] ?? null))
-                            <span class="whitespace-nowrap text-[16px] italic">{{ __('books.contributor_role.' . $person['role']) }}</span>
+                            <span class="whitespace-nowrap text-[16px] italic">{{ $person['role']->getLabel() }}</span>
+                        </div>
+                        @if (filled($person['bio']))
+                            <div class="rich-text mt-2 max-w-[52ch] text-[16px]/[1.5]">{!! $person['bio'] !!}</div>
                         @endif
                     </li>
                 @endforeach

@@ -174,7 +174,6 @@ readonly class BookMetadata
             'isbn10'              => $this->isbn10,
             'title'               => $this->title,
             'subtitle'            => $this->subtitle,
-            'contributors'        => $this->contributors === [] ? null : $this->contributors,
             'imprint'             => $this->imprint,
             'collection_name'     => $this->collectionName,
             'published_on'        => $this->publishedOn,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Author;
 use App\Models\Book;
 
 it('lists everything on the shelf by one author', function(): void {
@@ -44,15 +45,19 @@ it('finds a co-writer from either name', function(): void {
     }
 });
 
-it('keeps translators off the author shelf', function(): void {
+it('gives a translator a shelf of their own too', function(): void {
     Book::factory()->create([
+        'title'        => 'Quiero',
         'contributors' => [
             ['name' => 'Gillian Anderson', 'role' => 'author'],
             ['name' => 'Esther Cruz Santaella', 'role' => 'translator'],
         ],
     ]);
 
-    $this->get(route('authors.show', 'esther-cruz-santaella'))->assertNotFound();
+    $this->get(route('authors.show', 'esther-cruz-santaella'))
+        ->assertOk()
+        ->assertSee('Esther Cruz Santaella')
+        ->assertSee('Quiero');
 });
 
 it('never shows a book that is hidden from the web', function(): void {
@@ -69,7 +74,7 @@ it('is a 404 for an author we have nothing by', function(): void {
     $this->get(route('authors.show', 'nadie-en-absoluto'))->assertNotFound();
 });
 
-it('links to the author from the book page', function(): void {
+it('links to everyone on the title page from the book page', function(): void {
     $book = Book::factory()->create([
         'contributors' => [
             ['name' => 'Ana Garriga', 'role' => 'author'],
@@ -80,18 +85,48 @@ it('links to the author from the book page', function(): void {
     $this->get(route('books.show', $book))
         ->assertOk()
         ->assertSee(route('authors.show', 'ana-garriga'))
-        ->assertDontSee(route('authors.show', 'esther-cruz-santaella'));
+        ->assertSee(route('authors.show', 'esther-cruz-santaella'));
 });
 
-it('keeps the slugs in step with the contributors when a book is edited', function(): void {
+it('follows the contributors when a book is refiled under someone else', function(): void {
     $book = Book::factory()->create(['contributors' => [['name' => 'Ana Garriga', 'role' => 'author']]]);
 
-    expect($book->author_slugs)->toBe(['ana-garriga']);
+    expect($book->authors_line)->toBe('Ana Garriga');
 
-    $book->update(['contributors' => [['name' => 'Carmen Urbita', 'role' => 'author']]]);
+    $book->syncContributors([['name' => 'Carmen Urbita', 'role' => 'author']]);
 
-    expect($book->refresh()->author_slugs)->toBe(['carmen-urbita']);
+    expect($book->refresh()->authors_line)->toBe('Carmen Urbita');
 
     $this->get(route('authors.show', 'ana-garriga'))->assertNotFound();
     $this->get(route('authors.show', 'carmen-urbita'))->assertOk();
+});
+
+it('files the same person on two books as one record', function(): void {
+    Book::factory()->count(2)->create(['contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']]]);
+
+    expect(Author::where('slug', 'almudena-grandes')->count())->toBe(1)
+        ->and(Author::firstWhere('slug', 'almudena-grandes')->books)->toHaveCount(2);
+});
+
+it('tells the reader who the author is, in the shop\'s own words', function(): void {
+    Author::factory()->create([
+        'name' => 'Almudena Grandes',
+        'bio'  => '<p>Escritora madrileña, <strong>cronista de la posguerra</strong>.</p><p>Murió en 2021.</p>',
+    ]);
+    Book::factory()->create(['contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']]]);
+
+    $this->get(route('authors.show', 'almudena-grandes'))
+        ->assertOk()
+        ->assertSee('<strong>cronista de la posguerra</strong>', escape: false)
+        ->assertSee('<p>Murió en 2021.</p>', escape: false)
+        ->assertSee('content="Escritora madrileña, cronista de la posguerra. Murió en 2021."', escape: false)
+        ->assertSee(__('books.public.author.intro', ['name' => 'Almudena Grandes']));
+});
+
+it('rewrites the authors line of every book when a person is renamed', function(): void {
+    $book = Book::factory()->create(['contributors' => [['name' => 'Almudena Grande', 'role' => 'author']]]);
+
+    Author::firstWhere('slug', 'almudena-grande')->update(['name' => 'Almudena Grandes']);
+
+    expect($book->refresh()->authors_line)->toBe('Almudena Grandes');
 });

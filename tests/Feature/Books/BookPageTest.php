@@ -3,6 +3,7 @@
 use App\Enums\BookAvailability;
 use App\Filament\Resources\Books\Pages\EditBook;
 use App\Filament\Resources\Books\Pages\ListBooks;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\User;
@@ -111,6 +112,20 @@ it('has nothing to show beside the object when the cover is the only picture', f
     $book->addCoverFromString(fakeCover());
 
     expect($book->refresh()->gallery())->toBeEmpty();
+});
+
+it('says a word about each person on the title page, translator included', function(): void {
+    Author::factory()->create(['name' => 'Gillian Anderson', 'bio' => '<p>Actriz conocida por <em>«Expediente X»</em>.</p>']);
+    Author::factory()->create(['name' => 'Esther Cruz Santaella', 'bio' => '<p>Traductora del inglés al castellano.</p>']);
+    $book = Book::factory()->create(['contributors' => [
+        ['name' => 'Gillian Anderson', 'role' => 'author'],
+        ['name' => 'Esther Cruz Santaella', 'role' => 'translator'],
+    ]]);
+
+    $this->get(route('books.show', $book))
+        ->assertOk()
+        ->assertSee('Actriz conocida por <em>«Expediente X»</em>.', escape: false)
+        ->assertSee('<p>Traductora del inglés al castellano.</p>', escape: false);
 });
 
 it('points at other books by the same people', function(): void {

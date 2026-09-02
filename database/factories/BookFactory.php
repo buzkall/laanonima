@@ -5,11 +5,13 @@ namespace Database\Factories;
 use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
 use App\Enums\BookLanguage;
+use App\Enums\ContributorRole;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Support\Isbn;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use WeakMap;
 
 /**
  * @extends Factory<Book>
@@ -17,6 +19,18 @@ use Illuminate\Support\Str;
 class BookFactory extends Factory
 {
     protected $model = Book::class;
+
+    /**
+     * The title page each made book is waiting for, keyed by the instance.
+     *
+     * `contributors` is not a column any more, but a test still reads best as
+     * `Book::factory()->create(['contributors' => [['name' => ..., 'role' => 'author']]])`,
+     * so the key is lifted out of the attributes before the model is built
+     * and filed as rows once it has an id.
+     *
+     * @var WeakMap<Book, array<int, array{name: string, role: ContributorRole|string}>>
+     */
+    private static ?WeakMap $pendingContributors = null;
 
     /**
      * @return array<string, mixed>
@@ -32,7 +46,7 @@ class BookFactory extends Factory
             'title'        => $title,
             'subtitle'     => fake()->optional(0.3)->sentence(4),
             'contributors' => [
-                ['name' => fake()->name(), 'role' => 'author'],
+                ['name' => fake()->name(), 'role' => ContributorRole::Author->value],
             ],
             'publisher_id'    => Publisher::factory(),
             'published_on'    => $publishedOn,
@@ -48,6 +62,30 @@ class BookFactory extends Factory
             'is_active'       => true,
             'metadata_source' => 'manual',
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function(Book $book): void {
+            $contributors = self::pending()[$book] ?? [];
+            unset(self::pending()[$book]);
+
+            $book->syncContributors($contributors);
+        });
+    }
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    public function newModel(array $attributes = []): Book
+    {
+        $contributors = $attributes['contributors'] ?? [];
+        unset($attributes['contributors']);
+
+        $book = parent::newModel($attributes);
+        self::pending()[$book] = $contributors;
+
+        return $book;
     }
 
     public function featured(): static
@@ -68,9 +106,17 @@ class BookFactory extends Factory
         return $this->state(fn(array $attributes): array => [
             'contributors' => [
                 ...$attributes['contributors'],
-                ['name' => fake()->name(), 'role' => 'translator'],
+                ['name' => fake()->name(), 'role' => ContributorRole::Translator->value],
             ],
         ]);
+    }
+
+    /**
+     * @return WeakMap<Book, array<int, array{name: string, role: ContributorRole|string}>>
+     */
+    private static function pending(): WeakMap
+    {
+        return self::$pendingContributors ??= new WeakMap;
     }
 
     /**

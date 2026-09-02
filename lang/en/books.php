@@ -9,6 +9,10 @@ return [
         'navigation_group' => 'Catalogue',
     ],
 
+    'author' => [
+        'create' => 'New author',
+    ],
+
     'publisher' => [
         'label'        => 'Publisher',
         'plural_label' => 'Publishers',

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Actions\Books\DownloadBookCover;
 use App\Actions\Books\FetchBookMetadata;
 use App\Enums\BookAvailability;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Database\Seeder;
@@ -39,7 +40,6 @@ class BookSeeder extends Seeder
                 ['isbn13' => $data['isbn13']],
                 [
                     ...collect($data)->except(['publisher', 'contributors'])->all(),
-                    'contributors'           => $data['contributors'],
                     'publisher_id'           => $publisher->id,
                     'availability'           => $data['availability'] ?? BookAvailability::Available->value,
                     'country_of_publication' => 'ES',
@@ -47,7 +47,26 @@ class BookSeeder extends Seeder
                 ],
             );
 
+            $book->syncContributors($data['contributors']);
+            $this->writeBios($data['contributors']);
+
             $this->attachCover($book);
+        }
+    }
+
+    /**
+     * What the shop says about each person, from books.json. The file is the
+     * source of the demo data, so a bio written there wins over one typed in
+     * the panel on the next seed, the way the rest of the record does.
+     *
+     * @param  array<int, array{name: string, role: string, bio?: string}>  $contributors
+     */
+    private function writeBios(array $contributors): void
+    {
+        foreach ($contributors as $person) {
+            if (filled($person['bio'] ?? null)) {
+                Author::named($person['name'])->update(['bio' => $person['bio']]);
+            }
         }
     }
 
