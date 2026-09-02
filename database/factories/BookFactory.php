@@ -67,8 +67,8 @@ class BookFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function(Book $book): void {
-            $contributors = self::pending()[$book] ?? [];
-            unset(self::pending()[$book]);
+            $contributors = $this->pending()[$book] ?? [];
+            unset($this->pending()[$book]);
 
             $book->syncContributors($contributors);
         });
@@ -83,7 +83,7 @@ class BookFactory extends Factory
         unset($attributes['contributors']);
 
         $book = parent::newModel($attributes);
-        self::pending()[$book] = $contributors;
+        $this->pending()[$book] = $contributors;
 
         return $book;
     }
@@ -114,7 +114,7 @@ class BookFactory extends Factory
     /**
      * @return WeakMap<Book, array<int, array{name: string, role: ContributorRole|string}>>
      */
-    private static function pending(): WeakMap
+    private function pending(): WeakMap
     {
         return self::$pendingContributors ??= new WeakMap;
     }

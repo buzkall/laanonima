@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+#
+# Runs the same checks GitHub Actions runs (composer ci:check) before every push,
+# so a failing pint/rector/phpstan/test never reaches CI.
+#
+# Bypass for a genuine emergency with: git push --no-verify
+
+set -e
+
+printf '\033[33mRunning composer ci:check before push...\033[0m\n'
+
+if ! composer ci:check; then
+    printf '\033[31m\nPush aborted: composer ci:check failed.\033[0m\n'
+    printf 'Fix it, commit, and push again (composer rector fixes most Rector failures).\n'
+    printf 'To bypass: git push --no-verify\n'
+    exit 1
+fi
+
+printf '\033[32mAll checks passed. Pushing...\033[0m\n'

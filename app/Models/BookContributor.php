@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ContributorRole;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,10 +23,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read Author $author
  */
 #[Fillable(['book_id', 'author_id', 'role', 'position'])]
+#[WithoutTimestamps]
 class BookContributor extends Model
 {
-    public $timestamps = false;
-
     /**
      * @return array<string, string>
      */

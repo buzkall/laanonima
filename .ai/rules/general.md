@@ -17,17 +17,6 @@ Rector rewrites code without regard for `pint.json`, so its output can violate t
 
 `composer rector:check` (dry-run, no Pint) is the CI gate and runs in `ci:check` after `lint:check`.
 
-`rector.php` deliberately skips `SafeDeclareStrictTypesRector`: no file in this project declares `strict_types` today, and enabling it across `config/` changes scalar coercion at runtime rather than at test time. Remove the skip only as a deliberate project-wide decision.
-
-Rector also skips `ReadOnlyPropertyRector` everywhere (Livewire/Filament hydrate public properties by reflection) and `AddOverrideAttributeToOverriddenMethodsRector` / `ClassPropertyAssignToConstructorPromotionRector` under `app/Filament` (static props carry union types like `string|BackedEnum|null` that narrowing rules break).
-
-`withPhpSets()` takes its target from `composer.json`, which is `php: ^8.3` — so PHP 8.4+ rules (e.g. parenthesisless `new`) are NOT applied. Bump the constraint if the project actually requires 8.4+.
-
-## Always run Pint after Rector
-Rector rewrites code without regard for `pint.json`, so its output can violate this project's style (closure spacing, `=>` alignment, cast spacing). Never run `vendor/bin/rector process` on its own — use `composer rector`, which chains `rector process` then `pint --dirty`. `rector process` exits 0 even when it changes files, so the Pint step always runs.
-
-`composer rector:check` (dry-run, no Pint) is the CI gate and runs in `ci:check` after `lint:check`.
-
 Deliberate skips in `rector.php`:
 
 - `SafeDeclareStrictTypesRector` — no file declares `strict_types` today, and enabling it across `config/` changes scalar coercion at runtime rather than at test time. Remove only as a project-wide decision.
@@ -36,3 +25,9 @@ Deliberate skips in `rector.php`:
 - `ClassPropertyAssignToConstructorPromotionRector` under `app/Filament` — static props carry union types like `string|BackedEnum|null` that promotion breaks.
 
 `withPhpSets()` takes its target from `composer.json`, which is `php: ^8.3` — so PHP 8.4+ rules (e.g. parenthesisless `new`) are NOT applied. Bump the constraint if the project actually requires 8.4+.
+
+## `composer ci:check` runs before every push
+
+`.githooks/pre-push` runs the full `composer ci:check` (pint, rector, phpstan, tests) and aborts the push if any step fails, so a Rector or Pint violation can never reach GitHub Actions again. It is enabled per clone with `git config core.hooksPath .githooks`, which `composer setup` does for you.
+
+`git push --no-verify` skips it — for genuine emergencies only. When the hook fails on Rector, `composer rector` fixes it and re-runs Pint.
