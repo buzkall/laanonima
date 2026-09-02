@@ -4,8 +4,10 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookRequestController;
 use Illuminate\Support\Facades\Route;
 
-if (file_exists(__DIR__ . '/autologin.php')) {
-    require __DIR__ . '/autologin.php';
+// Optional local-only helper. It may be a symlink into a path the running process is not allowed to read
+// (a Git GUI or other sandboxed app booting Artisan), so failing to open it must never take the whole app down.
+if (is_readable(__DIR__ . '/autologin.php')) {
+    @include __DIR__ . '/autologin.php';
 }
 
 Route::controller(BookController::class)->group(function(): void {
