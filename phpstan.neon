@@ -10,4 +10,11 @@ parameters:
         - database/
         - routes/
 
+    # Local-only helper: a gitignored symlink that may point into a path the
+    # running process cannot read (a Git GUI booting the checks). PHPStan hashes
+    # every analysed file for its result cache, so it must not see this one.
+    excludePaths:
+        analyseAndScan:
+            - routes/autologin*.php
+
     level: 7
