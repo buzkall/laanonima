@@ -8,6 +8,7 @@ paths:
   - app/Http/Requests/StoreBookRequest.php
   - 'app/Mail/**'
   - resources/views/books/request.blade.php
+  - app/Policies/CupidaRecommendationPolicy.php
 ---
 
 # Books

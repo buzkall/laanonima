@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create(config('finisterre.table_name', 'finisterre_tasks'), function(Blueprint $table): void {
+            $table->id();
+            $table->string('title');
+            $table->longText('description')->nullable();
+            $table->string('status');
+            $table->string('priority');
+            $table->dateTime('due_at')->nullable();
+            $table->dateTime('completed_at')->nullable();
+            $table->unsignedInteger('order_column')->nullable();
+            $table->foreignId('creator_id')->nullable()
+                ->constrained(config('finisterre.authenticatable_table_name', 'users'))
+                ->nullOnDelete();
+            $table->foreignId('assignee_id')->nullable()
+                ->constrained(config('finisterre.authenticatable_table_name', 'users'))
+                ->nullOnDelete();
+            $table->timestamps();
+        });
+
+        Schema::create(config('finisterre.comments.table_name', 'finisterre_task_comments'), function(Blueprint $table): void {
+            $table->id();
+            $table->foreignId('task_id')->nullable()->constrained(config('finisterre.table_name'))->cascadeOnDelete();
+            $table->longText('comment');
+            $table->foreignId('creator_id')->nullable()
+                ->constrained(config('finisterre.authenticatable_table_name', 'users'))
+                ->nullOnDelete();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists(config('finisterre.comments.table_name', 'finisterre_task_comments'));
+        Schema::dropIfExists(config('finisterre.table_name', 'finisterre_tasks'));
+    }
+};

@@ -17,6 +17,8 @@ export default defineConfig({
                 'resources/images/brand/la-anonima-logo.png',
                 'resources/images/brand/la-anonima-logo-dark.png',
                 'resources/images/brand/la-cupida.webp',
+                'resources/css/filament/admin/theme.css',
+                'resources/css/filament/client/theme.css',
             ],
             refresh: true,
             fonts: [

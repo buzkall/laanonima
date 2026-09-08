@@ -6,6 +6,7 @@ use App\Filament\Auth\EditProfile;
 use App\Filament\Auth\Login;
 use App\Http\Middleware\ForgetIntendedUrlFromOtherPanels;
 use Arzcode\FilamentMagicLogin\MagicLoginPlugin;
+use Arzcode\Finisterre\FinisterrePlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -69,6 +70,9 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(MagicLoginPlugin::make());
+            ->plugin(MagicLoginPlugin::make())
+            ->plugins([
+                FinisterrePlugin::make(),
+            ]);
     }
 }
