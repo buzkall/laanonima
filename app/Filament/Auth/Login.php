@@ -2,10 +2,13 @@
 
 namespace App\Filament\Auth;
 
+use App\Enums\UserRole;
 use App\Http\Responses\LoginResponse;
 use App\Models\User;
 use Arzcode\FilamentMagicLogin\Pages\Login as BaseLogin;
 use Filament\Facades\Filament;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Component;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
@@ -33,5 +36,46 @@ class Login extends BaseLogin
         // email, a suspended account — decisive here too.
         return $user instanceof User
             && $user->canAccessPanel(Filament::getPanel($user->role->panelId()));
+    }
+
+    /**
+     * The demo opens on the client panel's login form with the shop's own address
+     * already typed in, so nobody has to be told what to write. The address is the
+     * one `config('site.contact_email')` holds and `DatabaseSeeder` gives to Lorena's
+     * account — an admin, which signs in here and is redirected by {@see LoginResponse}.
+     */
+    protected function getEmailFormComponent(): Component
+    {
+        $email = parent::getEmailFormComponent();
+
+        if ($this->isDemoLogin()) {
+            $email->default(config('site.contact_email'));
+        }
+
+        return $email;
+    }
+
+    /**
+     * The password is not written down, only pointed at: the riddle under the field
+     * is enough for anybody in the room and no use to anybody outside it. It goes below
+     * the box rather than in the hint slot beside the label, where it is too long to sit.
+     */
+    protected function getPasswordFormComponent(): Component
+    {
+        $password = parent::getPasswordFormComponent();
+
+        if ($password instanceof TextInput && $this->isDemoLogin()) {
+            $password->helperText(__('auth.demo.password_hint'));
+        }
+
+        return $password;
+    }
+
+    /**
+     * Only the client panel is dressed for the demo; the admin form stays blank.
+     */
+    protected function isDemoLogin(): bool
+    {
+        return Filament::getCurrentOrDefaultPanel()?->getId() === UserRole::Client->panelId();
     }
 }

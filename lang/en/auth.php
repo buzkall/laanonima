@@ -17,4 +17,18 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Demo
+    |--------------------------------------------------------------------------
+    |
+    | The client panel's login form arrives with the shop's own address already
+    | filled in; this is the riddle printed under the password box in its place.
+    |
+    */
+
+    'demo' => [
+        'password_hint' => 'the woman who knew who Anonymous was (lowercase, no spaces)',
+    ],
+
 ];

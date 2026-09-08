@@ -17,4 +17,18 @@ return [
     'password' => 'La contraseña proporcionada es incorrecta.',
     'throttle' => 'Demasiados intentos de acceso. Inténtalo de nuevo en :seconds segundos.',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Demo
+    |--------------------------------------------------------------------------
+    |
+    | The client panel's login form arrives with the shop's own address already
+    | filled in; this is the riddle printed under the password box in its place.
+    |
+    */
+
+    'demo' => [
+        'password_hint' => 'La mujer que sabía quién era anónimo (en minúsculas y junto)',
+    ],
+
 ];

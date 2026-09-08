@@ -15,6 +15,10 @@ return [
 
     'actions' => [
 
+        'register' => [
+            'label' => 'Regístrate',
+        ],
+
         'request_password_reset' => [
             'label' => '¿Has olvidado tu contraseña?',
         ],
@@ -41,7 +45,7 @@ return [
 
         'throttled' => [
             'title' => 'Demasiados intentos. Prueba de nuevo en :seconds segundos.',
-            'body' => 'Prueba de nuevo en :seconds segundos.',
+            'body'  => 'Prueba de nuevo en :seconds segundos.',
         ],
 
     ],

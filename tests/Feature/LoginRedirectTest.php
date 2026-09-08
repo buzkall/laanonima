@@ -121,3 +121,19 @@ it('keeps the magic link button on both login pages', function(string $panelId):
 it('renders both login pages', function(string $url): void {
     get($url)->assertOk();
 })->with(['/admin/login', '/client/login']);
+
+it('opens the client login with the shop address filled in and a hint under the password', function(): void {
+    Filament::setCurrentPanel('client');
+
+    Livewire::test(Login::class)
+        ->assertSchemaStateSet(['email' => config('site.contact_email')], 'form')
+        ->assertSee(__('auth.demo.password_hint'));
+});
+
+it('leaves the admin login empty and unhinted', function(): void {
+    Filament::setCurrentPanel('admin');
+
+    Livewire::test(Login::class)
+        ->assertSchemaStateSet(['email' => null], 'form')
+        ->assertDontSee(__('auth.demo.password_hint'));
+});
