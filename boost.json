@@ -22,9 +22,11 @@
         "testing-best-practices",
         "livewire-development",
         "tailwindcss-development",
+        "filament-development",
         "blaze-optimize",
         "debugging-output-and-previewing-html-using-ray",
         "debug-using-debugbar",
-        "filament-security-audit"
+        "filament-security-audit",
+        "planning-filament"
     ]
 }

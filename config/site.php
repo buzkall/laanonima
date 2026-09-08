@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'contact_email' => env('SITE_CONTACT_EMAIL', 'hola@laanonima.es'),
+    'contact_email' => env('SITE_CONTACT_EMAIL', 'hola@laanonimalibreria.com'),
 
     /*
     |--------------------------------------------------------------------------
