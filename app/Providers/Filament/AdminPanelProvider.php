@@ -20,6 +20,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
@@ -35,6 +36,14 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            // Resolved lazily: the panel is configured while the application
+            // boots, before the Vite manifest is guaranteed to be readable.
+            ->brandLogo(fn(): string => Vite::asset('resources/images/brand/la-anonima-logo.png'))
+            ->darkModeBrandLogo(fn(): string => Vite::asset('resources/images/brand/la-anonima-logo-dark.png'))
+            ->brandLogoHeight('2rem')
+            // The same mark the shop's own pages wear; Filament renders a
+            // single `rel="icon"`, so the .ico fallback has no place here.
+            ->favicon(asset('favicon.svg'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

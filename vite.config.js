@@ -8,13 +8,15 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
     plugins: [
         laravel({
-            // The wordmark is listed as an entry so Vite hashes it and
-            // `Vite::asset()` can resolve it from the manifest; it is not
-            // reachable from the CSS or JS entries.
+            // The wordmarks and La Cupida's mark are listed as entries so Vite
+            // hashes them and `Vite::asset()` can resolve them from the
+            // manifest; none is reachable from the CSS or JS entries.
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/images/brand/la-anonima-logo.png',
+                'resources/images/brand/la-anonima-logo-dark.png',
+                'resources/images/brand/la-cupida.webp',
             ],
             refresh: true,
             fonts: [
