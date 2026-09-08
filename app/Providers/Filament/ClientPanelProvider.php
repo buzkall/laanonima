@@ -32,7 +32,7 @@ class ClientPanelProvider extends PanelProvider
             ->path('client')
             ->login(Login::class)
             ->registration(Register::class)
-            ->profile(EditProfile::class)
+            ->profile(EditProfile::class, isSimple: false)
             ->colors([
                 'primary' => Color::Amber,
             ])
