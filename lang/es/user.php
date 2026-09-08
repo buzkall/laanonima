@@ -61,9 +61,8 @@ return [
     'filters' => [
         'email_verification' => [
             'label'      => 'Verificación del correo',
-            'all'        => 'Todos los usuarios',
-            'verified'   => 'Usuarios verificados',
-            'unverified' => 'Usuarios sin verificar',
+            'verified'   => 'Verificados',
+            'unverified' => 'Sin verificar',
         ],
     ],
 

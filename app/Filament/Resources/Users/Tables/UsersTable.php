@@ -62,7 +62,6 @@ class UsersTable
                 TernaryFilter::make('email_verified_at')
                     ->label(__('user.filters.email_verification.label'))
                     ->nullable()
-                    ->placeholder(__('user.filters.email_verification.all'))
                     ->trueLabel(__('user.filters.email_verification.verified'))
                     ->falseLabel(__('user.filters.email_verification.unverified')),
             ])

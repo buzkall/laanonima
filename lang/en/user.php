@@ -61,9 +61,8 @@ return [
     'filters' => [
         'email_verification' => [
             'label'      => 'Email verification',
-            'all'        => 'All users',
-            'verified'   => 'Verified users',
-            'unverified' => 'Unverified users',
+            'verified'   => 'Verified',
+            'unverified' => 'Unverified',
         ],
     ],
 

@@ -9,11 +9,14 @@ use App\Support\BookMetadata\BookMetadataProvider;
 use App\Support\BookMetadata\ChainedBookMetadataProvider;
 use App\Support\BookMetadata\GoogleBooksProvider;
 use App\Support\BookMetadata\OpenLibraryProvider;
+use App\Support\Cupida\CupidaCatalogue;
 use Carbon\CarbonImmutable;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as LoginResponseContract;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as RegistrationResponseContract;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Schema;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -37,6 +40,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RegistrationResponseContract::class, RegistrationResponse::class);
 
         $this->registerBookMetadataProvider();
+
+        /*
+         | La Cupida reads three JSON files off disk and scores the whole pool
+         | against every set of answers, so it is a singleton to keep that to
+         | one decode per request rather than one per call.
+         */
+        $this->app->singleton(CupidaCatalogue::class);
     }
 
     /**
@@ -150,6 +160,42 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
+     * Every ternary filter is a row of three buttons rather than a select.
+     *
+     * The labels are read off the filter itself -- `getPlaceholder()` is the "-"
+     * Filament already puts on the blank option, `getTrueLabel()` and
+     * `getFalseLabel()` the "Yes" and "No" -- so a filter that spells its own
+     * out with `->placeholder()` or `->trueLabel()` keeps them, and none of this
+     * needs a translation key of its own.
+     *
+     * Three things are load-bearing. The field has to be called `value`: that is
+     * the state path `TernaryFilter::queries()` reads. Blank is the `''` option --
+     * `blank('')` is what sends the query down the third branch and keeps the
+     * filter out of the indicators. And `->default('')` is what lights that
+     * button on a page that arrives with no filter set, because the filter's own
+     * state is `null` there while the option's value is `''`.
+     */
+    protected function configureTernaryFilters(): void
+    {
+        TernaryFilter::configureUsing(fn(TernaryFilter $filter): TernaryFilter => $filter
+            ->schema(fn(): array => [
+                ToggleButtons::make('value')
+                    ->label($filter->getLabel())
+                    ->grouped()
+                    ->options([
+                        ''  => $filter->getPlaceholder(),
+                        '1' => $filter->getTrueLabel(),
+                        '0' => $filter->getFalseLabel(),
+                    ])
+                    ->colors([
+                        '1' => 'success',
+                        '0' => 'gray',
+                    ])
+                    ->default(''),
+            ]));
+    }
+
+    /**
      * Configure default behaviors for production-ready applications.
      */
     protected function configureDefaults(): void
@@ -158,6 +204,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->configureDateDisplayFormats();
         $this->configureTableDefaults();
+        $this->configureTernaryFilters();
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),
