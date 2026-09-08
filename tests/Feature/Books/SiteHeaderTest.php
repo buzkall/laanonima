@@ -51,7 +51,13 @@ it('wears the wordmark rather than the shop name in writing', function(): void {
 it('no longer prints the tagline in the header', function(): void {
     $book = Book::factory()->create(['title' => 'Cuaderno de faros']);
 
-    $this->get(route('books.show', $book))
+    $page = $this->get(route('books.show', $book))
         ->assertOk()
-        ->assertDontSee(__('books.public.tagline'));
+        ->getContent();
+
+    // Scoped to the bar rather than the page: the footer line reads
+    // ":name Librería · Madrid", so the tagline is a substring of it and a
+    // page-wide assertDontSee() would fail on the footer instead.
+    expect(str((string)$page)->between('<header', '</header>')->toString())
+        ->not->toContain(__('books.public.tagline'));
 });
