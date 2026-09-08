@@ -37,6 +37,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string|null $original_title
  * @property string|null $authors_line
  * @property int|null $publisher_id
+ * @property int|null $subject_id
  * @property string|null $imprint
  * @property string|null $collection_name
  * @property string|null $collection_number
@@ -55,7 +56,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property int|null $weight_grams
  * @property BookLanguage $language
  * @property BookLanguage|null $original_language
- * @property array<int, array{scheme?: string, code?: string|null, heading?: string|null}>|null $subjects
  * @property string|null $synopsis
  * @property string|null $back_cover_text
  * @property string|null $cover_source_url
@@ -81,7 +81,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
     'authors_line', 'publisher_id', 'imprint', 'collection_name', 'collection_number',
     'published_on', 'published_year', 'edition_number', 'edition_statement', 'country_of_publication',
     'city_of_publication', 'legal_deposit', 'binding', 'pages', 'height_mm', 'width_mm', 'thickness_mm', 'weight_grams',
-    'language', 'original_language', 'subjects', 'synopsis', 'back_cover_text', 'cover_source_url', 'cover_color',
+    'language', 'original_language', 'subject_id', 'synopsis', 'back_cover_text', 'cover_source_url', 'cover_color',
     'price_cents', 'vat_rate', 'currency', 'stock', 'availability', 'is_featured', 'is_active',
     'metadata_source', 'metadata_synced_at', 'raw_metadata',
 ])]
@@ -105,7 +105,6 @@ class Book extends Model implements HasMedia
     protected function casts(): array
     {
         return [
-            'subjects'           => 'array',
             'raw_metadata'       => 'array',
             'binding'            => BookBinding::class,
             'availability'       => BookAvailability::class,
@@ -150,6 +149,17 @@ class Book extends Model implements HasMedia
             ->wherePivot('role', ContributorRole::Author->value)
             ->orderByPivot('position')
             ->orderByPivot('id');
+    }
+
+    /**
+     * What the book is about: one THEMA subject, the most specific one that
+     * fits. Everything broader follows from the code -- see Subject.
+     *
+     * @return BelongsTo<Subject, $this>
+     */
+    public function subject(): BelongsTo
+    {
+        return $this->belongsTo(Subject::class);
     }
 
     /**

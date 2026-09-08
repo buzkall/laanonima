@@ -79,7 +79,6 @@ class GoogleBooksProvider implements BookMetadataProvider
             widthMm: $dimensions['width'],
             thicknessMm: $dimensions['thickness'],
             language: BookLanguage::fromIso6391(is_string($volume['language'] ?? null) ? $volume['language'] : null),
-            subjects: $this->subjects($volume),
             synopsis: is_string($volume['description'] ?? null) ? $volume['description'] : null,
             coverSourceUrl: $this->coverUrl($volume),
             source: 'google_books',
@@ -112,22 +111,6 @@ class GoogleBooksProvider implements BookMetadataProvider
         return array_values(array_map(
             fn(string $name): array => ['name' => $name, 'role' => 'author'],
             $names,
-        ));
-    }
-
-    /**
-     * Google's categories are free text, not a coded scheme like Thema or IBIC.
-     *
-     * @param  array<string, mixed>  $volume
-     * @return array<int, array{scheme: string, code: string|null, heading: string|null}>
-     */
-    private function subjects(array $volume): array
-    {
-        $categories = array_filter(Arr::wrap($volume['categories'] ?? []), is_string(...));
-
-        return array_values(array_map(
-            fn(string $category): array => ['scheme' => 'text', 'code' => null, 'heading' => $category],
-            $categories,
         ));
     }
 

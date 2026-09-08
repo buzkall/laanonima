@@ -25,6 +25,9 @@ class DatabaseSeeder extends Seeder
             'role'  => UserRole::Client,
         ]);
 
+        /* Subjects first: a book points at one. */
+        $this->call(SubjectSeeder::class);
+
         $this->call(BookSeeder::class);
     }
 }

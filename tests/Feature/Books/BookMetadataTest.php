@@ -196,11 +196,13 @@ it('does not reach the network for an ISBN that cannot be valid', function(): vo
 });
 
 /*
- | Open Library's "subjects" are reader-contributed tags, not a classification.
- | One real record (Momo, 9788420482767) yields "Girls", "Time", "tortoises",
- | "lilies", "interest" -- fifteen rows of noise in the Materias table.
+ | Neither provider names a materia, and the DTO no longer carries one: Google
+ | answers with free text and Open Library with reader-contributed tags -- one
+ | real record (Momo, 9788420482767) yields "Girls", "tortoises", "lilies".
+ | Which THEMA subject a book belongs to is a bookseller's judgement, made in
+ | the panel. What the providers said survives in `raw_metadata`.
  */
-it('imports no subjects from Open Library', function(): void {
+it('leaves the materia to the bookseller and keeps what the provider said', function(): void {
     Http::fake([
         'openlibrary.org/api/books*' => Http::response([
             'ISBN:9788420482767' => [
@@ -215,5 +217,8 @@ it('imports no subjects from Open Library', function(): void {
         'covers.openlibrary.org/*' => Http::response('', 404),
     ]);
 
-    expect(app(FetchBookMetadata::class)('9788420482767')->subjects)->toBeEmpty();
+    $metadata = app(FetchBookMetadata::class)('9788420482767');
+
+    expect($metadata->toBookAttributes())->not->toHaveKey('subjects')
+        ->and($metadata->raw)->toHaveKey('subjects');
 });

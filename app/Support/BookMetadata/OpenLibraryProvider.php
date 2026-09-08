@@ -69,14 +69,6 @@ class OpenLibraryProvider implements BookMetadataProvider
             thicknessMm: $physical['thickness'],
             weightGrams: $physical['weight'],
             language: BookLanguage::Spa,
-            /*
-             | Open Library's "subjects" are reader-contributed tags, not a
-             | classification: a single record yields "Girls", "Time",
-             | "tortoises", "lilies", "interest". Fifteen rows of that in the
-             | Materias table is worse than none, so nothing is imported here.
-             | Google Books' BISAC-style categories are kept; they are real.
-             */
-            subjects: [],
             synopsis: $this->synopsis($data),
             coverSourceUrl: $this->coverUrl($data, $isbn13),
             source: 'open_library',

@@ -17,7 +17,6 @@ readonly class BookMetadata
 {
     /**
      * @param  array<int, array{name: string, role: string}>  $contributors
-     * @param  array<int, array{scheme: string, code: string|null, heading: string|null}>  $subjects
      * @param  array<string, mixed>  $raw
      */
     public function __construct(
@@ -41,7 +40,6 @@ readonly class BookMetadata
         public ?int $thicknessMm = null,
         public ?int $weightGrams = null,
         public ?BookLanguage $language = null,
-        public array $subjects = [],
         public ?string $synopsis = null,
         public ?string $coverSourceUrl = null,
         public ?string $source = null,
@@ -80,7 +78,6 @@ readonly class BookMetadata
             'thicknessMm'       => $this->thicknessMm,
             'weightGrams'       => $this->weightGrams,
             'language'          => $this->language?->value,
-            'subjects'          => $this->subjects,
             'synopsis'          => $this->synopsis,
             'coverSourceUrl'    => $this->coverSourceUrl,
             'source'            => $this->source,
@@ -114,7 +111,6 @@ readonly class BookMetadata
             thicknessMm: $data['thicknessMm'] ?? null,
             weightGrams: $data['weightGrams'] ?? null,
             language: BookLanguage::tryFrom($data['language'] ?? ''),
-            subjects: $data['subjects'] ?? [],
             synopsis: $data['synopsis'] ?? null,
             coverSourceUrl: $data['coverSourceUrl'] ?? null,
             source: $data['source'] ?? null,
@@ -151,7 +147,6 @@ readonly class BookMetadata
             thicknessMm: $this->thicknessMm ?? $other->thicknessMm,
             weightGrams: $this->weightGrams ?? $other->weightGrams,
             language: $this->language ?? $other->language,
-            subjects: $this->subjects !== [] ? $this->subjects : $other->subjects,
             synopsis: $this->synopsis ?? $other->synopsis,
             coverSourceUrl: $this->coverSourceUrl ?? $other->coverSourceUrl,
             source: implode('+', array_filter([$this->source, $other->source])),
@@ -188,7 +183,6 @@ readonly class BookMetadata
             'thickness_mm'        => $this->thicknessMm,
             'weight_grams'        => $this->weightGrams,
             'language'            => $this->language?->value,
-            'subjects'            => $this->subjects === [] ? null : $this->subjects,
             'synopsis'            => $this->synopsis,
             'cover_source_url'    => $this->coverSourceUrl,
             'metadata_source'     => $this->source,

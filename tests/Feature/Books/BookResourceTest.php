@@ -8,6 +8,7 @@ use App\Filament\Resources\Books\Pages\ListBooks;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
+use App\Models\Subject;
 use App\Models\User;
 use App\Rules\Isbn;
 use Filament\Forms\Components\Repeater;
@@ -307,4 +308,35 @@ describe('the ISBN lookup', function(): void {
 
         Http::assertNothingSent();
     });
+});
+
+it('files a book under one materia, chosen from the tree', function(): void {
+    $fiction = Subject::factory()->create(['code' => 'F', 'name' => 'Ficción y temas afines']);
+    $fantasy = Subject::factory()->create(['code' => 'FM', 'name' => 'Fantasía', 'parent_id' => $fiction->id]);
+
+    $book = Book::factory()->create();
+
+    livewire(EditBook::class, ['record' => $book->getRouteKey()])
+        ->fillForm(['subject_id' => $fantasy->id])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    expect($book->fresh()->subject->code)->toBe('FM');
+});
+
+it('filters the shelf by a materia and everything filed under it', function(): void {
+    $fiction = Subject::factory()->create(['code' => 'F', 'name' => 'Ficción y temas afines']);
+    $fantasy = Subject::factory()->create(['code' => 'FM', 'name' => 'Fantasía', 'parent_id' => $fiction->id]);
+    $epic = Subject::factory()->create(['code' => 'FMM', 'name' => 'Fantasía épica', 'parent_id' => $fantasy->id]);
+    $crime = Subject::factory()->create(['code' => 'FF', 'name' => 'Crímenes', 'parent_id' => $fiction->id]);
+
+    $deep = Book::factory()->for($epic)->create(['title' => 'Un tocho de dragones']);
+    $sibling = Book::factory()->for($crime)->create(['title' => 'Un cadáver en la biblioteca']);
+
+    /* Asking for fantasy must reach the epic fantasy filed under it -- that is
+       the whole point of storing a code rather than a label. */
+    livewire(ListBooks::class)
+        ->filterTable('subject', 'FM')
+        ->assertCanSeeTableRecords([$deep])
+        ->assertCanNotSeeTableRecords([$sibling]);
 });

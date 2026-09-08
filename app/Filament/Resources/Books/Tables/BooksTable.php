@@ -9,6 +9,7 @@ use App\Filament\Resources\Books\Actions\ViewOnSiteAction;
 use App\Filament\Resources\Publishers\RelationManagers\BooksRelationManager;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Subject;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -125,6 +126,40 @@ class BooksTable
                     ->searchable()
                     ->preload()
                     ->hiddenOn(BooksRelationManager::class),
+
+                /*
+                 | Filters the whole subtree, not the one code: choosing
+                 | "Ficción y temas afines" should find the fantasy and the
+                 | crime filed under it. A THEMA code is its own path, so that
+                 | is a left-anchored `like` on the index rather than a walk.
+                 |
+                 | Not preloaded -- there are a couple of thousand of these.
+                 */
+                SelectFilter::make('subject')
+                    ->label(__('books.fields.subject'))
+                    ->searchable()
+                    ->getSearchResultsUsing(fn(string $search): array => Subject::query()
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('code', 'like', "{$search}%")
+                        ->orderBy('code')
+                        ->limit(40)
+                        ->get()
+                        ->mapWithKeys(fn(Subject $subject): array => [$subject->code => $subject->path()])
+                        ->all())
+                    ->getOptionLabelUsing(fn(string $value): ?string => Subject::query()
+                        ->where('code', $value)
+                        ->first()?->path())
+                    ->query(fn(Builder $query, array $data): Builder => $query->when(
+                        filled($data['value'] ?? null),
+                        fn(Builder $query): Builder => $query->whereHas(
+                            'subject',
+                            fn(Builder $subject): Builder => $subject->where(
+                                'code',
+                                'like',
+                                $data['value'] . '%',
+                            ),
+                        ),
+                    )),
 
                 SelectFilter::make('availability')
                     ->label(__('books.fields.availability'))

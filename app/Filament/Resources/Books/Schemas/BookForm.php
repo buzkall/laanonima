@@ -11,6 +11,7 @@ use App\Filament\Resources\Books\Actions\DownloadCoverAction;
 use App\Filament\Resources\Books\Actions\LookupIsbnAction;
 use App\Filament\Resources\Books\Actions\ResetCoverColorAction;
 use App\Models\Book;
+use App\Models\Subject;
 use App\Rules\Isbn;
 use App\Support\Isbn as IsbnHelper;
 use Filament\Forms\Components\ColorPicker;
@@ -340,27 +341,19 @@ class BookForm
                     ->rows(4)
                     ->columnSpanFull(),
 
-                Repeater::make('subjects')
-                    ->label(__('books.fields.subjects'))
-                    ->table([
-                        TableColumn::make(__('books.fields.subject_scheme'))
-                            ->width('10rem'),
-                        TableColumn::make(__('books.fields.subject_code'))
-                            ->width('10rem'),
-                        TableColumn::make(__('books.fields.subject_heading'))
-                            ->markAsRequired(),
-                    ])
-                    ->schema([
-                        TextInput::make('scheme')
-                            ->label(__('books.fields.subject_scheme'))
-                            ->default('text'),
-                        TextInput::make('code')
-                            ->label(__('books.fields.subject_code')),
-                        TextInput::make('heading')
-                            ->label(__('books.fields.subject_heading'))
-                            ->required(),
-                    ])
-                    ->defaultItems(0)
+                /*
+                 | One materia, picked from THEMA rather than typed. The option
+                 | shows where it sits -- "Ficción y temas afines › Fantasía" --
+                 | because on its own "Fantasía" does not say whether it means
+                 | the novels or the criticism, and the tree is two thousand
+                 | entries deep.
+                 */
+                Select::make('subject_id')
+                    ->label(__('books.fields.subject'))
+                    ->relationship('subject', 'name')
+                    ->getOptionLabelFromRecordUsing(fn(Subject $record): string => $record->path())
+                    ->searchable(['code', 'name'])
+                    ->preload(false)
                     ->columnSpanFull(),
             ])
             ->columns(1);
