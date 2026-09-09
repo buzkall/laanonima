@@ -17,6 +17,10 @@ export default defineConfig({
                 'resources/images/brand/la-anonima-logo.png',
                 'resources/images/brand/la-anonima-logo-dark.png',
                 'resources/images/brand/la-cupida.webp',
+                // The share card: the same mark laid on the cream page at the
+                // 1200x630 the scrapers crop to, in JPEG because WhatsApp and
+                // Telegram will not preview a WebP.
+                'resources/images/brand/la-cupida-og.jpg',
                 'resources/css/filament/admin/theme.css',
                 'resources/css/filament/client/theme.css',
             ],

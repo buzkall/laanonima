@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Vite;
 
 use function Pest\Livewire\livewire;
 
@@ -135,4 +136,33 @@ it('says so in the log when its catalog will not parse', function(): void {
         ->assertSee(__('cupida.empty.heading'));
 
     File::deleteDirectory($directory);
+});
+
+/*
+ | La Cupida is the one shelf page with a face of its own, so it is the one
+ | that shares with a picture. The other shelves pass no `:og-image` and get
+ | the small card instead of a wide one with nothing in it.
+ */
+it('shares with the cupida card behind it', function(): void {
+    $card = Vite::asset('resources/images/brand/la-cupida-og.jpg');
+
+    $this->get(route('cupida'))
+        ->assertOk()
+        ->assertSee('<meta property="og:image" content="' . $card . '" />', escape: false)
+        ->assertSee('<meta name="twitter:card" content="summary_large_image" />', escape: false);
+});
+
+it('shares the guest page with the same card', function(): void {
+    config()->set('cupida.guests', ['lorena' => 'Lorena']);
+
+    $this->get(route('cupida.guest', 'lorena'))
+        ->assertOk()
+        ->assertSee(Vite::asset('resources/images/brand/la-cupida-og.jpg'), escape: false);
+});
+
+it('leaves a shelf with no face of its own without a picture', function(): void {
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertDontSee('og:image')
+        ->assertSee('<meta name="twitter:card" content="summary" />', escape: false);
 });

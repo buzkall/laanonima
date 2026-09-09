@@ -1,4 +1,10 @@
-<x-layouts.shelf :title="__('cupida.title')" :description="__('cupida.intro')" :palette="$palette" :footer-cta="false">
+<x-layouts.shelf
+    :title="__('cupida.title')"
+    :description="__('cupida.intro')"
+    :palette="$palette"
+    :footer-cta="false"
+    :og-image="Vite::asset('resources/images/brand/la-cupida-og.jpg')"
+>
     <livewire:cupida :guest="$guest" />
 
     {{--

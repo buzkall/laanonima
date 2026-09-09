@@ -1,4 +1,4 @@
-@props(['title', 'description', 'palette', 'footerCta' => true])
+@props(['title', 'description', 'palette', 'footerCta' => true, 'ogImage' => null])
 
 {{-- A shelf of books: the home page, an author's page, an imprint's page.
      None of them belongs to a single book, so all three wear the house
@@ -18,6 +18,18 @@
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:description" content="{{ str($description)->limit(155) }}" />
     <meta property="og:url" content="{{ url()->current() }}" />
+
+    {{-- A shelf is a list of covers and no one of them speaks for the page, so
+         most of these pages share without a picture. `:og-image` is for the
+         page that does have a face of its own -- La Cupida -- and it takes an
+         absolute URL, which is what `Vite::asset()` already returns. The card
+         only grows to the wide format once there is something to put in it. --}}
+    @if ($ogImage)
+        <meta property="og:image" content="{{ $ogImage }}" />
+        <meta name="twitter:card" content="summary_large_image" />
+    @else
+        <meta name="twitter:card" content="summary" />
+    @endif
 
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
