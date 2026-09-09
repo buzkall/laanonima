@@ -3,11 +3,11 @@
 use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
 use Monolog\Handler\PsrHandler;
 
-it('registers the bugsnag service provider', function() {
+it('registers the bugsnag service provider', function(): void {
     expect(app()->getLoadedProviders())->toHaveKey(BugsnagServiceProvider::class);
 });
 
-it('resolves the bugsnag log channel without falling back to the emergency logger', function() {
+it('resolves the bugsnag log channel without falling back to the emergency logger', function(): void {
     $handlers = Log::channel('bugsnag')->getLogger()->getHandlers();
 
     expect($handlers[0])->toBeInstanceOf(PsrHandler::class);
