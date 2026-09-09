@@ -14,10 +14,10 @@ A URL belonging to no panel at all (`PanelUrl::isPublic()`) is a page of the sho
 
 Note Filament refuses a sign-in at a panel `canAccessPanel()` denies: it is a credentials validation error, not a redirect.
 
-## Both panels wear the wordmark, in two colourways
+## Both panels wear the wordmark, in two colorways
 `brandLogo()` / `darkModeBrandLogo()` in `AdminPanelProvider` and `ClientPanelProvider` render `resources/images/brand/la-anonima-logo.png` and its `-dark` sibling at `brandLogoHeight('2rem')`, replacing Filament's text logo. Both are passed as closures on purpose: `panel()` runs while the application boots, and resolving `Vite::asset()` eagerly there would read the manifest before it is guaranteed to be readable.
 
-The dark file is the same wordmark with the black glyphs turned white and the brand green and magenta left alone — the black wordmark disappears against Filament's dark shell, and a CSS `invert` would wreck the two brand colours. Regenerate it from the light PNG rather than editing it by hand:
+The dark file is the same wordmark with the black glyphs turned white and the brand green and magenta left alone — the black wordmark disappears against Filament's dark shell, and a CSS `invert` would wreck the two brand colors. Regenerate it from the light PNG rather than editing it by hand:
 
 ```
 magick resources/images/brand/la-anonima-logo.png -alpha extract /tmp/alpha.png

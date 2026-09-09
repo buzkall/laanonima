@@ -6,10 +6,10 @@ use App\Models\Book;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
- * Give a book with no colour of its own the one its cover leads with.
+ * Give a book with no color of its own the one its cover leads with.
  *
  * books.cover_color belongs to whoever wrote it: reading it off the cover is
- * how an empty column gets filled, and nothing more. A colour already on the
+ * how an empty column gets filled, and nothing more. A color already on the
  * record -- derived once, or chosen in the panel, the two are not told apart --
  * survives every later upload, reordering and deletion. Emptying the field is
  * what asks for it to be read again.
@@ -24,16 +24,16 @@ class SyncCoverColor
     public function __construct(private ExtractCoverColor $extractColor) {}
 
     /**
-     * @return string|null the colour now stored
+     * @return string|null the color now stored
      */
     public function __invoke(Book $book): ?string
     {
         /*
          | Everything about the instance the event hands over is stale: the
          | attributes were read before the form wrote the record, and the media
-         | that triggered this was attached afterwards. Reading the colour off
-         | the object rather than off the row is how a colour just emptied in
-         | the panel looks like a colour still there.
+         | that triggered this was attached afterwards. Reading the color off
+         | the object rather than off the row is how a color just emptied in
+         | the panel looks like a color still there.
          |
          | Nothing comes back when the book itself is on its way out, taking its
          | media with it.

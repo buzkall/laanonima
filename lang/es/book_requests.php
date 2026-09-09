@@ -44,8 +44,8 @@ return [
     ],
 
     'filters' => [
-        'in_catalogue' => 'Sobre un libro del catálogo',
-        'mine'         => 'Solo las abiertas',
+        'in_catalog' => 'Sobre un libro del catálogo',
+        'mine'       => 'Solo las abiertas',
     ],
 
     'mail' => [

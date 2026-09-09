@@ -3,24 +3,19 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\UserRole;
+use App\Filament\Actions\GeneratePasswordAction;
 use App\Models\User;
-use Filament\Actions\Action;
+use App\Support\AccountPassword;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Illuminate\Validation\Rules\Password;
-use Livewire\Component;
 
 class UserForm
 {
-    private const int PASSWORD_LENGTH = 12;
-
     public static function configure(Schema $schema): Schema
     {
         return $schema
@@ -76,7 +71,7 @@ class UserForm
             ->password()
             ->revealable()
             ->confirmed()
-            ->rules([Password::min(self::PASSWORD_LENGTH)->letters()->mixedCase()->numbers()])
+            ->rules([AccountPassword::rule()])
             ->required(fn(string $operation): bool => $operation === 'create')
             ->saved(fn(?string $state): bool => filled($state))
             ->maxLength(255)
@@ -88,22 +83,21 @@ class UserForm
 
                 return __('user.helpers.password');
             })
-            ->hintAction(self::generatePasswordAction())
-            ->extraAlpineAttributes([
-                'x-on:reveal-password.window'   => 'isPasswordRevealed = true',
-                'x-on:copy-to-clipboard.window' => 'navigator.clipboard.writeText($event.detail.text)',
-            ]);
+            ->hintAction(GeneratePasswordAction::make())
+            ->extraAlpineAttributes(GeneratePasswordAction::revealAndCopyAttributes());
     }
 
     /**
-     * Only there once a password is being set, and never saved: the column does
-     * not exist, the field is here for the `confirmed()` rule above.
+     * Owed once a password is being set, and never saved: the column does not
+     * exist, the field is here for the `confirmed()` rule above.
      *
-     * The box appears from `visibleJs()` rather than a `visible()` closure, so
-     * it is in place on the first keystroke instead of after the password field
-     * loses focus -- otherwise Tab would carry you past where the field is
-     * about to appear. That is presentation only: `required()` below is the
-     * server's word on whether a confirmation was owed.
+     * Always on the page, and only `required()` is conditional. It was hidden
+     * until a password had been typed -- first behind a `visible()` closure,
+     * then a `visibleJs()` one -- and neither was worth it: a box that appears
+     * under the cursor moves the rest of the form out from under somebody
+     * tabbing through it. Do not put the condition back on visibility. The
+     * server's word on whether a confirmation was owed is `required()`, which
+     * is also what keeps `fillForm()` reaching this field in tests.
      */
     private static function passwordConfirmationField(): TextInput
     {
@@ -111,7 +105,6 @@ class UserForm
             ->label(__('user.fields.password_confirmation'))
             ->password()
             ->revealable()
-            ->visibleJs('($get(\'password\') ?? \'\').length > 0')
             ->required(fn(Get $get): bool => filled($get('password')))
             ->maxLength(255)
             ->saved(false)
@@ -142,50 +135,5 @@ class UserForm
             ->color(fn(?User $record): string => $record?->email_verified_at === null ? 'gray' : 'success')
             ->icon(fn(?User $record): Heroicon => $record?->email_verified_at === null ? Heroicon::OutlinedClock : Heroicon::OutlinedCheckBadge)
             ->visibleOn('edit');
-    }
-
-    /**
-     * Fills both fields with a password nobody has to invent.
-     *
-     * The generated value is revealed and copied to the clipboard in the same
-     * click, because a password that is neither visible nor copied is a
-     * password the administrator cannot pass on to the user.
-     */
-    private static function generatePasswordAction(): Action
-    {
-        return Action::make('generatePassword')
-            ->label(__('user.actions.generate_password'))
-            ->icon(Heroicon::OutlinedKey)
-            ->color('info')
-            ->badge()
-            ->action(function(Set $set, Component $livewire): void {
-                $password = self::generatePassword();
-
-                $set('password', $password);
-                $set('password_confirmation', $password);
-
-                $livewire->dispatch('reveal-password');
-                $livewire->dispatch('copy-to-clipboard', text: $password);
-
-                Notification::make()
-                    ->success()
-                    ->title(__('user.actions.password_generated_title'))
-                    ->body(__('user.actions.password_generated_body'))
-                    ->send();
-            });
-    }
-
-    /**
-     * `Str::password()` guarantees length but not case mix, so a run of it can
-     * lose to the `mixedCase()` rule roughly once in every few hundred clicks.
-     * Rerolling is cheaper than explaining that error to the administrator.
-     */
-    private static function generatePassword(): string
-    {
-        do {
-            $password = str()->password(16);
-        } while (! preg_match('/[a-z]/', $password) || ! preg_match('/[A-Z]/', $password) || ! preg_match('/\d/', $password));
-
-        return $password;
     }
 }

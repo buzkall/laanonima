@@ -35,7 +35,7 @@ beforeEach(function(): void {
     ]);
 });
 
-it('seeds the whole hand-curated catalogue', function(): void {
+it('seeds the whole hand-curated catalog', function(): void {
     $this->seed(BookSeeder::class);
 
     // Temas de Hoy publishes two of them, hence seven publishers for eight books.
@@ -162,7 +162,7 @@ it('does not attach a second copy of a cover when seeded twice', function(): voi
     });
 });
 
-it('needs no metadata provider to cover the catalogue', function(): void {
+it('needs no metadata provider to cover the catalog', function(): void {
     Http::fake([
         'openlibrary.org/*'    => Http::response([], 500),
         'www.googleapis.com/*' => Http::response([], 500),

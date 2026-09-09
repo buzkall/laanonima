@@ -21,3 +21,18 @@ it('carries the shop favicon rather than Filament\'s', function(UserRole $role):
         ->assertOk()
         ->assertSee('<link rel="icon" href="' . asset('favicon.svg') . '" />', escape: false);
 })->with([UserRole::Admin, UserRole::Client]);
+
+/*
+ | Filament's own Spanish greets whoever signs in with "Bienvenida/o", which is
+ | a form rather than a greeting. `lang/vendor/filament-panels/es/widgets/
+ | account-widget.php` overrides the one key; the rest of the file still tracks
+ | upstream.
+ */
+it('says hello on the dashboard rather than welcoming a form', function(UserRole $role): void {
+    $this->actingAs(User::factory()->create(['role' => $role]));
+
+    $this->get(Filament::getPanel($role->panelId())->getUrl())
+        ->assertOk()
+        ->assertSee('Hola')
+        ->assertDontSee('Bienvenida/o');
+})->with([UserRole::Admin, UserRole::Client]);

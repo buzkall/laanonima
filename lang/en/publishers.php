@@ -6,7 +6,7 @@ return [
         'label'            => 'Publisher',
         'plural_label'     => 'Publishers',
         'navigation_label' => 'Publishers',
-        'navigation_group' => 'Catalogue',
+        'navigation_group' => 'Catalog',
     ],
 
     'sections' => [
@@ -31,11 +31,11 @@ return [
     ],
 
     'relations' => [
-        'books' => 'Books in the catalogue',
+        'books' => 'Books in the catalog',
     ],
 
     'filters' => [
-        'with_books' => 'With books in the catalogue',
+        'with_books' => 'With books in the catalog',
     ],
 
 ];

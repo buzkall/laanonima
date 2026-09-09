@@ -1,0 +1,176 @@
+{
+    "bermejo-ana": {
+        "slug": "bermejo-ana",
+        "name": "Ana Bermejo",
+        "status": "matched",
+        "qid": "Q000000002",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ana Bermejo",
+            "description": "escritora",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "bermejo-ana.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Ana.jpg/800px-Ana.jpg",
+        "color": "#4a6f8a",
+        "credit": {
+            "file": "File:Ana.jpg",
+            "artist": "Quien Sea",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Ana.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "guerriero-leila": {
+        "slug": "guerriero-leila",
+        "name": "Leila Guerriero",
+        "status": "matched",
+        "qid": "Q000000001",
+        "pinned": false,
+        "wikidata": {
+            "label": "Leila Guerriero",
+            "description": "periodista y escritora argentina",
+            "occupations": [
+                "Q1930187",
+                "Q36180"
+            ]
+        },
+        "photo": "guerriero-leila.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Leila.jpg/800px-Leila.jpg",
+        "color": "#8a7f74",
+        "credit": {
+            "file": "File:Leila.jpg",
+            "artist": "Florenciac",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Leila.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "ito-kaoru": {
+        "slug": "ito-kaoru",
+        "name": "Kaoru Ito",
+        "status": "no_person",
+        "qid": null,
+        "pinned": true,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "mayayo-patricia": {
+        "slug": "mayayo-patricia",
+        "name": "Patricia Mayayo",
+        "status": "matched",
+        "qid": "Q00001292",
+        "pinned": false,
+        "wikidata": {
+            "label": "Patricia Mayayo",
+            "description": "escritora",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "mayayo-patricia.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/mayayo-patricia.jpg/800px-mayayo-patricia.jpg",
+        "color": "#6b7a8f",
+        "credit": {
+            "file": "File:mayayo-patricia.jpg",
+            "artist": "Alguien Dos",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:mayayo-patricia.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "parker-sarah-a": {
+        "slug": "parker-sarah-a",
+        "name": "Sarah A. Parker",
+        "status": "matched",
+        "qid": "Q00002763",
+        "pinned": false,
+        "wikidata": {
+            "label": "Sarah A. Parker",
+            "description": "escritora",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "parker-sarah-a.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/parker-sarah-a.jpg/800px-parker-sarah-a.jpg",
+        "color": "#6b7a8f",
+        "credit": {
+            "file": "File:parker-sarah-a.jpg",
+            "artist": "Alguien Tres",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:parker-sarah-a.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "rodriguez-elaine-vilar": {
+        "slug": "rodriguez-elaine-vilar",
+        "name": "Elaine Vilar Rodríguez",
+        "status": "matched",
+        "qid": "Q00001170",
+        "pinned": false,
+        "wikidata": {
+            "label": "Elaine Vilar Rodríguez",
+            "description": "escritora",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "rodriguez-elaine-vilar.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/rodriguez-elaine-vilar.jpg/800px-rodriguez-elaine-vilar.jpg",
+        "color": "#6b7a8f",
+        "credit": {
+            "file": "File:rodriguez-elaine-vilar.jpg",
+            "artist": "Alguien Uno",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:rodriguez-elaine-vilar.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "torres-sara": {
+        "slug": "torres-sara",
+        "name": "Sara Torres",
+        "status": "matched",
+        "qid": "Q000000004",
+        "pinned": false,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "vera-julia": {
+        "slug": "vera-julia",
+        "name": "Julia Vera",
+        "status": "no_image",
+        "qid": "Q000000003",
+        "pinned": false,
+        "wikidata": {
+            "label": "Julia Vera",
+            "description": "escritora",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    }
+}

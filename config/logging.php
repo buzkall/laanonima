@@ -73,6 +73,10 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'bugsnag' => [
+            'driver' => 'bugsnag',
+        ],
+
         'monthly' => [
             'driver'               => 'monthly',
             'path'                 => storage_path('logs/laravel.log'),

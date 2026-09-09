@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Throwable;
 
 /**
- * Fetches the subject tree the catalogue is classified with.
+ * Fetches the subject tree the catalog is classified with.
  *
  * The shop files every book under THEMA, the international subject scheme, and
  * publishes the whole tree in Spanish on its own site -- which is the version we

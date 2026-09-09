@@ -81,7 +81,7 @@ class User extends Authenticatable implements FilamentUser
 
     /**
      * A bookseller is whoever runs the shop. Everything the shop keeps to
-     * itself -- the requests readers send in, a book still being catalogued --
+     * itself -- the requests readers send in, a book still being catalogd --
      * is theirs to see, and nobody else's.
      */
     public function isBookseller(): bool

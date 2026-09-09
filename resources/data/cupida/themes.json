@@ -1,0 +1,992 @@
+[
+    {
+        "code": 0,
+        "shop_label": "Otras materias de la librería",
+        "label": "Otras materias de la librería",
+        "parent": null,
+        "slug": "otras-materias-de-la-libreria",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": 1,
+        "shop_label": "Geográficos",
+        "label": "Geográficos",
+        "parent": null,
+        "slug": "geograficos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": 2,
+        "shop_label": "Lenguas de la obra",
+        "label": "Lenguas de la obra",
+        "parent": null,
+        "slug": "lenguas-de-la-obra",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": 3,
+        "shop_label": "Períodos históricos",
+        "label": "Períodos históricos",
+        "parent": null,
+        "slug": "periodos-historicos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": 4,
+        "shop_label": "Fines didácticos",
+        "label": "Fines didácticos",
+        "parent": null,
+        "slug": "fines-didacticos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": 5,
+        "shop_label": "Nivel de lectura e interés especial",
+        "label": "Nivel de lectura e interés especial",
+        "parent": null,
+        "slug": "nivel-de-lectura-e-interes-especial",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": 6,
+        "shop_label": "Calificadores de estilo",
+        "label": "Calificadores de estilo",
+        "parent": null,
+        "slug": "calificadores-de-estilo",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "A",
+        "shop_label": "Artes",
+        "label": "Artes",
+        "parent": null,
+        "slug": "artes",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "C",
+        "shop_label": "Lenguas",
+        "label": "Lenguas",
+        "parent": null,
+        "slug": "lenguas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "D",
+        "shop_label": "Literatura y estudios literarios",
+        "label": "Literatura y estudios literarios",
+        "parent": null,
+        "slug": "literatura-y-estudios-literarios",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "F",
+        "shop_label": "Ficción y temas afines",
+        "label": "Ficción y temas afines",
+        "parent": null,
+        "slug": "ficcion-y-temas-afines",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "G",
+        "shop_label": "Consulta, información y materias interdisciplinarias",
+        "label": "Consulta, información y materias interdisciplinarias",
+        "parent": null,
+        "slug": "consulta-informacion-y-materias-interdisciplinarias",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "J",
+        "shop_label": "Sociedad y ciencias sociales",
+        "label": "Sociedad y ciencias sociales",
+        "parent": null,
+        "slug": "sociedad-y-ciencias-sociales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "K",
+        "shop_label": "Economía, finanzas, empresa y gestión",
+        "label": "Economía, finanzas, empresa y gestión",
+        "parent": null,
+        "slug": "economia-finanzas-empresa-y-gestion",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "L",
+        "shop_label": "Derecho",
+        "label": "Derecho",
+        "parent": null,
+        "slug": "derecho",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "M",
+        "shop_label": "Medicina",
+        "label": "Medicina",
+        "parent": null,
+        "slug": "medicina",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "N",
+        "shop_label": "Historia y arqueología",
+        "label": "Historia y arqueología",
+        "parent": null,
+        "slug": "historia-y-arqueologia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "P",
+        "shop_label": "Matemáticas y ciencia",
+        "label": "Matemáticas y ciencia",
+        "parent": null,
+        "slug": "matematicas-y-ciencia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "Q",
+        "shop_label": "Filosofía y religión",
+        "label": "Filosofía y religión",
+        "parent": null,
+        "slug": "filosofia-y-religion",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "R",
+        "shop_label": "Ciencias de la tierra, geografía, medioambiente, planificación",
+        "label": "Ciencias de la tierra, geografía, medioambiente, planificación",
+        "parent": null,
+        "slug": "ciencias-de-la-tierra-geografia-medioambiente-planificacion",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "S",
+        "shop_label": "Deportes y actividades de ocio al aire libre",
+        "label": "Deportes y actividades de ocio al aire libre",
+        "parent": null,
+        "slug": "deportes-y-actividades-de-ocio-al-aire-libre",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "T",
+        "shop_label": "Tecnología, ingeniería, agricultura",
+        "label": "Tecnología, ingeniería, agricultura",
+        "parent": null,
+        "slug": "tecnologia-ingenieria-agricultura",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "U",
+        "shop_label": "Computación e informática",
+        "label": "Computación e informática",
+        "parent": null,
+        "slug": "computacion-e-informatica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "V",
+        "shop_label": "Salud y desarrollo personal",
+        "label": "Salud y desarrollo personal",
+        "parent": null,
+        "slug": "salud-y-desarrollo-personal",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "W",
+        "shop_label": "Estilo de vida, deporte y ocio",
+        "label": "Estilo de vida, deporte y ocio",
+        "parent": null,
+        "slug": "estilo-de-vida-deporte-y-ocio",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "X",
+        "shop_label": "Novela gráfica, libros de cómics, dibujos animados",
+        "label": "Cómic y novela gráfica",
+        "parent": null,
+        "slug": "novela-grafica-libros-de-comics-dibujos-animados",
+        "deck": true,
+        "books": 1562
+    },
+    {
+        "code": "Y",
+        "shop_label": "Infantiles, juveniles y didácticos",
+        "label": "Infantiles, juveniles y didácticos",
+        "parent": null,
+        "slug": "infantiles-juveniles-y-didacticos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "Z",
+        "shop_label": "anonima",
+        "label": "anonima",
+        "parent": null,
+        "slug": "anonima",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FB",
+        "shop_label": "Ficción: general y literaria",
+        "label": "Narrativa",
+        "parent": "F",
+        "slug": "ficcion-general-y-literaria",
+        "deck": true,
+        "books": 4931
+    },
+    {
+        "code": "FC",
+        "shop_label": "Ficción biográfica",
+        "label": "Ficción biográfica",
+        "parent": "F",
+        "slug": "ficcion-biografica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FD",
+        "shop_label": "Ficción especulativa",
+        "label": "Ficción especulativa",
+        "parent": "F",
+        "slug": "ficcion-especulativa",
+        "deck": true,
+        "books": 41
+    },
+    {
+        "code": "FF",
+        "shop_label": "Crímenes y misterio",
+        "label": "Crimen y misterio",
+        "parent": "F",
+        "slug": "crimenes-y-misterio",
+        "deck": true,
+        "books": 459
+    },
+    {
+        "code": "FG",
+        "shop_label": "Ficción deportiva",
+        "label": "Ficción deportiva",
+        "parent": "F",
+        "slug": "ficcion-deportiva",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FH",
+        "shop_label": "Thriller/suspense",
+        "label": "Thriller/suspense",
+        "parent": "F",
+        "slug": "thrillersuspense",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FJ",
+        "shop_label": "Aventura de ficción",
+        "label": "Aventura de ficción",
+        "parent": "F",
+        "slug": "aventura-de-ficcion",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FK",
+        "shop_label": "Ficción de terror y lo sobrenatural",
+        "label": "Terror",
+        "parent": "F",
+        "slug": "ficcion-de-terror-y-lo-sobrenatural",
+        "deck": true,
+        "books": 158
+    },
+    {
+        "code": "FL",
+        "shop_label": "Ciencia ficción",
+        "label": "Ciencia ficción",
+        "parent": "F",
+        "slug": "ciencia-ficcion",
+        "deck": true,
+        "books": 164
+    },
+    {
+        "code": "FM",
+        "shop_label": "Fantasía",
+        "label": "Fantasía",
+        "parent": "F",
+        "slug": "fantasia",
+        "deck": true,
+        "books": 301
+    },
+    {
+        "code": "FN",
+        "shop_label": "Historias tradicionales, mitos y cuentos de hadas",
+        "label": "Historias tradicionales, mitos y cuentos de hadas",
+        "parent": "F",
+        "slug": "historias-tradicionales-mitos-y-cuentos-de-hadas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FP",
+        "shop_label": "Ficción erótica",
+        "label": "Ficción erótica",
+        "parent": "F",
+        "slug": "ficcion-erotica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FQ",
+        "shop_label": "Novelas sobre estilos de vida contemporáneos",
+        "label": "Vidas contemporáneas",
+        "parent": "F",
+        "slug": "novelas-sobre-estilos-de-vida-contemporaneos",
+        "deck": true,
+        "books": 25
+    },
+    {
+        "code": "FR",
+        "shop_label": "Narrativa romántica",
+        "label": "Narrativa romántica",
+        "parent": "F",
+        "slug": "narrativa-romantica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FS",
+        "shop_label": "Novelas sobre la vida familiar",
+        "label": "Novelas sobre la vida familiar",
+        "parent": "F",
+        "slug": "novelas-sobre-la-vida-familiar",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FT",
+        "shop_label": "Sagas generacionales",
+        "label": "Sagas generacionales",
+        "parent": "F",
+        "slug": "sagas-generacionales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FU",
+        "shop_label": "Ficción humorística",
+        "label": "Ficción humorística",
+        "parent": "F",
+        "slug": "ficcion-humoristica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FV",
+        "shop_label": "Ficción histórica",
+        "label": "Novela histórica",
+        "parent": "F",
+        "slug": "ficcion-historica",
+        "deck": true,
+        "books": 253
+    },
+    {
+        "code": "FW",
+        "shop_label": "Ficción religiosa y espiritual",
+        "label": "Ficción religiosa y espiritual",
+        "parent": "F",
+        "slug": "ficcion-religiosa-y-espiritual",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FX",
+        "shop_label": "Ficción: temas narrativos",
+        "label": "Ficción: temas narrativos",
+        "parent": "F",
+        "slug": "ficcion-temas-narrativos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FY",
+        "shop_label": "Ficción: características especiales",
+        "label": "Ficción: características especiales",
+        "parent": "F",
+        "slug": "ficcion-caracteristicas-especiales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "FZ",
+        "shop_label": "Suplementos de obras de ficción",
+        "label": "Suplementos de obras de ficción",
+        "parent": "F",
+        "slug": "suplementos-de-obras-de-ficcion",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "DB",
+        "shop_label": "Textos antiguos, clásicos y medievales",
+        "label": "Textos antiguos, clásicos y medievales",
+        "parent": "D",
+        "slug": "textos-antiguos-clasicos-y-medievales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "DC",
+        "shop_label": "Poesía",
+        "label": "Poesía",
+        "parent": "D",
+        "slug": "poesia",
+        "deck": true,
+        "books": 619
+    },
+    {
+        "code": "DD",
+        "shop_label": "Obras de teatro, textos teatrales",
+        "label": "Obras de teatro, textos teatrales",
+        "parent": "D",
+        "slug": "obras-de-teatro-textos-teatrales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "DN",
+        "shop_label": "Biografías y prosa de no ficción",
+        "label": "Biografías y memorias",
+        "parent": "D",
+        "slug": "biografias-y-prosa-de-no-ficcion",
+        "deck": true,
+        "books": 1337
+    },
+    {
+        "code": "DS",
+        "shop_label": "Literatura: historia y crítica",
+        "label": "Literatura: historia y crítica",
+        "parent": "D",
+        "slug": "literatura-historia-y-critica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JB",
+        "shop_label": "Sociedad y cultura: general",
+        "label": "Sociedad",
+        "parent": "J",
+        "slug": "sociedad-y-cultura-general",
+        "deck": true,
+        "books": 570
+    },
+    {
+        "code": "JH",
+        "shop_label": "Sociología y antropología",
+        "label": "Sociología y antropología",
+        "parent": "J",
+        "slug": "sociologia-y-antropologia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JK",
+        "shop_label": "Servicios sociales y bienestar, criminología",
+        "label": "Servicios sociales y bienestar, criminología",
+        "parent": "J",
+        "slug": "servicios-sociales-y-bienestar-criminologia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JM",
+        "shop_label": "Psicología",
+        "label": "Psicología",
+        "parent": "J",
+        "slug": "psicologia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JN",
+        "shop_label": "Educación",
+        "label": "Educación",
+        "parent": "J",
+        "slug": "educacion",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JP",
+        "shop_label": "Política y gobierno",
+        "label": "Política y gobierno",
+        "parent": "J",
+        "slug": "politica-y-gobierno",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JW",
+        "shop_label": "Guerra y defensa",
+        "label": "Guerra y defensa",
+        "parent": "J",
+        "slug": "guerra-y-defensa",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBC",
+        "shop_label": "Estudios culturales y sobre medios",
+        "label": "Estudios culturales y sobre medios",
+        "parent": "JB",
+        "slug": "estudios-culturales-y-sobre-medios",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBF",
+        "shop_label": "Cuestiones sociales y éticas",
+        "label": "Cuestiones sociales y éticas",
+        "parent": "JB",
+        "slug": "cuestiones-sociales-y-eticas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBG",
+        "shop_label": "Creencias populares y saberes polémicos",
+        "label": "Creencias populares y saberes polémicos",
+        "parent": "JB",
+        "slug": "creencias-populares-y-saberes-polemicos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBS",
+        "shop_label": "Grupos sociales e identidades",
+        "label": "Grupos sociales e identidades",
+        "parent": "JB",
+        "slug": "grupos-sociales-e-identidades",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSA",
+        "shop_label": "Clases sociales",
+        "label": "Clases sociales",
+        "parent": "JBS",
+        "slug": "clases-sociales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSC",
+        "shop_label": "Comunidades rurales",
+        "label": "Comunidades rurales",
+        "parent": "JBS",
+        "slug": "comunidades-rurales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSD",
+        "shop_label": "Comunidades urbanas",
+        "label": "Comunidades urbanas",
+        "parent": "JBS",
+        "slug": "comunidades-urbanas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSF",
+        "shop_label": "Estudios de género, grupos de género",
+        "label": "Feminismos",
+        "parent": "JBS",
+        "slug": "estudios-de-genero-grupos-de-genero",
+        "deck": true,
+        "books": 191
+    },
+    {
+        "code": "JBSJ",
+        "shop_label": "LGBTQ+ / Estudios sobre gais y lesbianas",
+        "label": "LGBTQ+ / Estudios sobre gais y lesbianas",
+        "parent": "JBS",
+        "slug": "lgbtq-estudios-sobre-gais-y-lesbianas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSL",
+        "shop_label": "Estudios étnicos",
+        "label": "Estudios étnicos",
+        "parent": "JBS",
+        "slug": "estudios-etnicos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSP",
+        "shop_label": "Grupos por edades y generaciones",
+        "label": "Grupos por edades y generaciones",
+        "parent": "JBS",
+        "slug": "grupos-por-edades-y-generaciones",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSR",
+        "shop_label": "Grupos sociales: grupos y comunidades religiosas",
+        "label": "Grupos sociales: grupos y comunidades religiosas",
+        "parent": "JBS",
+        "slug": "grupos-sociales-grupos-y-comunidades-religiosas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSW",
+        "shop_label": "Grupos sociales: estilos de vida alternativos",
+        "label": "Grupos sociales: estilos de vida alternativos",
+        "parent": "JBS",
+        "slug": "grupos-sociales-estilos-de-vida-alternativos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSX",
+        "shop_label": "Sociedades secretas",
+        "label": "Sociedades secretas",
+        "parent": "JBS",
+        "slug": "sociedades-secretas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "JBSY",
+        "shop_label": "Grupos sociales: clubes y sociedades",
+        "label": "Grupos sociales: clubes y sociedades",
+        "parent": "JBS",
+        "slug": "grupos-sociales-clubes-y-sociedades",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "QD",
+        "shop_label": "Filosofía",
+        "label": "Filosofía",
+        "parent": "Q",
+        "slug": "filosofia",
+        "deck": true,
+        "books": 306
+    },
+    {
+        "code": "QR",
+        "shop_label": "Religión y creencias",
+        "label": "Religión y creencias",
+        "parent": "Q",
+        "slug": "religion-y-creencias",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "NH",
+        "shop_label": "Historia",
+        "label": "Historia",
+        "parent": "N",
+        "slug": "historia",
+        "deck": true,
+        "books": 390
+    },
+    {
+        "code": "NK",
+        "shop_label": "Arqueología",
+        "label": "Arqueología",
+        "parent": "N",
+        "slug": "arqueologia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "AB",
+        "shop_label": "Artes: aspectos generales",
+        "label": "Artes: aspectos generales",
+        "parent": "A",
+        "slug": "artes-aspectos-generales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "AF",
+        "shop_label": "Artes: formas de expresión artística",
+        "label": "Artes: formas de expresión artística",
+        "parent": "A",
+        "slug": "artes-formas-de-expresion-artistica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "AG",
+        "shop_label": "Artes: enfoques y temas",
+        "label": "Arte",
+        "parent": "A",
+        "slug": "artes-enfoques-y-temas",
+        "deck": true,
+        "books": 63
+    },
+    {
+        "code": "AJ",
+        "shop_label": "Fotografía y fotógrafos",
+        "label": "Fotografía y fotógrafos",
+        "parent": "A",
+        "slug": "fotografia-y-fotografos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "AK",
+        "shop_label": "Diseño, arte industrial y comercial, ilustración",
+        "label": "Diseño, arte industrial y comercial, ilustración",
+        "parent": "A",
+        "slug": "diseno-arte-industrial-y-comercial-ilustracion",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "AM",
+        "shop_label": "Arquitectura",
+        "label": "Arquitectura",
+        "parent": "A",
+        "slug": "arquitectura",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "AT",
+        "shop_label": "Artes escénicas",
+        "label": "Artes escénicas",
+        "parent": "A",
+        "slug": "artes-escenicas",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "AV",
+        "shop_label": "Música",
+        "label": "Música",
+        "parent": "A",
+        "slug": "musica",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WB",
+        "shop_label": "Cocina / comidas y bebidas, etc.",
+        "label": "Cocina",
+        "parent": "W",
+        "slug": "cocina-comidas-y-bebidas-etc",
+        "deck": true,
+        "books": 132
+    },
+    {
+        "code": "WC",
+        "shop_label": "Antigüedades, objetos de época (vintage) y coleccionables",
+        "label": "Antigüedades, objetos de época (vintage) y coleccionables",
+        "parent": "W",
+        "slug": "antiguedades-objetos-de-epoca-vintage-y-coleccionables",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WD",
+        "shop_label": "Pasatiempos, acertijos y juegos",
+        "label": "Pasatiempos, acertijos y juegos",
+        "parent": "W",
+        "slug": "pasatiempos-acertijos-y-juegos",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WF",
+        "shop_label": "Artesanías, artes decorativas y manualidades",
+        "label": "Artesanías, artes decorativas y manualidades",
+        "parent": "W",
+        "slug": "artesanias-artes-decorativas-y-manualidades",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WG",
+        "shop_label": "Transporte: interés general",
+        "label": "Transporte: interés general",
+        "parent": "W",
+        "slug": "transporte-interes-general",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WH",
+        "shop_label": "Humor",
+        "label": "Humor",
+        "parent": "W",
+        "slug": "humor",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WJ",
+        "shop_label": "Guías de estilos personales y estilos de vida",
+        "label": "Guías de estilos personales y estilos de vida",
+        "parent": "W",
+        "slug": "guias-de-estilos-personales-y-estilos-de-vida",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WK",
+        "shop_label": "Mantenimiento del hogar y la vivienda",
+        "label": "Mantenimiento del hogar y la vivienda",
+        "parent": "W",
+        "slug": "mantenimiento-del-hogar-y-la-vivienda",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WM",
+        "shop_label": "Jardinería",
+        "label": "Jardinería",
+        "parent": "W",
+        "slug": "jardineria",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WN",
+        "shop_label": "Naturaleza y mundo natural: interés general",
+        "label": "Naturaleza y mundo natural: interés general",
+        "parent": "W",
+        "slug": "naturaleza-y-mundo-natural-interes-general",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WQ",
+        "shop_label": "Interés local, historia familiar y nostalgia",
+        "label": "Interés local, historia familiar y nostalgia",
+        "parent": "W",
+        "slug": "interes-local-historia-familiar-y-nostalgia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WT",
+        "shop_label": "Viajes y vacaciones",
+        "label": "Viajes y vacaciones",
+        "parent": "W",
+        "slug": "viajes-y-vacaciones",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "WZ",
+        "shop_label": "Artículos de papelería y miscelánea",
+        "label": "Artículos de papelería y miscelánea",
+        "parent": "W",
+        "slug": "articulos-de-papeleria-y-miscelanea",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "YB",
+        "shop_label": "Libros para niños: ilustrados, de actividades y de primeros conceptos de aprendizaje",
+        "label": "Libros para niños: ilustrados, de actividades y de primeros conceptos de aprendizaje",
+        "parent": "Y",
+        "slug": "libros-para-ninos-ilustrados-de-actividades-y-de-primeros-conceptos-de-aprendizaje",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "YD",
+        "shop_label": "Infantil/Juvenil: anuarios, antologías y poesía",
+        "label": "Infantil/Juvenil: anuarios, antologías y poesía",
+        "parent": "Y",
+        "slug": "infantiljuvenil-anuarios-antologias-y-poesia",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "YF",
+        "shop_label": "Ficción infantil / Ficción juvenil e historias reales",
+        "label": "Infantil y juvenil",
+        "parent": "Y",
+        "slug": "ficcion-infantil-ficcion-juvenil-e-historias-reales",
+        "deck": true,
+        "books": 2416
+    },
+    {
+        "code": "YN",
+        "shop_label": "Infantil/Juvenil: interés general",
+        "label": "Infantil/Juvenil: interés general",
+        "parent": "Y",
+        "slug": "infantiljuvenil-interes-general",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "YP",
+        "shop_label": "Material educativo",
+        "label": "Material educativo",
+        "parent": "Y",
+        "slug": "material-educativo",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "YR",
+        "shop_label": "Infantil / Juvenil, material de consulta",
+        "label": "Infantil / Juvenil, material de consulta",
+        "parent": "Y",
+        "slug": "infantil-juvenil-material-de-consulta",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "YX",
+        "shop_label": "Infantil / Juvenil: cuestiones personales y sociales",
+        "label": "Infantil / Juvenil: cuestiones personales y sociales",
+        "parent": "Y",
+        "slug": "infantil-juvenil-cuestiones-personales-y-sociales",
+        "deck": false,
+        "books": 0
+    },
+    {
+        "code": "YZ",
+        "shop_label": "Infantil / Juvenil: artículos de escritorio y papelería y objetos diversos",
+        "label": "Infantil / Juvenil: artículos de escritorio y papelería y objetos diversos",
+        "parent": "Y",
+        "slug": "infantil-juvenil-articulos-de-escritorio-y-papeleria-y-objetos-diversos",
+        "deck": false,
+        "books": 0
+    }
+]

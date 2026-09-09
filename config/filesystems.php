@@ -47,6 +47,24 @@ return [
             'report'     => false,
         ],
 
+        /*
+         | La Cupida's author portraits.
+         |
+         | Its own disk rather than a folder on 'public' so a test can
+         | Storage::fake() it, and so the one place that knows where these
+         | files live is this array. The bytes are not committed --
+         | `cupida:portraits:fetch` downloads them on deploy -- and a machine
+         | that has not run it simply deals faceless cards.
+         */
+        'portraits' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public/cupida/authors'),
+            'url'        => rtrim((string)env('APP_URL', 'http://localhost'), '/') . '/storage/cupida/authors',
+            'visibility' => 'public',
+            'throw'      => false,
+            'report'     => false,
+        ],
+
         's3' => [
             'driver'                  => 's3',
             'key'                     => env('AWS_ACCESS_KEY_ID'),

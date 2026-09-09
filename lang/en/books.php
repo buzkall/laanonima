@@ -6,7 +6,7 @@ return [
         'label'            => 'Book',
         'plural_label'     => 'Books',
         'navigation_label' => 'Books',
-        'navigation_group' => 'Catalogue',
+        'navigation_group' => 'Catalog',
     ],
 
     'author' => [
@@ -67,7 +67,7 @@ return [
         'cover'                  => 'Cover',
         'covers'                 => 'Images',
         'cover_source_url'       => 'Cover source',
-        'cover_color'            => 'Cover colour',
+        'cover_color'            => 'Cover color',
         'price_cents'            => 'Price',
         'vat_rate'               => 'VAT (%)',
         'currency'               => 'Currency',
@@ -99,6 +99,7 @@ return [
         'invalid_title'   => 'Invalid ISBN',
         'invalid_body'    => 'Check the number: the check digit does not add up.',
 
+        'found_with_cover'    => 'The cover is downloaded when you save the record.',
         'found_without_cover' => 'No cover was found: download one from an address, or upload the image by hand.',
     ],
 
@@ -116,7 +117,7 @@ return [
 
     'cover_color' => [
         'reset'   => 'Read it from the cover again',
-        'invalid' => 'Enter a colour in #rrggbb format.',
+        'invalid' => 'Enter a color in #rrggbb format.',
     ],
 
     'filters' => [
@@ -184,7 +185,7 @@ return [
         'also_note'         => 'If they publish something new, we order it on day one.',
         'publisher_kicker'  => 'Published by :publisher',
         'publisher_intro'   => 'If you like this one, from the same imprint we usually stock:',
-        'footer_line'       => ':name · Independent bookshop · Madrid',
+        'footer_line'       => ':name Bookshop · Madrid',
 
         'shelf_back' => 'See the whole shelf',
 

@@ -34,7 +34,7 @@ it('searches by name', function(): void {
         ->assertCanNotSeeTableRecords([$other]);
 });
 
-it('counts the books each publisher has in the catalogue', function(): void {
+it('counts the books each publisher has in the catalog', function(): void {
     $publisher = Publisher::factory()->create();
     Book::factory()->count(2)->for($publisher)->create();
 

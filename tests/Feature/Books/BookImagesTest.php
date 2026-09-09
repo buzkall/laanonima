@@ -242,6 +242,29 @@ it('says so when the lookup found a record but no cover', function(): void {
 });
 
 /*
+ | The other half of the same gap: the cover field stays empty until the record
+ | is saved, which without a word looks exactly like a lookup that found none.
+ */
+it('says the cover arrives on save when the lookup found one', function(): void {
+    config()->set('books.metadata.google_books.key');
+
+    Http::fake([
+        'openlibrary.org/api/books*' => Http::response(apiFixture('book-metadata/open-library-hit')),
+    ]);
+
+    livewire(CreateBook::class)
+        ->fillForm(['isbn13' => '9788433920423'])
+        ->callFormComponentAction('isbn13', 'lookup')
+        ->assertNotified(
+            Notification::make()
+                ->success()
+                ->title(__('books.lookup.found_title'))
+                ->body(__('books.lookup.found_body', ['title' => 'La conjura de los necios'])
+                    . ' ' . __('books.lookup.found_with_cover')),
+        );
+});
+
+/*
  | Twice a bookseller added a book, got no cover and no explanation, and could
  | not tell a source with nothing to offer from a broken feature.
  */
@@ -283,8 +306,8 @@ describe('a cover that cannot be fetched after the save', function(): void {
     });
 });
 
-describe('the cover colour', function(): void {
-    it('keeps the colour the bookseller picks, in lowercase', function(): void {
+describe('the cover color', function(): void {
+    it('keeps the color the bookseller picks, in lowercase', function(): void {
         $book = Book::factory()->create();
 
         livewire(EditBook::class, ['record' => $book->getRouteKey()])
@@ -307,10 +330,10 @@ describe('the cover colour', function(): void {
     });
 
     /*
-     | Nothing else reads the cover once a colour is stored, so this action is
+     | Nothing else reads the cover once a color is stored, so this action is
      | the only way back to it.
      */
-    it('reads the colour off the cover again when the bookseller asks', function(): void {
+    it('reads the color off the cover again when the bookseller asks', function(): void {
         $book = Book::factory()->create(['cover_color' => '#3a7b86']);
         $book->addCoverFromString(fakeCover());
 

@@ -2,12 +2,10 @@
 
 namespace App\Actions\Books;
 
+use App\Support\RemoteImage;
 use GdImage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Psr\Http\Message\UriInterface;
-use RuntimeException;
 use Throwable;
 
 /**
@@ -16,7 +14,7 @@ use Throwable;
  * Open Library asks not to be used as a CDN, source records disappear, and
  * DILVE will hand covers over the same way through getResourceX.
  *
- * Whatever a source serves is normalised on the way in: decoded, measured
+ * Whatever a source serves is normalized on the way in: decoded, measured
  * against a floor that rejects placeholders, downscaled, and re-encoded as
  * JPEG. Filing it is somebody else's job: this hands the bytes back and the
  * caller attaches them to a book's media collection.
@@ -30,7 +28,7 @@ class DownloadBookCover
     public const EXTENSION = 'jpg';
 
     /**
-     * @return string|null the normalised JPEG bytes
+     * @return string|null the normalized JPEG bytes
      */
     public function __invoke(?string $url, string $isbn13): ?string
     {
@@ -50,19 +48,7 @@ class DownloadBookCover
         try {
             $response = Http::timeout(config('books.metadata.timeout'))
                 ->withUserAgent(config('books.metadata.user_agent'))
-                ->withOptions([
-                    'allow_redirects' => [
-                        'max'         => 5,
-                        'protocols'   => ['https'],
-                        'strict'      => true,
-                        'referer'     => false,
-                        'on_redirect' => function(mixed $request, mixed $response, UriInterface $uri): void {
-                            if (! $this->isAllowed((string)$uri)) {
-                                throw new RuntimeException("Cover redirect refused: {$uri}");
-                            }
-                        },
-                    ],
-                ])
+                ->withOptions(RemoteImage::redirectGuard($this->hosts()))
                 ->retry(2, 200, throw: false)
                 ->get($url);
         } catch (Throwable $exception) {
@@ -100,19 +86,15 @@ class DownloadBookCover
      */
     private function isAllowed(string $url): bool
     {
-        $parts = parse_url($url);
+        return RemoteImage::allowed($url, $this->hosts());
+    }
 
-        if ($parts === false || ($parts['scheme'] ?? null) !== 'https') {
-            return false;
-        }
-
-        $host = $parts['host'] ?? null;
-
-        if (! is_string($host) || blank($host)) {
-            return false;
-        }
-
-        return Str::is(config('books.covers.allowed_hosts'), $host);
+    /**
+     * @return array<int, string>
+     */
+    private function hosts(): array
+    {
+        return (array)config('books.covers.allowed_hosts');
     }
 
     /**
@@ -168,7 +150,7 @@ class DownloadBookCover
 
         $canvas = imagecreatetruecolor($targetWidth, $targetHeight);
 
-        /** A truecolor canvas takes the colour as a plain RGB integer. */
+        /** A truecolor canvas takes the color as a plain RGB integer. */
         imagefill($canvas, 0, 0, 0xFFFFFF);
         imagecopyresampled($canvas, $image, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
 

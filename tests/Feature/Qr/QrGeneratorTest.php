@@ -113,9 +113,9 @@ it('draws the glyph on a white plate rather than a solid block', function(int $s
 
     for ($x = $left; $x < $left + $plateWidth; $x++) {
         for ($y = $top; $y < $top + $plateHeight; $y++) {
-            $colour = imagecolorsforindex($image, imagecolorat($image, $x, $y));
+            $color = imagecolorsforindex($image, imagecolorat($image, $x, $y));
 
-            if ($colour['red'] > 200 && $colour['green'] > 200 && $colour['blue'] > 200) {
+            if ($color['red'] > 200 && $color['green'] > 200 && $color['blue'] > 200) {
                 $white++;
             }
         }
@@ -125,14 +125,14 @@ it('draws the glyph on a white plate rather than a solid block', function(int $s
 })->with([384, 576]);
 
 it('produces a fully opaque PNG so the glyph reads as ink', function(int $size): void {
-    // Endroid quantises a logo-less code to a 16 colour palette, and a palette
+    // Endroid quantises a logo-less code to a 16 color palette, and a palette
     // canvas cannot blend the logo's alpha: the glyph came out transparent
     // instead of black, invisible on white and dark in a dark viewer.
     $png = app(QrGenerator::class)->thermalPng('https://laanonimalibreria.com', $size);
     $image = imagecreatefromstring($png);
 
     expect(imageistruecolor($image))->toBeTrue()
-        ->and(ord(substr($png, 25, 1)))->toBe(2); // PNG colour type 2 = RGB, no alpha channel
+        ->and(ord(substr($png, 25, 1)))->toBe(2); // PNG color type 2 = RGB, no alpha channel
 
     for ($x = 0; $x < $size; $x += 3) {
         for ($y = 0; $y < $size; $y += 3) {

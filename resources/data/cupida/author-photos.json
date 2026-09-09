@@ -1,0 +1,3882 @@
+{
+    "abercrombie-joe": {
+        "slug": "abercrombie-joe",
+        "name": "Joe Abercrombie",
+        "status": "matched",
+        "qid": "Q515421",
+        "pinned": false,
+        "wikidata": {
+            "label": "Joe Abercrombie",
+            "description": "British fantasy writer and film editor (born 1974)",
+            "occupations": [
+                "Q36180",
+                "Q28389"
+            ]
+        },
+        "photo": "abercrombie-joe.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Joe_Abercrombie_at_Swecon_October_2012.jpg/960px-Joe_Abercrombie_at_Swecon_October_2012.jpg",
+        "color": "#9a8b78",
+        "credit": {
+            "file": "File:Joe Abercrombie at Swecon October 2012.jpg",
+            "artist": "Arild Vågen",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Joe_Abercrombie_at_Swecon_October_2012.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "adams-douglas": {
+        "slug": "adams-douglas",
+        "name": "Douglas Adams",
+        "status": "matched",
+        "qid": "Q42",
+        "pinned": false,
+        "wikidata": {
+            "label": null,
+            "description": "escritor de ciencia ficción y humorista inglés",
+            "occupations": [
+                "Q214917",
+                "Q28389",
+                "Q6625963",
+                "Q4853732",
+                "Q36180"
+            ]
+        },
+        "photo": "adams-douglas.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/6/64/Douglas_adams_portrait.jpg",
+        "color": "#b3a797",
+        "credit": {
+            "file": "File:Douglas adams portrait.jpg",
+            "artist": "Michael Hughes",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Douglas_adams_portrait.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "alba-rico-santiago": {
+        "slug": "alba-rico-santiago",
+        "name": "Santiago Alba Rico",
+        "status": "matched",
+        "qid": "Q3391750",
+        "pinned": false,
+        "wikidata": {
+            "label": "Santiago Alba Rico",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q4964182",
+                "Q11774202"
+            ]
+        },
+        "photo": "alba-rico-santiago.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/El_fil%C3%B3sofo_y_candidato_al_Senado_por_%C3%81vila_de_Podemos%2C_Santiago_Alba_Rico_%28cropped%29.jpg/960px-El_fil%C3%B3sofo_y_candidato_al_Senado_por_%C3%81vila_de_Podemos%2C_Santiago_Alba_Rico_%28cropped%29.jpg",
+        "color": "#857e8d",
+        "credit": {
+            "file": "File:El filósofo y candidato al Senado por Ávila de Podemos, Santiago Alba Rico (cropped).jpg",
+            "artist": "Marta Jara (eldiario.es)",
+            "license": "CC BY-SA 3.0 es",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0/es/deed.en",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:El_fil%C3%B3sofo_y_candidato_al_Senado_por_%C3%81vila_de_Podemos,_Santiago_Alba_Rico_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "arbol-victor-del": {
+        "slug": "arbol-victor-del",
+        "name": "Víctor Del Árbol",
+        "status": "matched",
+        "qid": "Q14627518",
+        "pinned": false,
+        "wikidata": {
+            "label": "Víctor del Árbol",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q6625963"
+            ]
+        },
+        "photo": "arbol-victor-del.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Victor_del_Arbol.JPG/960px-Victor_del_Arbol.JPG",
+        "color": "#707173",
+        "credit": {
+            "file": "File:Victor del Arbol.JPG",
+            "artist": "CRL - UT2J",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Victor_del_Arbol.JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "arendt-hannah": {
+        "slug": "arendt-hannah",
+        "name": "Hannah Arendt",
+        "status": "no_image",
+        "qid": "Q60025",
+        "pinned": false,
+        "wikidata": {
+            "label": "Hannah Arendt",
+            "description": "filósofa alemana",
+            "occupations": [
+                "Q4964182",
+                "Q201788",
+                "Q36180",
+                "Q11774202"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "arguinano-karlos": {
+        "slug": "arguinano-karlos",
+        "name": "Karlos Arguiñano",
+        "status": "matched",
+        "qid": "Q1398433",
+        "pinned": false,
+        "wikidata": {
+            "label": "Karlos Arguiñano",
+            "description": "cocinero, empresario, escritor y presentador de televisión español",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "arguinano-karlos.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Karlos_Argui%C3%B1ano_La_cocina%2C_la_mejor_terapia.%28cropped%29.jpg",
+        "color": "#ad9988",
+        "credit": {
+            "file": "File:Karlos Arguiñano La cocina, la mejor terapia.(cropped).jpg",
+            "artist": "infoLibre",
+            "license": "CC BY 3.0",
+            "license_url": "https://creativecommons.org/licenses/by/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Karlos_Argui%C3%B1ano_La_cocina,_la_mejor_terapia.(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "asimov-isaac": {
+        "slug": "asimov-isaac",
+        "name": "Isaac Asimov",
+        "status": "matched",
+        "qid": "Q34981",
+        "pinned": false,
+        "wikidata": {
+            "label": "Isaac Asimov",
+            "description": "escritor estadounidense de origen ruso (1920–1992)",
+            "occupations": [
+                "Q6625963",
+                "Q1930187",
+                "Q28389",
+                "Q36180",
+                "Q10297252"
+            ]
+        },
+        "photo": "asimov-isaac.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Isaac.Asimov01.jpg/960px-Isaac.Asimov01.jpg",
+        "color": "#828282",
+        "credit": {
+            "file": "File:Isaac.Asimov01.jpg",
+            "artist": "Phillip Leonian [1] from New York World-Telegram & Sun.[2]",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Isaac.Asimov01.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "barba-muniz-andres": {
+        "slug": "barba-muniz-andres",
+        "name": "Andrés Barba Muñiz",
+        "status": "matched",
+        "qid": "Q5675575",
+        "pinned": false,
+        "wikidata": {
+            "label": "Andrés Barba",
+            "description": "novelista, ensayista, traductor, guionista y fotógrafo español",
+            "occupations": [
+                "Q333634",
+                "Q28389",
+                "Q36180"
+            ]
+        },
+        "photo": "barba-muniz-andres.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Andres_Barba.jpg/960px-Andres_Barba.jpg",
+        "color": "#606253",
+        "credit": {
+            "file": "File:Andres Barba.jpg",
+            "artist": "Micaela Feversani",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Andres_Barba.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "beard-mary": {
+        "slug": "beard-mary",
+        "name": "Mary Beard",
+        "status": "matched",
+        "qid": "Q458403",
+        "pinned": false,
+        "wikidata": {
+            "label": "Mary Beard",
+            "description": "clasicista británica",
+            "occupations": [
+                "Q201788"
+            ]
+        },
+        "photo": "beard-mary.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Mary_Beard_UC3M_2017_%28cropped%29.JPG",
+        "color": "#aa998a",
+        "credit": {
+            "file": "File:Mary Beard UC3M 2017 (cropped).JPG",
+            "artist": "UC3M (youtube)",
+            "license": "CC BY 3.0",
+            "license_url": "https://creativecommons.org/licenses/by/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Mary_Beard_UC3M_2017_(cropped).JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "bechdel-alison": {
+        "slug": "bechdel-alison",
+        "name": "Alison Bechdel",
+        "status": "matched",
+        "qid": "Q435032",
+        "pinned": false,
+        "wikidata": {
+            "label": "Alison Bechdel",
+            "description": "historietista estadounidense",
+            "occupations": [
+                "Q1114448",
+                "Q715301"
+            ]
+        },
+        "photo": "bechdel-alison.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Alison_Bechdel_8.jpg/960px-Alison_Bechdel_8.jpg",
+        "color": "#595959",
+        "credit": {
+            "file": "File:Alison Bechdel 8.jpg",
+            "artist": "20Nasium26",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Alison_Bechdel_8.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "beka": {
+        "slug": "beka",
+        "name": "Beka",
+        "status": "no_person",
+        "qid": null,
+        "pinned": true,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "blabey-aaron": {
+        "slug": "blabey-aaron",
+        "name": "Aaron Blabey",
+        "status": "no_image",
+        "qid": "Q4661850",
+        "pinned": false,
+        "wikidata": {
+            "label": "Aaron Blabey",
+            "description": "actor, artista y escritor australiano",
+            "occupations": [
+                "Q36180",
+                "Q4853732"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "bradbury-ray": {
+        "slug": "bradbury-ray",
+        "name": "Ray Bradbury",
+        "status": "matched",
+        "qid": "Q40640",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ray Bradbury",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q28389",
+                "Q49757",
+                "Q36180",
+                "Q6625963",
+                "Q214917"
+            ]
+        },
+        "photo": "bradbury-ray.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/69/Ray_Bradbury_%281975%29_-cropped-.jpg/960px-Ray_Bradbury_%281975%29_-cropped-.jpg",
+        "color": "#845f51",
+        "credit": {
+            "file": "File:Ray Bradbury (1975) -cropped-.jpg",
+            "artist": "Alan Light",
+            "license": "CC BY 2.0",
+            "license_url": "https://creativecommons.org/licenses/by/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Ray_Bradbury_(1975)_-cropped-.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "brandis-katja": {
+        "slug": "brandis-katja",
+        "name": "Katja Brandis",
+        "status": "matched",
+        "qid": "Q1736611",
+        "pinned": false,
+        "wikidata": {
+            "label": "Sylvia Englert",
+            "description": "periodista y escritora alemana",
+            "occupations": [
+                "Q1930187",
+                "Q36180"
+            ]
+        },
+        "photo": "brandis-katja.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Katja_Brandis_at_Frankfurter_Buchmesse_2022.jpg/960px-Katja_Brandis_at_Frankfurter_Buchmesse_2022.jpg",
+        "color": "#704941",
+        "credit": {
+            "file": "File:Katja Brandis at Frankfurter Buchmesse 2022.jpg",
+            "artist": "Elena Ternovaja",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Katja_Brandis_at_Frankfurter_Buchmesse_2022.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "camilleri-andrea": {
+        "slug": "camilleri-andrea",
+        "name": "Andrea Camilleri",
+        "status": "matched",
+        "qid": "Q334219",
+        "pinned": false,
+        "wikidata": {
+            "label": "Andrea Camilleri",
+            "description": "escritor italiano",
+            "occupations": [
+                "Q36180",
+                "Q28389",
+                "Q6625963",
+                "Q214917",
+                "Q49757",
+                "Q11774202"
+            ]
+        },
+        "photo": "camilleri-andrea.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Andrea_Camilleri%2C_Premio_Chiara_2010.jpg/960px-Andrea_Camilleri%2C_Premio_Chiara_2010.jpg",
+        "color": "#856c58",
+        "credit": {
+            "file": "File:Andrea Camilleri, Premio Chiara 2010.jpg",
+            "artist": "Associazione Amici di Piero Chiara",
+            "license": "CC BY 2.0",
+            "license_url": "https://creativecommons.org/licenses/by/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Andrea_Camilleri,_Premio_Chiara_2010.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "card-orson-scott": {
+        "slug": "card-orson-scott",
+        "name": "Orson Scott Card",
+        "status": "matched",
+        "qid": "Q217110",
+        "pinned": false,
+        "wikidata": {
+            "label": "Orson Scott Card",
+            "description": "escritor de ciencia ficción",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q4853732",
+                "Q28389"
+            ]
+        },
+        "photo": "card-orson-scott.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Orson_Scott_Card_-_2007_%28crop%29.jpg",
+        "color": "#906d56",
+        "credit": {
+            "file": "File:Orson Scott Card - 2007 (crop).jpg",
+            "artist": "Jeremy Hall",
+            "license": "CC BY 2.0",
+            "license_url": "https://creativecommons.org/licenses/by/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Orson_Scott_Card_-_2007_(crop).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "cardona-teresa": {
+        "slug": "cardona-teresa",
+        "name": "Teresa Cardona",
+        "status": "no_match",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "carroll-lewis": {
+        "slug": "carroll-lewis",
+        "name": "Lewis Carroll",
+        "status": "matched",
+        "qid": "Q38082",
+        "pinned": false,
+        "wikidata": {
+            "label": "Lewis Carroll",
+            "description": "diácono anglicano, lógico, matemático, fotógrafo y escritor británico",
+            "occupations": [
+                "Q49757",
+                "Q4853732",
+                "Q18939491",
+                "Q6625963",
+                "Q36180",
+                "Q4964182"
+            ]
+        },
+        "photo": "carroll-lewis.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/fb/LewisCarrollSelfPhoto.jpg",
+        "color": "#594a3f",
+        "credit": {
+            "file": "File:LewisCarrollSelfPhoto.jpg",
+            "artist": "Lewis Carroll",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:LewisCarrollSelfPhoto.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "casamayor-alberto": {
+        "slug": "casamayor-alberto",
+        "name": "Alberto Casamayor",
+        "status": "no_match",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "cathon": {
+        "slug": "cathon",
+        "name": "Cathon",
+        "status": "matched",
+        "qid": "Q47159365",
+        "pinned": false,
+        "wikidata": {
+            "label": "Cathon",
+            "description": "historietista canadiense",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "cathon.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Cathon_2015-04-09_B.jpg/960px-Cathon_2015-04-09_B.jpg",
+        "color": "#988c84",
+        "credit": {
+            "file": "File:Cathon 2015-04-09 B.jpg",
+            "artist": "Asclepias",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Cathon_2015-04-09_B.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "cercas-javier": {
+        "slug": "cercas-javier",
+        "name": "Javier Cercas",
+        "status": "matched",
+        "qid": "Q381920",
+        "pinned": false,
+        "wikidata": {
+            "label": "Javier Cercas",
+            "description": "escritor y periodista español",
+            "occupations": [
+                "Q1930187",
+                "Q333634",
+                "Q36180"
+            ]
+        },
+        "photo": "cercas-javier.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Cercas%2C_Javier_-Puertodeideas_2016_fRF01.jpg/960px-Cercas%2C_Javier_-Puertodeideas_2016_fRF01.jpg",
+        "color": "#564d4b",
+        "credit": {
+            "file": "File:Cercas, Javier -Puertodeideas 2016 fRF01.jpg",
+            "artist": "Rodrigo Fernández",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Cercas,_Javier_-Puertodeideas_2016_fRF01.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "chamblain-joris": {
+        "slug": "chamblain-joris",
+        "name": "Joris Chamblain",
+        "status": "matched",
+        "qid": "Q27061860",
+        "pinned": false,
+        "wikidata": {
+            "label": "Joris Chamblain",
+            "description": "historietista francés",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "chamblain-joris.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Joris_Chamblain_-_Festival_Le_Livre_%C3%A0_Metz.jpg/960px-Joris_Chamblain_-_Festival_Le_Livre_%C3%A0_Metz.jpg",
+        "color": "#8e7566",
+        "credit": {
+            "file": "File:Joris Chamblain - Festival Le Livre à Metz.jpg",
+            "artist": "ActuaLitté",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Joris_Chamblain_-_Festival_Le_Livre_%C3%A0_Metz.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "chaves-nogales-manuel": {
+        "slug": "chaves-nogales-manuel",
+        "name": "Manuel Chaves Nogales",
+        "status": "matched",
+        "qid": "Q3031671",
+        "pinned": false,
+        "wikidata": {
+            "label": "Manuel Chaves Nogales",
+            "description": "periodista y escritor español",
+            "occupations": [
+                "Q1930187",
+                "Q36180"
+            ]
+        },
+        "photo": "chaves-nogales-manuel.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Chaves_nogales_002.jpg/960px-Chaves_nogales_002.jpg",
+        "color": "#0f0f0f",
+        "credit": {
+            "file": "File:Chaves nogales 002.jpg",
+            "artist": "Unknown authorUnknown author",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Chaves_nogales_002.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "christie-agatha": {
+        "slug": "christie-agatha",
+        "name": "Agatha Christie",
+        "status": "matched",
+        "qid": "Q35064",
+        "pinned": false,
+        "wikidata": {
+            "label": "Agatha Christie",
+            "description": "escritora británica",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q28389",
+                "Q49757",
+                "Q214917",
+                "Q10297252"
+            ]
+        },
+        "photo": "christie-agatha.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Agatha_Christie_in_Nederland_%28detectiveschrijfster%29%2C_bij_aankomst_op_Schiphol_me%2C_Bestanddeelnr_916-8898_%28cropped%29.jpg/960px-Agatha_Christie_in_Nederland_%28detectiveschrijfster%29%2C_bij_aankomst_op_Schiphol_me%2C_Bestanddeelnr_916-8898_%28cropped%29.jpg",
+        "color": "#737373",
+        "credit": {
+            "file": "File:Agatha Christie in Nederland (detectiveschrijfster), bij aankomst op Schiphol me, Bestanddeelnr 916-8898 (cropped).jpg",
+            "artist": "Joop van Bilsen for Anefo",
+            "license": "CC0",
+            "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Agatha_Christie_in_Nederland_(detectiveschrijfster),_bij_aankomst_op_Schiphol_me,_Bestanddeelnr_916-8898_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "colombani-laetitia": {
+        "slug": "colombani-laetitia",
+        "name": "Laetitia Colombani",
+        "status": "matched",
+        "qid": "Q3216065",
+        "pinned": false,
+        "wikidata": {
+            "label": "Lætitia Colombani",
+            "description": "actriz, directora y escritora francesa",
+            "occupations": [
+                "Q36180",
+                "Q28389"
+            ]
+        },
+        "photo": "colombani-laetitia.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/25/Laetitia_Colombani_%282017%29.jpg",
+        "color": "#412b27",
+        "credit": {
+            "file": "File:Laetitia Colombani (2017).jpg",
+            "artist": "librairie mollat",
+            "license": "CC BY 3.0",
+            "license_url": "https://creativecommons.org/licenses/by/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Laetitia_Colombani_(2017).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "corey-james-s-a": {
+        "slug": "corey-james-s-a",
+        "name": "James S. A. Corey",
+        "status": "no_image",
+        "qid": "Q1159871",
+        "pinned": false,
+        "wikidata": {
+            "label": "Daniel Abraham",
+            "description": "escritor de ficción estadounidense",
+            "occupations": [
+                "Q6625963",
+                "Q36180",
+                "Q482980"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "dahl-roald": {
+        "slug": "dahl-roald",
+        "name": "Roald Dahl",
+        "status": "matched",
+        "qid": "Q25161",
+        "pinned": false,
+        "wikidata": {
+            "label": "Roald Dahl",
+            "description": "escritor y guionista británico",
+            "occupations": [
+                "Q28389",
+                "Q6625963",
+                "Q49757",
+                "Q4853732",
+                "Q36180"
+            ]
+        },
+        "photo": "dahl-roald.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Roald_Dahl.jpg/960px-Roald_Dahl.jpg",
+        "color": "#6f6f6f",
+        "credit": {
+            "file": "File:Roald Dahl.jpg",
+            "artist": "Carl Van Vechten",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Roald_Dahl.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "dexter-colin": {
+        "slug": "dexter-colin",
+        "name": "Colin Dexter",
+        "status": "no_image",
+        "qid": "Q457092",
+        "pinned": false,
+        "wikidata": {
+            "label": "Colin Dexter",
+            "description": "escritor británico",
+            "occupations": [
+                "Q36180",
+                "Q6625963"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "diaz-reguera-raquel": {
+        "slug": "diaz-reguera-raquel",
+        "name": "Raquel Díaz Reguera",
+        "status": "no_image",
+        "qid": "Q105867496",
+        "pinned": false,
+        "wikidata": {
+            "label": "Raquel Díaz Reguera",
+            "description": "dibujante y autora de libros infantiles",
+            "occupations": [
+                "Q3391743",
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "diaz-santiago": {
+        "slug": "diaz-santiago",
+        "name": "Santiago Díaz",
+        "status": "matched",
+        "qid": "Q110700188",
+        "pinned": false,
+        "wikidata": {
+            "label": "Santiago Díaz",
+            "description": "guionista y escritor español",
+            "occupations": [
+                "Q36180",
+                "Q28389"
+            ]
+        },
+        "photo": "diaz-santiago.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/SANTIAGO_D%C3%8DAZ_CORT%C3%89S.jpg",
+        "color": "#454447",
+        "credit": {
+            "file": "File:SANTIAGO DÍAZ CORTÉS.jpg",
+            "artist": "PatriciaMS74",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:SANTIAGO_D%C3%8DAZ_CORT%C3%89S.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "dickinson-emily": {
+        "slug": "dickinson-emily",
+        "name": "Emily Dickinson",
+        "status": "matched",
+        "qid": "Q4441",
+        "pinned": false,
+        "wikidata": {
+            "label": "Emily Dickinson",
+            "description": "poetisa estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q49757"
+            ]
+        },
+        "photo": "dickinson-emily.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Emily_Dickinson_daguerreotype_%28Restored%2C_cropped%2C_blown_up%2C_sepia%29.jpg",
+        "color": "#96928a",
+        "credit": {
+            "file": "File:Emily Dickinson daguerreotype (Restored, cropped, blown up, sepia).jpg",
+            "artist": "Unknown authorUnknown author",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Emily_Dickinson_daguerreotype_(Restored,_cropped,_blown_up,_sepia).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "dinniman-matt": {
+        "slug": "dinniman-matt",
+        "name": "Matt Dinniman",
+        "status": "matched",
+        "qid": "Q134731703",
+        "pinned": false,
+        "wikidata": {
+            "label": "Matt Dinniman",
+            "description": "American speculative fiction writer, best known for Dungeon Crawler Carl novel series",
+            "occupations": [
+                "Q36180",
+                "Q482980"
+            ]
+        },
+        "photo": "dinniman-matt.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Matt_Dinniman_at_San_Diego_Comic_Con_2026-1.jpg/960px-Matt_Dinniman_at_San_Diego_Comic_Con_2026-1.jpg",
+        "color": "#8e8079",
+        "credit": {
+            "file": "File:Matt Dinniman at San Diego Comic Con 2026-1.jpg",
+            "artist": "Kevin Paul",
+            "license": "CC BY 4.0",
+            "license_url": "https://creativecommons.org/licenses/by/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Matt_Dinniman_at_San_Diego_Comic_Con_2026-1.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "duval-elizabeth": {
+        "slug": "duval-elizabeth",
+        "name": "Elizabeth Duval",
+        "status": "matched",
+        "qid": "Q86862500",
+        "pinned": false,
+        "wikidata": {
+            "label": "Elizabeth Duval",
+            "description": "escritora y activista trans española",
+            "occupations": [
+                "Q6625963",
+                "Q49757",
+                "Q36180",
+                "Q4964182",
+                "Q11774202"
+            ]
+        },
+        "photo": "duval-elizabeth.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Elizabeth_Duval_2022_by_1rhb.jpg/960px-Elizabeth_Duval_2022_by_1rhb.jpg",
+        "color": "#907869",
+        "credit": {
+            "file": "File:Elizabeth Duval 2022 by 1rhb.jpg",
+            "artist": "Rudolf H. Boettcher",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Elizabeth_Duval_2022_by_1rhb.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "enriquez-mariana": {
+        "slug": "enriquez-mariana",
+        "name": "Mariana Enriquez",
+        "status": "matched",
+        "qid": "Q5997426",
+        "pinned": false,
+        "wikidata": {
+            "label": "Mariana Enriquez",
+            "description": "escritora y periodista argentina",
+            "occupations": [
+                "Q36180",
+                "Q1930187",
+                "Q6625963",
+                "Q482980"
+            ]
+        },
+        "photo": "enriquez-mariana.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Mariana_Enr%C3%ADquez_en_la_Feria_Internacional_del_Libro_de_Buenos_Aires.jpg/960px-Mariana_Enr%C3%ADquez_en_la_Feria_Internacional_del_Libro_de_Buenos_Aires.jpg",
+        "color": "#312f36",
+        "credit": {
+            "file": "File:Mariana Enríquez en la Feria Internacional del Libro de Buenos Aires.jpg",
+            "artist": "Ministerio de Cultura de la Nación",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Mariana_Enr%C3%ADquez_en_la_Feria_Internacional_del_Libro_de_Buenos_Aires.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "epicteto": {
+        "slug": "epicteto",
+        "name": "Epicteto",
+        "status": "matched",
+        "qid": "Q183144",
+        "pinned": false,
+        "wikidata": {
+            "label": "Epicteto",
+            "description": "filósofo estoico griego",
+            "occupations": [
+                "Q4964182",
+                "Q36180"
+            ]
+        },
+        "photo": "epicteto.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/39/Epictetus_from_L._Annaei_Senecae_philosophi_Opera%2C_1605%2C_title_page_detail.png",
+        "color": "#8f8f8f",
+        "credit": {
+            "file": "File:Epictetus from L. Annaei Senecae philosophi Opera, 1605, title page detail.png",
+            "artist": "Theodoor Galle",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Epictetus_from_L._Annaei_Senecae_philosophi_Opera,_1605,_title_page_detail.png"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "erikson-steven": {
+        "slug": "erikson-steven",
+        "name": "Steven Erikson",
+        "status": "matched",
+        "qid": "Q428755",
+        "pinned": false,
+        "wikidata": {
+            "label": "Steven Erikson",
+            "description": "novelista canadiense",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "erikson-steven.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Steven_Erikson_-_Lucca_Comics_%26_Games_2016.jpg/960px-Steven_Erikson_-_Lucca_Comics_%26_Games_2016.jpg",
+        "color": "#91725b",
+        "credit": {
+            "file": "File:Steven Erikson - Lucca Comics & Games 2016.jpg",
+            "artist": "Niccolò Caranti",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Steven_Erikson_-_Lucca_Comics_%26_Games_2016.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "eslava-galan-juan": {
+        "slug": "eslava-galan-juan",
+        "name": "Juan Eslava Galán",
+        "status": "matched",
+        "qid": "Q3494468",
+        "pinned": false,
+        "wikidata": {
+            "label": "Juan Eslava Galán",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "eslava-galan-juan.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Juan_Eslava_Gal%C3%A1n_%28Feria_del_Libro_de_Madrid%2C_6_de_junio_de_2008%29.jpg/960px-Juan_Eslava_Gal%C3%A1n_%28Feria_del_Libro_de_Madrid%2C_6_de_junio_de_2008%29.jpg",
+        "color": "#7e6d59",
+        "credit": {
+            "file": "File:Juan Eslava Galán (Feria del Libro de Madrid, 6 de junio de 2008).jpg",
+            "artist": "Mr. Tickle",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Juan_Eslava_Gal%C3%A1n_(Feria_del_Libro_de_Madrid,_6_de_junio_de_2008).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "falcones-ildefonso": {
+        "slug": "falcones-ildefonso",
+        "name": "Ildefonso Falcones",
+        "status": "matched",
+        "qid": "Q555888",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ildefonso Falcones",
+            "description": "abogado y escritor español",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "falcones-ildefonso.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Ildefonso_Falcones_en_la_Iglesia_de_Santa_Maria_del_Mar.jpg",
+        "color": "#7a5f4d",
+        "credit": {
+            "file": "File:Ildefonso Falcones en la Iglesia de Santa Maria del Mar.jpg",
+            "artist": "Partido Popular de Cataluña",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Ildefonso_Falcones_en_la_Iglesia_de_Santa_Maria_del_Mar.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "ferrer-valero-sandra": {
+        "slug": "ferrer-valero-sandra",
+        "name": "Sandra Ferrer Valero",
+        "status": "matched",
+        "qid": "Q112520637",
+        "pinned": false,
+        "wikidata": {
+            "label": "Sandra Ferrer Valero",
+            "description": null,
+            "occupations": [
+                "Q201788",
+                "Q1930187"
+            ]
+        },
+        "photo": "ferrer-valero-sandra.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Sant_Jordi_2025_-_Sandra_Ferrer_signant_al_carrer_Gran_de_Gr%C3%A0cia_-_20250423_180052.jpg/960px-Sant_Jordi_2025_-_Sandra_Ferrer_signant_al_carrer_Gran_de_Gr%C3%A0cia_-_20250423_180052.jpg",
+        "color": "#a3958b",
+        "credit": {
+            "file": "File:Sant Jordi 2025 - Sandra Ferrer signant al carrer Gran de Gràcia - 20250423 180052.jpg",
+            "artist": "Pere López Brosa",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Sant_Jordi_2025_-_Sandra_Ferrer_signant_al_carrer_Gran_de_Gr%C3%A0cia_-_20250423_180052.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "flavita-banana": {
+        "slug": "flavita-banana",
+        "name": "Flavita Banana",
+        "status": "rejected",
+        "qid": null,
+        "rejected_qid": null,
+        "pinned": true,
+        "wikidata": {
+            "label": "Flavita Banana",
+            "description": "dibujante de historietas española",
+            "occupations": [
+                "Q1114448"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "follett-ken": {
+        "slug": "follett-ken",
+        "name": "Ken Follett",
+        "status": "no_image",
+        "qid": "Q210669",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ken Follett",
+            "description": "novelista británico",
+            "occupations": [
+                "Q36180",
+                "Q6625963"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "fuertes-gloria": {
+        "slug": "fuertes-gloria",
+        "name": "Gloria Fuertes",
+        "status": "matched",
+        "qid": "Q3323486",
+        "pinned": false,
+        "wikidata": {
+            "label": "Gloria Fuertes",
+            "description": "poeta española",
+            "occupations": [
+                "Q36180",
+                "Q49757",
+                "Q4853732"
+            ]
+        },
+        "photo": "fuertes-gloria.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Gloria_Fuertes_%28cropped%29.jpg/960px-Gloria_Fuertes_%28cropped%29.jpg",
+        "color": "#949090",
+        "credit": {
+            "file": "File:Gloria Fuertes (cropped).jpg",
+            "artist": "Maitane Azurmendi",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Gloria_Fuertes_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gaiman-neil": {
+        "slug": "gaiman-neil",
+        "name": "Neil Gaiman",
+        "status": "matched",
+        "qid": "Q210059",
+        "pinned": false,
+        "wikidata": {
+            "label": "Neil Gaiman",
+            "description": "escritor británico",
+            "occupations": [
+                "Q6625963",
+                "Q1930187",
+                "Q36180",
+                "Q49757",
+                "Q28389"
+            ]
+        },
+        "photo": "gaiman-neil.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Kyle-cassidy-neil-gaiman-April-2013.jpg/960px-Kyle-cassidy-neil-gaiman-April-2013.jpg",
+        "color": "#523325",
+        "credit": {
+            "file": "File:Kyle-cassidy-neil-gaiman-April-2013.jpg",
+            "artist": "Kyle Cassidy",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Kyle-cassidy-neil-gaiman-April-2013.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gallego-laura": {
+        "slug": "gallego-laura",
+        "name": "Laura Gallego",
+        "status": "matched",
+        "qid": "Q258067",
+        "pinned": false,
+        "wikidata": {
+            "label": "Laura Gallego García",
+            "description": "escritora española",
+            "occupations": [
+                "Q36180",
+                "Q201788"
+            ]
+        },
+        "photo": "gallego-laura.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Laura_Gallego.jpg",
+        "color": "#70523d",
+        "credit": {
+            "file": "File:Laura Gallego.jpg",
+            "artist": "Sergio González / 20 Minutos",
+            "license": "CC BY-SA 2.1 es",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.1/es/deed.en",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Laura_Gallego.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "garcia-lorca-federico": {
+        "slug": "garcia-lorca-federico",
+        "name": "Federico García Lorca",
+        "status": "matched",
+        "qid": "Q41408",
+        "pinned": false,
+        "wikidata": {
+            "label": "Federico García Lorca",
+            "description": "escritor español",
+            "occupations": [
+                "Q214917",
+                "Q49757",
+                "Q36180"
+            ]
+        },
+        "photo": "garcia-lorca-federico.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/22/Federico_Garc%C3%ADa_Lorca._Huerta_de_San_Vicente%2C_Granada.jpg",
+        "color": "#9f9f9f",
+        "credit": {
+            "file": "File:Federico García Lorca. Huerta de San Vicente, Granada.jpg",
+            "artist": "AnonymousUnknown author",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Federico_Garc%C3%ADa_Lorca._Huerta_de_San_Vicente,_Granada.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "garcia-marquez-gabriel": {
+        "slug": "garcia-marquez-gabriel",
+        "name": "Gabriel García Márquez",
+        "status": "matched",
+        "qid": "Q5878",
+        "pinned": false,
+        "wikidata": {
+            "label": "Gabriel García Márquez",
+            "description": "escritor y periodista colombiano (1927–2014)",
+            "occupations": [
+                "Q6625963",
+                "Q1930187",
+                "Q214917",
+                "Q36180",
+                "Q28389"
+            ]
+        },
+        "photo": "garcia-marquez-gabriel.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Gabriel_Garc%C3%ADa_M%C3%A1rquez_02.jpg/960px-Gabriel_Garc%C3%ADa_M%C3%A1rquez_02.jpg",
+        "color": "#796f7a",
+        "credit": {
+            "file": "File:Gabriel García Márquez 02.jpg",
+            "artist": "Gorup de Besanez",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Gabriel_Garc%C3%ADa_M%C3%A1rquez_02.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "garcia-saenz-de-urturi-eva": {
+        "slug": "garcia-saenz-de-urturi-eva",
+        "name": "Eva García Sáenz De Urturi",
+        "status": "matched",
+        "qid": "Q27506759",
+        "pinned": false,
+        "wikidata": {
+            "label": "Eva García Sáenz de Urturi",
+            "description": "novelista española",
+            "occupations": [
+                "Q6625963",
+                "Q36180"
+            ]
+        },
+        "photo": "garcia-saenz-de-urturi-eva.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/20201118_EVA_G_SAENZ_DE_URTURI-055_2.jpg/960px-20201118_EVA_G_SAENZ_DE_URTURI-055_2.jpg",
+        "color": "#856e5b",
+        "credit": {
+            "file": "File:20201118 EVA G SAENZ DE URTURI-055 2.jpg",
+            "artist": "Aureallc",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:20201118_EVA_G_SAENZ_DE_URTURI-055_2.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gendry-kim-keum-suk": {
+        "slug": "gendry-kim-keum-suk",
+        "name": "Keum Suk Gendry-Kim",
+        "status": "matched",
+        "qid": "Q61872876",
+        "pinned": false,
+        "wikidata": {
+            "label": "Keum Suk Gendry-Kim",
+            "description": "historietista surcoreana",
+            "occupations": [
+                "Q715301",
+                "Q333634"
+            ]
+        },
+        "photo": "gendry-kim-keum-suk.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Keum_Suk_Gendry-Kim_2023.jpg/960px-Keum_Suk_Gendry-Kim_2023.jpg",
+        "color": "#504a58",
+        "credit": {
+            "file": "File:Keum Suk Gendry-Kim 2023.jpg",
+            "artist": "Ferran Cornellà",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Keum_Suk_Gendry-Kim_2023.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gibson-ian": {
+        "slug": "gibson-ian",
+        "name": "Ian Gibson",
+        "status": "matched",
+        "qid": "Q2739768",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ian Gibson",
+            "description": "hispanista e historiador irlandés",
+            "occupations": [
+                "Q201788",
+                "Q28389",
+                "Q36180"
+            ]
+        },
+        "photo": "gibson-ian.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Ian_Gibson_FLM2019-1.jpg/960px-Ian_Gibson_FLM2019-1.jpg",
+        "color": "#887d72",
+        "credit": {
+            "file": "File:Ian Gibson FLM2019-1.jpg",
+            "artist": "AytoEru",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Ian_Gibson_FLM2019-1.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gil-david-b": {
+        "slug": "gil-david-b",
+        "name": "David B. Gil",
+        "status": "matched",
+        "qid": "Q64616774",
+        "pinned": false,
+        "wikidata": {
+            "label": "David B. Gil",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q1930187"
+            ]
+        },
+        "photo": "gil-david-b.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Retrato_David_B._Gil.jpg/960px-Retrato_David_B._Gil.jpg",
+        "color": "#95887c",
+        "credit": {
+            "file": "File:Retrato David B. Gil.jpg",
+            "artist": "Graceberg",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Retrato_David_B._Gil.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gomez-jurado-juan": {
+        "slug": "gomez-jurado-juan",
+        "name": "Juan Gómez-Jurado",
+        "status": "matched",
+        "qid": "Q1634870",
+        "pinned": false,
+        "wikidata": {
+            "label": "Juan Gómez-Jurado",
+            "description": "escritor español",
+            "occupations": [
+                "Q6625963",
+                "Q1930187",
+                "Q36180"
+            ]
+        },
+        "photo": "gomez-jurado-juan.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e7/Juan_Gomez-Jurado_%28cropped%29.jpg/960px-Juan_Gomez-Jurado_%28cropped%29.jpg",
+        "color": "#323134",
+        "credit": {
+            "file": "File:Juan Gomez-Jurado (cropped).jpg",
+            "artist": "Porter3492",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Juan_Gomez-Jurado_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "grandes-almudena": {
+        "slug": "grandes-almudena",
+        "name": "Almudena Grandes",
+        "status": "matched",
+        "qid": "Q274348",
+        "pinned": false,
+        "wikidata": {
+            "label": null,
+            "description": "escritora española",
+            "occupations": [
+                "Q36180",
+                "Q28389",
+                "Q1930187",
+                "Q6625963"
+            ]
+        },
+        "photo": "grandes-almudena.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Almudena_Grandes.jpg",
+        "color": "#493632",
+        "credit": {
+            "file": "File:Almudena Grandes.jpg",
+            "artist": "Jpedreira",
+            "license": "CC BY-SA 2.5",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Almudena_Grandes.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gravel-elise": {
+        "slug": "gravel-elise",
+        "name": "Elise Gravel",
+        "status": "no_image",
+        "qid": "Q3051124",
+        "pinned": false,
+        "wikidata": {
+            "label": "Élise Gravel",
+            "description": "escritor, ilustrador, escritor de literatura infantil y artista visual",
+            "occupations": [
+                "Q36180",
+                "Q4853732",
+                "Q3391743"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "guibert-emmanuel": {
+        "slug": "guibert-emmanuel",
+        "name": "Emmanuel Guibert",
+        "status": "matched",
+        "qid": "Q461153",
+        "pinned": false,
+        "wikidata": {
+            "label": "Emmanuel Guibert",
+            "description": "escritor francés",
+            "occupations": [
+                "Q36180",
+                "Q715301"
+            ]
+        },
+        "photo": "guibert-emmanuel.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Salon_du_livre_de_Paris_2011_-_Emmanuel_Guibert_-_001.jpg/960px-Salon_du_livre_de_Paris_2011_-_Emmanuel_Guibert_-_001.jpg",
+        "color": "#8e6b58",
+        "credit": {
+            "file": "File:Salon du livre de Paris 2011 - Emmanuel Guibert - 001.jpg",
+            "artist": "Thesupermat",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Salon_du_livre_de_Paris_2011_-_Emmanuel_Guibert_-_001.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "gutman-colas": {
+        "slug": "gutman-colas",
+        "name": "Colas Gutman",
+        "status": "matched",
+        "qid": "Q59657472",
+        "pinned": false,
+        "wikidata": {
+            "label": "Colas Gutman",
+            "description": "escritor francés",
+            "occupations": [
+                "Q36180",
+                "Q4853732"
+            ]
+        },
+        "photo": "gutman-colas.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Colas_Gutman_-_2018_%28cropped%29.jpg/960px-Colas_Gutman_-_2018_%28cropped%29.jpg",
+        "color": "#82624a",
+        "credit": {
+            "file": "File:Colas Gutman - 2018 (cropped).jpg",
+            "artist": "ActuaLitté",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Colas_Gutman_-_2018_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "hallett-janice": {
+        "slug": "hallett-janice",
+        "name": "Janice Hallett",
+        "status": "no_image",
+        "qid": "Q115590744",
+        "pinned": false,
+        "wikidata": {
+            "label": "Janice Hallett",
+            "description": "British journalist, screenwriter, and author",
+            "occupations": [
+                "Q1930187",
+                "Q28389",
+                "Q36180",
+                "Q214917"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "han-byung-chul": {
+        "slug": "han-byung-chul",
+        "name": "Byung-Chul Han",
+        "status": "matched",
+        "qid": "Q495875",
+        "pinned": false,
+        "wikidata": {
+            "label": "Byung-Chul Han",
+            "description": "filósofo surcoreano",
+            "occupations": [
+                "Q36180",
+                "Q4964182"
+            ]
+        },
+        "photo": "han-byung-chul.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/2015_Byung-Chul_Han_%28cropped%292.jpg",
+        "color": "#442e24",
+        "credit": {
+            "file": "File:2015 Byung-Chul Han (cropped)2.jpg",
+            "artist": "ActuaLitté",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:2015_Byung-Chul_Han_(cropped)2.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "hanselmann-simon": {
+        "slug": "hanselmann-simon",
+        "name": "Simon Hanselmann",
+        "status": "matched",
+        "qid": "Q17006093",
+        "pinned": false,
+        "wikidata": {
+            "label": "Simon Hanselmann",
+            "description": "Australian cartoonist and zine creator",
+            "occupations": [
+                "Q1114448",
+                "Q715301"
+            ]
+        },
+        "photo": "hanselmann-simon.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Simon_Hanselman_a_Val%C3%A8ncia_06.jpg/960px-Simon_Hanselman_a_Val%C3%A8ncia_06.jpg",
+        "color": "#726457",
+        "credit": {
+            "file": "File:Simon Hanselman a València 06.jpg",
+            "artist": "Coentor",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Simon_Hanselman_a_Val%C3%A8ncia_06.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "haraway-donna": {
+        "slug": "haraway-donna",
+        "name": "Donna Haraway",
+        "status": "matched",
+        "qid": "Q253407",
+        "pinned": false,
+        "wikidata": {
+            "label": "Donna Haraway",
+            "description": "filósofa y profesora universitaria estadounidense",
+            "occupations": [
+                "Q4964182",
+                "Q201788"
+            ]
+        },
+        "photo": "haraway-donna.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Donna_Haraway_2006_%28cropped%29.jpg",
+        "color": "#787461",
+        "credit": {
+            "file": "File:Donna Haraway 2006 (cropped).jpg",
+            "artist": "Rusten Hogness",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Donna_Haraway_2006_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "hendrix-grady": {
+        "slug": "hendrix-grady",
+        "name": "Grady Hendrix",
+        "status": "matched",
+        "qid": "Q24231989",
+        "pinned": false,
+        "wikidata": {
+            "label": "Grady Hendrix",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q6625963",
+                "Q28389",
+                "Q36180",
+                "Q1930187"
+            ]
+        },
+        "photo": "hendrix-grady.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Grady_Hendrix_%2810822%29.jpg/960px-Grady_Hendrix_%2810822%29.jpg",
+        "color": "#b39686",
+        "credit": {
+            "file": "File:Grady Hendrix (10822).jpg",
+            "artist": "Rhododendrites",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Grady_Hendrix_(10822).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "herbert-frank": {
+        "slug": "herbert-frank",
+        "name": "Frank Herbert",
+        "status": "matched",
+        "qid": "Q7934",
+        "pinned": false,
+        "wikidata": {
+            "label": "Frank Herbert",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q1930187"
+            ]
+        },
+        "photo": "herbert-frank.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Frank_Herbert_1984_%28square%29.jpg",
+        "color": "#807b71",
+        "credit": {
+            "file": "File:Frank Herbert 1984 (square).jpg",
+            "artist": "Unknown photographer",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Frank_Herbert_1984_(square).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "hernandez-miguel": {
+        "slug": "hernandez-miguel",
+        "name": "Miguel Hernández",
+        "status": "matched",
+        "qid": "Q332088",
+        "pinned": false,
+        "wikidata": {
+            "label": "Miguel Hernández",
+            "description": "poeta español",
+            "occupations": [
+                "Q49757",
+                "Q214917",
+                "Q36180"
+            ]
+        },
+        "photo": "hernandez-miguel.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Miguel_hernandez.jpg",
+        "color": "#ababab",
+        "credit": {
+            "file": "File:Miguel hernandez.jpg",
+            "artist": "UNED Universidad Nacional de Educación a Distancia from Madrid, Spain",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Miguel_hernandez.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "hesse-maria": {
+        "slug": "hesse-maria",
+        "name": "María Hesse",
+        "status": "no_image",
+        "qid": "Q96482172",
+        "pinned": false,
+        "wikidata": {
+            "label": "María Hesse",
+            "description": "ilustradora española",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "highsmith-patricia": {
+        "slug": "highsmith-patricia",
+        "name": "Patricia Highsmith",
+        "status": "matched",
+        "qid": "Q270635",
+        "pinned": false,
+        "wikidata": {
+            "label": "Patricia Highsmith",
+            "description": "escritora estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q28389"
+            ]
+        },
+        "photo": "highsmith-patricia.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Highsmith_on_After_Dark.JPG/960px-Highsmith_on_After_Dark.JPG",
+        "color": "#6a3b36",
+        "credit": {
+            "file": "File:Highsmith on After Dark.JPG",
+            "artist": "Open Media Ltd",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Highsmith_on_After_Dark.JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "hooks-bell": {
+        "slug": "hooks-bell",
+        "name": "Bell Hooks",
+        "status": "matched",
+        "qid": "Q259507",
+        "pinned": false,
+        "wikidata": {
+            "label": "bell hooks",
+            "description": "escritora y activista social estadounidense",
+            "occupations": [
+                "Q4964182",
+                "Q36180"
+            ]
+        },
+        "photo": "hooks-bell.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Bellhooks.jpg",
+        "color": "#81512e",
+        "credit": {
+            "file": "File:Bellhooks.jpg",
+            "artist": "Cmongirl",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Bellhooks.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "islington-james": {
+        "slug": "islington-james",
+        "name": "James Islington",
+        "status": "no_image",
+        "qid": "Q84570758",
+        "pinned": false,
+        "wikidata": {
+            "label": "James Islington",
+            "description": "escritor australiano",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "k-le-guin-ursula": {
+        "slug": "k-le-guin-ursula",
+        "name": "Ursula K. Le Guin",
+        "status": "matched",
+        "qid": "Q181659",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ursula K. LeGuin",
+            "description": "escritora estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q28389",
+                "Q333634",
+                "Q6625963",
+                "Q49757",
+                "Q482980",
+                "Q4853732",
+                "Q1930187"
+            ]
+        },
+        "photo": "k-le-guin-ursula.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Ursula_Le_Guin_%283551195631%29_-_Restoration.jpg/960px-Ursula_Le_Guin_%283551195631%29_-_Restoration.jpg",
+        "color": "#525252",
+        "credit": {
+            "file": "File:Ursula Le Guin (3551195631) - Restoration.jpg",
+            "artist": "Marian Wood Kolisch, Oregon State University  \n\nRestored by Adam Cuerden",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Ursula_Le_Guin_(3551195631)_-_Restoration.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "kashiwai-hisashi": {
+        "slug": "kashiwai-hisashi",
+        "name": "Hisashi Kashiwai",
+        "status": "no_image",
+        "qid": "Q11533795",
+        "pinned": false,
+        "wikidata": {
+            "label": "Keiichirō Kashiwagi",
+            "description": "escritor y dentista japonés",
+            "occupations": [
+                "Q6625963",
+                "Q36180",
+                "Q11774202",
+                "Q482980"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "king-stephen": {
+        "slug": "king-stephen",
+        "name": "Stephen King",
+        "status": "matched",
+        "qid": "Q39829",
+        "pinned": false,
+        "wikidata": {
+            "label": "Stephen King",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q28389",
+                "Q1930187",
+                "Q6625963",
+                "Q36180"
+            ]
+        },
+        "photo": "king-stephen.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg/960px-Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_%28cropped%29.jpg",
+        "color": "#7d746d",
+        "credit": {
+            "file": "File:Stephen King at the 2024 Toronto International Film Festival 2 (cropped).jpg",
+            "artist": "Kevin Payravi",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Stephen_King_at_the_2024_Toronto_International_Film_Festival_2_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "lackberg-camilla": {
+        "slug": "lackberg-camilla",
+        "name": "Camilla Läckberg",
+        "status": "matched",
+        "qid": "Q231320",
+        "pinned": false,
+        "wikidata": {
+            "label": "Camilla Läckberg",
+            "description": "escritora sueca",
+            "occupations": [
+                "Q36180",
+                "Q6625963"
+            ]
+        },
+        "photo": "lackberg-camilla.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Camilla_L%C3%A4ckberg_by_Christian_Ursilva.jpg/960px-Camilla_L%C3%A4ckberg_by_Christian_Ursilva.jpg",
+        "color": "#5f3d31",
+        "credit": {
+            "file": "File:Camilla Läckberg by Christian Ursilva.jpg",
+            "artist": "Christian Ursilva from København, Danmark",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Camilla_L%C3%A4ckberg_by_Christian_Ursilva.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "laperla-artur": {
+        "slug": "laperla-artur",
+        "name": "Artur Laperla",
+        "status": "no_match",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "lindgren-astrid": {
+        "slug": "lindgren-astrid",
+        "name": "Astrid Lindgren",
+        "status": "matched",
+        "qid": "Q55767",
+        "pinned": false,
+        "wikidata": {
+            "label": "Astrid Lindgren",
+            "description": "escritora sueca",
+            "occupations": [
+                "Q28389",
+                "Q4853732",
+                "Q6625963",
+                "Q36180"
+            ]
+        },
+        "photo": "lindgren-astrid.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Astrid_Lindgren_%28cropped%29.jpg",
+        "color": "#957c72",
+        "credit": {
+            "file": "File:Astrid Lindgren (cropped).jpg",
+            "artist": "Unknown authorUnknown author",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Astrid_Lindgren_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "lipovetsky-gilles": {
+        "slug": "lipovetsky-gilles",
+        "name": "Gilles Lipovetsky",
+        "status": "matched",
+        "qid": "Q1351078",
+        "pinned": false,
+        "wikidata": {
+            "label": "Gilles Lipovetsky",
+            "description": "filósofo y sociólogo francés.",
+            "occupations": [
+                "Q4964182",
+                "Q36180"
+            ]
+        },
+        "photo": "lipovetsky-gilles.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Gilles_Lipovetsky_e_Eduardo_Giannetti_no_Fronteiras_do_Pensamento_S%C3%A3o_Paulo_2017_%2834822383540%29.jpg/960px-Gilles_Lipovetsky_e_Eduardo_Giannetti_no_Fronteiras_do_Pensamento_S%C3%A3o_Paulo_2017_%2834822383540%29.jpg",
+        "color": "#92714e",
+        "credit": {
+            "file": "File:Gilles Lipovetsky e Eduardo Giannetti no Fronteiras do Pensamento São Paulo 2017 (34822383540).jpg",
+            "artist": "Fronteiras do Pensamento",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Gilles_Lipovetsky_e_Eduardo_Giannetti_no_Fronteiras_do_Pensamento_S%C3%A3o_Paulo_2017_(34822383540).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "liu-cixin": {
+        "slug": "liu-cixin",
+        "name": "Cixin Liu",
+        "status": "matched",
+        "qid": "Q607588",
+        "pinned": false,
+        "wikidata": {
+            "label": "Liu Cixin",
+            "description": "escritor de ciencia ficción chino",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "liu-cixin.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Geek_Bar_Tor_authors_event_-_Cixin_Liu_%2818397919319%29.jpg/960px-Geek_Bar_Tor_authors_event_-_Cixin_Liu_%2818397919319%29.jpg",
+        "color": "#625142",
+        "credit": {
+            "file": "File:Geek Bar Tor authors event - Cixin Liu (18397919319).jpg",
+            "artist": "opacity from Chicago",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Geek_Bar_Tor_authors_event_-_Cixin_Liu_(18397919319).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "lovecraft-h-p": {
+        "slug": "lovecraft-h-p",
+        "name": "H. P. Lovecraft",
+        "status": "matched",
+        "qid": "Q169566",
+        "pinned": false,
+        "wikidata": {
+            "label": "H. P. Lovecraft",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q6625963",
+                "Q49757",
+                "Q1930187",
+                "Q11774202",
+                "Q36180"
+            ]
+        },
+        "photo": "lovecraft-h-p.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/9/95/Howard_Phillips_Lovecraft.jpg",
+        "color": "#424245",
+        "credit": {
+            "file": "File:Howard Phillips Lovecraft.jpg",
+            "artist": "Unknown authorUnknown author",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Howard_Phillips_Lovecraft.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "marques-juan": {
+        "slug": "marques-juan",
+        "name": "Juan Marqués",
+        "status": "no_image",
+        "qid": "Q105698480",
+        "pinned": false,
+        "wikidata": {
+            "label": "Juan Marqués",
+            "description": "poeta español (s. XXI)",
+            "occupations": [
+                "Q49757",
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "martin-gaite-carmen": {
+        "slug": "martin-gaite-carmen",
+        "name": "Carmen Martín Gaite",
+        "status": "matched",
+        "qid": "Q268582",
+        "pinned": false,
+        "wikidata": {
+            "label": "Carmen Martín Gaite",
+            "description": "escritora española",
+            "occupations": [
+                "Q36180",
+                "Q1930187",
+                "Q333634",
+                "Q11774202",
+                "Q49757",
+                "Q4853732",
+                "Q6625963"
+            ]
+        },
+        "photo": "martin-gaite-carmen.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Carmen_Mart%C3%ADn_Gaite.jpg/960px-Carmen_Mart%C3%ADn_Gaite.jpg",
+        "color": "#dddddd",
+        "credit": {
+            "file": "File:Carmen Martín Gaite.jpg",
+            "artist": "Alexandrapociello",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Carmen_Mart%C3%ADn_Gaite.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "martin-gijon-susana": {
+        "slug": "martin-gijon-susana",
+        "name": "Susana Martín Gijón",
+        "status": "matched",
+        "qid": "Q27311357",
+        "pinned": false,
+        "wikidata": {
+            "label": "Susana Martín Gijón",
+            "description": "escritora española",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "martin-gijon-susana.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Susana_Mart%C3%ADn_Gij%C3%B3n-Alcobendas_2016.jpg/960px-Susana_Mart%C3%ADn_Gij%C3%B3n-Alcobendas_2016.jpg",
+        "color": "#656565",
+        "credit": {
+            "file": "File:Susana Martín Gijón-Alcobendas 2016.jpg",
+            "artist": "Susana Martín Gijón",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Susana_Mart%C3%ADn_Gij%C3%B3n-Alcobendas_2016.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "martin-ibon": {
+        "slug": "martin-ibon",
+        "name": "Ibon Martín",
+        "status": "no_image",
+        "qid": "Q70441092",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ibon Martín",
+            "description": "escritor vasco",
+            "occupations": [
+                "Q36180",
+                "Q1930187",
+                "Q482980"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "martinez-layla": {
+        "slug": "martinez-layla",
+        "name": "Layla Martínez",
+        "status": "no_image",
+        "qid": "Q122961400",
+        "pinned": false,
+        "wikidata": {
+            "label": "Layla Martínez",
+            "description": "escritora española",
+            "occupations": [
+                "Q36180",
+                "Q49757"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "matsumoto-seicho": {
+        "slug": "matsumoto-seicho",
+        "name": "Seicho Matsumoto",
+        "status": "matched",
+        "qid": "Q201580",
+        "pinned": false,
+        "wikidata": {
+            "label": "Seichō Matsumoto",
+            "description": "escritor japonés",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q10297252"
+            ]
+        },
+        "photo": "matsumoto-seicho.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Seich%C5%8D_Matsumoto_%281955%2C_46_years_old%29.jpg/960px-Seich%C5%8D_Matsumoto_%281955%2C_46_years_old%29.jpg",
+        "color": "#818285",
+        "credit": {
+            "file": "File:Seichō Matsumoto (1955, 46 years old).jpg",
+            "artist": "文藝春秋",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Seich%C5%8D_Matsumoto_(1955,_46_years_old).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "mcdowell-michael": {
+        "slug": "mcdowell-michael",
+        "name": "Michael Mcdowell",
+        "status": "no_image",
+        "qid": "Q276817",
+        "pinned": false,
+        "wikidata": {
+            "label": "Michael McDowell",
+            "description": "novelista y guionista estadounidense (1950–1999)",
+            "occupations": [
+                "Q36180",
+                "Q28389",
+                "Q6625963"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "mcewan-ian": {
+        "slug": "mcewan-ian",
+        "name": "Ian Mcewan",
+        "status": "matched",
+        "qid": "Q190379",
+        "pinned": false,
+        "wikidata": {
+            "label": "Ian McEwan",
+            "description": "escritor británico",
+            "occupations": [
+                "Q36180",
+                "Q28389",
+                "Q6625963",
+                "Q214917",
+                "Q482980"
+            ]
+        },
+        "photo": "mcewan-ian.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/IanMcEwan_EIBF2025_i481.jpg/960px-IanMcEwan_EIBF2025_i481.jpg",
+        "color": "#8c9492",
+        "credit": {
+            "file": "File:IanMcEwan EIBF2025 i481.jpg",
+            "artist": "TimDuncan",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:IanMcEwan_EIBF2025_i481.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "miller-kayla": {
+        "slug": "miller-kayla",
+        "name": "Kayla Miller",
+        "status": "no_match",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "mola-carmen": {
+        "slug": "mola-carmen",
+        "name": "Carmen Mola",
+        "status": "no_person",
+        "qid": null,
+        "pinned": true,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "molist-jorge": {
+        "slug": "molist-jorge",
+        "name": "Jorge Molist",
+        "status": "matched",
+        "qid": "Q3810081",
+        "pinned": false,
+        "wikidata": {
+            "label": "Jorge Molist",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "molist-jorge.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Jorge_Molist_fotografiado_por_As%C3%ADs_G._Ayerbe.jpg/960px-Jorge_Molist_fotografiado_por_As%C3%ADs_G._Ayerbe.jpg",
+        "color": "#403b38",
+        "credit": {
+            "file": "File:Jorge Molist fotografiado por Asís G. Ayerbe.jpg",
+            "artist": "Asís G. Ayerbe",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Jorge_Molist_fotografiado_por_As%C3%ADs_G._Ayerbe.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "montgomery-lucy-maud": {
+        "slug": "montgomery-lucy-maud",
+        "name": "Lucy Maud Montgomery",
+        "status": "matched",
+        "qid": "Q273034",
+        "pinned": false,
+        "wikidata": {
+            "label": "Lucy Maud Montgomery",
+            "description": "escritora canadiense",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q4853732",
+                "Q49757",
+                "Q18939491",
+                "Q1930187"
+            ]
+        },
+        "photo": "montgomery-lucy-maud.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/LMM_signed_photo.jpg",
+        "color": "#787878",
+        "credit": {
+            "file": "File:LMM signed photo.jpg",
+            "artist": "Unknown authorUnknown author",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:LMM_signed_photo.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "mr-tan": {
+        "slug": "mr-tan",
+        "name": "Mr Tan",
+        "status": "no_image",
+        "qid": "Q2853874",
+        "pinned": false,
+        "wikidata": {
+            "label": "Antoine Dole",
+            "description": "guionista francés",
+            "occupations": [
+                "Q28389"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "nesbo-jo": {
+        "slug": "nesbo-jo",
+        "name": "Jo Nesbo",
+        "status": "matched",
+        "qid": "Q202693",
+        "pinned": false,
+        "wikidata": {
+            "label": "Jo Nesbø",
+            "description": "escritor noruego",
+            "occupations": [
+                "Q6625963",
+                "Q1930187",
+                "Q4853732",
+                "Q28389",
+                "Q36180",
+                "Q10297252",
+                "Q482980"
+            ]
+        },
+        "photo": "nesbo-jo.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Jo_Nesb%C3%B81.jpg/960px-Jo_Nesb%C3%B81.jpg",
+        "color": "#8a7d76",
+        "credit": {
+            "file": "File:Jo Nesbø1.jpg",
+            "artist": "Elena Torre",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Jo_Nesb%C3%B81.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "nothomb-amelie": {
+        "slug": "nothomb-amelie",
+        "name": "Amélie Nothomb",
+        "status": "matched",
+        "qid": "Q168040",
+        "pinned": false,
+        "wikidata": {
+            "label": "Amélie Nothomb",
+            "description": "escritora belga",
+            "occupations": [
+                "Q36180",
+                "Q28389",
+                "Q6625963"
+            ]
+        },
+        "photo": "nothomb-amelie.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Am%C3%A9lie_Nothomb_2015_%28facecrop1%29.jpg/960px-Am%C3%A9lie_Nothomb_2015_%28facecrop1%29.jpg",
+        "color": "#836c64",
+        "credit": {
+            "file": "File:Amélie Nothomb 2015 (facecrop1).jpg",
+            "artist": "ActuaLitté",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Am%C3%A9lie_Nothomb_2015_(facecrop1).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "offutt-chris": {
+        "slug": "offutt-chris",
+        "name": "Chris Offutt",
+        "status": "no_image",
+        "qid": "Q5107639",
+        "pinned": false,
+        "wikidata": {
+            "label": "Chris Offutt",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q6625963",
+                "Q28389",
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "oliver-mary": {
+        "slug": "oliver-mary",
+        "name": "Mary Oliver",
+        "status": "no_image",
+        "qid": "Q454836",
+        "pinned": false,
+        "wikidata": {
+            "label": "Mary Oliver",
+            "description": "escritora estadounidense",
+            "occupations": [
+                "Q49757",
+                "Q36180",
+                "Q6625963"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "oruna-maria": {
+        "slug": "oruna-maria",
+        "name": "María Oruña",
+        "status": "matched",
+        "qid": "Q80700291",
+        "pinned": false,
+        "wikidata": {
+            "label": "María Oruña",
+            "description": "abogada y novelista española",
+            "occupations": [
+                "Q36180",
+                "Q6625963"
+            ]
+        },
+        "photo": "oruna-maria.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Mar%C3%ADa_Oru%C3%B1a_2021.jpg/960px-Mar%C3%ADa_Oru%C3%B1a_2021.jpg",
+        "color": "#737963",
+        "credit": {
+            "file": "File:María Oruña 2021.jpg",
+            "artist": "Ogalego.gal",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Mar%C3%ADa_Oru%C3%B1a_2021.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "orwell-george": {
+        "slug": "orwell-george",
+        "name": "George Orwell",
+        "status": "matched",
+        "qid": "Q3335",
+        "pinned": false,
+        "wikidata": {
+            "label": "George Orwell",
+            "description": "escritor y periodista británico",
+            "occupations": [
+                "Q36180",
+                "Q49757",
+                "Q11774202",
+                "Q1930187",
+                "Q6625963",
+                "Q28389"
+            ]
+        },
+        "photo": "orwell-george.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/George_Orwell%2C_c._1940_%2841928180381%29.jpg/960px-George_Orwell%2C_c._1940_%2841928180381%29.jpg",
+        "color": "#85898c",
+        "credit": {
+            "file": "File:George Orwell, c. 1940 (41928180381).jpg",
+            "artist": "Cassowary Colorizations",
+            "license": "CC BY 2.0",
+            "license_url": "https://creativecommons.org/licenses/by/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:George_Orwell,_c._1940_(41928180381).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "ovejero-jose": {
+        "slug": "ovejero-jose",
+        "name": "José Ovejero",
+        "status": "matched",
+        "qid": "Q5944447",
+        "pinned": false,
+        "wikidata": {
+            "label": "José Ovejero",
+            "description": "novelista español",
+            "occupations": [
+                "Q36180",
+                "Q333634",
+                "Q6625963",
+                "Q49757"
+            ]
+        },
+        "photo": "ovejero-jose.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Jose_Ovejero_-_Buch_Wien_2025.JPG/960px-Jose_Ovejero_-_Buch_Wien_2025.JPG",
+        "color": "#3d312c",
+        "credit": {
+            "file": "File:Jose Ovejero - Buch Wien 2025.JPG",
+            "artist": "C.Stadler/Bwag",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Jose_Ovejero_-_Buch_Wien_2025.JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "padura-leonardo": {
+        "slug": "padura-leonardo",
+        "name": "Leonardo Padura",
+        "status": "matched",
+        "qid": "Q454005",
+        "pinned": false,
+        "wikidata": {
+            "label": null,
+            "description": "periodista y escritor cubano",
+            "occupations": [
+                "Q36180",
+                "Q1930187",
+                "Q28389",
+                "Q482980"
+            ]
+        },
+        "photo": "padura-leonardo.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Leonardo_Padura_no_Fronteiras_do_Pensamento_Porto_Alegre_2017_%2836635363641%29.jpg/960px-Leonardo_Padura_no_Fronteiras_do_Pensamento_Porto_Alegre_2017_%2836635363641%29.jpg",
+        "color": "#5a4b57",
+        "credit": {
+            "file": "File:Leonardo Padura no Fronteiras do Pensamento Porto Alegre 2017 (36635363641).jpg",
+            "artist": "Fronteiras do Pensamento",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Leonardo_Padura_no_Fronteiras_do_Pensamento_Porto_Alegre_2017_(36635363641).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "pardo-bazan-emilia": {
+        "slug": "pardo-bazan-emilia",
+        "name": "Emilia Pardo Bazán",
+        "status": "matched",
+        "qid": "Q275929",
+        "pinned": false,
+        "wikidata": {
+            "label": "Emilia Pardo Bazán",
+            "description": "escritora española",
+            "occupations": [
+                "Q11774202",
+                "Q6625963",
+                "Q1930187",
+                "Q36180",
+                "Q49757"
+            ]
+        },
+        "photo": "pardo-bazan-emilia.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Emilia_Pardo_Baz%C3%A1n_por_Luis_Sellier_1885.jpg/960px-Emilia_Pardo_Baz%C3%A1n_por_Luis_Sellier_1885.jpg",
+        "color": "#9c9c9c",
+        "credit": {
+            "file": "File:Emilia Pardo Bazán por Luis Sellier 1885.jpg",
+            "artist": "Luis Sellier",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Emilia_Pardo_Baz%C3%A1n_por_Luis_Sellier_1885.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "parks-alan": {
+        "slug": "parks-alan",
+        "name": "Alan Parks",
+        "status": "no_image",
+        "qid": "Q115110240",
+        "pinned": false,
+        "wikidata": {
+            "label": "Alan Parks",
+            "description": "Scottish crime writer",
+            "occupations": [
+                "Q6625963",
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "perez-galdos-benito": {
+        "slug": "perez-galdos-benito",
+        "name": "Benito Pérez Galdós",
+        "status": "matched",
+        "qid": "Q189869",
+        "pinned": false,
+        "wikidata": {
+            "label": "Benito Pérez Galdós",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q214917",
+                "Q6625963",
+                "Q1930187",
+                "Q49757"
+            ]
+        },
+        "photo": "perez-galdos-benito.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Benito_Perez_Galdos_-_Kaulak_%284.3%29.jpg/960px-Benito_Perez_Galdos_-_Kaulak_%284.3%29.jpg",
+        "color": "#727272",
+        "credit": {
+            "file": "File:Benito Perez Galdos - Kaulak (4.3).jpg",
+            "artist": "Kaulak",
+            "license": "CC BY 4.0",
+            "license_url": "https://creativecommons.org/licenses/by/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Benito_Perez_Galdos_-_Kaulak_(4.3).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "perez-gellida-cesar": {
+        "slug": "perez-gellida-cesar",
+        "name": "César Pérez Gellida",
+        "status": "matched",
+        "qid": "Q18419283",
+        "pinned": false,
+        "wikidata": {
+            "label": "César Pérez Gellida",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q6625963"
+            ]
+        },
+        "photo": "perez-gellida-cesar.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/C%C3%A9sar_P%C3%A9rez_Gellida_1.jpg/960px-C%C3%A9sar_P%C3%A9rez_Gellida_1.jpg",
+        "color": "#837874",
+        "credit": {
+            "file": "File:César Pérez Gellida 1.jpg",
+            "artist": "Ruben Ortega",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:C%C3%A9sar_P%C3%A9rez_Gellida_1.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "perez-reverte-arturo": {
+        "slug": "perez-reverte-arturo",
+        "name": "Arturo Pérez-Reverte",
+        "status": "matched",
+        "qid": "Q155106",
+        "pinned": false,
+        "wikidata": {
+            "label": "Arturo Pérez-Reverte",
+            "description": "periodista y escritor español",
+            "occupations": [
+                "Q36180",
+                "Q1930187",
+                "Q6625963"
+            ]
+        },
+        "photo": "perez-reverte-arturo.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Arturo_P%C3%A9rez-Reverte_%282024%29.jpg",
+        "color": "#967767",
+        "credit": {
+            "file": "File:Arturo Pérez-Reverte (2024).jpg",
+            "artist": "Librairie Mollat",
+            "license": "CC BY 3.0",
+            "license_url": "https://creativecommons.org/licenses/by/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Arturo_P%C3%A9rez-Reverte_(2024).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "picault-aude": {
+        "slug": "picault-aude",
+        "name": "Aude Picault",
+        "status": "no_image",
+        "qid": "Q2870705",
+        "pinned": false,
+        "wikidata": {
+            "label": "Aude Picault",
+            "description": "historietista francesa",
+            "occupations": [
+                "Q715301"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "pilkey-dav": {
+        "slug": "pilkey-dav",
+        "name": "Dav Pilkey",
+        "status": "matched",
+        "qid": "Q2550486",
+        "pinned": false,
+        "wikidata": {
+            "label": "Dav Pilkei",
+            "description": "caricaturista y autor estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q4853732",
+                "Q1114448"
+            ]
+        },
+        "photo": "pilkey-dav.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Dav_Pilkey_at_a_book_event_in_2018.jpg",
+        "color": "#7b655d",
+        "credit": {
+            "file": "File:Dav Pilkey at a book event in 2018.jpg",
+            "artist": "Kojisasuke",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Dav_Pilkey_at_a_book_event_in_2018.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "pintadera-fran": {
+        "slug": "pintadera-fran",
+        "name": "Fran Pintadera",
+        "status": "no_image",
+        "qid": "Q137392797",
+        "pinned": false,
+        "wikidata": {
+            "label": "Fran Pintadera",
+            "description": null,
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "plath-sylvia": {
+        "slug": "plath-sylvia",
+        "name": "Sylvia Plath",
+        "status": "matched",
+        "qid": "Q133054",
+        "pinned": false,
+        "wikidata": {
+            "label": "Sylvia Plath",
+            "description": "escritora estadounidense",
+            "occupations": [
+                "Q49757",
+                "Q36180",
+                "Q6625963",
+                "Q11774202",
+                "Q18939491",
+                "Q4853732"
+            ]
+        },
+        "photo": "plath-sylvia.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Sylvia_Plath.jpg",
+        "color": "#71797a",
+        "credit": {
+            "file": "File:Sylvia Plath.jpg",
+            "artist": "Giovanni Giovannetti/Grazia Neri",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Sylvia_Plath.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "poe-edgar-allan": {
+        "slug": "poe-edgar-allan",
+        "name": "Edgar Allan Poe",
+        "status": "matched",
+        "qid": "Q16867",
+        "pinned": false,
+        "wikidata": {
+            "label": "Edgar Allan Poe",
+            "description": "escritor, poeta y periodista estadounidense",
+            "occupations": [
+                "Q49757",
+                "Q36180",
+                "Q11774202",
+                "Q214917",
+                "Q1930187",
+                "Q10297252",
+                "Q6625963",
+                "Q482980"
+            ]
+        },
+        "photo": "poe-edgar-allan.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Edgar_Allan_Poe%2C_circa_1849%2C_restored%2C_squared_off.jpg/960px-Edgar_Allan_Poe%2C_circa_1849%2C_restored%2C_squared_off.jpg",
+        "color": "#49433b",
+        "credit": {
+            "file": "File:Edgar Allan Poe, circa 1849, restored, squared off.jpg",
+            "artist": "Unknown authorUnknown author; Restored by Yann Forget and Adam Cuerden",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Edgar_Allan_Poe,_circa_1849,_restored,_squared_off.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "posteguillo-santiago": {
+        "slug": "posteguillo-santiago",
+        "name": "Santiago Posteguillo",
+        "status": "matched",
+        "qid": "Q6121095",
+        "pinned": false,
+        "wikidata": {
+            "label": "Santiago Posteguillo",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "posteguillo-santiago.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Santiago_Posteguillo.jpg",
+        "color": "#8f859b",
+        "credit": {
+            "file": "File:Santiago Posteguillo.jpg",
+            "artist": "AdriPareja",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Santiago_Posteguillo.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "pratchett-terry": {
+        "slug": "pratchett-terry",
+        "name": "Terry Pratchett",
+        "status": "matched",
+        "qid": "Q46248",
+        "pinned": false,
+        "wikidata": {
+            "label": "Terry Pratchett",
+            "description": "escritor inglés",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q1930187",
+                "Q28389",
+                "Q4853732",
+                "Q482980"
+            ]
+        },
+        "photo": "pratchett-terry.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/10.12.12TerryPratchettByLuigiNovi1.jpg/960px-10.12.12TerryPratchettByLuigiNovi1.jpg",
+        "color": "#56483b",
+        "credit": {
+            "file": "File:10.12.12TerryPratchettByLuigiNovi1.jpg",
+            "artist": "Luigi Novi",
+            "license": "CC BY 3.0",
+            "license_url": "https://creativecommons.org/licenses/by/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:10.12.12TerryPratchettByLuigiNovi1.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "pujol-romain": {
+        "slug": "pujol-romain",
+        "name": "Romain Pujol",
+        "status": "no_match",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "redondo-dolores": {
+        "slug": "redondo-dolores",
+        "name": "Dolores Redondo",
+        "status": "matched",
+        "qid": "Q12256308",
+        "pinned": false,
+        "wikidata": {
+            "label": "Dolores Redondo",
+            "description": "escritora española",
+            "occupations": [
+                "Q6625963",
+                "Q36180"
+            ]
+        },
+        "photo": "redondo-dolores.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Dolores_redondo.jpg",
+        "color": "#766862",
+        "credit": {
+            "file": "File:Dolores redondo.jpg",
+            "artist": "Sapristi1000",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Dolores_redondo.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "rilke-rainer-maria": {
+        "slug": "rilke-rainer-maria",
+        "name": "Rainer Maria Rilke",
+        "status": "matched",
+        "qid": "Q76483",
+        "pinned": false,
+        "wikidata": {
+            "label": "Rainer Maria Rilke",
+            "description": "poeta austríaco (1875–1926)",
+            "occupations": [
+                "Q36180",
+                "Q49757",
+                "Q214917",
+                "Q333634",
+                "Q6625963"
+            ]
+        },
+        "photo": "rilke-rainer-maria.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Rainer_Maria_Rilke_1900.jpg",
+        "color": "#777777",
+        "credit": {
+            "file": "File:Rainer Maria Rilke 1900.jpg",
+            "artist": "Unknown authorUnknown author",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Rainer_Maria_Rilke_1900.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "rippin-sally": {
+        "slug": "rippin-sally",
+        "name": "Sally Rippin",
+        "status": "no_image",
+        "qid": "Q117831510",
+        "pinned": false,
+        "wikidata": {
+            "label": "Sally Rippin",
+            "description": "Australian author and illustrator of children's books",
+            "occupations": [
+                "Q4853732"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "roca-paco": {
+        "slug": "roca-paco",
+        "name": "Paco Roca",
+        "status": "matched",
+        "qid": "Q2438463",
+        "pinned": false,
+        "wikidata": {
+            "label": "Paco Roca",
+            "description": "historietista español",
+            "occupations": [
+                "Q715301",
+                "Q28389",
+                "Q36180"
+            ]
+        },
+        "photo": "roca-paco.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c3/Paco_Roca_en_Alita_Comics_%28cropped%29.jpg/960px-Paco_Roca_en_Alita_Comics_%28cropped%29.jpg",
+        "color": "#6c6366",
+        "credit": {
+            "file": "File:Paco Roca en Alita Comics (cropped).jpg",
+            "artist": "Marcusfernandez",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Paco_Roca_en_Alita_Comics_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "rothfuss-patrick": {
+        "slug": "rothfuss-patrick",
+        "name": "Patrick Rothfuss",
+        "status": "matched",
+        "qid": "Q514546",
+        "pinned": false,
+        "wikidata": {
+            "label": "Patrick Rothfuss",
+            "description": "escritor estadounidense de fantasía",
+            "occupations": [
+                "Q6625963",
+                "Q36180"
+            ]
+        },
+        "photo": "rothfuss-patrick.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Patrick-rothfuss-2014-kyle-cassidy.jpg/960px-Patrick-rothfuss-2014-kyle-cassidy.jpg",
+        "color": "#474447",
+        "credit": {
+            "file": "File:Patrick-rothfuss-2014-kyle-cassidy.jpg",
+            "artist": "Kyle Cassidy",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Patrick-rothfuss-2014-kyle-cassidy.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "rowling-jk": {
+        "slug": "rowling-jk",
+        "name": "J.K. Rowling",
+        "status": "matched",
+        "qid": "Q34660",
+        "pinned": false,
+        "wikidata": {
+            "label": null,
+            "description": "escritora británica",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q4853732",
+                "Q28389",
+                "Q482980"
+            ]
+        },
+        "photo": "rowling-jk.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/J._K._Rowling_2010.jpg/960px-J._K._Rowling_2010.jpg",
+        "color": "#9aa594",
+        "credit": {
+            "file": "File:J. K. Rowling 2010.jpg",
+            "artist": "Daniel Ogren",
+            "license": "CC BY 2.0",
+            "license_url": "https://creativecommons.org/licenses/by/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:J._K._Rowling_2010.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "rr-martin-george": {
+        "slug": "rr-martin-george",
+        "name": "George R.R. Martin",
+        "status": "matched",
+        "qid": "Q181677",
+        "pinned": false,
+        "wikidata": {
+            "label": "George R. R. Martin",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q28389"
+            ]
+        },
+        "photo": "rr-martin-george.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/50/Portrait_photoshoot_at_Worldcon_75%2C_Helsinki%2C_before_the_Hugo_Awards_%E2%80%93_George_R._R._Martin_%28cropped%29.jpg",
+        "color": "#383738",
+        "credit": {
+            "file": "File:Portrait photoshoot at Worldcon 75, Helsinki, before the Hugo Awards – George R. R. Martin (cropped).jpg",
+            "artist": "Henry Söderlund",
+            "license": "CC BY 4.0",
+            "license_url": "https://creativecommons.org/licenses/by/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Portrait_photoshoot_at_Worldcon_75,_Helsinki,_before_the_Hugo_Awards_%E2%80%93_George_R._R._Martin_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "saint-exupery-antoine-de": {
+        "slug": "saint-exupery-antoine-de",
+        "name": "Antoine De Saint-Exupéry",
+        "status": "matched",
+        "qid": "Q2908",
+        "pinned": false,
+        "wikidata": {
+            "label": "Antoine de Saint-Exupéry",
+            "description": "escritor y aviador francés",
+            "occupations": [
+                "Q6625963",
+                "Q4853732",
+                "Q36180",
+                "Q1930187",
+                "Q4964182",
+                "Q49757",
+                "Q11774202"
+            ]
+        },
+        "photo": "saint-exupery-antoine-de.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7f/11exupery-inline1-500.jpg",
+        "color": "#828282",
+        "credit": {
+            "file": "File:11exupery-inline1-500.jpg",
+            "artist": "Distributed by Agence France-Presse",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:11exupery-inline1-500.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "sanderson-brandon": {
+        "slug": "sanderson-brandon",
+        "name": "Brandon Sanderson",
+        "status": "matched",
+        "qid": "Q457608",
+        "pinned": false,
+        "wikidata": {
+            "label": "Brandon Sanderson",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q6625963",
+                "Q36180",
+                "Q482980"
+            ]
+        },
+        "photo": "sanderson-brandon.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg/960px-Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg",
+        "color": "#a29582",
+        "credit": {
+            "file": "File:Brandon Sanderson - Lucca Comics & Games 2016.jpg",
+            "artist": "Niccolò Caranti",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Brandon_Sanderson_-_Lucca_Comics_%26_Games_2016.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "santamaria-jara": {
+        "slug": "santamaria-jara",
+        "name": "Jara Santamaría",
+        "status": "no_image",
+        "qid": "Q138956475",
+        "pinned": false,
+        "wikidata": {
+            "label": null,
+            "description": null,
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "santiago-roberto": {
+        "slug": "santiago-roberto",
+        "name": "Roberto Santiago",
+        "status": "no_image",
+        "qid": "Q6110007",
+        "pinned": false,
+        "wikidata": {
+            "label": "Roberto Santiago",
+            "description": "director y escritor dramaturgo español",
+            "occupations": [
+                "Q28389",
+                "Q36180",
+                "Q4853732"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "sanz-marta": {
+        "slug": "sanz-marta",
+        "name": "Marta Sanz",
+        "status": "matched",
+        "qid": "Q6002016",
+        "pinned": false,
+        "wikidata": {
+            "label": "Marta Sanz",
+            "description": "escritora española",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "sanz-marta.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Marta_Sanz.jpg/960px-Marta_Sanz.jpg",
+        "color": "#725b49",
+        "credit": {
+            "file": "File:Marta Sanz.jpg",
+            "artist": "José M. Ciordia",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Marta_Sanz.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "sapkowski-andrzej": {
+        "slug": "sapkowski-andrzej",
+        "name": "Andrzej Sapkowski",
+        "status": "matched",
+        "qid": "Q312101",
+        "pinned": false,
+        "wikidata": {
+            "label": "Andrzej Sapkowski",
+            "description": "escritor de fantasía polaco",
+            "occupations": [
+                "Q36180",
+                "Q333634"
+            ]
+        },
+        "photo": "sapkowski-andrzej.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Andrzej_Sapkowski_-_Lucca_Comics_%26_Games_2015.JPG/960px-Andrzej_Sapkowski_-_Lucca_Comics_%26_Games_2015.JPG",
+        "color": "#a89080",
+        "credit": {
+            "file": "File:Andrzej Sapkowski - Lucca Comics & Games 2015.JPG",
+            "artist": "Niccolò Caranti",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Andrzej_Sapkowski_-_Lucca_Comics_%26_Games_2015.JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "sastre-elvira": {
+        "slug": "sastre-elvira",
+        "name": "Elvira Sastre",
+        "status": "matched",
+        "qid": "Q27670801",
+        "pinned": false,
+        "wikidata": {
+            "label": "Elvira Sastre",
+            "description": "poeta y traductora española",
+            "occupations": [
+                "Q333634",
+                "Q49757",
+                "Q36180"
+            ]
+        },
+        "photo": "sastre-elvira.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Elvira_Sastre.jpg/960px-Elvira_Sastre.jpg",
+        "color": "#815859",
+        "credit": {
+            "file": "File:Elvira Sastre.jpg",
+            "artist": "Florenciac",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Elvira_Sastre.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "shelley-mary": {
+        "slug": "shelley-mary",
+        "name": "Mary Shelley",
+        "status": "matched",
+        "qid": "Q47152",
+        "pinned": false,
+        "wikidata": {
+            "label": "Mary Shelley",
+            "description": "escritora inglesa (1797-1851)",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q11774202",
+                "Q214917",
+                "Q49757",
+                "Q333634"
+            ]
+        },
+        "photo": "shelley-mary.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Richard_Rothwell_%281800-1868%29_-_Mary_Wollstonecraft_Shelley_-_NPG_1235_-_National_Portrait_Gallery.jpg",
+        "color": "#392919",
+        "credit": {
+            "file": "File:Richard Rothwell (1800-1868) - Mary Wollstonecraft Shelley - NPG 1235 - National Portrait Gallery.jpg",
+            "artist": "Richard Rothwell",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Richard_Rothwell_(1800-1868)_-_Mary_Wollstonecraft_Shelley_-_NPG_1235_-_National_Portrait_Gallery.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "silva-lorenzo": {
+        "slug": "silva-lorenzo",
+        "name": "Lorenzo Silva",
+        "status": "matched",
+        "qid": "Q4894938",
+        "pinned": false,
+        "wikidata": {
+            "label": "Lorenzo Silva",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q10297252"
+            ]
+        },
+        "photo": "silva-lorenzo.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Lorenzo_Silva_-_Buch_Wien_2023.JPG/960px-Lorenzo_Silva_-_Buch_Wien_2023.JPG",
+        "color": "#483a3f",
+        "credit": {
+            "file": "File:Lorenzo Silva - Buch Wien 2023.JPG",
+            "artist": "C.Stadler/Bwag",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Lorenzo_Silva_-_Buch_Wien_2023.JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "sola-saez-irene": {
+        "slug": "sola-saez-irene",
+        "name": "Irene Solà Saez",
+        "status": "matched",
+        "qid": "Q19291157",
+        "pinned": false,
+        "wikidata": {
+            "label": "Irene Solà Sàez",
+            "description": "poeta y escritora catalana",
+            "occupations": [
+                "Q49757",
+                "Q36180",
+                "Q3391743"
+            ]
+        },
+        "photo": "sola-saez-irene.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Els_12_finalistes_del_Premi_%C3%92mnium_Millor_Novel%C2%B7la_de_l%27Any_191130_162_dc_%2849162599576%29_%28cropped%29.jpg/960px-Els_12_finalistes_del_Premi_%C3%92mnium_Millor_Novel%C2%B7la_de_l%27Any_191130_162_dc_%2849162599576%29_%28cropped%29.jpg",
+        "color": "#a2887d",
+        "credit": {
+            "file": "File:Els 12 finalistes del Premi Òmnium Millor Novel·la de l'Any 191130 162 dc (49162599576) (cropped).jpg",
+            "artist": "Òmnium Cultural",
+            "license": "CC BY-SA 2.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Els_12_finalistes_del_Premi_%C3%92mnium_Millor_Novel%C2%B7la_de_l%27Any_191130_162_dc_(49162599576)_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "soto-chica-jose": {
+        "slug": "soto-chica-jose",
+        "name": "José Soto Chica",
+        "status": "no_image",
+        "qid": "Q113830110",
+        "pinned": false,
+        "wikidata": {
+            "label": "José Soto Chica",
+            "description": "historiador, novelista y profesor universitario español",
+            "occupations": [
+                "Q201788",
+                "Q6625963"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "stoker-bram": {
+        "slug": "stoker-bram",
+        "name": "Bram Stoker",
+        "status": "matched",
+        "qid": "Q36184",
+        "pinned": false,
+        "wikidata": {
+            "label": "Bram Stoker",
+            "description": "escritor irlandés (1847-1912)",
+            "occupations": [
+                "Q36180",
+                "Q1930187",
+                "Q6625963",
+                "Q28389"
+            ]
+        },
+        "photo": "stoker-bram.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Bram_Stoker_1906.jpg/960px-Bram_Stoker_1906.jpg",
+        "color": "#323232",
+        "credit": {
+            "file": "File:Bram Stoker 1906.jpg",
+            "artist": "unidentified photographer",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Bram_Stoker_1906.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "stromquist-liv": {
+        "slug": "stromquist-liv",
+        "name": "Liv Strömquist",
+        "status": "matched",
+        "qid": "Q4980986",
+        "pinned": false,
+        "wikidata": {
+            "label": "Liv Strömquist",
+            "description": "Autora de cómics sueca",
+            "occupations": [
+                "Q715301"
+            ]
+        },
+        "photo": "stromquist-liv.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Liv_Str%C3%B6mquist%2C_Bokm%C3%A4ssan_2013_4.jpg/960px-Liv_Str%C3%B6mquist%2C_Bokm%C3%A4ssan_2013_4.jpg",
+        "color": "#86654a",
+        "credit": {
+            "file": "File:Liv Strömquist, Bokmässan 2013 4.jpg",
+            "artist": "Albin Olsson",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Liv_Str%C3%B6mquist,_Bokm%C3%A4ssan_2013_4.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "tey-josephine": {
+        "slug": "tey-josephine",
+        "name": "Josephine Tey",
+        "status": "no_image",
+        "qid": "Q261521",
+        "pinned": false,
+        "wikidata": {
+            "label": "Josephine Tey",
+            "description": "escritora británica",
+            "occupations": [
+                "Q36180",
+                "Q214917",
+                "Q6625963",
+                "Q28389",
+                "Q10297252"
+            ]
+        },
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "thompson-craig": {
+        "slug": "thompson-craig",
+        "name": "Craig Thompson",
+        "status": "matched",
+        "qid": "Q429590",
+        "pinned": false,
+        "wikidata": {
+            "label": "Craig Thompson",
+            "description": "historietista estadounidense",
+            "occupations": [
+                "Q715301",
+                "Q6625963"
+            ]
+        },
+        "photo": "thompson-craig.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Craig_Thompson_BBF_2011_Shankbone.JPG/960px-Craig_Thompson_BBF_2011_Shankbone.JPG",
+        "color": "#6c574c",
+        "credit": {
+            "file": "File:Craig Thompson BBF 2011 Shankbone.JPG",
+            "artist": "David Shankbone",
+            "license": "CC BY 3.0",
+            "license_url": "https://creativecommons.org/licenses/by/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Craig_Thompson_BBF_2011_Shankbone.JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "thoreau-henry-david": {
+        "slug": "thoreau-henry-david",
+        "name": "Henry David Thoreau",
+        "status": "matched",
+        "qid": "Q131149",
+        "pinned": false,
+        "wikidata": {
+            "label": "Henry David Thoreau",
+            "description": "escritor, poeta y filósofo estadounidense",
+            "occupations": [
+                "Q49757",
+                "Q4964182",
+                "Q11774202",
+                "Q18939491",
+                "Q333634",
+                "Q36180"
+            ]
+        },
+        "photo": "thoreau-henry-david.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Benjamin_D._Maxham_-_Henry_David_Thoreau_-_Restored_-_greyscale_-_straightened.jpg/960px-Benjamin_D._Maxham_-_Henry_David_Thoreau_-_Restored_-_greyscale_-_straightened.jpg",
+        "color": "#5a5a5a",
+        "credit": {
+            "file": "File:Benjamin D. Maxham - Henry David Thoreau - Restored - greyscale - straightened.jpg",
+            "artist": "B. D. Maxham",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Benjamin_D._Maxham_-_Henry_David_Thoreau_-_Restored_-_greyscale_-_straightened.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "tirado-torras-miriam": {
+        "slug": "tirado-torras-miriam",
+        "name": "Míriam Tirado Torras",
+        "status": "matched",
+        "qid": "Q134082097",
+        "pinned": false,
+        "wikidata": {
+            "label": "Miriam Tirado Torras",
+            "description": null,
+            "occupations": [
+                "Q36180",
+                "Q1930187"
+            ]
+        },
+        "photo": "tirado-torras-miriam.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/67/Setmana_del_Llibre_en_Catal%C3%A0_2025_20-09_IMG_6762_copia_%2854800609549%29.jpg/960px-Setmana_del_Llibre_en_Catal%C3%A0_2025_20-09_IMG_6762_copia_%2854800609549%29.jpg",
+        "color": "#95948f",
+        "credit": {
+            "file": "File:Setmana del Llibre en Català 2025 20-09 IMG 6762 copia (54800609549).jpg",
+            "artist": "La Setmana from Barcelona, Catalunya",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Setmana_del_Llibre_en_Catal%C3%A0_2025_20-09_IMG_6762_copia_(54800609549).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "tolkien-j-r-r": {
+        "slug": "tolkien-j-r-r",
+        "name": "J. R. R. Tolkien",
+        "status": "matched",
+        "qid": "Q892",
+        "pinned": false,
+        "wikidata": {
+            "label": "J. R. R. Tolkien",
+            "description": "escritor y filólogo inglés",
+            "occupations": [
+                "Q49757",
+                "Q4853732",
+                "Q333634",
+                "Q11774202",
+                "Q482980",
+                "Q36180",
+                "Q201788",
+                "Q6625963"
+            ]
+        },
+        "photo": "tolkien-j-r-r.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/J._R._R._Tolkien%2C_ca._1925.jpg/960px-J._R._R._Tolkien%2C_ca._1925.jpg",
+        "color": "#4c4c4c",
+        "credit": {
+            "file": "File:J. R. R. Tolkien, ca. 1925.jpg",
+            "artist": "Unknown photo studio commissioned by Tolkien's students 1925/6 (private communication from Catherine McIlwaine, Tolkien Archivist, Bodleian Library)",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:J._R._R._Tolkien,_ca._1925.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "torres-sara": {
+        "slug": "torres-sara",
+        "name": "Sara Torres",
+        "status": "matched",
+        "qid": "Q117309137",
+        "pinned": false,
+        "wikidata": {
+            "label": "Sara Torres",
+            "description": "poeta y novelista española",
+            "occupations": [
+                "Q6625963",
+                "Q49757",
+                "Q36180"
+            ]
+        },
+        "photo": "torres-sara.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Sara_Torres_EL_Queer_II.jpg/960px-Sara_Torres_EL_Queer_II.jpg",
+        "color": "#7b4f3e",
+        "credit": {
+            "file": "File:Sara Torres EL Queer II.jpg",
+            "artist": "Nacaru",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Sara_Torres_EL_Queer_II.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "trueba-david": {
+        "slug": "trueba-david",
+        "name": "David Trueba",
+        "status": "matched",
+        "qid": "Q960778",
+        "pinned": false,
+        "wikidata": {
+            "label": "David Trueba",
+            "description": "escritor y director español",
+            "occupations": [
+                "Q28389",
+                "Q1930187",
+                "Q36180"
+            ]
+        },
+        "photo": "trueba-david.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Seminci_2025_-_David_Trueba-2_%28cropped%29.jpg/960px-Seminci_2025_-_David_Trueba-2_%28cropped%29.jpg",
+        "color": "#624242",
+        "credit": {
+            "file": "File:Seminci 2025 - David Trueba-2 (cropped).jpg",
+            "artist": "Pedro J Pacheco",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Seminci_2025_-_David_Trueba-2_(cropped).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "vallejo-moreu-irene": {
+        "slug": "vallejo-moreu-irene",
+        "name": "Irene Vallejo Moreu",
+        "status": "matched",
+        "qid": "Q42897117",
+        "pinned": false,
+        "wikidata": {
+            "label": "Irene Vallejo",
+            "description": "escritora española",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "vallejo-moreu-irene.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Irene_Vallejo_Moreu.jpg/960px-Irene_Vallejo_Moreu.jpg",
+        "color": "#5e5257",
+        "credit": {
+            "file": "File:Irene Vallejo Moreu.jpg",
+            "artist": "Santiago Basallo",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Irene_Vallejo_Moreu.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "vargas-fred": {
+        "slug": "vargas-fred",
+        "name": "Fred Vargas",
+        "status": "matched",
+        "qid": "Q237087",
+        "pinned": false,
+        "wikidata": {
+            "label": "Fred Vargas",
+            "description": "escritora francesa",
+            "occupations": [
+                "Q6625963",
+                "Q201788",
+                "Q482980",
+                "Q36180"
+            ]
+        },
+        "photo": "vargas-fred.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Fred_Vargas_2009.jpg/960px-Fred_Vargas_2009.jpg",
+        "color": "#7a7476",
+        "credit": {
+            "file": "File:Fred Vargas 2009.jpg",
+            "artist": "Marcello Casal Jr./ Agência Brasil",
+            "license": "CC BY 3.0 br",
+            "license_url": "https://creativecommons.org/licenses/by/3.0/br/deed.en",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Fred_Vargas_2009.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "varios-autores": {
+        "slug": "varios-autores",
+        "name": "Varios Autores",
+        "status": "no_person",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "vazquez-montalban-manuel": {
+        "slug": "vazquez-montalban-manuel",
+        "name": "Manuel Vázquez Montalbán",
+        "status": "matched",
+        "qid": "Q316884",
+        "pinned": false,
+        "wikidata": {
+            "label": "Manuel Vázquez Montalbán",
+            "description": "escritor y periodista español (1939-2003)",
+            "occupations": [
+                "Q36180",
+                "Q1930187",
+                "Q49757",
+                "Q11774202",
+                "Q6625963",
+                "Q10297252",
+                "Q214917"
+            ]
+        },
+        "photo": "vazquez-montalban-manuel.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/0/09/Manuel_V%C3%A1zquez_Montalb%C3%A1n.jpg",
+        "color": "#685d51",
+        "credit": {
+            "file": "File:Manuel Vázquez Montalbán.jpg",
+            "artist": "Arxiu Aisa",
+            "license": "Attribution",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Manuel_V%C3%A1zquez_Montalb%C3%A1n.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "vilar-madruga-elaine": {
+        "slug": "vilar-madruga-elaine",
+        "name": "Elaine Vilar Madruga",
+        "status": "matched",
+        "qid": "Q131189629",
+        "pinned": false,
+        "wikidata": {
+            "label": "Elaine Vilar Madruga",
+            "description": "narradora, poeta y dramaturga cubana",
+            "occupations": [
+                "Q36180"
+            ]
+        },
+        "photo": "vilar-madruga-elaine.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Elaine_Vilar_Madruga.jpg/960px-Elaine_Vilar_Madruga.jpg",
+        "color": "#ae9b96",
+        "credit": {
+            "file": "File:Elaine Vilar Madruga.jpg",
+            "artist": "Soliticagb",
+            "license": "CC0",
+            "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Elaine_Vilar_Madruga.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "villar-domingo": {
+        "slug": "villar-domingo",
+        "name": "Domingo Villar",
+        "status": "matched",
+        "qid": "Q472065",
+        "pinned": false,
+        "wikidata": {
+            "label": "Domingo Villar",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q1930187"
+            ]
+        },
+        "photo": "villar-domingo.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/Domingo_Villar.jpg/960px-Domingo_Villar.jpg",
+        "color": "#7e5837",
+        "credit": {
+            "file": "File:Domingo Villar.jpg",
+            "artist": "Estevoaei",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Domingo_Villar.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "vv-aa": {
+        "slug": "vv-aa",
+        "name": "Vv. Aa.",
+        "status": "no_person",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "vvaa3": {
+        "slug": "vvaa3",
+        "name": "Vv.Aa.3",
+        "status": "no_person",
+        "qid": null,
+        "pinned": false,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-08"
+    },
+    "weil-simone": {
+        "slug": "weil-simone",
+        "name": "Simone Weil",
+        "status": "matched",
+        "qid": "Q157309",
+        "pinned": false,
+        "wikidata": {
+            "label": "Simone Weil",
+            "description": "filósofa, activista social y mística cristiana francesa",
+            "occupations": [
+                "Q4964182",
+                "Q36180",
+                "Q49757",
+                "Q18939491",
+                "Q333634"
+            ]
+        },
+        "photo": "weil-simone.jpg",
+        "image_url": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Simone_Weil_1943.jpg",
+        "color": "#a09d99",
+        "credit": {
+            "file": "File:Simone Weil 1943.jpg",
+            "artist": "Unknown",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Simone_Weil_1943.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "weir-andy": {
+        "slug": "weir-andy",
+        "name": "Andy Weir",
+        "status": "matched",
+        "qid": "Q18590295",
+        "pinned": false,
+        "wikidata": {
+            "label": "Andy Weir",
+            "description": "escritor estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q482980"
+            ]
+        },
+        "photo": "weir-andy.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Andy_Weir_by_Gage_Skidmore.jpg/960px-Andy_Weir_by_Gage_Skidmore.jpg",
+        "color": "#928390",
+        "credit": {
+            "file": "File:Andy Weir by Gage Skidmore.jpg",
+            "artist": "Gage Skidmore",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Andy_Weir_by_Gage_Skidmore.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "woolf-virginia": {
+        "slug": "woolf-virginia",
+        "name": "Virginia Woolf",
+        "status": "matched",
+        "qid": "Q40909",
+        "pinned": false,
+        "wikidata": {
+            "label": "Virginia Woolf",
+            "description": "escritora inglesa",
+            "occupations": [
+                "Q6625963",
+                "Q11774202",
+                "Q18939491",
+                "Q36180",
+                "Q482980"
+            ]
+        },
+        "photo": "woolf-virginia.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg/960px-George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg",
+        "color": "#afafaf",
+        "credit": {
+            "file": "File:George Charles Beresford - Virginia Woolf in 1902 - Restoration.jpg",
+            "artist": "George Charles Beresford / Adam Cuerden",
+            "license": "Public domain",
+            "license_url": null,
+            "attribution_required": false,
+            "source_url": "https://commons.wikimedia.org/wiki/File:George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "yarros-rebecca": {
+        "slug": "yarros-rebecca",
+        "name": "Rebecca Yarros",
+        "status": "matched",
+        "qid": "Q121091992",
+        "pinned": false,
+        "wikidata": {
+            "label": "Rebecca Yarros",
+            "description": "escritora estadounidense",
+            "occupations": [
+                "Q36180",
+                "Q6625963",
+                "Q482980"
+            ]
+        },
+        "photo": "yarros-rebecca.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Rebecca_Yarros_%283%29.jpg/960px-Rebecca_Yarros_%283%29.jpg",
+        "color": "#83614b",
+        "credit": {
+            "file": "File:Rebecca Yarros (3).jpg",
+            "artist": "Serine Ben Brahim",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Rebecca_Yarros_(3).jpg"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "zerocalcare": {
+        "slug": "zerocalcare",
+        "name": "Zerocalcare",
+        "status": "matched",
+        "qid": "Q4024265",
+        "pinned": false,
+        "wikidata": {
+            "label": "Zerocalcare",
+            "description": "historietista italiano",
+            "occupations": [
+                "Q1114448",
+                "Q715301",
+                "Q36180"
+            ]
+        },
+        "photo": "zerocalcare.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Zerocalcare_-_Lucca_Comics_and_Games_2012.JPG/960px-Zerocalcare_-_Lucca_Comics_and_Games_2012.JPG",
+        "color": "#857167",
+        "credit": {
+            "file": "File:Zerocalcare - Lucca Comics and Games 2012.JPG",
+            "artist": "Niccolò Caranti",
+            "license": "CC BY-SA 3.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Zerocalcare_-_Lucca_Comics_and_Games_2012.JPG"
+        },
+        "checked_at": "2026-09-08"
+    },
+    "zueco-luis": {
+        "slug": "zueco-luis",
+        "name": "Luis Zueco",
+        "status": "matched",
+        "qid": "Q5984496",
+        "pinned": false,
+        "wikidata": {
+            "label": "Luis Zueco",
+            "description": "escritor español",
+            "occupations": [
+                "Q36180",
+                "Q201788"
+            ]
+        },
+        "photo": "zueco-luis.jpg",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Luis_Zueco_%282018%29_02.jpg/960px-Luis_Zueco_%282018%29_02.jpg",
+        "color": "#4f4236",
+        "credit": {
+            "file": "File:Luis Zueco (2018) 02.jpg",
+            "artist": "Ecelan",
+            "license": "CC BY-SA 4.0",
+            "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+            "attribution_required": true,
+            "source_url": "https://commons.wikimedia.org/wiki/File:Luis_Zueco_(2018)_02.jpg"
+        },
+        "checked_at": "2026-09-08"
+    }
+}

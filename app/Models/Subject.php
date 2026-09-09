@@ -32,7 +32,7 @@ use Illuminate\Support\Str;
  * text and no code ("Fiction / Fantasy"), and Open Library's subjects are
  * reader-contributed tags -- one record yields "Girls", "Time", "tortoises" --
  * so neither can be trusted to name a THEMA code. Which materia a book belongs
- * to stays a bookseller's judgement; the providers' own words survive untouched
+ * to stays a bookseller's judgment; the providers' own words survive untouched
  * in `books.raw_metadata`.
  *
  * @property int $id

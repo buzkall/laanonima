@@ -13,7 +13,7 @@ use Filament\Schemas\Schema;
 class PublisherForm
 {
     /**
-     * The catalogue data on the left, the logotype beside it.
+     * The catalog data on the left, the logotype beside it.
      *
      * A publisher is a short record, so everything fits on one screen: the
      * name and web presence in the wide column, the logo where the bookseller

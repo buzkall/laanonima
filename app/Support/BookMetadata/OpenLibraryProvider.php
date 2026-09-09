@@ -150,7 +150,7 @@ class OpenLibraryProvider implements BookMetadataProvider
      * records omit it while covers.openlibrary.org still serves the image.
      *
      * The default=false query string matters. Without it a missing cover comes
-     * back as a 200 with a grey placeholder, which we would happily store.
+     * back as a 200 with a gray placeholder, which we would happily store.
      *
      * @param  array<string, mixed>  $data
      */

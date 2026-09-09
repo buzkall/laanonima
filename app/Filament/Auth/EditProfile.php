@@ -27,7 +27,7 @@ use SensitiveParameter;
 class EditProfile extends BaseEditProfile
 {
     /**
-     * Filament lays the profile out as one inline-labelled column. This is the
+     * Filament lays the profile out as one inline-labeled column. This is the
      * users resource's section instead, so a reader and an administrator are
      * looking at the same form.
      */

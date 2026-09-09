@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'catalogue' => [
+    'catalog' => [
         'books'                 => 'Libros',
         'books_online'          => '{0} ninguno en la web|{1} :count en la web|[2,*] :count en la web',
         'authors'               => 'Autores/as',

@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * A listing and nothing more: a request is edited in `BookRequestResource`,
  * where the bookseller has the whole form -- status, internal notes, the
- * catalogue link -- rather than a modal that would only show half of it. The
+ * catalog link -- rather than a modal that would only show half of it. The
  * row action therefore leaves for that page instead of opening one here.
  */
 class BookRequestsRelationManager extends RelationManager

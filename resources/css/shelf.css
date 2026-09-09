@@ -2,7 +2,7 @@
    The shelf at /estanteria.
 
    Every book here is drawn at the size it is in the shop: the record's
-   millimetres go in as unitless custom properties and one scale factor on the
+   millimeters go in as unitless custom properties and one scale factor on the
    stage turns them into pixels, so a resize is a single property to rewrite
    rather than four per book.
 
@@ -10,8 +10,8 @@
    utilities: interlocking custom properties, four 3-D faces per book and a
    stage that changes layout mode under the physics loop.
 
-   Colours come from the site's own paper and ink. What a book is painted with
-   is its own cover colour, handed in as --spine / --spine-ink per record.
+   Colors come from the site's own paper and ink. What a book is painted with
+   is its own cover color, handed in as --spine / --spine-ink per record.
    ========================================================================== */
 
 .shelf {
@@ -295,7 +295,7 @@
    -- 266px of picture crushed into about 13 of screen -- and the compositor
    resamples that into a band of noise beside every spine. Nothing is lost by
    not drawing it: what you see along the edge of a real book there is the edge
-   of its cover board, which is exactly what the face's own colour becomes.
+   of its cover board, which is exactly what the face's own color becomes.
 
    The delay is the point of the second rule. Appearing is instant, because at
    the moment a turn begins the face is a dozen pixels wide and nobody sees it
@@ -324,7 +324,7 @@
 }
 
 /* Only a book standing on its spine is turned. The box pivots about its own
-   centre on an axis that is vertical for a standing book -- the door-opening
+   center on an axis that is vertical for a standing book -- the door-opening
    motion of pulling one out -- but a book lying in a pile has been rolled a
    quarter turn, so that same axis is now horizontal and half the book swings
    down through the board and through whatever it is resting on. A book in a
@@ -336,12 +336,12 @@
 }
 
 /* A book in a pile is lifted off it before it is turned. Tilting it in place
-   would pivot it about its own centre, dropping its near edge through the book
+   would pivot it about its own center, dropping its near edge through the book
    underneath -- the same geometry that made this look broken when it shared
    the standing books' rule. Off the pile there is nothing to pass through. */
 .shelf__stage.is-live .shelf__book[data-stack]:hover .shelf__box,
 .shelf__stage.is-live .shelf__book[data-stack]:focus-visible .shelf__box {
-    /* Half a hand's width off the pile, in millimetres like everything else,
+    /* Half a hand's width off the pile, in millimeters like everything else,
        so the gesture holds at whatever scale the shelf is drawn. */
     --rise: calc(50 * var(--shelf-scale) * 1px);
     --ry: 50deg;
@@ -353,6 +353,8 @@
 
 /* --- the card that follows the pointer ------------------------------------ */
 
+/* Placed against .shelf, not the scroller: that one hides its overflow, and a
+   card standing above a tall book would be cut off at the top. */
 .shelf__peek {
     position: absolute;
     z-index: 20;

@@ -37,13 +37,13 @@ function attachCover(Book $book, string $contents, string $fileName = 'cubierta.
         ->toMediaCollection(Book::COVERS_COLLECTION);
 }
 
-it('reads the dominant colour off a stored cover', function(): void {
+it('reads the dominant color off a stored cover', function(): void {
     $cover = attachCover(Book::factory()->create(), fakeCover());
 
     expectColorNear(extractCoverColor()($cover), '#c81e1e');
 });
 
-it('averages a cover that is more than one colour', function(): void {
+it('averages a cover that is more than one color', function(): void {
     $cover = attachCover(Book::factory()->create(), twoToneCover());
 
     expectColorNear(extractCoverColor()($cover), '#7f007f');
@@ -88,11 +88,11 @@ it('returns null when the file is not an image', function(): void {
 });
 
 /*
- | The colour cannot be derived while the book is saved: media library attaches
+ | The color cannot be derived while the book is saved: media library attaches
  | a cover after the row is written. The trigger is the media itself, wired up
  | in AppServiceProvider -- but only ever to fill an empty column.
  */
-it('stores the cover colour when a cover is attached', function(): void {
+it('stores the cover color when a cover is attached', function(): void {
     $book = Book::factory()->create();
 
     attachCover($book, fakeCover());
@@ -100,16 +100,16 @@ it('stores the cover colour when a cover is attached', function(): void {
     expectColorNear($book->fresh()->cover_color, '#c81e1e');
 });
 
-it('leaves the colour empty for a book with no cover', function(): void {
+it('leaves the color empty for a book with no cover', function(): void {
     expect(Book::factory()->create()->cover_color)->toBeNull();
 });
 
 /*
- | The colour on the record is the one the page is painted with, whether it was
+ | The color on the record is the one the page is painted with, whether it was
  | read off a cover or chosen in the panel: nothing here tells the two apart,
  | and nothing here writes over either.
  */
-it('keeps the colour it has when another image is dragged to the front', function(): void {
+it('keeps the color it has when another image is dragged to the front', function(): void {
     $book = Book::factory()->create();
     $red = attachCover($book, fakeCover(), 'roja.jpg');
     $twoTone = attachCover($book, twoToneCover(), 'dos-tonos.jpg');
@@ -120,12 +120,12 @@ it('keeps the colour it has when another image is dragged to the front', functio
 
     $reordered = $book->fresh();
 
-    /* The two-tone image leads now, and the red one's colour has stayed. */
+    /* The two-tone image leads now, and the red one's color has stayed. */
     expect($reordered->cover()->id)->toBe($twoTone->id);
     expectColorNear($reordered->cover_color, '#c81e1e');
 });
 
-it('keeps the colour it has when the last cover is deleted', function(): void {
+it('keeps the color it has when the last cover is deleted', function(): void {
     $book = Book::factory()->create();
     $cover = attachCover($book, fakeCover());
 
@@ -136,7 +136,7 @@ it('keeps the colour it has when the last cover is deleted', function(): void {
     expectColorNear($book->fresh()->cover_color, '#c81e1e');
 });
 
-it('keeps a colour that was never read off a cover at all', function(): void {
+it('keeps a color that was never read off a cover at all', function(): void {
     $book = Book::factory()->create(['cover_color' => '#3a7b86']);
 
     attachCover($book, fakeCover());
@@ -148,19 +148,19 @@ it('keeps a colour that was never read off a cover at all', function(): void {
  | Emptying the column is how a bookseller asks for the cover to be read again,
  | so both of the triggers still have work to do.
  */
-it('reads the next image added once the colour is emptied', function(): void {
+it('reads the next image added once the color is emptied', function(): void {
     $book = Book::factory()->create();
     attachCover($book, fakeCover(), 'roja.jpg');
 
     $book->update(['cover_color' => null]);
     attachCover($book, twoToneCover(), 'dos-tonos.jpg');
 
-    /* The colour of the cover, which is still the first image, not of the one
+    /* The color of the cover, which is still the first image, not of the one
        that was just added. */
     expectColorNear($book->fresh()->cover_color, '#c81e1e');
 });
 
-it('falls back to the next image when a cover is deleted and no colour is stored', function(): void {
+it('falls back to the next image when a cover is deleted and no color is stored', function(): void {
     $book = Book::factory()->create();
     $red = attachCover($book, fakeCover(), 'roja.jpg');
     attachCover($book, twoToneCover(), 'dos-tonos.jpg');

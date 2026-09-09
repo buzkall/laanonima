@@ -17,13 +17,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Admin
+    |--------------------------------------------------------------------------
+    |
+    | Whoever looks after the site rather than whoever is behind the counter:
+    | La Cupida's credit warnings are written here, and an account running dry
+    | is not something the counter can do anything about. It is deployment
+    | plumbing and not a shop decision, which is why it is an environment
+    | variable and not a setting a bookseller edits.
+    |
+    | Left unset, `WatchCupidaCredit` writes to the contact address instead: a
+    | warning in the wrong inbox gets noticed and a warning sent nowhere does
+    | not.
+    |
+    */
+
+    'admin_email' => env('ADMIN_EMAIL'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Palette
     |--------------------------------------------------------------------------
     |
-    | The design is one flat colour taken off a book's cover plus cream and
-    | ink, so these are every colour on the site that is not derived from a
+    | The design is one flat color taken off a book's cover plus cream and
+    | ink, so these are every color on the site that is not derived from a
     | cover. CoverPalette reads them and works out the two that follow: what to
-    | write on top of the cover colour, and how dark it has to get before it
+    | write on top of the cover color, and how dark it has to get before it
     | reads as a link on the cream page.
     |
     | Careful with "paper" and "ink": Tailwind cannot read PHP, so the same two
@@ -35,7 +54,7 @@ return [
     'palette' => [
 
         /*
-         | The house colour, for a book with no cover to read.
+         | The house color, for a book with no cover to read.
          */
         'fallback' => '#80d7ac',
 
@@ -46,17 +65,17 @@ return [
         'ink'   => '#211511',
 
         /*
-         | Cream over a cover colour, a shade warmer than the page.
+         | Cream over a cover color, a shade warmer than the page.
          */
         'cream' => '#f7f0e1',
 
         /*
-         | Both derived colours are decided by contrast ratio rather than by a
-         | lightness threshold, because the averaged colours the covers produce
+         | Both derived colors are decided by contrast ratio rather than by a
+         | lightness threshold, because the averaged colors the covers produce
          | land all over the place: a washed pink for one book, a near-black
          | brown for the next. 4.5:1 is WCAG AA for body text.
          |
-         | The accent is the cover colour walked towards black, keeping this
+         | The accent is the cover color walked towards black, keeping this
          | much of each channel per step, until it clears the threshold against
          | the page. A larger step is a slower walk and a closer match to the
          | cover; a smaller one gets there in fewer passes and overshoots.
@@ -117,7 +136,7 @@ return [
          | nothing measured is stood up at the ordinary size for its binding
          | rather than left off the shelf.
          |
-         | Width and height in millimetres, keyed by BookBinding value.
+         | Width and height in millimeters, keyed by BookBinding value.
          */
         'sizes' => [
             'paperback'  => [140, 210],
@@ -132,7 +151,7 @@ return [
 
         /*
          | The spine when the thickness is not known: paper is about this thick
-         | a leaf, plus the covers. A hardback's boards add a few millimetres
+         | a leaf, plus the covers. A hardback's boards add a few millimeters
          | more. Both floors are there so a slim book still has a spine to read.
          */
         'mm_per_page'          => 0.055,

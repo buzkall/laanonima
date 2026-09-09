@@ -8,7 +8,7 @@ use App\Models\Book;
 /**
  * One book as a physical object, ready to be stood on the shelf at /estanteria.
  *
- * That page is the catalogue drawn to scale: every book on it is as tall, as
+ * That page is the catalog drawn to scale: every book on it is as tall, as
  * wide and as thick on screen as it is in the shop, which is the whole point of
  * it and the one thing the grid on the home page cannot show. So this is where
  * the three measurements are settled -- read off the record when the ISBN
@@ -23,7 +23,7 @@ final readonly class ShelfBook
 {
     private function __construct(
         public Book $book,
-        /** Millimetres, as they would be with a ruler against the book. */
+        /** Millimeters, as they would be with a ruler against the book. */
         public int $widthMm,
         public int $heightMm,
         public int $thicknessMm,
@@ -33,7 +33,7 @@ final readonly class ShelfBook
         public bool $facesOut,
         /** The pile it lies in, if it is lying flat rather than standing. */
         public ?int $stack,
-        /** The cover colour, and what can be read over it: the spine's paint. */
+        /** The cover color, and what can be read over it: the spine's paint. */
         public CoverPalette $palette,
     ) {}
 

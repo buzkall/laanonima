@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 use function Pest\Livewire\livewire;
 
-it('shows the record a bookseller catalogued', function(): void {
+it('shows the record a bookseller catalogd', function(): void {
     $book = Book::factory()->create([
         'title'        => 'Instrucción de novicias',
         'subtitle'     => 'Vidas del convento barroco para guiar tu presente',
@@ -37,7 +37,7 @@ it('shows the record a bookseller catalogued', function(): void {
         ->assertSee('22,00');
 });
 
-it('paints the page in the colour read off the cover', function(): void {
+it('paints the page in the color read off the cover', function(): void {
     $book = Book::factory()->create(['cover_color' => '#3a7b86']);
 
     $this->get(route('books.show', $book))

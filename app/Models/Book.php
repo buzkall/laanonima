@@ -190,7 +190,7 @@ class Book extends Model implements HasMedia
                    so `thumb` is right for a plain screen and soft on a dense
                    one. This is that same picture at twice the density, offered
                    as the 2x of a srcset -- x descriptors rather than w, because
-                   the size a book is drawn at follows from its millimetres and
+                   the size a book is drawn at follows from its millimeters and
                    not from the width of the window. */
                 $this->addMediaConversion('retina')
                     ->nonQueued()
@@ -435,8 +435,8 @@ class Book extends Model implements HasMedia
      * Only the books there is a picture of.
      *
      * The grid on the home page is happy without one -- it sets the title over
-     * the book's own colour, which reads as a deliberate cover. The shelf is
-     * not: a book there is an object seen from the front, and a blank coloured
+     * the book's own color, which reads as a deliberate cover. The shelf is
+     * not: a book there is an object seen from the front, and a blank colored
      * board among real covers reads as a missing image rather than as a book.
      *
      * @param  Builder<$this>  $query

@@ -2,7 +2,7 @@
 
 {{-- A shelf of books: the home page, an author's page, an imprint's page.
      None of them belongs to a single book, so all three wear the house
-     colours rather than a cover's. The book page keeps its own shell: it is
+     colors rather than a cover's. The book page keeps its own shell: it is
      painted per record and carries the floating cover. --}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -27,15 +27,19 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+{{-- A column as tall as the window, so a page with little on it -- an author
+     with two books, La Cupida with one -- does not leave the footer floating in
+     the middle of the screen with cream below it. The page between the header
+     and the footer takes whatever is left over; what it does with the room is
+     its own business. --}}
 <body
-    class="bg-paper font-serif text-[20px]/[1.65] text-ink antialiased selection:bg-[var(--accent)] selection:text-paper"
+    class="bg-paper text-ink selection:text-paper flex min-h-dvh flex-col font-serif text-[20px]/[1.65] antialiased selection:bg-[var(--accent)]"
     style="--cover: {{ $palette->background }}; --on-cover: {{ $palette->foreground }}; --accent: {{ $palette->accent }}; --rule: {{ $palette->foregroundFaded() }}"
 >
+    <x-site-header />
 
-<x-site-header />
+    <div class="flex flex-1 flex-col">{{ $slot }}</div>
 
-{{ $slot }}
-
-<x-site-footer :cta="$footerCta" />
+    <x-site-footer :cta="$footerCta" />
 </body>
 </html>

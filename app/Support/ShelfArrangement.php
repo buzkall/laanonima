@@ -160,9 +160,9 @@ final readonly class ShelfArrangement
                 break;
             }
 
-            $neighbours = array_filter($chosen, fn(int $taken): bool => abs($taken - $place) < 2);
+            $neighbors = array_filter($chosen, fn(int $taken): bool => abs($taken - $place) < 2);
 
-            if ($neighbours === []) {
+            if ($neighbors === []) {
                 $chosen[] = $place;
             }
         }

@@ -1,5 +1,5 @@
 <header class="flex items-center justify-between border-b border-[var(--rule)] bg-[var(--cover)] px-[clamp(22px,4vw,44px)] py-[18px] text-[var(--on-cover)]">
-    {{-- The wordmark carries its own brand colours, so unlike the rest of the
+    {{-- The wordmark carries its own brand colors, so unlike the rest of the
          header it does NOT recolour with --on-cover. --}}
     <a href="{{ route('home') }}" class="transition-opacity duration-150 hover:opacity-65">
         <img
@@ -8,7 +8,7 @@
             width="922"
             height="242"
             class="h-[clamp(28px,4vw,36px)] w-auto"
-        >
+        />
     </a>
 
     <div class="flex items-center gap-[clamp(16px,3vw,28px)]">
@@ -19,6 +19,14 @@
                 'underline underline-offset-[6px]' => request()->routeIs('books.shelf'),
             ])
         >{{ __('books.public.shelf.title') }}</a>
+
+        <a
+            href="{{ route('cupida') }}"
+            @class([
+                'text-[13px] font-semibold uppercase tracking-[0.22em] transition-opacity duration-150 hover:opacity-65',
+                'underline underline-offset-[6px]' => request()->routeIs('cupida'),
+            ])
+        >{{ __('cupida.nav') }}</a>
 
         {{-- Clients sign in here to reach their own pages in the client panel;
              an administrator already signed in is sent to the admin panel. --}}

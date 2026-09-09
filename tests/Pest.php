@@ -1,6 +1,8 @@
 <?php
 
+use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 /*
@@ -94,8 +96,8 @@ function fakeCover(int $width = 800, int $height = 1200): string
 }
 
 /**
- * GD's resampler does not land on the source colour to the byte, and JPEG costs
- * another point or two, so a colour read off a cover is compared channel by
+ * GD's resampler does not land on the source color to the byte, and JPEG costs
+ * another point or two, so a color read off a cover is compared channel by
  * channel with a tolerance rather than as a hex string.
  */
 function expectColorNear(?string $color, string $expected): void
@@ -165,4 +167,37 @@ function translationOverrideTarget(string $file): array
         (string)$relative->before('/'),
         (string)$relative->after('/es/'),
     ];
+}
+
+/**
+ * Point La Cupida at the small committed catalog instead of the real one.
+ *
+ * The pool it ships with is seven hundred books off the shop's live site, which
+ * makes for a good page and a terrible assertion. The fixture is twelve books
+ * chosen so that every scoring rule has something to bite on.
+ *
+ * The catalog is a singleton that reads its files once, so the instance has
+ * to go as well as the config: a test that resolved it first would otherwise
+ * keep the real pool.
+ */
+function useCupidaFixture(): void
+{
+    config()->set('cupida.data_path', base_path('tests/Fixtures/cupida/catalog'));
+
+    /* The floor on how many books a subject card needs is written for the real
+       pool, where the thinnest card the deck deals still has two dozen books
+       behind it. The fixture is twelve books over eleven subjects, so left
+       alone every one of them would be dropped and the theme round would be
+       empty -- which is a fixture that is too small, not a deck that is
+       broken. */
+    config()->set('cupida.deck.min_books', 1);
+
+    /* The portraits disk goes with it. A card only carries a face when the JPEG
+       is actually on this machine, so without this a test reads whatever
+       `cupida:portraits:fetch` last left in storage on the developer's laptop --
+       and a real file whose name happens to match a fixture slug (torres-sara,
+       today) would put a portrait on a card the test never asked for. */
+    Storage::fake('portraits');
+
+    app()->forgetInstance(CupidaCatalog::class);
 }

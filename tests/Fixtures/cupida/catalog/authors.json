@@ -1,0 +1,102 @@
+[
+    {
+        "name": "Leila Guerriero",
+        "shop_name": "Guerriero, Leila",
+        "slug": "guerriero-leila",
+        "titles": [
+            "La llamada",
+            "Poesía reunida"
+        ],
+        "books": 2
+    },
+    {
+        "name": "Ana Bermejo",
+        "shop_name": "Bermejo, Ana",
+        "slug": "bermejo-ana",
+        "titles": [
+            "Ollis"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Elaine Vilar Rodríguez",
+        "shop_name": "Rodríguez, Elaine Vilar",
+        "slug": "rodriguez-elaine-vilar",
+        "titles": [
+            "El cielo de la selva"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Julia Vera",
+        "shop_name": "Vera, Julia",
+        "slug": "vera-julia",
+        "titles": [
+            "Por qué algunos hombres odian a las mujeres"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Kaoru Ito",
+        "shop_name": "Ito, Kaoru",
+        "slug": "ito-kaoru",
+        "titles": [
+            "Umiko"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Marta Ruiz",
+        "shop_name": "Ruiz, Marta",
+        "slug": "ruiz-marta",
+        "titles": [
+            "Han cantado bingo"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Patricia Mayayo",
+        "shop_name": "Mayayo, Patricia",
+        "slug": "mayayo-patricia",
+        "titles": [
+            "Historia del arte en femenino"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Sara Torres",
+        "shop_name": "Torres, Sara",
+        "slug": "torres-sara",
+        "titles": [
+            "Mientras pasan otras cosas"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Sarah A. Parker",
+        "shop_name": "Parker, Sarah A.",
+        "slug": "parker-sarah-a",
+        "titles": [
+            "Cuatro lunas"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Sergio del Molino Barba",
+        "shop_name": "Barba, Sergio del Molino",
+        "slug": "barba-sergio-del-molino",
+        "titles": [
+            "La hora violeta"
+        ],
+        "books": 1
+    },
+    {
+        "name": "T. Kingfisher",
+        "shop_name": "Kingfisher, T.",
+        "slug": "kingfisher-t",
+        "titles": [
+            "Hay un monstruo en el lago"
+        ],
+        "books": 1
+    }
+]

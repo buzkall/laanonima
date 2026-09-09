@@ -8,7 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * The catalogue a publisher has on the shelves, listed with the same columns as
+ * The catalog a publisher has on the shelves, listed with the same columns as
  * the books resource: `$relatedResource` hands the table over to
  * `BookResource::configureTable()`, so a row here cannot drift from a row there,
  * and the edit action opens the full book form instead of a modal that would

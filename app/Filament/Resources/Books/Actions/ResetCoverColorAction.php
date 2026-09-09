@@ -9,11 +9,11 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Support\Icons\Heroicon;
 
 /**
- * Hand the cover colour back to the cover.
+ * Hand the cover color back to the cover.
  *
- * A colour on the record is never written over -- SyncCoverColor only fills an
+ * A color on the record is never written over -- SyncCoverColor only fills an
  * empty column -- so once a book has one, this is the way to take the current
- * cover's colour instead. Emptying the field does the same for the next image
+ * cover's color instead. Emptying the field does the same for the next image
  * that arrives; this is for the image already there.
  *
  * Only the form state is touched, like every other field on the page: nothing

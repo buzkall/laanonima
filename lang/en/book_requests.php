@@ -6,7 +6,7 @@ return [
         'label'            => 'Book request',
         'plural_label'     => 'Book requests',
         'navigation_label' => 'Book requests',
-        'navigation_group' => 'Catalogue',
+        'navigation_group' => 'Catalog',
     ],
 
     'sections' => [
@@ -23,7 +23,7 @@ return [
         'notes'       => 'Comments',
         'phone'       => 'Phone',
         'user_id'     => 'Client',
-        'book_id'     => 'Book in the catalogue',
+        'book_id'     => 'Book in the catalog',
         'status'      => 'Status',
         'admin_notes' => 'Internal notes',
         'created_at'  => 'Received',
@@ -44,8 +44,8 @@ return [
     ],
 
     'filters' => [
-        'in_catalogue' => 'About a book in the catalogue',
-        'mine'         => 'Still open',
+        'in_catalog' => 'About a book in the catalog',
+        'mine'       => 'Still open',
     ],
 
     'mail' => [

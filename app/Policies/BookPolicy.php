@@ -13,7 +13,7 @@ use Illuminate\Auth\Access\Response;
 class BookPolicy
 {
     /**
-     * A book still being catalogued is a 404, not a 403 -- a denial that says
+     * A book still being catalogd is a 404, not a 403 -- a denial that says
      * "forbidden" confirms the address, and an unpublished book should not be
      * confirmed to anybody. A bookseller sees it anyway: the "Ver en la web"
      * action on the edit screen is most useful precisely while the record is
@@ -21,7 +21,7 @@ class BookPolicy
      *
      * The user is nullable because the shop window is mostly read by visitors
      * who are not signed in: a policy method typed `User` is skipped for a
-     * guest and denies by default, which would hide the whole catalogue.
+     * guest and denies by default, which would hide the whole catalog.
      */
     public function view(?User $user, Book $book): Response
     {

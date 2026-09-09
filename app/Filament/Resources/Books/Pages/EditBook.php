@@ -48,7 +48,7 @@ class EditBook extends EditRecord
         /*
          | Always, not just on the download path: cover_color is derived from
          | the media, which is attached after the form was filled, so uploading
-         | an image would otherwise leave the swatch showing the old colour
+         | an image would otherwise leave the swatch showing the old color
          | until the page was reloaded.
          */
         $this->refreshFormData(['cover_color']);

@@ -1,0 +1,161 @@
+[
+    {
+        "ean": "9788433922069",
+        "slug": "la-llamada",
+        "title": "La llamada",
+        "author": "Guerriero, Leila",
+        "publisher": "Anagrama",
+        "subjects": [
+            "DN"
+        ],
+        "price_cents": 2290,
+        "available": true,
+        "synopsis": "Una crónica real sobre el testimonio de una superviviente de la dictadura, la memoria y la injusticia."
+    },
+    {
+        "ean": "9788412976137",
+        "slug": "mientras-pasan-otras-cosas",
+        "title": "Mientras pasan otras cosas",
+        "author": "Torres, Sara",
+        "subjects": [
+            "DC"
+        ],
+        "price_cents": 1800,
+        "available": true,
+        "publisher": "La Bella Varsovia",
+        "synopsis": "Poemas breves sobre el duelo y la pérdida, escritos con una ternura que no consuela del todo."
+    },
+    {
+        "ean": "9788410352018",
+        "slug": "han-cantado-bingo",
+        "title": "Han cantado bingo",
+        "author": "Ruiz, Marta",
+        "subjects": [
+            "FB"
+        ],
+        "price_cents": 1990,
+        "available": true,
+        "publisher": "Blackie Books",
+        "synopsis": "Una comedia absurda y divertida sobre una familia que hereda un bingo en la costa."
+    },
+    {
+        "ean": "9788410550698",
+        "slug": "cuatro-lunas",
+        "title": "Cuatro lunas",
+        "author": "Parker, Sarah A.",
+        "subjects": [
+            "FM"
+        ],
+        "price_cents": 2295,
+        "available": true,
+        "publisher": "Umbriel",
+        "synopsis": "Una saga de fantasía monumental en un reino de cúpulas de cristal."
+    },
+    {
+        "ean": "9788412606454",
+        "slug": "umiko",
+        "title": "Umiko",
+        "author": "Ito, Kaoru",
+        "subjects": [
+            "X"
+        ],
+        "price_cents": 2400,
+        "available": true,
+        "publisher": "Ediciones La Cúpula",
+        "synopsis": "Una novela gráfica extraña y onírica sobre una ciudad que se hunde."
+    },
+    {
+        "ean": "9791387563127",
+        "slug": "ollis",
+        "title": "Ollis",
+        "author": "Bermejo, Ana",
+        "subjects": [
+            "JB"
+        ],
+        "price_cents": 2100,
+        "available": true,
+        "publisher": "Consonni",
+        "synopsis": "Un ensayo sobre la lucha de clases y la resistencia vecinal en los barrios del sur."
+    },
+    {
+        "ean": "9788419490421",
+        "slug": "la-hora-violeta",
+        "title": "La hora violeta",
+        "author": "Barba, Sergio del Molino",
+        "subjects": [
+            "DN"
+        ],
+        "price_cents": 1750,
+        "available": true,
+        "publisher": "Random House",
+        "synopsis": "Memorias de un padre sobre la muerte de su hijo. Un testimonio real sobre el duelo."
+    },
+    {
+        "ean": "9788410249516",
+        "slug": "por-que-algunos-hombres",
+        "title": "Por qué algunos hombres odian a las mujeres",
+        "author": "Vera, Julia",
+        "subjects": [
+            "JBSF",
+            "JB"
+        ],
+        "price_cents": 1950,
+        "available": true,
+        "publisher": "Capitán Swing",
+        "synopsis": "Un ensayo sobre la violencia y la injusticia estructural contra las mujeres."
+    },
+    {
+        "ean": "9788419951144",
+        "slug": "hay-un-monstruo-en-el-lago",
+        "title": "Hay un monstruo en el lago",
+        "author": "Kingfisher, T.",
+        "subjects": [
+            "FK",
+            "FM"
+        ],
+        "price_cents": 1890,
+        "available": false,
+        "publisher": "Runas",
+        "synopsis": "Terror rural inquietante en un pueblo junto a un lago que nadie quiere nombrar."
+    },
+    {
+        "ean": "9791399081312",
+        "slug": "el-cielo-de-la-selva",
+        "title": "El cielo de la selva",
+        "author": "Rodríguez, Elaine Vilar",
+        "subjects": [
+            "FL"
+        ],
+        "price_cents": 2050,
+        "available": true,
+        "publisher": "Lava",
+        "synopsis": "Ciencia ficción delirante sobre una expedición que se pierde en una selva que piensa."
+    },
+    {
+        "ean": "9788493764395",
+        "slug": "poesia-reunida",
+        "title": "Poesía reunida",
+        "author": "Guerriero, Leila",
+        "subjects": [
+            "DC"
+        ],
+        "price_cents": 2600,
+        "available": true,
+        "publisher": "Pre-Textos",
+        "synopsis": "Toda la poesía de una autora que escribe sobre la casa, la infancia y el cuidado."
+    },
+    {
+        "ean": "9788419393616",
+        "slug": "historia-del-arte-en-femenino",
+        "title": "Historia del arte en femenino",
+        "author": "Mayayo, Patricia",
+        "subjects": [
+            "NH",
+            "AG"
+        ],
+        "price_cents": 2450,
+        "available": true,
+        "publisher": "Cátedra",
+        "synopsis": "Una historia del arte contada desde las mujeres que la escribieron y fueron borradas."
+    }
+]

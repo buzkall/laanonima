@@ -91,7 +91,7 @@ it('marks which books are standing at a guessed size', function(): void {
         ->and($page)->toContain('data-measured="0"');
 });
 
-it('never turns two neighbouring books cover-first', function(): void {
+it('never turns two neighboring books cover-first', function(): void {
     shelved(9);
 
     /* Two covers side by side read as a mistake at the table rather than as a

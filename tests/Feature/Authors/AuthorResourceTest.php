@@ -32,7 +32,7 @@ it('searches by name', function(): void {
         ->assertCanNotSeeTableRecords([$other]);
 });
 
-it('counts the books each author has in the catalogue', function(): void {
+it('counts the books each author has in the catalog', function(): void {
     $author = Author::factory()->create();
     Book::factory()->count(2)->create(['contributors' => [['name' => $author->name, 'role' => 'author']]]);
 

@@ -3,18 +3,18 @@
 namespace App\Support\BookMetadata;
 
 /**
- * How the free text a provider calls a measurement becomes millimetres and
+ * How the free text a provider calls a measurement becomes millimeters and
  * grams.
  *
  * Nothing arrives in a fixed unit. Open Library files one string for the whole
- * object ("8.5 x 5.4 x 0.8 inches"), Google Books files three labelled ones
- * ("23.00 cm"), and the underlying records were imported from catalogues on
- * both sides of the Atlantic, so inches and centimetres are equally common.
+ * object ("8.5 x 5.4 x 0.8 inches"), Google Books files three labeled ones
+ * ("23.00 cm"), and the underlying records were imported from catalogs on
+ * both sides of the Atlantic, so inches and centimeters are equally common.
  */
 final class PhysicalMeasure
 {
     /**
-     * How many millimetres one unit of each name is worth.
+     * How many millimeters one unit of each name is worth.
      *
      * Longest name first: the patterns are matched in order, so "centimeters"
      * has to be tried before "cm" would swallow its first two letters.
@@ -70,10 +70,10 @@ final class PhysicalMeasure
     private const int MAX_WEIGHT_G = 20000;
 
     /**
-     * The three sides of a book out of one string, in millimetres.
+     * The three sides of a book out of one string, in millimeters.
      *
      * The order the numbers come in is not trustworthy -- the same field holds
-     * records imported from library catalogues, from Amazon and from hand
+     * records imported from library catalogs, from Amazon and from hand
      * edits, and they do not agree on whether height or width leads -- so the
      * sides are assigned by size instead: the longest is the height, the
      * shortest of three is the thickness. That is right for every book that is
@@ -125,7 +125,7 @@ final class PhysicalMeasure
     }
 
     /**
-     * One labelled measurement -- "23.00 cm" -- in millimetres.
+     * One labeled measurement -- "23.00 cm" -- in millimeters.
      */
     public static function lengthInMm(mixed $text): ?int
     {
@@ -163,7 +163,7 @@ final class PhysicalMeasure
 
     /**
      * A measurement with no unit written on it is not assumed to be anything.
-     * Both centimetres and inches are common enough here that a guess would be
+     * Both centimeters and inches are common enough here that a guess would be
      * wrong for a large minority of records, and a book listed at 210 inches is
      * worse than a book with no measurements at all.
      */

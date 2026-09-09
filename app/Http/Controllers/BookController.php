@@ -27,7 +27,7 @@ class BookController extends Controller
     }
 
     /**
-     * The same catalogue, stood up on a shelf and drawn to scale.
+     * The same catalog, stood up on a shelf and drawn to scale.
      */
     public function shelf(): View
     {
@@ -80,7 +80,7 @@ class BookController extends Controller
     }
 
     /**
-     * The shop window for one book: one page, painted in its own cover colour.
+     * The shop window for one book: one page, painted in its own cover color.
      *
      * Who may see it is `BookPolicy::view`, which 404s a book that is not on
      * the web yet for everyone but a bookseller.

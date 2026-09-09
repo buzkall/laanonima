@@ -4,7 +4,7 @@ return [
 
     'title'            => 'QR generator',
     'navigation_label' => 'QR generator',
-    'subheading'       => 'Generate a code with the La Anónima question mark in the centre.',
+    'subheading'       => 'Generate a code with the La Anónima question mark in the center.',
 
     'fields' => [
         'url' => 'QR destination',

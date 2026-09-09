@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * Run the ISBN lookup over the catalogue and write down how big the books are.
+ * Run the ISBN lookup over the catalog and write down how big the books are.
  *
  * The shelf at /estanteria is drawn to scale, so a record with no measurements
  * is stood up at the ordinary size for its binding instead. This is how those
@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Cache;
  *
  * It only ever fills gaps. A measurement already on the record was either
  * typed by a bookseller with the book in hand or found on an earlier run, and
- * both beat whatever a free catalogue says today.
+ * both beat whatever a free catalog says today.
  */
 #[Signature('books:measure {--fresh : Ignore the cached lookups and ask the sources again} {--all : Include books that are already measured}')]
-#[Description('Fill in the physical measurements of the catalogue from the ISBN sources')]
+#[Description('Fill in the physical measurements of the catalog from the ISBN sources')]
 class MeasureBooks extends Command
 {
     /** The columns this command is allowed to touch. */

@@ -3,7 +3,7 @@
 namespace App\Support;
 
 /**
- * ISBN normalisation and check-digit validation.
+ * ISBN normalization and check-digit validation.
  *
  * Booksellers type ISBNs from a book's back cover, hyphens and all, and often
  * from an older edition that still carries a 10-digit number.

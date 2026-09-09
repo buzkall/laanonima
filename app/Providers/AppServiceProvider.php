@@ -9,7 +9,9 @@ use App\Support\BookMetadata\BookMetadataProvider;
 use App\Support\BookMetadata\ChainedBookMetadataProvider;
 use App\Support\BookMetadata\GoogleBooksProvider;
 use App\Support\BookMetadata\OpenLibraryProvider;
-use App\Support\Cupida\CupidaCatalogue;
+use App\Support\Cupida\CupidaCatalog;
+use App\Support\Portraits\PortraitSource;
+use App\Support\Portraits\WikidataPortraitSource;
 use Carbon\CarbonImmutable;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as LoginResponseContract;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as RegistrationResponseContract;
@@ -42,11 +44,18 @@ class AppServiceProvider extends ServiceProvider
         $this->registerBookMetadataProvider();
 
         /*
+         | Where an author's face comes from. One source today; a second one
+         | (es.wikipedia's lead image, Open Library author photos) would become
+         | a chain here, the way the book metadata providers already are.
+         */
+        $this->app->singleton(PortraitSource::class, WikidataPortraitSource::class);
+
+        /*
          | La Cupida reads three JSON files off disk and scores the whole pool
          | against every set of answers, so it is a singleton to keep that to
          | one decode per request rather than one per call.
          */
-        $this->app->singleton(CupidaCatalogue::class);
+        $this->app->singleton(CupidaCatalog::class);
     }
 
     /**
@@ -59,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Fill books.cover_color from the cover, for a book that has no colour yet.
+     * Fill books.cover_color from the cover, for a book that has no color yet.
      *
      * It cannot be done in the model: media library attaches a cover after the
      * book row is written, so a saving hook only ever sees the state before the
@@ -70,12 +79,12 @@ class AppServiceProvider extends ServiceProvider
      * to read.
      *
      * Reordering used to be a third trigger, and is not one any more: a stored
-     * colour is never written over, so dragging an image to the front cannot
+     * color is never written over, so dragging an image to the front cannot
      * change it. The listener could only ever have fired for a book whose
-     * colour had been emptied by hand, and unreliably at that -- setNewOrder
+     * color had been emptied by hand, and unreliably at that -- setNewOrder
      * writes one row at a time and each write raises its own event, so the
      * first of them reads the collection while two images still share an
-     * order_column. Reading a specific cover's colour is what the "read it from
+     * order_column. Reading a specific cover's color is what the "read it from
      * the cover again" action on the form is for.
      */
     protected function syncBookCoverColors(): void
@@ -149,7 +158,7 @@ class AppServiceProvider extends ServiceProvider
      * `deferFilters(false)` applies a filter the moment it changes, dropping
      * Filament's "Apply" button; `striped()` alternates the row background so
      * long listings stay readable; 25 rows a page instead of Filament's 10,
-     * so a catalogue of a few dozen titles is one or two pages, not five.
+     * so a catalog of a few dozen titles is one or two pages, not five.
      */
     protected function configureTableDefaults(): void
     {

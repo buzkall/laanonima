@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 /**
  * The single entry point for "what do we know about this ISBN?".
  *
- * Used by the Filament resource, the seeder, and whatever imports the catalogue
+ * Used by the Filament resource, the seeder, and whatever imports the catalog
  * once DILVE credentials arrive.
  */
 class FetchBookMetadata

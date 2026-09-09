@@ -5,13 +5,15 @@ paths:
   - 'app/Actions/Cupida/**'
   - config/cupida.php
   - app/Livewire/Cupida.php
-  - app/Console/Commands/ScrapeCupidaCatalogue.php
+  - app/Console/Commands/ScrapeCupidaCatalog.php
   - app/Models/CupidaPrompt.php
   - app/Models/CupidaRecommendation.php
   - 'app/Filament/Resources/Cupida/**'
   - app/Filament/Actions/EditCupidaPromptAction.php
   - 'resources/views/cupida/**'
   - resources/views/livewire/cupida.blade.php
+  - lang/es/cupida.php
+  - lang/en/cupida.php
   - resources/css/cupida.css
   - 'app/Support/Portraits/**'
   - 'app/Actions/Portraits/**'
@@ -19,22 +21,23 @@ paths:
   - app/Console/Commands/FetchCupidaPortraits.php
   - app/Support/Cupida/CupidaPortrait.php
   - resources/views/cupida/contact-sheet.blade.php
+  - 'app/Support/Cupida/**,config/cupida.php'
 ---
 
 # La Cupida
 The recommender at /la-cupida: an opening card, three rounds of six swipe cards, then one book.
 
-## The model never chooses out of the catalogue
+## The model never chooses out of the catalog
 `CupidaShortlist` scores the whole pool in PHP and sends the best 30; `CupidaAgent::schema()` pins `ean` to those 30 with `->enum()`, so a book the shop does not stock is not a bad answer to catch downstream, it is not a possible answer. Keep the enum. It is the only reason this is safe to put on a real shop's public page.
 
 With no `ANTHROPIC_API_KEY`, a provider failure, or the rate limit reached, `RecommendBook` falls back to the top of its own shortlist plus `cupida.result.fallback_pitch`. The page must never 500 and must never need a key to demo.
 
 ## The pool is three committed JSON files, never a live request
-`resources/data/cupida/{themes,authors,books}.json`, written by `php artisan cupida:scrape` by hand and committed. Nothing regenerates them on deploy or in CI, and the app only reads them, so the shop being down cannot take the page with it. `CupidaCatalogue` is a singleton (registered in `AppServiceProvider`) that reads them once.
+`resources/data/cupida/{themes,authors,books}.json`, written by `php artisan cupida:scrape` by hand and committed. Nothing regenerates them on deploy or in CI, and the app only reads them, so the shop being down cannot take the page with it. `CupidaCatalog` is a singleton (registered in `AppServiceProvider`) that reads them once.
 
 ## The author portraits are a fourth file, and that is not tidiness
 
-`ScrapeCupidaCatalogue::authors()` rebuilds its whole array from the books pool
+`ScrapeCupidaCatalog::authors()` rebuilds its whole array from the books pool
 on every write. A `photo` key added to `authors.json` therefore survives exactly
 until the next `cupida:scrape` and then vanishes with no error at all -- so the
 portraits live in `resources/data/cupida/author-photos.json`, keyed by slug,
@@ -44,7 +47,7 @@ which the scrape never touches.
 asks Wikidata and Commons, is run by hand, and writes the file;
 `cupida:portraits:fetch` reads the recorded `image_url` and downloads the images,
 and is a deploy step (it is in `composer setup`, and it needs a line in the
-deploy script). That is why `CupidaCatalogue::portrait()` checks the disk as well
+deploy script). That is why `CupidaCatalog::portrait()` checks the disk as well
 as the row: a deploy that skipped the fetch has every verdict and no image, and
 the card has to fall back to no face rather than to a broken one. One directory
 listing per request answers it for all six cards -- never a `Storage::exists()`
@@ -83,14 +86,14 @@ slice, so the pool stays 150 real writers deep rather than 145.
 
 The recurring shop-ism is matched by `cupida.portraits.collective_patterns`
 before any request is made, because it comes back under a new spelling every time
-the catalogue grows. A shared byline with a real Wikidata item is a judgement
+the catalog grows. A shared byline with a real Wikidata item is a judgment
 call no pattern expresses: mark it with `--none`.
 
 ## The photo credit sits under the deck, and is not a link
 
 Commons portraits are mostly CC BY-SA with attribution required, and every one is
 recropped to the card -- so the line under the buttons names the photographer,
-gives the licence, and says it was cropped. All three are the licence's asking,
+gives the license, and says it was cropped. All three are the license's asking,
 and `portraits.credit` in `lang/{es,en}/cupida.php` holds it.
 
 It reads `$stack[0]`, the card actually in front of the reader, and renders
@@ -114,7 +117,7 @@ It is gone on purpose: a reader meets six author cards and the list credited a
 hundred and thirteen photographs, nearly all for faces that session never showed.
 
 ## The scrape resumes; build the pool over several runs
-Every run reads the committed JSON first, adds to it, and re-fetches nothing it has. The synopsis pass is one request per book and only looks at books without one; `--limit` takes a chunk and the closing line reports what is left. `--fresh` is the only way a dropped book leaves the pool. Never try to fetch the whole catalogue in one sitting -- that is what gets the address blocked.
+Every run reads the committed JSON first, adds to it, and re-fetches nothing it has. The synopsis pass is one request per book and only looks at books without one; `--limit` takes a chunk and the closing line reports what is left. `--fresh` is the only way a dropped book leaves the pool. Never try to fetch the whole catalog in one sitting -- that is what gets the address blocked.
 
 ## Pool size costs scoring, not decoding
 Decoding 5k books is ~9ms; scoring them is ~120ms and was ~450ms until `CupidaShortlist::fold()` dropped `Str::ascii()` for a `strtr` over the Spanish accents. It runs over every book's title and synopsis on every recommendation. Do not put `Str::ascii()`, `Str::slug()` or anything else with a transliteration table back into that path.
@@ -126,7 +129,7 @@ Decoding 5k books is ~9ms; scoring them is ~120ms and was ~450ms until `CupidaSh
 Pagination is a module id and a subject code that cannot be rebuilt from the pretty URL — follow the shop's own next-page link, never construct `?p=2`. Be slow (`cupida.scrape.delay_ms`): the address gets blocked otherwise, which happened while this was written.
 
 ## The covers round is out, and the deck is a function of its seed again
-There was a fourth round of real books with covers, drawn from a shortlist scored on the first three answers. It is gone from `CupidaDeck` (git has it, up to the commit that dropped it), so `for()` takes a seed and nothing else and the component memoises the deck for the request instead of rebuilding it after every swipe.
+There was a fourth round of real books with covers, drawn from a shortlist scored on the first three answers. It is gone from `CupidaDeck` (git has it, up to the commit that dropped it), so `for()` takes a seed and nothing else and the component memoizes the deck for the request instead of rebuilding it after every swipe.
 
 What is left of it on purpose: `CupidaShortlist` still scores `book:` likes and still excludes `book:` passes, because sessions recorded while the round existed are still read back by the panel -- and because the round is meant to come back. An empty round is still stepped over by `Cupida::advance()`; a round with no cards can never be completed.
 
@@ -173,11 +176,13 @@ There is no balance to read. Anthropic publishes none, and the admin reports say
 
 `afterSpending()` must run after `record()`, never inside `decide()`. What is left is the balance minus the rows, so a check that runs before the row is written has not seen the dollar just spent.
 
+**Both warnings are `ShouldQueue`, and that is the one thing here with a server dependency.** They are raised inside a reader's swipe, so an unreachable SMTP host would otherwise be added to the wait for their book. The price is that the site needs a queue worker: on Forge that is the site's Queue tab (a Supervisor `queue:work` daemon on the `database` connection), plus `php artisan queue:restart` in the deploy script so a worker does not keep serving the old code. Setting `QUEUE_CONNECTION=database` on its own runs nothing -- the job waits in `jobs`, no error, no log, and nobody is told the pitches have stopped. The rest of the app's mail (`BookRequest`) is still sent inline and does not depend on this.
+
 ## The prompt has two halves
 `CupidaAgent::baseInstructions()` is in code and changes with a deploy: it is what keeps the recommendation honest. `CupidaSettings::$extra_instructions` is what the bookseller edits from the header action, appended and announced as coming from the shop. Never move the baseline into the settings.
 
 ## Anything a bookseller edits is a setting, not a table
-`App\Settings\CupidaSettings` (spatie/laravel-settings) holds the extra instructions, the credit balance and its top-up date, and the address the warnings go to. There is no `cupida_prompts` or `cupida_credits` table and there should not be one: each of these is a single value with no rows, no history and no relations, and a table apiece is a model, a migration and a `firstOrCreate()` standing in for a property. Add a property and a line in `database/settings/`.
+`App\Settings\CupidaSettings` (spatie/laravel-settings) holds the extra instructions, the credit balance and its top-up date. There is no `cupida_prompts` or `cupida_credits` table and there should not be one: each of these is a single value with no rows, no history and no relations, and a table apiece is a model, a migration and a `firstOrCreate()` standing in for a property. Add a property and a line in `database/settings/`.
 
 Resolve it with `app(CupidaSettings::class)` at the point of use rather than injecting it into a constructor — a bookseller who saves the modal expects the next swipe to use it. Values only reach the DB on `->save()`.
 
@@ -185,12 +190,14 @@ Resolve it with `app(CupidaSettings::class)` at the point of use rather than inj
 
 `CupidaBudget` does the counting, not the settings class: a sum over `cupida_recommendations` is not one of the values a person edits.
 
+Where the credit warnings are mailed is not a setting either, and was one: it is `site.admin_email`, out of `ADMIN_EMAIL`. The address belongs to whoever looks after the site rather than to a bookseller between top-ups, so it changes with the deploy environment and not from the Saldo IA modal -- which is why that modal now asks only for the number and the date. `WatchCupidaCredit::warningAddress()` falls back to `site.contact_email` when the variable is missing: a warning read by the wrong person gets acted on, one sent to an empty address does not.
+
 ## The recommendations list is cards, and every card touches two relations
 `CupidaTable` is a `Stack`/`Split` layout in a `contentGrid(['lg' => 2])`, not rows: the cover is what makes a page of sessions readable, and a pitch is a paragraph a cell can only truncate. Two per row at most -- a third column turns cover, pitch and badges into columns of one word.
 
 Each card draws `book.media` (our cover, and the link to our page for it) and `user`, so the table needs `->modifyQueryUsing(fn ($query) => $query->with(['user', 'book.media']))`. Without it a page is three queries a row; `CupidaAdminTest` counts them.
 
-`likes`/`passes` render as badge lists off `likeLabels()`/`passLabels()`. The last round is covers, so a session carries a `book:<ean>` answer per swipe -- two dozen badges by the end. They resolve through `CupidaCatalogue::titles()` (a memoised EAN => title map; `book()` scans and is for the single lookup), and both lists are `limitList(8)` with the whole list in a `tooltip()`.
+`likes`/`passes` render as badge lists off `likeLabels()`/`passLabels()`. The last round is covers, so a session carries a `book:<ean>` answer per swipe -- two dozen badges by the end. They resolve through `CupidaCatalog::titles()` (a memoized EAN => title map; `book()` scans and is for the single lookup), and both lists render in full -- no `limitList()`, no `tooltip()`: a cut list needs a hover to say what was cut, and there is no hover on a phone. Color is not what tells the two apart, an `icon()` is: a heart on every like badge, a cross on every pass.
 
 Never `expandableLimitedList()` on a badge list: `TextColumn` only keeps the items past the limit in the markup when the column is *also* `listWithLineBreaks()` (one badge per line, which is what the card is trying to avoid). Without it the extras are sliced off before rendering, so the "show more" link renders, is clickable, and reveals nothing.
 
@@ -198,7 +205,7 @@ Never `expandableLimitedList()` on a badge list: `TextColumn` only keeps the ite
 `cupida.model` is `claude-haiku-4-5`; the API answers with `claude-haiku-4-5-20251001`, and `Meta::$model` carries what answered. `PromptCost::rates()` therefore tries the exact key and then the longest `cupida.prices` key the id starts with. Keep the rate list keyed by alias, and never go back to a plain `config("cupida.prices.{$model}")` -- it prices every faked test and no real call.
 
 ## The EAN on a card is the shop's own page for the book
-`CupidaRecommendation::shopUrl()` builds /libros/{ean}/{slug}/ from `CupidaCatalogue::slugs()`. The slug lives only in the scraped pool, so a book the shop has dropped gets no link rather than a guessed address -- the page it would point at has gone too. The title links to *our* page when the EAN is also a `books` row, with an arrow icon; the EAN always points at theirs.
+`CupidaRecommendation::shopUrl()` builds /libros/{ean}/{slug}/ from `CupidaCatalog::slugs()`. The slug lives only in the scraped pool, so a book the shop has dropped gets no link rather than a guessed address -- the page it would point at has gone too. The title links to *our* page when the EAN is also a `books` row, with an arrow icon; the EAN always points at theirs.
 
 ## A recommendation cannot be edited or deleted, by anybody
 `CupidaRecommendationPolicy` allows `viewAny`/`view` to booksellers and returns false for `create`, `update`, `delete` and `deleteAny`. The log is the only record of what the shop recommended and what it spent, so a row removed from it takes a question with it. `CupidaTable` therefore has no toolbar actions at all, which is also what keeps the bulk-select checkboxes off the cards.
@@ -216,3 +223,31 @@ Filters are applied before sorting, so the filter's `orderBy` is the primary one
 A liked author is the heaviest weight in `CupidaShortlist`, so left alone the top of the list is that author's whole backlist. `withoutAuthors` drops a writer from the scoring entirely and `perAuthor` caps how many of one writer's books get through. Nothing in the app passes `withoutAuthors` today -- it was the covers round's -- and it is kept for whatever asks a second question off the same shortlist.
 
 The model's thirty are capped at `cupida.shortlist_per_author` (3) per writer so three liked authors do not fill it with three backlists. Both the exclusion and the cap also apply to the nothing-scored fallback list, and a book with no author is never capped. Keep the exclusion in the shortlist (before scoring), not as a post-filter in the deck: a filter over the top 18 leaves too few once the liked authors are removed.
+
+## The opening card's promise, and its arrow on a phone
+
+`cupida.start.matches` holds whole phrases ("tu próxima cita", "tu próximo
+flechazo"), never the bare noun with a shared article in `promise`: flechazo,
+crush and match are masculine and cita is not, so one "tu próxima :match" is
+wrong three times in four. The card's two lines are two keys (`lead`, then
+`promise`) with a `<br />` between them in the view -- the break is the
+sentence's own, and markup in a translated string would have to be echoed
+unescaped. `Cupida::matchWord()` picks by `seed % count` rather than
+`random_int`, so a Livewire re-render cannot reword a sentence mid-read -- and
+the es and en lists have to stay the same length, because `Arr::dot` parity in
+`TranslationsTest` counts a list's numeric keys like any other.
+
+The card carries two controls for one `start` action: the block button
+(`hidden wide:block`) and the bouncing chevron (`.cupida-nudge`, `wide:hidden`).
+Phone-only is `wide:` (1000px), the same breakpoint as the book page's pinned
+buy bar. Both are in the DOM at every width, which is why
+`assertSee(__('cupida.start.button'))` still covers the opening card.
+
+## The subject deck is the config, not themes.json
+`CupidaCatalog::deckThemes()` builds the theme round from `cupida.deck.subjects` plus a count derived from the pool — it no longer reads themes.json's `deck` flag. A subject is added to the deck by editing the config alone: no `cupida:scrape` run, no network, no themes.json row. themes.json stays the scrape's record of the shop's tree.
+
+The count on a card is the pool count, not the shop's total for the subject page (the shop stocks 4,931 under FB; the pool holds 536, and the shortlist can only offer the 536). `cupida.deck.min_books` drops a subject the pool is thin on, so the list can stay long and prune itself as stock moves. The fixture is 12 books, so `useCupidaFixture()` lowers the floor to 1.
+
+`CupidaShortlist::matchesSubject()` matches downwards only (book code starts with card code). Do not restore the upward branch: 504 pool books carry the bare code X and 4,941 a two-letter one, so matching upwards made "Manga" (XAM) score every comic in the shop and collapsed every narrow card onto its parent. Dropping it changed 17 of the 18 original cards by nothing, and fixed JBSF, which had been scoring all 527 "Sociedad" books as Feminismos.
+
+A narrow code only works because the broad one is still a card to catch books filed coarsely — keep both in the list.

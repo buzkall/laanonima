@@ -10,7 +10,7 @@ use Filament\Support\Icons\Heroicon;
  * Open the book's own page on the web, in a tab of its own.
  *
  * It reads nothing but the record, not `is_active`: a book still being
- * catalogued is a 404 for a reader but visible to a bookseller, which is
+ * catalogd is a 404 for a reader but visible to a bookseller, which is
  * exactly when they want to look at it.
  */
 class ViewOnSiteAction extends Action

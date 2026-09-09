@@ -31,12 +31,28 @@ it('lists the newest request first', function(): void {
 
 it('searches by the title asked for and by who asked', function(): void {
     $wanted = BookRequest::factory()
-        ->for(User::factory()->client()->create(['name' => 'Marta Ruiz']))
+        ->for(User::factory()->client()->create([
+            'name'  => 'Marta Ruiz',
+            'email' => 'marta.ruiz@ejemplo.test',
+        ]))
         ->create(['title' => 'Cuaderno de faros']);
 
+    /* Every searchable field of the row that must stay hidden is written out.
+       The column searches the reader's email as well as their name and the
+       factory fills it from a Spanish faker, which builds one out of a first
+       name -- "marta.llamas@example.net" comes up about once in 250 rows, and
+       when it does Juan Gil answers a search for Marta. Same for the
+       publisher, which is searchable and optional in the factory. */
     $other = BookRequest::factory()
-        ->for(User::factory()->client()->create(['name' => 'Juan Gil']))
-        ->create(['title' => 'Muerte en Persia']);
+        ->for(User::factory()->client()->create([
+            'name'  => 'Juan Gil',
+            'email' => 'juan.gil@ejemplo.test',
+        ]))
+        ->create([
+            'title'     => 'Muerte en Persia',
+            'publisher' => 'Errata Naturae',
+            'isbn'      => '9788415217664',
+        ]);
 
     livewire(ListBookRequests::class)
         ->searchTable('Cuaderno de faros')
@@ -101,7 +117,7 @@ it('counts what is still open on the sidebar', function(): void {
     expect(BookRequestResource::getNavigationBadge())->toBe('2');
 });
 
-it('shows the catalogued book a request came from', function(): void {
+it('shows the catalogd book a request came from', function(): void {
     $book = Book::factory()->create(['title' => 'Cuaderno de faros']);
     $request = BookRequest::factory()->for($book)->create();
 

@@ -349,9 +349,10 @@ it('sends the edit action to the book request resource', function(): void {
         );
 });
 
-it('only shows the password confirmation once a password is being typed', function(): void {
+it('keeps the password confirmation on the page before anything is typed', function(): void {
     Livewire::test(CreateUser::class)
-        ->assertSeeHtml("'fi-hidden': ! ((\$get('password') ?? '').length > 0)");
+        ->assertSchemaComponentVisible('password_confirmation')
+        ->assertSeeHtml('wire:model="data.password_confirmation"');
 });
 
 it('still demands a confirmation for whatever password was typed', function(): void {

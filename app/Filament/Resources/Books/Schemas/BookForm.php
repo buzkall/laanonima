@@ -134,7 +134,7 @@ class BookForm
 
                 /*
                  | One row per person and role, saved as book_contributors.
-                 | The name is a catalogued author, and a person not yet on
+                 | The name is a catalogd author, and a person not yet on
                  | file is added from the + beside the select without leaving
                  | the book.
                  */
@@ -314,7 +314,7 @@ class BookForm
 
                 /*
                  | Whatever stands here wins: SyncCoverColor only fills the
-                 | column while it is empty, so a colour typed in survives every
+                 | column while it is empty, so a color typed in survives every
                  | later upload. Clear the field to have the cover read again,
                  | or press the hint action to read it now.
                  |

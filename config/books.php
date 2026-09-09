@@ -79,7 +79,7 @@ return [
         /*
          | Covers are shown a few hundred pixels wide, so the 2000px originals
          | the sources hand over are stored downscaled. Everything is re-encoded
-         | to JPEG: some sources still serve 256-colour GIF.
+         | to JPEG: some sources still serve 256-color GIF.
          */
         'max_width'  => 800,
         'max_height' => 1200,

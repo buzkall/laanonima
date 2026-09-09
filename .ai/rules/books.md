@@ -20,7 +20,7 @@ Every "pídenoslo" call to action posts to `book_requests` now. One form serves 
 
 Both routes are behind `auth`, and `bootstrap/app.php` sends a guest to `UserRole::Client->loginUrl()`. `user_id` is therefore required and the row carries no name, email or telephone: those are read off `users` through the relation, so correcting an address fixes every request that reader has open. The telephone is asked for on the form only while the account has none, and `BookRequestController::rememberPhone()` writes it to `users` -- a number already given is never overwritten from here.
 
-`BookRequest` is a note for the bookseller, never a catalogue record: `book_id` stays nullable and `nullOnDelete`, so withdrawing a book must not take the request with it.
+`BookRequest` is a note for the bookseller, never a catalog record: `book_id` stays nullable and `nullOnDelete`, so withdrawing a book must not take the request with it.
 
 Two resources over one model. The shop's (`App\Filament\Resources\BookRequests`) works every row. The reader's (`App\Filament\Client\Resources\BookRequests`) is one listing scoped in `getEloquentQuery()` -- not on the table, so a record reached by URL is out of reach too -- with no form and no edit page: a request is a message to the shop, and letting the sender rewrite it leaves the bookseller chasing a title that quietly changed. The only thing a reader may do is `WithdrawBookRequestAction`, gated by `BookRequestPolicy::withdraw` (own, and still open).
 

@@ -1,0 +1,355 @@
+{
+    "entities": {
+        "Q454836": {
+            "id": "Q454836",
+            "labels": {
+                "en": {
+                    "language": "en",
+                    "value": "Mary Oliver"
+                },
+                "es": {
+                    "language": "es",
+                    "value": "Mary Oliver"
+                }
+            },
+            "descriptions": {
+                "es": {
+                    "language": "es",
+                    "value": "escritora estadounidense"
+                },
+                "en": {
+                    "language": "en",
+                    "value": "American poet (1935–2019)"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 5,
+                                    "id": "Q5"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "P106": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 49757,
+                                    "id": "Q49757"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 36180,
+                                    "id": "Q36180"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 6625963,
+                                    "id": "Q6625963"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 61048378,
+                                    "id": "Q61048378"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Q87842784": {
+            "id": "Q87842784",
+            "labels": {
+                "en": {
+                    "language": "en",
+                    "value": "Mary Oliver"
+                },
+                "es": {
+                    "language": "es",
+                    "value": "Mary Oliver"
+                }
+            },
+            "descriptions": {
+                "en": {
+                    "language": "en",
+                    "value": "(1640-1698)"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 5,
+                                    "id": "Q5"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Q1906359": {
+            "id": "Q1906359",
+            "labels": {
+                "en": {
+                    "language": "en",
+                    "value": "Mary Oliver"
+                },
+                "es": {
+                    "language": "es",
+                    "value": "Mary Oliver"
+                }
+            },
+            "descriptions": {
+                "en": {
+                    "language": "en",
+                    "value": "American jazz violinist and composer (born 1956)"
+                },
+                "es": {
+                    "language": "es",
+                    "value": "música estadounidense"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 5,
+                                    "id": "Q5"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "P18": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": "ICP Orchestra (268672931).jpg"
+                            }
+                        }
+                    }
+                ],
+                "P106": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 15981151,
+                                    "id": "Q15981151"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 1259917,
+                                    "id": "Q1259917"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 1622272,
+                                    "id": "Q1622272"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 639669,
+                                    "id": "Q639669"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 36834,
+                                    "id": "Q36834"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Q1272454": {
+            "id": "Q1272454",
+            "labels": {
+                "en": {
+                    "language": "en",
+                    "value": "Mary Oliver"
+                },
+                "es": {
+                    "language": "es",
+                    "value": "Mary Oliver"
+                }
+            },
+            "descriptions": {
+                "en": {
+                    "language": "en",
+                    "value": "Wikimedia disambiguation page"
+                },
+                "es": {
+                    "language": "es",
+                    "value": "página de desambiguación de Wikimedia"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 22808320,
+                                    "id": "Q22808320"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Q75729296": {
+            "id": "Q75729296",
+            "labels": {
+                "en": {
+                    "language": "en",
+                    "value": "Mary Oliver"
+                }
+            },
+            "descriptions": {
+                "en": {
+                    "language": "en",
+                    "value": "Peerage person ID=305595"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 5,
+                                    "id": "Q5"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Q76140714": {
+            "id": "Q76140714",
+            "labels": {
+                "en": {
+                    "language": "en",
+                    "value": "Mary Oliver"
+                }
+            },
+            "descriptions": {
+                "en": {
+                    "language": "en",
+                    "value": "Peerage person ID=559448"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 5,
+                                    "id": "Q5"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "Q76231151": {
+            "id": "Q76231151",
+            "labels": {
+                "en": {
+                    "language": "en",
+                    "value": "Mary Dyne"
+                }
+            },
+            "descriptions": {
+                "en": {
+                    "language": "en",
+                    "value": "(born 1915)"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 5,
+                                    "id": "Q5"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "success": 1
+}

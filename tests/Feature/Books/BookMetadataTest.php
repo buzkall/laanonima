@@ -106,7 +106,7 @@ it('maps a Google Books volume once a key is configured', function(): void {
         ->and($metadata->source)->toBe('google_books');
 });
 
-it('reads the labelled dimensions Google Books files per side', function(): void {
+it('reads the labeled dimensions Google Books files per side', function(): void {
     config()->set('books.metadata.google_books.key', 'test-key');
     Http::fake(['googleapis.com/*' => Http::response(apiFixture('book-metadata/google-books-hit'))]);
 
@@ -199,7 +199,7 @@ it('does not reach the network for an ISBN that cannot be valid', function(): vo
  | Neither provider names a materia, and the DTO no longer carries one: Google
  | answers with free text and Open Library with reader-contributed tags -- one
  | real record (Momo, 9788420482767) yields "Girls", "tortoises", "lilies".
- | Which THEMA subject a book belongs to is a bookseller's judgement, made in
+ | Which THEMA subject a book belongs to is a bookseller's judgment, made in
  | the panel. What the providers said survives in `raw_metadata`.
  */
 it('leaves the materia to the bookseller and keeps what the provider said', function(): void {

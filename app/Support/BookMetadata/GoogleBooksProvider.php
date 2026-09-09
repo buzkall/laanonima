@@ -119,7 +119,7 @@ class GoogleBooksProvider implements BookMetadataProvider
      *
      * Google labels each side, so unlike Open Library's single free-text string
      * there is nothing to work out: only the unit has to be read, and it is
-     * usually but not always centimetres.
+     * usually but not always centimeters.
      *
      * @param  array<string, mixed>  $volume
      * @return array{height: int|null, width: int|null, thickness: int|null}

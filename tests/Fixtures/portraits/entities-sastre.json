@@ -1,0 +1,109 @@
+{
+    "entities": {
+        "Q27670801": {
+            "id": "Q27670801",
+            "labels": {
+                "es": {
+                    "language": "es",
+                    "value": "Elvira Sastre"
+                },
+                "en": {
+                    "language": "en",
+                    "value": "Elvira Sastre"
+                }
+            },
+            "descriptions": {
+                "es": {
+                    "language": "es",
+                    "value": "poeta y traductora española"
+                },
+                "en": {
+                    "language": "en",
+                    "value": "Spanish poet and translator"
+                }
+            },
+            "claims": {
+                "P31": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 5,
+                                    "id": "Q5"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "P106": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 333634,
+                                    "id": "Q333634"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 49757,
+                                    "id": "Q49757"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 36180,
+                                    "id": "Q36180"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 13418253,
+                                    "id": "Q13418253"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": {
+                                    "entity-type": "item",
+                                    "numeric-id": 16308156,
+                                    "id": "Q16308156"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "P18": [
+                    {
+                        "mainsnak": {
+                            "datavalue": {
+                                "value": "Elvira Sastre.jpg"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "success": 1
+}

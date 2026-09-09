@@ -22,7 +22,7 @@ use Illuminate\Support\Number;
  * How much of everything the shop holds, on the admin dashboard.
  *
  * Every stat is a whole count with the part that matters underneath it: a
- * catalogue of 400 books of which 380 are on the web is a different shop from
+ * catalog of 400 books of which 380 are on the web is a different shop from
  * one where half of them are hidden, and the second number is the one a
  * bookseller acts on. Each card opens the listing it counts, so the dashboard
  * is a way in rather than a report.
@@ -33,7 +33,7 @@ use Illuminate\Support\Number;
  * under and the scheme is the small print. It is also the one card with nowhere
  * to go -- subjects have no resource of their own.
  */
-class CatalogueStats extends StatsOverviewWidget
+class CatalogStats extends StatsOverviewWidget
 {
     /* After the account widget, which greets whoever just signed in. */
     protected static ?int $sort = 1;
@@ -44,39 +44,39 @@ class CatalogueStats extends StatsOverviewWidget
     protected function getStats(): array
     {
         return [
-            Stat::make(__('widgets.catalogue.books'), $this->formatted(Book::count()))
-                ->description($this->counted('widgets.catalogue.books_online', Book::query()->active()->count()))
+            Stat::make(__('widgets.catalog.books'), $this->formatted(Book::count()))
+                ->description($this->counted('widgets.catalog.books_online', Book::query()->active()->count()))
                 ->descriptionIcon(Heroicon::OutlinedGlobeAlt)
                 ->icon(Heroicon::OutlinedBookOpen)
                 ->color('primary')
                 ->url(BookResource::getUrl()),
 
-            Stat::make(__('widgets.catalogue.authors'), $this->formatted(Author::count()))
-                ->description($this->counted('widgets.catalogue.authors_with_books', Author::query()->has('books')->count()))
+            Stat::make(__('widgets.catalog.authors'), $this->formatted(Author::count()))
+                ->description($this->counted('widgets.catalog.authors_with_books', Author::query()->has('books')->count()))
                 ->descriptionIcon(Heroicon::OutlinedBookOpen)
                 ->icon(Heroicon::OutlinedUsers)
                 ->url(AuthorResource::getUrl()),
 
-            Stat::make(__('widgets.catalogue.publishers'), $this->formatted(Publisher::count()))
-                ->description($this->counted('widgets.catalogue.publishers_with_books', Publisher::query()->has('books')->count()))
+            Stat::make(__('widgets.catalog.publishers'), $this->formatted(Publisher::count()))
+                ->description($this->counted('widgets.catalog.publishers_with_books', Publisher::query()->has('books')->count()))
                 ->descriptionIcon(Heroicon::OutlinedBookOpen)
                 ->icon(Heroicon::OutlinedBuildingLibrary)
                 ->url(PublisherResource::getUrl()),
 
-            Stat::make(__('widgets.catalogue.subjects'), $this->formatted(Subject::query()->has('books')->count()))
-                ->description(__('widgets.catalogue.subjects_scheme', ['count' => $this->formatted(Subject::count())]))
+            Stat::make(__('widgets.catalog.subjects'), $this->formatted(Subject::query()->has('books')->count()))
+                ->description(__('widgets.catalog.subjects_scheme', ['count' => $this->formatted(Subject::count())]))
                 ->descriptionIcon(Heroicon::OutlinedTag)
                 ->icon(Heroicon::OutlinedRectangleStack),
 
-            Stat::make(__('widgets.catalogue.requests'), $this->formatted(BookRequest::count()))
-                ->description($this->counted('widgets.catalogue.requests_open', BookRequest::query()->open()->count()))
+            Stat::make(__('widgets.catalog.requests'), $this->formatted(BookRequest::count()))
+                ->description($this->counted('widgets.catalog.requests_open', BookRequest::query()->open()->count()))
                 ->descriptionIcon(Heroicon::OutlinedClock)
                 ->icon(Heroicon::OutlinedInboxArrowDown)
                 ->color('warning')
                 ->url(BookRequestResource::getUrl()),
 
-            Stat::make(__('widgets.catalogue.recommendations'), $this->formatted(CupidaRecommendation::count()))
-                ->description($this->counted('widgets.catalogue.recommendations_month', CupidaRecommendation::query()->where('created_at', '>=', now()->subDays(30))->count()))
+            Stat::make(__('widgets.catalog.recommendations'), $this->formatted(CupidaRecommendation::count()))
+                ->description($this->counted('widgets.catalog.recommendations_month', CupidaRecommendation::query()->where('created_at', '>=', now()->subDays(30))->count()))
                 ->descriptionIcon(Heroicon::OutlinedSparkles)
                 ->icon(Heroicon::OutlinedSparkles)
                 ->url(CupidaResource::getUrl()),

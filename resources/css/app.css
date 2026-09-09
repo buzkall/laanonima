@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './shelf.css';
+@import './cupida.css';
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -20,7 +21,7 @@
 }
 
 /* Prose from the panel's rich editor (an author's biography). It inherits the
-   size and colour of wherever it is placed; this only spaces the paragraphs
+   size and color of wherever it is placed; this only spaces the paragraphs
    and gives inline marks their look. */
 @layer components {
     .rich-text > * + * {

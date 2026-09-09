@@ -7,7 +7,7 @@ use DOMElement;
 use RuntimeException;
 
 /**
- * Draws a vector logo over the centre of an already generated QR SVG.
+ * Draws a vector logo over the center of an already generated QR SVG.
  *
  * Endroid can embed a logo itself, but only the PNG writer supports punching
  * the modules out from behind it. The SVG writer inlines the logo as a base64
@@ -59,7 +59,7 @@ final class SvgLogoComposer
             $logoY,
         ));
 
-        // saveXML() with no argument serialises the whole document and prepends
+        // saveXML() with no argument serializes the whole document and prepends
         // an XML declaration, which would be echoed inline by the Blade view.
         return (string)$qr->saveXML($root);
     }

@@ -56,6 +56,10 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
             ])
             ->sidebarCollapsibleOnDesktop()
+            // The bell in the topbar. Nothing routine goes through it: it is
+            // there for the credit warnings, which have to reach whoever is in
+            // the panel as well as whoever reads the mail.
+            ->databaseNotifications()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

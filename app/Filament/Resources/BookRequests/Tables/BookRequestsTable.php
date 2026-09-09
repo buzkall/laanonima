@@ -83,7 +83,7 @@ class BookRequestsTable
                     ),
 
                 TernaryFilter::make('book_id')
-                    ->label(__('book_requests.filters.in_catalogue'))
+                    ->label(__('book_requests.filters.in_catalog'))
                     ->queries(
                         true: fn(Builder $query): Builder => $query->whereNotNull('book_id'),
                         false: fn(Builder $query): Builder => $query->whereNull('book_id'),

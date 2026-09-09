@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
  *
  * The five newest, whatever their state, because the question the dashboard
  * answers is "what has come in" rather than "what is outstanding" -- the count
- * of what is still open is one card up, in {@see CatalogueStats}, and the
+ * of what is still open is one card up, in {@see CatalogStats}, and the
  * listing itself is a click away in the header action.
  *
  * Deliberately not the resource's table: no filters, no search, no bulk

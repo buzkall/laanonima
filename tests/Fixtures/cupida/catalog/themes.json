@@ -1,0 +1,92 @@
+[
+    {
+        "code": "FM",
+        "shop_label": "Fantasía",
+        "label": "Fantasía",
+        "parent": "F",
+        "slug": "fantasia",
+        "deck": true,
+        "books": 301
+    },
+    {
+        "code": "FL",
+        "shop_label": "Ciencia ficción",
+        "label": "Ciencia ficción",
+        "parent": "F",
+        "slug": "ciencia-ficcion",
+        "deck": true,
+        "books": 164
+    },
+    {
+        "code": "DC",
+        "shop_label": "Poesía",
+        "label": "Poesía",
+        "parent": "D",
+        "slug": "poesia",
+        "deck": true,
+        "books": 619
+    },
+    {
+        "code": "NH",
+        "shop_label": "Historia",
+        "label": "Historia",
+        "parent": null,
+        "slug": "historia",
+        "deck": true,
+        "books": 390
+    },
+    {
+        "code": "X",
+        "shop_label": "Novela gráfica",
+        "label": "Cómic y novela gráfica",
+        "parent": null,
+        "slug": "novela-grafica",
+        "deck": true,
+        "books": 1562
+    },
+    {
+        "code": "JB",
+        "shop_label": "Sociedad y cultura",
+        "label": "Sociedad",
+        "parent": "J",
+        "slug": "sociedad",
+        "deck": true,
+        "books": 570
+    },
+    {
+        "code": "QD",
+        "shop_label": "Filosofía",
+        "label": "Filosofía",
+        "parent": "Q",
+        "slug": "filosofia",
+        "deck": true,
+        "books": 306
+    },
+    {
+        "code": "DN",
+        "shop_label": "Biografías",
+        "label": "Biografías y memorias",
+        "parent": "D",
+        "slug": "biografias",
+        "deck": true,
+        "books": 1337
+    },
+    {
+        "code": "WB",
+        "shop_label": "Cocina",
+        "label": "Cocina",
+        "parent": null,
+        "slug": "cocina",
+        "deck": true,
+        "books": 0
+    },
+    {
+        "code": "F",
+        "shop_label": "Ficción y temas afines",
+        "label": "Ficción y temas afines",
+        "parent": null,
+        "slug": "ficcion",
+        "deck": false,
+        "books": 0
+    }
+]

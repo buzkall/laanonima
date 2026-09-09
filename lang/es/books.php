@@ -99,6 +99,7 @@ return [
         'invalid_title'   => 'ISBN no válido',
         'invalid_body'    => 'Revisa el número: el dígito de control no cuadra.',
 
+        'found_with_cover'    => 'La cubierta se descarga al guardar la ficha.',
         'found_without_cover' => 'No hemos encontrado cubierta: descárgala desde una dirección o sube la imagen a mano.',
     ],
 
@@ -168,7 +169,7 @@ return [
     ],
 
     'public' => [
-        'tagline'           => 'Librería · Madrid',
+        'tagline'           => 'Librería Independiente · Madrid',
         'login'             => 'Entrar',
         'account'           => 'Tu cuenta',
         'buy'               => 'Comprar',
@@ -184,7 +185,7 @@ return [
         'also_note'         => 'Si sacan algo nuevo, lo pedimos el primer día.',
         'publisher_kicker'  => 'Publicado por :publisher',
         'publisher_intro'   => 'Si este te gusta, del mismo sello solemos tener en mesa:',
-        'footer_line'       => ':name · Librería independiente · Madrid',
+        'footer_line'       => ':name Librería · Madrid',
 
         'shelf_back' => 'Ver toda la estantería',
 

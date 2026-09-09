@@ -14,7 +14,7 @@ use Illuminate\Support\Carbon;
 
 /**
  * A book a reader has asked us for: either one we do not stock at all, or one
- * on the shelf that has run out. The catalogue is not touched by any of this --
+ * on the shelf that has run out. The catalog is not touched by any of this --
  * a request is a note for the bookseller, not a record of a book.
  *
  * @property int $id
@@ -66,7 +66,7 @@ class BookRequest extends Model
     }
 
     /**
-     * The catalogued book this was asked about, when the reader came from its
+     * The catalogd book this was asked about, when the reader came from its
      * page. Kept nullable on purpose: the point of the form is books we do not
      * have, and a book that is later withdrawn must not take the request away.
      *

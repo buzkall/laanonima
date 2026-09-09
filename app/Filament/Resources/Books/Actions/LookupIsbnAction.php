@@ -40,7 +40,7 @@ class LookupIsbnAction extends Action
 
     /**
      * The people the source names become rows of the contributors repeater,
-     * each matched to (or filed as) a catalogued author, the way the
+     * each matched to (or filed as) a catalogd author, the way the
      * publisher is. Rows the bookseller has already filled are left alone.
      */
     private function fillContributors(Get $get, Set $set, BookMetadata $metadata): void
@@ -104,13 +104,15 @@ class LookupIsbnAction extends Action
         }
 
         /*
-         | Say plainly when the sources had no cover. Roughly one Spanish ISBN in
-         | six comes back without one, and a bookseller has no other way to tell
-         | that apart from a broken download.
+         | Say plainly what happens to the cover either way. Roughly one Spanish
+         | ISBN in six comes back without one, and a bookseller has no other way
+         | to tell that apart from a broken download; when there is one, the
+         | image is only fetched after the save, so the empty cover field on
+         | screen is expected rather than a failure.
          */
-        $coverNote = blank($metadata->coverSourceUrl)
-            ? ' ' . __('books.lookup.found_without_cover')
-            : '';
+        $coverNote = ' ' . (blank($metadata->coverSourceUrl)
+            ? __('books.lookup.found_without_cover')
+            : __('books.lookup.found_with_cover'));
 
         Notification::make()
             ->success()

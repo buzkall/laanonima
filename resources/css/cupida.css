@@ -1,0 +1,206 @@
+/*
+ * The card stack on /la-cupida.
+ *
+ * Tailwind draws everything inside a card; this is only the things a utility
+ * cannot say -- the stack's depth, the two stamps that bleed through as a card
+ * is dragged, and the transitions the gesture writes over.
+ *
+ * The transform on the top card is owned by the gesture -- the inline script
+ * in `resources/views/cupida/index.blade.php` -- and set as a style attribute,
+ * so nothing here may declare `transform` on `.cupida-card--top` or the two
+ * will fight on every pointer move.
+ */
+
+.cupida-stack {
+    /* The cards behind step back and down, so the stack reads as a stack
+       rather than as one card with a shadow.
+
+       The two have to be set against each other: scaling about the center
+       lifts a card's bottom edge by half the height it loses, so a step that
+       is not comfortably more than that leaves nothing showing. At these
+       values a card behind peeks about fourteen pixels, which is enough to
+       read as another card and not so much that it looks like a fan. */
+    --cupida-step: 22px;
+    --cupida-shrink: 0.045;
+
+    /* The cards behind hang below the aspect box they are positioned in, so
+       the row of buttons has to be pushed clear of them by hand. */
+    margin-bottom: calc(var(--cupida-step) * 2);
+
+    touch-action: pan-y;
+}
+
+.cupida-card {
+    background: var(--card);
+    color: var(--on-card);
+    border-radius: 4px;
+
+    /* Two layers, the same idea as the book cover on a book page: a hard offset
+       that reads as thickness, and a soft one that lifts it off the cream. */
+    box-shadow:
+        0 10px 0 -6px color-mix(in srgb, var(--color-ink) 14%, transparent),
+        0 24px 50px -22px color-mix(in srgb, var(--color-ink) 70%, transparent);
+
+    transform: translateY(calc(var(--depth) * var(--cupida-step)))
+        scale(calc(1 - var(--depth) * var(--cupida-shrink)));
+
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+/* The one the reader is holding sits square, and its transform belongs to the
+   gesture. Only the cards behind it are offset. */
+.cupida-card--top {
+    transform: none;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+}
+
+.cupida-card--top:active {
+    cursor: grabbing;
+}
+
+/*
+ * The stamps.
+ *
+ * `--like` and `--pass` are written by the drag as it goes, from 0 to well past
+ * 1, and clamped here rather than there: the JS says how far the card has been
+ * pulled and the stylesheet decides what that looks like.
+ */
+.cupida-stamp {
+    position: absolute;
+    top: clamp(18px, 5vw, 28px);
+
+    padding: 6px 12px;
+    border: 3px solid currentColor;
+    border-radius: 3px;
+
+    font-family: var(--font-sans);
+    font-size: clamp(15px, 4vw, 20px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    pointer-events: none;
+}
+
+.cupida-stamp--like {
+    right: clamp(18px, 5vw, 28px);
+    transform: rotate(12deg);
+    opacity: clamp(0, var(--like, 0), 1);
+}
+
+.cupida-stamp--pass {
+    left: clamp(18px, 5vw, 28px);
+    transform: rotate(-12deg);
+    opacity: clamp(0, var(--pass, 0), 1);
+}
+
+/* The round buttons under the stack. */
+.cupida-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: clamp(58px, 16vw, 68px);
+    height: clamp(58px, 16vw, 68px);
+
+    border: 2px solid var(--color-ink);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-ink);
+
+    cursor: pointer;
+    transition:
+        background-color 150ms ease-out,
+        color 150ms ease-out,
+        transform 150ms ease-out;
+}
+
+.cupida-button:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+}
+
+.cupida-button:active {
+    transform: scale(0.94);
+}
+
+.cupida-button--like:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.cupida-pulse {
+    animation: cupida-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes cupida-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.45;
+    }
+}
+
+/* The mark over the wait. Small enough to read as breathing rather than as
+   something bouncing: the panel is asking a reader to hold still for a few
+   seconds, not entertaining them. */
+.cupida-float {
+    animation: cupida-float 3s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes cupida-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* The arrow that stands in for the opening button on a phone. It bounces
+   because it is asking to be pressed and there is nothing else on the panel
+   moving; the ease drops it faster than it rises, which is what reads as a
+   nudge rather than as a float. */
+.cupida-nudge {
+    animation: cupida-nudge 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    will-change: transform;
+}
+
+@keyframes cupida-nudge {
+    0%,
+    55%,
+    100% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(10px);
+    }
+}
+
+/*
+ * Nothing here is load-bearing: the stack still stacks, the stamps still show
+ * which way a card is going, and the buttons still answer. Only the movement
+ * goes.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .cupida-card,
+    .cupida-button {
+        transition: none;
+    }
+
+    .cupida-pulse,
+    .cupida-float,
+    .cupida-nudge {
+        animation: none;
+    }
+}

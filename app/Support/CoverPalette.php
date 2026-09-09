@@ -68,7 +68,7 @@ final readonly class CoverPalette
      * Walk the color towards black until it stands out on the cream page.
      *
      * Scaling all three channels by the same factor keeps the hue, so a pale
-     * pink cover yields a deep rose rather than a generic dark grey. The loop
+     * pink cover yields a deep rose rather than a generic dark gray. The loop
      * always terminates: every step is a strict darkening, and black clears the
      * threshold against cream.
      */
@@ -137,7 +137,7 @@ final readonly class CoverPalette
     }
 
     /**
-     * One of the fixed colours the site is painted with, from config/site.php.
+     * One of the fixed colors the site is painted with, from config/site.php.
      */
     private static function color(string $name): string
     {

@@ -3,7 +3,7 @@
  *
  * Blade has already drawn the row: every book is a link with its three
  * measurements on it as custom properties. Nothing here creates a book. What
- * this does is decide the scale the millimetres are drawn at, and -- when
+ * this does is decide the scale the millimeters are drawn at, and -- when
  * Matter.js is available -- hand the row to a physics loop so a book can be
  * pulled out of it and dropped back.
  *
@@ -38,12 +38,19 @@ const ARRIVE_MS = 500;
 const MAX_TILT = 0.35;
 const BOARD_PX = 14;
 
-/** A dragged book stops colliding with its neighbours, so it comes out clean. */
+/** The gap the peek card leaves above a book. Mirrors its margin in shelf.css. */
+const PEEK_GAP = 14;
+
+/** And how close it is allowed to come to either end of the shelf. */
+const PEEK_EDGE = 8;
+
+/** A dragged book stops colliding with its neighbors, so it comes out clean. */
 const CATEGORY = { book: 0x0001, world: 0x0002, ceiling: 0x0004 };
 
 export default function mountShelf(root) {
     const scroll = root.querySelector('[data-shelf-scroll]');
     const stage = root.querySelector('[data-shelf-stage]');
+    const frame = root.querySelector('[data-shelf-frame]');
     const peek = root.querySelector('[data-shelf-peek]');
 
     if (!scroll || !stage) {
@@ -69,7 +76,7 @@ export default function mountShelf(root) {
 
     const shelf = new Shelf(root, scroll, stage, books);
 
-    mountPeek(scroll, stage, peek, () => shelf.wasDrag);
+    mountPeek(frame, stage, peek, () => shelf.wasDrag);
 
     /* A click that came out of a drag is not a click. Everything else is left
        to the anchor, so middle-click, cmd-click and Enter still work. */
@@ -174,7 +181,7 @@ class Shelf {
     }
 
     /**
-     * How many pixels a millimetre is worth.
+     * How many pixels a millimeter is worth.
      *
      * The height of the stage decides it, never the width: if the row does not
      * fit it overflows and is scrolled, because shrinking the books to fit
@@ -240,12 +247,12 @@ class Shelf {
         this.arrive(slots);
 
         for (const slot of slots) {
-            const centre = x + width(slot) / 2;
+            const center = x + width(slot) / 2;
             let stacked = 0;
 
             /* Down the pile from the board up, each book on the one below. */
             for (const item of slot) {
-                item.x = centre;
+                item.x = center;
                 item.restY = floorY - stacked - item.rise / 2;
                 stacked += item.rise;
 
@@ -368,7 +375,7 @@ class Shelf {
            rained onto a board land on each other's corners, and a spine 25px
            wide and 400 tall topples from the lightest knock -- over half of
            shelves built that way ended up with a book lying flat, most often
-           the first or the last to arrive, which has a neighbour on one side
+           the first or the last to arrive, which has a neighbor on one side
            only. Bookends do not save it either; falling books simply land on
            those instead. So the shelf arrives already standing, and the
            physics is there for what the reader does to it. */
@@ -451,7 +458,7 @@ class Shelf {
             event.body?.plugin?.item?.el.classList.remove('is-dragging');
 
             /* Put it back in the row only once it has fallen clear. Restored on
-               top of a neighbour, the solver fires it across the page. */
+               top of a neighbor, the solver fires it across the page. */
             if (event.body) {
                 setTimeout(() => {
                     event.body.collisionFilter.mask = CATEGORY.book | CATEGORY.world;
@@ -473,7 +480,7 @@ class Shelf {
      * Stop the loop, unless a book is not where a book should be.
      *
      * Dragging is the one move that can leave one somewhere else. A book being
-     * pulled stops colliding with its neighbours so that it comes out of the
+     * pulled stops colliding with its neighbors so that it comes out of the
      * row cleanly rather than shouldering its way out, and for a moment after
      * it is let go it is still passing through them. Released over the row, it
      * can have that collision restored while it overlaps two other books, and
@@ -481,7 +488,7 @@ class Shelf {
      * stable, and reads as a book hanging in the air.
      *
      * So anything not standing on the board is lifted back over its own slot
-     * and dropped the last few centimetres into it. Twice at most: a book that
+     * and dropped the last few centimeters into it. Twice at most: a book that
      * will not settle is left alone rather than dropped forever.
      */
     settle() {
@@ -597,9 +604,14 @@ class Shelf {
 
 /**
  * The card that follows the pointer along the row: title, author, price.
+ *
+ * It hangs off the shelf rather than the scroller, which hides its overflow
+ * and would cut the top off every card, so its position is measured against
+ * the shelf: a viewport rectangle already has the scroll in it, and the card
+ * is then held inside the shelf so it never runs off either edge of the page.
  */
-function mountPeek(scroll, stage, peek, suppressed) {
-    if (!peek) {
+function mountPeek(frame, stage, peek, suppressed) {
+    if (!frame || !peek) {
         return;
     }
 
@@ -612,15 +624,21 @@ function mountPeek(scroll, stage, peek, suppressed) {
             return;
         }
 
-        const box = book.getBoundingClientRect();
-        const frame = scroll.getBoundingClientRect();
-
         title.textContent = book.dataset.title ?? '';
         author.textContent = book.dataset.author ?? '';
         note.textContent = book.dataset.note ?? '';
 
-        peek.style.left = `${box.left - frame.left + scroll.scrollLeft + box.width / 2}px`;
-        peek.style.top = `${box.top - frame.top}px`;
+        const box = book.getBoundingClientRect();
+        const area = frame.getBoundingClientRect();
+
+        /* The card is drawn from its own bottom center, so what has to fit
+           inside the shelf is half its width either side of the book, and its
+           whole height above the book's top. */
+        const half = peek.offsetWidth / 2;
+        const above = peek.offsetHeight + PEEK_GAP;
+
+        peek.style.left = `${clamp(box.left - area.left + box.width / 2, half + PEEK_EDGE, area.width - half - PEEK_EDGE)}px`;
+        peek.style.top = `${Math.max(box.top - area.top, above)}px`;
         peek.classList.add('is-on');
     };
 
@@ -650,7 +668,7 @@ function mountPeek(scroll, stage, peek, suppressed) {
  * the difference has to be wrapped before it can be compared to a tolerance.
  */
 /**
- * How much board a book covers lying on its back, in square millimetres.
+ * How much board a book covers lying on its back, in square millimeters.
  */
 function footprintOf(item) {
     return item.mm.w * item.mm.h;
@@ -675,4 +693,8 @@ function whenLoaded(img) {
 
 function number(el, property) {
     return Number.parseFloat(el.style.getPropertyValue(property)) || 0;
+}
+
+function clamp(value, low, high) {
+    return Math.min(Math.max(value, low), high);
 }

@@ -1,22 +1,22 @@
 <?php
 
-use App\Filament\Widgets\CatalogueStats;
+use App\Filament\Widgets\CatalogStats;
 use App\Models\Book;
 use App\Models\BookRequest;
 use App\Models\Subject;
 use Filament\Facades\Filament;
 use Livewire\Livewire;
 
-it('counts the whole catalogue and what of it is on the web', function(): void {
+it('counts the whole catalog and what of it is on the web', function(): void {
     Book::factory()->count(3)->create();
     Book::factory()->create(['is_active' => false]);
 
     Filament::setCurrentPanel('admin');
 
-    Livewire::test(CatalogueStats::class)
-        ->assertSee(__('widgets.catalogue.books'))
+    Livewire::test(CatalogStats::class)
+        ->assertSee(__('widgets.catalog.books'))
         ->assertSee('4')
-        ->assertSee(trans_choice('widgets.catalogue.books_online', 3, ['count' => 3]));
+        ->assertSee(trans_choice('widgets.catalog.books_online', 3, ['count' => 3]));
 });
 
 it('counts the requests still open', function(): void {
@@ -25,9 +25,9 @@ it('counts the requests still open', function(): void {
 
     Filament::setCurrentPanel('admin');
 
-    Livewire::test(CatalogueStats::class)
-        ->assertSee(__('widgets.catalogue.requests'))
-        ->assertSee(trans_choice('widgets.catalogue.requests_open', 2, ['count' => 2]));
+    Livewire::test(CatalogStats::class)
+        ->assertSee(__('widgets.catalog.requests'))
+        ->assertSee(trans_choice('widgets.catalog.requests_open', 2, ['count' => 2]));
 });
 
 it('leads the materias card with what is filed rather than the whole THEMA scheme', function(): void {
@@ -39,7 +39,7 @@ it('leads the materias card with what is filed rather than the whole THEMA schem
     Filament::setCurrentPanel('admin');
 
     /* The whole card in one go: the label, then the two filed, then the scheme. */
-    expect(Livewire::test(CatalogueStats::class)->html())
+    expect(Livewire::test(CatalogStats::class)->html())
         ->toMatch('/Materias.*?stat-value.*?\b2\b.*?de 7 en el esquema THEMA/s');
 });
 
@@ -50,6 +50,6 @@ it('leads the materias card with what is filed rather than the whole THEMA schem
  | the page arrives holding a placeholder rather than the counts.
  */
 it('stands on the admin dashboard and nowhere else', function(): void {
-    expect(Filament::getPanel('admin')->getWidgets())->toContain(CatalogueStats::class)
-        ->and(Filament::getPanel('client')->getWidgets())->not->toContain(CatalogueStats::class);
+    expect(Filament::getPanel('admin')->getWidgets())->toContain(CatalogStats::class)
+        ->and(Filament::getPanel('client')->getWidgets())->not->toContain(CatalogStats::class);
 });

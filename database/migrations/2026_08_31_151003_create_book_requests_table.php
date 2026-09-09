@@ -15,7 +15,7 @@ return new class extends Migration
                row itself: their name, address and telephone live on `users`. */
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
-            /* Set when the request came off a book page we already catalogue. */
+            /* Set when the request came off a book page we already catalog. */
             $table->foreignId('book_id')->nullable()->constrained()->nullOnDelete();
 
             $table->string('title');

@@ -73,7 +73,7 @@ final readonly class QrGenerator
     }
 
     /**
-     * Draws the isotipo over the centre of a rendered QR PNG.
+     * Draws the isotipo over the center of a rendered QR PNG.
      *
      * Endroid's own logo support is unusable here: it only keeps the alpha
      * channel when the background is transparent, and our asset is a black

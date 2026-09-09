@@ -14,7 +14,7 @@ it('translates the role labels into Spanish', function(UserRole $role, string $l
     'client' => [UserRole::Client, 'Cliente'],
 ]);
 
-it('gives every role a colour and an icon', function(UserRole $role): void {
+it('gives every role a color and an icon', function(UserRole $role): void {
     expect($role->getColor())->not->toBeNull()
         ->and($role->getIcon())->not->toBeNull();
 })->with(UserRole::cases());

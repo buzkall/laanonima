@@ -6,7 +6,7 @@ return [
         'label'            => 'Author',
         'plural_label'     => 'Authors',
         'navigation_label' => 'Authors',
-        'navigation_group' => 'Catalogue',
+        'navigation_group' => 'Catalog',
     ],
 
     'fields' => [
@@ -23,11 +23,11 @@ return [
     ],
 
     'relations' => [
-        'books' => 'Books in the catalogue',
+        'books' => 'Books in the catalog',
     ],
 
     'filters' => [
-        'with_books' => 'With books in the catalogue',
+        'with_books' => 'With books in the catalog',
     ],
 
 ];

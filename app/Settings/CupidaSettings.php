@@ -8,9 +8,14 @@ use Spatie\LaravelSettings\Settings;
 /**
  * Everything about La Cupida a person changes without a deploy.
  *
- * Three unrelated things share this class because they share one property: a
+ * Two unrelated things share this class because they share one property: a
  * bookseller owns them and a release cannot wait for them. What the shop wants
- * said, what it put on the account, and who hears when that runs out.
+ * said, and what it put on the account.
+ *
+ * Where the warnings about that account go is NOT here, and was: it is
+ * `site.admin_email`, an environment variable. The address belongs to whoever
+ * looks after the site, which is a deployment fact rather than something a
+ * bookseller decides between top-ups.
  *
  * A settings class rather than a table each. Every one of these is a single
  * value with no rows, no history and no relations, and a table for that is a
@@ -20,7 +25,7 @@ use Spatie\LaravelSettings\Settings;
  * What is NOT here is the baseline prompt. `CupidaAgent::baseInstructions()`
  * stays in code because it is the part that keeps a recommendation honest --
  * choose from what you are given, invent nothing, never claim to be a person --
- * and it should only ever change with a deploy and a review.
+ * and it should only ever change with a deployment and a review.
  */
 class CupidaSettings extends Settings
 {
@@ -58,29 +63,8 @@ class CupidaSettings extends Settings
      */
     public ?CarbonImmutable $credit_topped_up_at = null;
 
-    /**
-     * Where the warnings go.
-     *
-     * Not the shop's public address: that one is printed on the book page and
-     * answered by whoever is behind the counter, and an account running dry is
-     * not something they can do anything about. Left empty it falls back to it
-     * anyway, because a warning in the wrong inbox gets noticed and a warning
-     * sent nowhere does not.
-     */
-    public ?string $admin_email = null;
-
     public static function group(): string
     {
         return 'cupida';
-    }
-
-    /**
-     * Who to mail, with the shop as the fallback.
-     */
-    public function notificationEmail(): string
-    {
-        return filled($this->admin_email)
-            ? $this->admin_email
-            : (string)config('site.contact_email');
     }
 }

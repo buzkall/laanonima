@@ -1,6 +1,8 @@
 <?php
 
+use App\Notifications\CupidaCreditExhausted;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Notification;
 
 /*
  | Words that only turn up when a string addresses the reader as "usted".
@@ -70,3 +72,35 @@ it('overrides only keys the package still defines, with no formal address left',
             ->not->toMatch(FORMAL_ADDRESS);
     }
 })->with(fn(): array => translationOverrideFiles());
+
+/*
+ | The chrome of a notification mail -- greeting, salutation, the "copy this
+ | URL" subcopy, the footer -- comes from Laravel's own view, which asks for
+ | those strings by their English text. Without lang/es.json a Spanish mail
+ | still opens with "Hello!" and signs off "Regards,".
+ |
+ | The subcopy line is the exception: finisterre registers its lang directory
+ | AFTER the app's, so its own es.json wins for that one key and lang/es.json
+ | must not restate it. The assertion below pins finisterre's wording so an
+ | upstream rewording is noticed here rather than in a reader's inbox.
+ */
+
+it('translates the notification mail chrome into Spanish', function(): void {
+    expect(__('Hello!'))->toBe('¡Hola!')
+        ->and(__('Whoops!'))->toBe('¡Vaya!')
+        ->and(__('Regards,'))->toBe('Un saludo,')
+        ->and(__('All rights reserved.'))->toBe('Todos los derechos reservados.')
+        ->and(__("If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:", ['actionText' => 'Ver La Cupida']))
+        ->toBe('Si tienes problemas para hacer clic en el botón "Ver La Cupida", copia y pega esta URL en tu navegador:');
+});
+
+it('renders a notification mail with no English left in its chrome', function(): void {
+    $notifiable = Notification::route('mail', 'admin@example.com');
+
+    $rendered = (string)new CupidaCreditExhausted()->toMail($notifiable)->render();
+
+    expect($rendered)->toContain('¡Hola!')
+        ->and($rendered)->toContain('Un saludo,')
+        ->and($rendered)->not->toContain('Hello!')
+        ->and($rendered)->not->toContain('Regards,');
+});

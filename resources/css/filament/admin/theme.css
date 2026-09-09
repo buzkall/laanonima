@@ -4,3 +4,23 @@
 @source '../../../../resources/views/filament/**/*';
 @source '../../../../vendor/arzcode/finisterre/resources/views/**/*.blade.php';
 @source '../../../../vendor/relaticle/flowforge/resources/views/**/*.blade.php';
+
+/* The badge on the "Saldo IA" button, and only that one.
+
+   Filament draws a button badge for a two-digit count: `fi-size-xs` padding,
+   which leaves a dollar figure touching its own outline, hung off the top-right
+   corner, which on this header lands it between the two buttons. Neither is
+   settable from PHP -- `Action` passes no `badgeSize`, and the corner is in the
+   component's own stylesheet -- so it is done here, on a class the action puts
+   on itself, rather than on `.fi-btn` where it would move every count in the
+   panel. `start-0`, not `left-0`, so it stays on the reading edge: Filament's
+   `-translate-x-1/2` / `rtl:translate-x-1/2` pair already flips. */
+.fi-btn.fi-ac-cupida-credit {
+    & .fi-btn-badge-ctn {
+        @apply start-0;
+    }
+
+    & .fi-badge {
+        @apply px-1.5 py-0.5;
+    }
+}
