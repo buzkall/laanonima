@@ -6,6 +6,7 @@ use App\Actions\Books\SyncCoverColor;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\RegistrationResponse;
 use App\Support\BookMetadata\BookMetadataProvider;
+use App\Support\BookMetadata\CasaDelLibroProvider;
 use App\Support\BookMetadata\ChainedBookMetadataProvider;
 use App\Support\BookMetadata\GoogleBooksProvider;
 use App\Support\BookMetadata\OpenLibraryProvider;
@@ -114,8 +115,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(function(): BookMetadataProvider {
             $available = [
-                'open_library' => OpenLibraryProvider::class,
-                'google_books' => GoogleBooksProvider::class,
+                'open_library'   => OpenLibraryProvider::class,
+                'google_books'   => GoogleBooksProvider::class,
+                'casa_del_libro' => CasaDelLibroProvider::class,
             ];
 
             $providers = array_map(

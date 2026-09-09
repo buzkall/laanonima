@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\PersonName;
 use Database\Factories\AuthorFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -63,10 +64,15 @@ class Author extends Model
 
     /**
      * The same person, keyed by slug, so two books by them share one record.
+     *
+     * The name is tidied first (see PersonName): what a metadata source files
+     * as "IAN. MCEWAN" is a person this shop prints as "Ian McEwan". The slug
+     * is unchanged by that -- both spell `ian-mcewan` -- so a record filed
+     * under the shouted name is still the same record afterwards.
      */
     public static function named(string $name): self
     {
-        $name = trim($name);
+        $name = PersonName::normalize($name);
 
         return self::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name]);
     }

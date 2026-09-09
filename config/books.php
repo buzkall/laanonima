@@ -14,6 +14,13 @@ return [
     | skipped entirely until GOOGLE_BOOKS_API_KEY is set: its unauthenticated
     | quota is shared and routinely exhausted, so keyless calls just 429.
     |
+    | Casa del Libro answers with a cover and nothing else, and sits ahead of
+    | Google Books because of it: the first source with a cover wins, and Google
+    | publishes none worth having for a Spanish edition (see the provider). It
+    | earns its place twice over -- openlibrary.org goes down for days at a time
+    | (it was refusing connections outright while this was written), which
+    | otherwise leaves the lookup with no cover source at all.
+    |
     | When DILVE credentials arrive, register a "dilve" provider and put it
     | first. Nothing else has to change.
     |
@@ -21,9 +28,18 @@ return [
 
     'metadata' => [
 
-        'providers' => ['open_library', 'google_books'],
+        'providers' => ['open_library', 'casa_del_libro', 'google_books'],
 
         'cache_ttl' => 60 * 60 * 24,
+
+        /*
+         | A miss is cached too, so retyping an ISBN no source knows is not a
+         | round trip every time -- but for minutes, not for a day. A miss is
+         | not always the truth: while a source is down every ISBN looks like
+         | one, and a day-long entry would keep the lookup empty long after the
+         | source came back.
+         */
+        'miss_cache_ttl' => 60 * 10,
 
         'timeout' => 5,
 

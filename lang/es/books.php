@@ -169,6 +169,7 @@ return [
     ],
 
     'public' => [
+        'menu'              => 'Menú',
         'tagline'           => 'Librería Independiente · Madrid',
         'login'             => 'Entrar',
         'account'           => 'Tu cuenta',

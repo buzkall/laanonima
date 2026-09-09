@@ -3,9 +3,11 @@
 use App\Actions\Books\FetchBookMetadata;
 use App\Enums\BookLanguage;
 use App\Support\BookMetadata\BookMetadataProvider;
+use App\Support\BookMetadata\CasaDelLibroProvider;
 use App\Support\BookMetadata\GoogleBooksProvider;
 use App\Support\BookMetadata\OpenLibraryProvider;
 use App\Support\BookMetadata\PhysicalMeasure;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 
 const ISBN = '9788433920423';
@@ -102,8 +104,11 @@ it('maps a Google Books volume once a key is configured', function(): void {
         ->and($metadata->pages)->toBe(380)
         ->and($metadata->publishedOn)->toBe('2002-05-01')
         ->and($metadata->language)->toBe(BookLanguage::Spa)
-        ->and($metadata->coverSourceUrl)->toStartWith('https://')
-        ->and($metadata->source)->toBe('google_books');
+        ->and($metadata->source)->toBe('google_books')
+        /* Google offers 128px thumbnails and nothing else for a record like
+           this one, which is not a cover -- and for a record it has no cover
+           for at all, the same URL renders "image not available". */
+        ->and($metadata->coverSourceUrl)->toBeNull();
 });
 
 it('reads the labeled dimensions Google Books files per side', function(): void {
@@ -146,9 +151,10 @@ it('falls through quietly when Google Books has exhausted its quota', function()
 it('merges the providers so one fills the gaps the other leaves', function(): void {
     config()->set('books.metadata.google_books.key', 'test-key');
     Http::fake([
-        'openlibrary.org/api/books*' => Http::response(apiFixture('book-metadata/open-library-hit')),
-        'covers.openlibrary.org/*'   => Http::response('', 404),
-        'googleapis.com/*'           => Http::response(apiFixture('book-metadata/google-books-hit')),
+        'openlibrary.org/api/books*'   => Http::response(apiFixture('book-metadata/open-library-hit')),
+        'covers.openlibrary.org/*'     => Http::response('', 404),
+        'googleapis.com/*'             => Http::response(apiFixture('book-metadata/google-books-hit')),
+        'imagessl*.casadellibro.com/*' => Http::response('', 404),
     ]);
 
     $metadata = app(BookMetadataProvider::class)->find(ISBN);
@@ -176,7 +182,10 @@ it('caches a hit so a second lookup makes no request', function(): void {
 });
 
 it('caches a miss too, so an unknown Spanish ISBN is not looked up twice', function(): void {
-    Http::fake(['openlibrary.org/*' => Http::response(apiFixture('book-metadata/open-library-miss'))]);
+    Http::fake([
+        'openlibrary.org/*'            => Http::response(apiFixture('book-metadata/open-library-miss')),
+        'imagessl*.casadellibro.com/*' => Http::response('', 404),
+    ]);
     $fetch = app(FetchBookMetadata::class);
 
     expect($fetch('9788401352836'))->toBeNull();
@@ -214,11 +223,97 @@ it('leaves the materia to the bookseller and keeps what the provider said', func
                 ],
             ],
         ]),
-        'covers.openlibrary.org/*' => Http::response('', 404),
+        'covers.openlibrary.org/*'     => Http::response('', 404),
+        'imagessl*.casadellibro.com/*' => Http::response('', 404),
     ]);
 
     $metadata = app(FetchBookMetadata::class)('9788420482767');
 
     expect($metadata->toBookAttributes())->not->toHaveKey('subjects')
         ->and($metadata->raw)->toHaveKey('subjects');
+});
+
+/*
+ | Casa del Libro. A cover and nothing else, last in the chain -- which is what
+ | 9788433950857 (Anagrama, on the shelves and on nobody's free API) needed.
+ */
+it('derives a Casa del Libro cover URL from the ISBN itself', function(): void {
+    Http::fake(['imagessl*.casadellibro.com/*' => Http::response('', 200)]);
+
+    $metadata = app(CasaDelLibroProvider::class)->find('9788433950857');
+
+    expect($metadata->coverSourceUrl)->toBe('https://imagessl3.casadellibro.com/a/l/t0/57/9788433950857.jpg')
+        ->and($metadata->source)->toBe('casa_del_libro')
+        ->and($metadata->title)->toBeNull();
+});
+
+it('reads a Casa del Libro 404 as no cover rather than a placeholder', function(): void {
+    Http::fake(['imagessl*.casadellibro.com/*' => Http::response('', 404)]);
+
+    expect(app(CasaDelLibroProvider::class)->find('9788433950857'))->toBeNull();
+});
+
+it('still finds a cover while Open Library is refusing connections', function(): void {
+    Http::fake([
+        'openlibrary.org/*'            => fn(): never => throw new ConnectionException('Connection refused'),
+        'imagessl*.casadellibro.com/*' => Http::response('', 200),
+    ]);
+
+    $metadata = app(FetchBookMetadata::class)('9788433950857');
+
+    expect($metadata->coverSourceUrl)->toContain('casadellibro.com')
+        ->and($metadata->source)->toBe('casa_del_libro');
+});
+
+/*
+ | A source that is down looks exactly like a source that has never heard of
+ | the book, so a miss may not be cached for as long as a hit: the outage would
+ | outlive itself by a day inside our own cache.
+ */
+it('looks a miss up again once the short miss TTL is out', function(): void {
+    Http::fake([
+        'openlibrary.org/*'            => fn(): never => throw new ConnectionException('Connection refused'),
+        'imagessl*.casadellibro.com/*' => Http::sequence()->push('', 404)->push('', 200),
+    ]);
+    $fetch = app(FetchBookMetadata::class);
+
+    expect($fetch('9788433950857'))->toBeNull();
+
+    $this->travel(config('books.metadata.miss_cache_ttl') + 1)->seconds();
+
+    expect($fetch('9788433950857')?->coverSourceUrl)->toContain('casadellibro.com');
+});
+
+it('takes a Google Books cover only in a size that is really one', function(): void {
+    config()->set('books.metadata.google_books.key', 'test-key');
+    Http::fake(['googleapis.com/*' => Http::response(['items' => [['volumeInfo' => [
+        'title'      => 'La conjura de los necios',
+        'imageLinks' => [
+            'smallThumbnail' => 'http://books.google.com/books/content?id=0FUv&zoom=5',
+            'thumbnail'      => 'http://books.google.com/books/content?id=0FUv&zoom=1',
+            'large'          => 'http://books.google.com/books/content?id=0FUv&zoom=3',
+        ],
+    ]]]])]);
+
+    expect(app(GoogleBooksProvider::class)->find(ISBN)->coverSourceUrl)
+        ->toBe('https://books.google.com/books/content?id=0FUv&zoom=3');
+});
+
+/*
+ | Casa del Libro is asked before Google Books, so the cover on a Spanish book
+ | is a cover and not a 128px thumbnail. Google still fills the words.
+ */
+it('prefers a Spanish cover over what Google Books calls one', function(): void {
+    config()->set('books.metadata.google_books.key', 'test-key');
+    Http::fake([
+        'openlibrary.org/*'            => Http::response(apiFixture('book-metadata/open-library-miss')),
+        'imagessl*.casadellibro.com/*' => Http::response('', 200),
+        'googleapis.com/*'             => Http::response(apiFixture('book-metadata/google-books-hit')),
+    ]);
+
+    $metadata = app(BookMetadataProvider::class)->find(ISBN);
+
+    expect($metadata->coverSourceUrl)->toContain('casadellibro.com')
+        ->and($metadata->title)->toBe('La conjura de los necios')
+        ->and($metadata->source)->toBe('casa_del_libro+google_books');
 });

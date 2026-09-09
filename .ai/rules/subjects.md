@@ -30,3 +30,12 @@ Google Books answers with free text and no code ("Fiction / Fantasy"); Open Libr
 
 ## Wording
 Table `subjects`, model `Subject`, panel label **"Materia"** — the shop's own word, and what `lang/es/books.php` already said. Readers see **"Género"**, which is what La Cupida's cards say. Do not rename one to match the other.
+
+## Where a cover really comes from
+Google Books publishes only `thumbnail`/`smallThumbnail` for a Spanish edition, and Google renders both at 128px whatever the book -- under the floor in config/books.php, so it downloads to nothing. Forcing the same URL wider (`&w=800`) is worse: a record Google has no cover for answers every size with a 300px picture reading "image not available", which clears the floor and gets filed as the book's cover. So `GoogleBooksProvider` reads `medium` and larger only, and covers for Spanish books come from `CasaDelLibroProvider`, which sits ahead of Google in the chain for that reason.
+
+Casa del Libro is a URL derived from the ISBN (`imagessl3.casadellibro.com/a/l/t0/<last two digits>/<isbn13>.jpg`), not a scrape, and answers a miss with a plain 404 -- which is why a HEAD is enough and why that probe must not retry a 404.
+
+openlibrary.org itself goes down for days at a time while covers.openlibrary.org stays up. Providers report that as a miss (they must not throw), so `FetchBookMetadata` caches a miss under `miss_cache_ttl` (minutes), never the day a hit gets.
+
+`Author::named()` normalizes through `App\Support\PersonName`: sources file people as "IAN. MCEWAN". The slug is unchanged by that, so an author filed under the shouted name stays the same record -- but its stored name is not rewritten, so rows created before this must be renamed by hand.

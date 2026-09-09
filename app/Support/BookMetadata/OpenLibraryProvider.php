@@ -33,7 +33,13 @@ class OpenLibraryProvider implements BookMetadataProvider
                 'jscmd'   => 'data',
             ]);
         } catch (Throwable $exception) {
-            Log::warning('Open Library lookup failed.', ['isbn13' => $isbn13, 'exception' => $exception->getMessage()]);
+            /*
+             | Debug, not warning: openlibrary.org is unreachable for days at a
+             | time, and one report per lookup buries the error tracker in an
+             | outage nobody here can act on. The bookseller is told the lookup
+             | found nothing, which is what the outage means for them.
+             */
+            Log::debug('Open Library lookup failed.', ['isbn13' => $isbn13, 'exception' => $exception->getMessage()]);
 
             return null;
         }

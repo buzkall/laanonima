@@ -251,3 +251,14 @@ The count on a card is the pool count, not the shop's total for the subject page
 `CupidaShortlist::matchesSubject()` matches downwards only (book code starts with card code). Do not restore the upward branch: 504 pool books carry the bare code X and 4,941 a two-letter one, so matching upwards made "Manga" (XAM) score every comic in the shop and collapsed every narrow card onto its parent. Dropping it changed 17 of the 18 original cards by nothing, and fixed JBSF, which had been scoring all 527 "Sociedad" books as Feminismos.
 
 A narrow code only works because the broad one is still a card to catch books filed coarsely — keep both in the list.
+
+## The opening panel is measured in `svh`, below `wide:` only
+La Cupida's `! $started` panel has to fit a phone screen without scrolling, and a phone never gives the page the whole window: on an iPhone 17 (402x874pt) the browser keeps ~190pt for its bars. Sized in px alone the card fitted 874 exactly and dropped the chevron off the bottom of the real device.
+
+Every vertical measurement in that panel is therefore `min(<original px>, <n>svh)`: the section's `pt`/`pb`, the mark's `max-h`, both paragraph margins, the rule's `pt`, both type sizes, the chevron's margin and icon size. Verified to fit at 402x600, 402x684, 402x874 and 430x660.
+
+`svh`, not `dvh` — the small viewport is the worst case (bars showing) and, unlike `dvh`, does not change while the reader scrolls, which would resize the type under their thumb.
+
+Each cap has a `wide:` twin restoring the original px value, so the desktop card is byte-for-byte what it was. Do not drop those overrides: `32svh` on a 900px-tall laptop shrinks the mark from 388px to 288px.
+
+`object-contain` on the mark is load-bearing: `max-h` on a replaced element whose width is set squashes it; contain letterboxes it at its own ratio instead.

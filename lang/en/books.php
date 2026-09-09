@@ -169,6 +169,7 @@ return [
     ],
 
     'public' => [
+        'menu'              => 'Menu',
         'tagline'           => 'Bookshop · Madrid',
         'login'             => 'Log in',
         'account'           => 'Your account',

@@ -23,14 +23,30 @@
 
     @elseif (! $started)
         {{-- The opening card: the section's own mark, what it does, and the one
-         thing a reader has to understand before the deck makes sense. --}}
-        <section class="flex flex-1 flex-col justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,56px)] pb-[clamp(36px,5vw,72px)] text-center text-[var(--on-cover)]">
+         thing a reader has to understand before the deck makes sense.
+
+         Every vertical measurement here is capped against `svh` as well as its
+         own value, because the panel has to fit a phone and a phone never gives
+         a page the screen. On an iPhone 17 the window is 874pt tall and the
+         browser keeps around 190 of it for its bars, so a card measured in
+         px alone fits the simulator exactly and drops the arrow off the bottom
+         of the real thing. `svh`, not `dvh`: the small viewport is the one with
+         the bars showing, so it is both the worst case and -- unlike `dvh` --
+         a number that does not change while the reader scrolls, which would
+         resize the type under their thumb.
+
+         The caps are `min(px,svh)` rather than plain `svh` so a desktop, where
+         there is room to spare, keeps exactly the card it already had. --}}
+        <section class="flex flex-1 flex-col justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[min(clamp(28px,4vw,56px),2.4svh)] pb-[min(clamp(36px,5vw,72px),2.4svh)] wide:pt-[clamp(28px,4vw,56px)] wide:pb-[clamp(36px,5vw,72px)] text-center text-[var(--on-cover)]">
+            {{-- `object-contain` is not decoration: `max-h` on a replaced element
+             whose width is set squashes it, and contain letterboxes it inside
+             the shorter box at its own ratio instead. --}}
             <img
                 src="{{ Vite::asset('resources/images/brand/la-cupida.webp') }}"
                 alt="{{ __('cupida.title') }}"
                 width="760"
                 height="983"
-                class="mx-auto h-auto w-[min(62vw,300px)]"
+                class="wide:max-h-none mx-auto h-auto max-h-[32svh] w-[min(62vw,300px)] object-contain"
             />
 
             {{-- Only the floors of these two clamps are a phone decision: 4.2vw
@@ -43,7 +59,7 @@
              its own, and the footer stopped taking a fifth of the window -- so
              the type is set to the room rather than to the smallest size that
              fits. --}}
-            <p class="font-display mx-auto mt-[clamp(22px,4vw,36px)] mb-0 max-w-[24ch] border-t border-[var(--rule)] pt-7 text-[clamp(44px,4.2vw,52px)]/[1.06] text-balance">
+            <p class="font-display mx-auto wide:mt-[clamp(22px,4vw,36px)] wide:pt-7 wide:text-[clamp(44px,4.2vw,52px)]/[1.06] mt-[min(clamp(22px,4vw,36px),2.4svh)] mb-0 max-w-[24ch] border-t border-[var(--rule)] pt-[min(28px,3svh)] text-[min(clamp(44px,4.2vw,52px),5.6svh)]/[1.06] text-balance">
                 {{ __('cupida.start.greeting', ['name' => $greeting]) }}
             </p>
 
@@ -57,7 +73,7 @@
              word alone onto a third line -- `text-balance` on the paragraph as
              a whole would weigh that orphan against the short line above it
              instead of against the sentence it belongs to. --}}
-            <p class="mx-auto mt-6 mb-0 max-w-[34ch] text-[clamp(26px,2.2vw,28px)]/[1.45] italic">
+            <p class="mx-auto wide:mt-6 wide:text-[clamp(26px,2.2vw,28px)]/[1.45] mt-[min(24px,2.6svh)] mb-0 max-w-[34ch] text-[min(clamp(26px,2.2vw,28px),3.1svh)]/[1.45] italic">
                 <span class="block text-balance">{{ __('cupida.start.lead') }}</span>
                 <span class="block text-balance">{{ __('cupida.start.promise', ['match' => $match]) }}</span>
             </p>
@@ -84,9 +100,9 @@
                 type="button"
                 wire:click="start"
                 aria-label="{{ __('cupida.start.button') }}"
-                class="cupida-nudge wide:hidden mt-[clamp(28px,7vw,44px)] cursor-pointer self-center border-0 bg-transparent p-2 text-[var(--on-cover)]"
+                class="cupida-nudge wide:hidden mt-[min(clamp(28px,7vw,44px),3.2svh)] cursor-pointer self-center border-0 bg-transparent p-2 text-[var(--on-cover)]"
             >
-                <x-heroicon-o-chevron-down class="size-10" />
+                <x-heroicon-o-chevron-down class="size-[min(40px,4.6svh)]" />
             </button>
         </section>
 

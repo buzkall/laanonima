@@ -281,8 +281,9 @@ describe('the ISBN lookup', function(): void {
 
     it('saves where the metadata came from, and when', function(): void {
         Http::fake([
-            'openlibrary.org/api/books*' => Http::response(apiFixture('book-metadata/open-library-hit')),
-            'covers.openlibrary.org/*'   => Http::response('', 404),
+            'openlibrary.org/api/books*'   => Http::response(apiFixture('book-metadata/open-library-hit')),
+            'covers.openlibrary.org/*'     => Http::response('', 404),
+            'imagessl*.casadellibro.com/*' => Http::response('', 404),
         ]);
 
         livewire(CreateBook::class)
@@ -296,6 +297,30 @@ describe('the ISBN lookup', function(): void {
         expect($book->metadata_source)->toBe('open_library')
             ->and($book->metadata_synced_at)->not->toBeNull()
             ->and($book->cover_source_url)->toContain('covers.openlibrary.org');
+    });
+
+    /*
+     | Sources file people the way a card index does. 9788433950857 arrived as
+     | "IAN. MCEWAN", which is not a name any shop would print on a book page.
+     */
+    it('files the author under a name a reader would recognize', function(): void {
+        Http::fake([
+            'openlibrary.org/api/books*' => Http::response([
+                'ISBN:9788433950857' => [
+                    'title'   => 'Lo que podemos saber',
+                    'authors' => [['name' => 'IAN. MCEWAN']],
+                ],
+            ]),
+            'openlibrary.org/isbn/*'       => Http::response('', 404),
+            'covers.openlibrary.org/*'     => Http::response('', 404),
+            'imagessl*.casadellibro.com/*' => Http::response('', 404),
+        ]);
+
+        livewire(CreateBook::class)
+            ->fillForm(['isbn13' => '9788433950857'])
+            ->callFormComponentAction('isbn13', 'lookup');
+
+        expect(Author::firstWhere('slug', 'ian-mcewan')?->name)->toBe('Ian McEwan');
     });
 
     it('says so when the ISBN itself is wrong, without calling anyone', function(): void {

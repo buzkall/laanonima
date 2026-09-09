@@ -18,3 +18,12 @@ The logo carries its own brand colors (black `#000000`, green `#80d7ac`, magenta
 `config('app.name')` survives as the img `alt`, which keeps the accessible name unchanged. The `books.public.tagline` string is gone from the bar but the key stays — `books/index.blade.php` still uses it as the page `<title>`.
 
 The bar is `items-center` now, not `items-baseline`: an image has no useful baseline to align the right-hand links against.
+
+## The phone menu is a `<details>`, and its links are written once
+Below `wide:` the two nav links collapse into a `<details>` hamburger sitting between the wordmark and the user icon; from `wide:` up the inline `<nav>` shows and the disclosure is hidden.
+
+`<details>` rather than a script or Alpine: Alpine only arrives with Livewire, so it exists on La Cupida and nowhere else, and the bar is on every page. The browser owns the open state and the `aria-expanded` that goes with it. `[&::-webkit-details-marker]:hidden` + `list-none` kill the triangle; `group-open:` swaps bars-3 for x-mark.
+
+The links live in one `$links` array at the top of the file and are rendered twice (inline nav, disclosure panel). Never maintain two hand-written lists — that is how a link lands on a laptop and nowhere else. `tests/Feature/Books/SiteHeaderTest.php` asserts each route appears exactly twice inside `<header>`.
+
+The panel is `absolute inset-x-0 top-full z-50` off a `relative` header, never an element that grows the bar: `books/show.blade.php` measures the header into `--top-bar` on every paint, so a panel that made the header taller would shove the floating cover down the page each time it opened. `z-50` clears that cover (z-30).

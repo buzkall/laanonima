@@ -9,9 +9,10 @@ const MEASURED_ISBN = '9788433920423';
 function fakeEditionWithDimensions(): void
 {
     Http::fake([
-        'openlibrary.org/api/books*' => Http::response(apiFixture('book-metadata/open-library-hit')),
-        'openlibrary.org/isbn/*'     => Http::response(apiFixture('book-metadata/open-library-edition')),
-        'covers.openlibrary.org/*'   => Http::response('', 404),
+        'openlibrary.org/api/books*'   => Http::response(apiFixture('book-metadata/open-library-hit')),
+        'openlibrary.org/isbn/*'       => Http::response(apiFixture('book-metadata/open-library-edition')),
+        'covers.openlibrary.org/*'     => Http::response('', 404),
+        'imagessl*.casadellibro.com/*' => Http::response('', 404),
     ]);
 }
 
@@ -104,5 +105,7 @@ it('asks about a measured book only when told to', function(): void {
 
     $this->artisan('books:measure', ['--all' => true])->assertSuccessful();
 
-    Http::assertSentCount(2);
+    /* The books API, the edition record, and the Casa del Libro cover probe:
+       every source in the chain is asked once, whatever the caller wanted. */
+    Http::assertSentCount(3);
 });

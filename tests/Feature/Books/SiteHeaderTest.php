@@ -39,6 +39,18 @@ it('carries the login link on a book page too', function(): void {
         ->assertSee(Filament::getPanel('client')->getLoginUrl());
 });
 
+it('carries the nav links inline and inside the phone menu', function(): void {
+    $page = str($this->get(route('home'))->assertOk()->getContent())
+        ->between('<header', '</header>')
+        ->toString();
+
+    // Twice each: once in the bar a laptop reads, once in the disclosure a
+    // phone opens. One of the two going missing is the failure this catches.
+    expect(substr_count($page, route('books.shelf')))->toBe(2)
+        ->and(substr_count($page, route('cupida')))->toBe(2)
+        ->and($page)->toContain(__('books.public.menu'));
+});
+
 it('wears the wordmark rather than the shop name in writing', function(): void {
     $book = Book::factory()->create(['title' => 'Cuaderno de faros']);
 

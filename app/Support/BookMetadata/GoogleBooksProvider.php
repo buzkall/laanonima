@@ -134,11 +134,25 @@ class GoogleBooksProvider implements BookMetadataProvider
     }
 
     /**
+     * The cover, and only in a size that is really a cover.
+     *
+     * `thumbnail` and `smallThumbnail` are deliberately not read. Google
+     * renders both at 128px wide whatever the book, which is under the floor in
+     * config/books.php, so offering one promises the bookseller a cover that
+     * then quietly fails to download. Asking for the same image wider is worse
+     * rather than better: a record Google has no cover for answers every size
+     * with a picture that reads "image not available", and at 300px that
+     * placeholder clears the floor and gets filed as the book's cover.
+     *
+     * A `medium` link or larger only exists where Google holds real content, so
+     * what survives here is a cover or nothing. Casa del Libro is what covers
+     * the Spanish books this leaves out.
+     *
      * @param  array<string, mixed>  $volume
      */
     private function coverUrl(array $volume): ?string
     {
-        foreach (['extraLarge', 'large', 'medium', 'thumbnail', 'smallThumbnail'] as $size) {
+        foreach (['extraLarge', 'large', 'medium'] as $size) {
             $url = data_get($volume, "imageLinks.{$size}");
 
             if (is_string($url) && filled($url)) {
