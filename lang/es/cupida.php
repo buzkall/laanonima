@@ -94,6 +94,7 @@ return [
         'by'             => 'de :author',
         'read_more'      => 'Ver el libro',
         'buy'            => 'Verlo en la librería',
+        'more'           => 'Seguir leyendo',
         'again'          => 'Otra vez',
         'fallback_pitch' => 'Es lo que más se parece a lo que nos has dicho. Pásate por la librería y te contamos por qué.',
     ],

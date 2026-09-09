@@ -210,3 +210,104 @@
         animation: none;
     }
 }
+
+/*
+ * The result, laid out for a phone.
+ *
+ * Measured, the poster layout this replaces needed 1240px of a 540px screen:
+ * a centered cover, a full-width title under it, then the match line, the
+ * pitch and the two controls, each waiting its turn down the page. The reader
+ * had to scroll past the cover to find out whether the book was worth
+ * scrolling for.
+ *
+ * Three areas instead. On a phone the cover and the title share one band --
+ * the cover shrinks to a thumbnail and the title stands beside it, so the two
+ * cost one band's height rather than two -- and everything that is prose runs
+ * full width below them. From `wide:` up the areas fall back to the layout the
+ * desktop already had: the cover in its own column, everything else beside it.
+ *
+ * Grid areas rather than utilities because the two arrangements differ in
+ * shape, not in values, and a `wide:` twin for every one of six properties is
+ * not a thing anyone can read.
+ */
+.cupida-result {
+    display: grid;
+    grid-template-columns: clamp(76px, 22vw, 104px) 1fr;
+    grid-template-areas:
+        'cover head'
+        'body body';
+    align-items: start;
+
+    column-gap: clamp(16px, 4vw, 22px);
+    row-gap: clamp(14px, 2.4svh, 24px);
+}
+
+/* No cover on file: the band is the title's alone rather than a blank column
+   with a heading pushed off to one side. */
+.cupida-result--no-cover {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        'head'
+        'body';
+}
+
+.cupida-result__cover {
+    grid-area: cover;
+}
+
+.cupida-result__head {
+    grid-area: head;
+}
+
+.cupida-result__body {
+    grid-area: body;
+}
+
+/*
+ * The pitch is the one thing on the panel that cannot be made to fit: it is
+ * five or six lines of prose and shrinking it to three would be shrinking the
+ * only reason the reader is here. So it is clamped instead, with a control
+ * that asks for the rest -- the panel fits, and the whole pitch is one tap
+ * away rather than one scroll.
+ *
+ * Clamped in the stylesheet and opened by Alpine, which this page has because
+ * Livewire brings it: the deck the reader just answered does not work without
+ * it, so there is no state of this panel where the button is dead.
+ */
+.cupida-pitch {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.cupida-pitch--open {
+    display: block;
+    overflow: visible;
+}
+
+@media (width >= theme(--breakpoint-wide)) {
+    .cupida-result {
+        grid-template-columns: minmax(0, 240px) 1fr;
+        grid-template-areas:
+            'cover head'
+            'cover body';
+
+        column-gap: clamp(28px, 4vw, 56px);
+        row-gap: 0;
+    }
+
+    .cupida-result--no-cover {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            'head'
+            'body';
+    }
+
+    /* There is room for the whole pitch, so it is never clamped and the
+       control that opens it is not rendered. */
+    .cupida-pitch {
+        display: block;
+        overflow: visible;
+    }
+}

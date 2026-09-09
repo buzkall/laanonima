@@ -91,6 +91,7 @@ return [
         'by'             => 'by :author',
         'read_more'      => 'See the book',
         'buy'            => 'See it in the shop',
+        'more'           => 'Read the rest',
         'again'          => 'Again',
         'fallback_pitch' => 'It is the closest thing to what you told us. Come by the shop and we will tell you why.',
     ],

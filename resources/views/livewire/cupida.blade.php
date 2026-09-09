@@ -110,7 +110,7 @@
         @php($palette = $recommendation->palette)
 
         <section
-            class="flex flex-1 flex-col justify-center bg-[var(--card)] px-[clamp(22px,5vw,80px)] pt-[clamp(40px,6vw,88px)] pb-[clamp(44px,6vw,88px)] text-[var(--on-card)]"
+            class="wide:pt-[clamp(40px,6vw,88px)] wide:pb-[clamp(44px,6vw,88px)] flex flex-1 flex-col justify-center bg-[var(--card)] px-[clamp(22px,5vw,80px)] pt-[min(clamp(40px,6vw,88px),2svh)] pb-[min(clamp(44px,6vw,88px),2svh)] text-[var(--on-card)]"
             style="--card: {{ $palette->background }}; --on-card: {{ $palette->foreground }}"
         >
             {{-- Held to a column rather than run the width of a desktop screen: a
@@ -118,59 +118,76 @@
              color, and the same words in a column are a paragraph that fills
              the panel it is standing in. --}}
             <div class="mx-auto w-full max-w-[1040px]">
-                {{-- On a phone this panel is a poster: the mark of the section is
-                 gone by now, so the cover is what the reader is looking at and
-                 it wants the middle of the screen. From `wide:` up the grid
-                 puts the cover in its own column beside the words and the
-                 editorial left edge is the one that reads -- so the centring
-                 is the narrow layout's, never both.
-
-                 The rule above the match line is where it stops: head centered,
-                 body left. A pitch is five lines of prose and centring those
-                 costs a reader a ragged left edge to find on every one. --}}
-                <p class="wide:text-left m-0 mb-[18px] text-center text-[14px] font-bold tracking-[0.26em] uppercase">
+                {{-- The editorial left edge, at every width. This panel used to be
+                 a centered poster on a phone -- cover in the middle, title
+                 under it -- and it cost 1240px of a 540px screen. It is now the
+                 same three areas the desktop has, folded differently
+                 (`.cupida-result` in `resources/css/cupida.css`), and a folded
+                 layout with a centered heading over a left-aligned body has two
+                 left edges and reads as neither. --}}
+                <p class="wide:mb-[18px] m-0 mb-[min(18px,2svh)] text-[14px] font-bold tracking-[0.26em] uppercase">
                     {{ __('cupida.result.kicker') }}
                 </p>
 
-                <div class="wide:grid-cols-[minmax(0,240px)_1fr] grid grid-cols-1 items-start gap-[clamp(28px,4vw,56px)]">
+                <div @class(['cupida-result', 'cupida-result--no-cover' => ! $recommendation->coverUrl])>
                     @if ($recommendation->coverUrl)
                         <img
                             src="{{ $recommendation->coverUrl }}"
                             alt="{{ __('books.fields.cover') }}: {{ $recommendation->title }}"
-                            class="wide:mx-0 mx-auto w-[min(56vw,240px)] max-w-full shadow-[0_18px_0_-8px_rgba(33,21,17,0.18),0_28px_60px_-24px_rgba(33,21,17,0.6)]"
+                            class="cupida-result__cover wide:w-[min(56vw,240px)] w-full max-w-full shadow-[0_18px_0_-8px_rgba(33,21,17,0.18),0_28px_60px_-24px_rgba(33,21,17,0.6)]"
                         />
                     @endif
 
-                    <div>
-                        <h1 class="font-display wide:mx-0 wide:text-left m-0 mx-auto max-w-[18ch] text-center text-[clamp(38px,5.2vw,76px)]/[0.98] font-normal tracking-[-0.01em] text-balance">
+                    {{-- The band the cover shares on a phone: which book it is, and
+                     nothing else. Everything that is prose waits below. --}}
+                    <div class="cupida-result__head">
+                        <h1 class="font-display wide:text-[clamp(38px,5.2vw,76px)]/[0.98] m-0 max-w-[18ch] text-[min(26px,3.6svh)]/[1.06] font-normal tracking-[-0.01em] text-balance">
                             {{ $recommendation->title }}
                         </h1>
 
                         @if ($recommendation->author)
-                            <p class="wide:text-left mt-3 mb-0 text-center text-[clamp(22px,2vw,24px)] italic opacity-85">
+                            <p class="wide:mt-3 wide:text-[clamp(22px,2vw,24px)] mt-[min(12px,1.6svh)] mb-0 text-[min(18px,2.6svh)] italic opacity-85">
                                 {{ __('cupida.result.by', ['author' => $recommendation->author]) }}
                             </p>
                         @endif
+                    </div>
 
+                    <div class="cupida-result__body" x-data="{ open: false }">
                         @if ($recommendation->matchLine)
-                            <p class="mt-7 mb-0 border-t border-[var(--rule)] pt-6 text-[14px] font-bold tracking-[0.16em] uppercase">
+                            <p class="wide:mt-7 wide:pt-6 wide:text-[14px]/[1.65] mt-0 mb-0 border-t border-[var(--rule)] pt-[min(24px,2.6svh)] text-[min(13px,1.9svh)]/[1.45] font-bold tracking-[0.16em] uppercase">
                                 {{ $recommendation->matchLine }}
                             </p>
                         @endif
 
-                        <p @class([
-                        'mb-0 max-w-[52ch] text-[clamp(22px,2.1vw,25px)]/[1.5] italic',
-                        'mt-5'                                    => $recommendation->matchLine,
-                        'mt-7 border-t border-[var(--rule)] pt-6' => ! $recommendation->matchLine,
-                                            ])>
+                        {{-- Three lines on a phone, all of it from `wide:` up. The
+                         clamp lives in the stylesheet and Alpine only opens it,
+                         so the fallback is a paragraph that reads short rather
+                         than one that never opens. --}}
+                        <p
+                            :class="open && 'cupida-pitch--open'"
+                            @class([
+                            'cupida-pitch wide:text-[clamp(22px,2.1vw,25px)]/[1.5] mb-0 max-w-[52ch] text-[min(19px,2.9svh)]/[1.5] italic',
+                            'wide:mt-5 mt-[min(20px,2.2svh)]'                                      => $recommendation->matchLine,
+                            'wide:mt-7 wide:pt-6 mt-0 border-t border-[var(--rule)] pt-[min(24px,2.6svh)]' => ! $recommendation->matchLine,
+                                                    ])
+                        >
                             {{ $recommendation->pitch }}
                         </p>
 
-                        <div class="mt-9 flex flex-wrap items-center gap-4">
+                        <button
+                            type="button"
+                            x-show="! open"
+                            @click="open = true"
+                            class="wide:hidden mt-[min(8px,1.2svh)] cursor-pointer border-0 border-b border-current bg-transparent p-0 pb-[2px] font-serif text-[15px] font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase opacity-70 transition-opacity duration-150 hover:opacity-100"
+                        >
+                            {{ __('cupida.result.more') }}
+                        </button>
+
+                        <div class="wide:mt-9 wide:gap-4 mt-[min(28px,3svh)] flex flex-wrap items-center gap-[min(16px,2svh)]">
                             <a
                                 href="{{ $recommendation->url }}"
                                 @if (! $recommendation->book) target="_blank" rel="noopener" @endif
-                                class="bg-[var(--on-card)] px-6 py-3 text-[18px] font-semibold tracking-[0.08em] text-[var(--card)] uppercase no-underline transition-opacity duration-150 hover:opacity-85"
+                                class="wide:px-6 wide:py-3 wide:text-[18px] bg-[var(--on-card)] px-[min(24px,5vw)] py-[min(10px,1.6svh)] text-[min(16px,2.4svh)] font-semibold tracking-[0.08em] text-[var(--card)] uppercase no-underline transition-opacity duration-150 hover:opacity-85"
                             >
                                 {{ $recommendation->book ? __('cupida.result.read_more') : __('cupida.result.buy') }}
                             </a>
@@ -178,7 +195,7 @@
                             <button
                                 type="button"
                                 wire:click="restart"
-                                class="cursor-pointer border-0 border-b-2 border-current bg-transparent pb-[3px] font-serif text-[18px] font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
+                                class="wide:text-[18px] cursor-pointer border-0 border-b-2 border-current bg-transparent pb-[3px] font-serif text-[min(16px,2.4svh)] font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
                             >
                                 {{ __('cupida.result.again') }}
                             </button>
