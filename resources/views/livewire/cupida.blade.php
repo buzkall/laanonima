@@ -9,7 +9,7 @@
      underneath. Each panel centers what it holds: on a laptop the answer is
      halfway down the screen, and on a phone, where the content is taller than
      the window anyway, nothing moves. --}}
-<div data-cupida class="flex flex-1 flex-col">
+<div data-cupida class="flex min-h-0 flex-1 flex-col">
     @if ($empty)
         <section class="flex flex-1 flex-col justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(48px,7vw,104px)] pb-[clamp(52px,6vw,96px)] text-[var(--on-cover)]">
             <h1 class="font-display m-0 max-w-[16ch] text-[clamp(48px,6.4vw,104px)]/[0.94] font-normal tracking-[-0.01em] text-balance">
@@ -25,19 +25,15 @@
         {{-- The opening card: the section's own mark, what it does, and the one
          thing a reader has to understand before the deck makes sense.
 
-         Every vertical measurement here is capped against `svh` as well as its
-         own value, because the panel has to fit a phone and a phone never gives
-         a page the screen. On an iPhone 17 the window is 874pt tall and the
-         browser keeps around 190 of it for its bars, so a card measured in
-         px alone fits the simulator exactly and drops the arrow off the bottom
-         of the real thing. `svh`, not `dvh`: the small viewport is the one with
-         the bars showing, so it is both the worst case and -- unlike `dvh` --
-         a number that does not change while the reader scrolls, which would
-         resize the type under their thumb.
-
-         The caps are `min(px,svh)` rather than plain `svh` so a desktop, where
-         there is room to spare, keeps exactly the card it already had. --}}
-        <section class="flex flex-1 flex-col justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[min(clamp(28px,4vw,56px),2.4svh)] pb-[min(clamp(36px,5vw,72px),2.4svh)] wide:pt-[clamp(28px,4vw,56px)] wide:pb-[clamp(36px,5vw,72px)] text-center text-[var(--on-cover)]">
+         Nothing here is measured against the window. The panel is a flex column
+         inside a shell with a real height (`fits-viewport` on the layout), so
+         the type is set at the size it was designed at and the mark is simply
+         allowed to give way: `min-h-0` is what lets a flex item shrink past its
+         own content, and `object-contain` is what keeps it from being squashed
+         while it does. It never grows beyond its natural size, because it is
+         `flex: 0 1 auto` -- it can lose height, not gain it -- so a laptop and a
+         tall phone get exactly the card that was drawn. --}}
+        <section class="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,56px)] pb-[clamp(36px,5vw,72px)] text-center text-[var(--on-cover)]">
             {{-- `object-contain` is not decoration: `max-h` on a replaced element
              whose width is set squashes it, and contain letterboxes it inside
              the shorter box at its own ratio instead. --}}
@@ -46,7 +42,7 @@
                 alt="{{ __('cupida.title') }}"
                 width="760"
                 height="983"
-                class="wide:max-h-none mx-auto h-auto max-h-[32svh] w-[min(62vw,300px)] object-contain"
+                class="mx-auto h-auto min-h-0 w-[min(62vw,300px)] object-contain"
             />
 
             {{-- Only the floors of these two clamps are a phone decision: 4.2vw
@@ -59,7 +55,7 @@
              its own, and the footer stopped taking a fifth of the window -- so
              the type is set to the room rather than to the smallest size that
              fits. --}}
-            <p class="font-display mx-auto wide:mt-[clamp(22px,4vw,36px)] wide:pt-7 wide:text-[clamp(44px,4.2vw,52px)]/[1.06] mt-[min(clamp(22px,4vw,36px),2.4svh)] mb-0 max-w-[24ch] border-t border-[var(--rule)] pt-[min(28px,3svh)] text-[min(clamp(44px,4.2vw,52px),5.6svh)]/[1.06] text-balance">
+            <p class="font-display mx-auto mt-[clamp(22px,4vw,36px)] mb-0 max-w-[24ch] border-t border-[var(--rule)] pt-7 text-[clamp(44px,4.2vw,52px)]/[1.06] text-balance">
                 {{ __('cupida.start.greeting', ['name' => $greeting]) }}
             </p>
 
@@ -73,7 +69,7 @@
              word alone onto a third line -- `text-balance` on the paragraph as
              a whole would weigh that orphan against the short line above it
              instead of against the sentence it belongs to. --}}
-            <p class="mx-auto wide:mt-6 wide:text-[clamp(26px,2.2vw,28px)]/[1.45] mt-[min(24px,2.6svh)] mb-0 max-w-[34ch] text-[min(clamp(26px,2.2vw,28px),3.1svh)]/[1.45] italic">
+            <p class="mx-auto mt-6 mb-0 max-w-[34ch] text-[clamp(26px,2.2vw,28px)]/[1.45] italic">
                 <span class="block text-balance">{{ __('cupida.start.lead') }}</span>
                 <span class="block text-balance">{{ __('cupida.start.promise', ['match' => $match]) }}</span>
             </p>
@@ -100,9 +96,9 @@
                 type="button"
                 wire:click="start"
                 aria-label="{{ __('cupida.start.button') }}"
-                class="cupida-nudge wide:hidden mt-[min(clamp(28px,7vw,44px),3.2svh)] cursor-pointer self-center border-0 bg-transparent p-2 text-[var(--on-cover)]"
+                class="cupida-nudge wide:hidden mt-[clamp(28px,7vw,44px)] cursor-pointer self-center border-0 bg-transparent p-2 text-[var(--on-cover)]"
             >
-                <x-heroicon-o-chevron-down class="size-[min(40px,4.6svh)]" />
+                <x-heroicon-o-chevron-down class="size-10" />
             </button>
         </section>
 
@@ -110,7 +106,7 @@
         @php($palette = $recommendation->palette)
 
         <section
-            class="wide:pt-[clamp(40px,6vw,88px)] wide:pb-[clamp(44px,6vw,88px)] flex flex-1 flex-col justify-center bg-[var(--card)] px-[clamp(22px,5vw,80px)] pt-[min(clamp(40px,6vw,88px),2svh)] pb-[min(clamp(44px,6vw,88px),2svh)] text-[var(--on-card)]"
+            class="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto bg-[var(--card)] px-[clamp(22px,5vw,80px)] pt-[clamp(40px,6vw,88px)] pb-[clamp(44px,6vw,88px)] text-[var(--on-card)]"
             style="--card: {{ $palette->background }}; --on-card: {{ $palette->foreground }}"
         >
             {{-- Held to a column rather than run the width of a desktop screen: a
@@ -125,7 +121,7 @@
                  (`.cupida-result` in `resources/css/cupida.css`), and a folded
                  layout with a centered heading over a left-aligned body has two
                  left edges and reads as neither. --}}
-                <p class="wide:mb-[18px] m-0 mb-[min(18px,2svh)] text-[14px] font-bold tracking-[0.26em] uppercase">
+                <p class="mb-[18px] m-0 text-[14px] font-bold tracking-[0.26em] uppercase">
                     {{ __('cupida.result.kicker') }}
                 </p>
 
@@ -141,12 +137,12 @@
                     {{-- The band the cover shares on a phone: which book it is, and
                      nothing else. Everything that is prose waits below. --}}
                     <div class="cupida-result__head">
-                        <h1 class="font-display wide:text-[clamp(38px,5.2vw,76px)]/[0.98] m-0 max-w-[18ch] text-[min(26px,3.6svh)]/[1.06] font-normal tracking-[-0.01em] text-balance">
+                        <h1 class="font-display text-[clamp(38px,5.2vw,76px)]/[0.98] m-0 max-w-[18ch] font-normal tracking-[-0.01em] text-balance">
                             {{ $recommendation->title }}
                         </h1>
 
                         @if ($recommendation->author)
-                            <p class="wide:mt-3 wide:text-[clamp(22px,2vw,24px)] mt-[min(12px,1.6svh)] mb-0 text-[min(18px,2.6svh)] italic opacity-85">
+                            <p class="mt-3 text-[clamp(22px,2vw,24px)] mb-0 italic opacity-85">
                                 {{ __('cupida.result.by', ['author' => $recommendation->author]) }}
                             </p>
                         @endif
@@ -154,7 +150,7 @@
 
                     <div class="cupida-result__body" x-data="{ open: false }">
                         @if ($recommendation->matchLine)
-                            <p class="wide:mt-7 wide:pt-6 wide:text-[14px]/[1.65] mt-0 mb-0 border-t border-[var(--rule)] pt-[min(24px,2.6svh)] text-[min(13px,1.9svh)]/[1.45] font-bold tracking-[0.16em] uppercase">
+                            <p class="wide:mt-7 pt-6 text-[14px]/[1.65] mt-0 mb-0 border-t border-[var(--rule)] font-bold tracking-[0.16em] uppercase">
                                 {{ $recommendation->matchLine }}
                             </p>
                         @endif
@@ -166,9 +162,9 @@
                         <p
                             :class="open && 'cupida-pitch--open'"
                             @class([
-                            'cupida-pitch wide:text-[clamp(22px,2.1vw,25px)]/[1.5] mb-0 max-w-[52ch] text-[min(19px,2.9svh)]/[1.5] italic',
-                            'wide:mt-5 mt-[min(20px,2.2svh)]'                                      => $recommendation->matchLine,
-                            'wide:mt-7 wide:pt-6 mt-0 border-t border-[var(--rule)] pt-[min(24px,2.6svh)]' => ! $recommendation->matchLine,
+                            'cupida-pitch text-[clamp(22px,2.1vw,25px)]/[1.5] mb-0 max-w-[52ch] italic',
+                            'mt-5'                                      => $recommendation->matchLine,
+                            'wide:mt-7 pt-6 mt-0 border-t border-[var(--rule)]' => ! $recommendation->matchLine,
                                                     ])
                         >
                             {{ $recommendation->pitch }}
@@ -178,16 +174,16 @@
                             type="button"
                             x-show="! open"
                             @click="open = true"
-                            class="wide:hidden mt-[min(8px,1.2svh)] cursor-pointer border-0 border-b border-current bg-transparent p-0 pb-[2px] font-serif text-[15px] font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase opacity-70 transition-opacity duration-150 hover:opacity-100"
+                            class="wide:hidden mt-[8px] cursor-pointer border-0 border-b border-current bg-transparent p-0 pb-[2px] font-serif text-[15px] font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase opacity-70 transition-opacity duration-150 hover:opacity-100"
                         >
                             {{ __('cupida.result.more') }}
                         </button>
 
-                        <div class="wide:mt-9 wide:gap-4 mt-[min(28px,3svh)] flex flex-wrap items-center gap-[min(16px,2svh)]">
+                        <div class="mt-9 gap-4 flex flex-wrap items-center">
                             <a
                                 href="{{ $recommendation->url }}"
                                 @if (! $recommendation->book) target="_blank" rel="noopener" @endif
-                                class="wide:px-6 wide:py-3 wide:text-[18px] bg-[var(--on-card)] px-[min(24px,5vw)] py-[min(10px,1.6svh)] text-[min(16px,2.4svh)] font-semibold tracking-[0.08em] text-[var(--card)] uppercase no-underline transition-opacity duration-150 hover:opacity-85"
+                                class="bg-[var(--on-card)] px-6 py-3 text-[18px] font-semibold tracking-[0.08em] text-[var(--card)] uppercase no-underline transition-opacity duration-150 hover:opacity-85"
                             >
                                 {{ $recommendation->book ? __('cupida.result.read_more') : __('cupida.result.buy') }}
                             </a>
@@ -195,7 +191,7 @@
                             <button
                                 type="button"
                                 wire:click="restart"
-                                class="wide:text-[18px] cursor-pointer border-0 border-b-2 border-current bg-transparent pb-[3px] font-serif text-[min(16px,2.4svh)] font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
+                                class="text-[18px] cursor-pointer border-0 border-b-2 border-current bg-transparent pb-[3px] font-serif font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
                             >
                                 {{ __('cupida.result.again') }}
                             </button>
@@ -211,7 +207,7 @@
          anything waits on a model. --}}
         <section
             wire:init="recommend"
-            class="wide:py-[clamp(48px,7vw,104px)] flex flex-1 flex-col items-center justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] py-[min(clamp(48px,7vw,104px),2.6svh)] text-center text-[var(--on-cover)]"
+            class="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto bg-[var(--cover)] px-[clamp(22px,5vw,80px)] py-[clamp(48px,7vw,104px)] text-center text-[var(--on-cover)]"
         >
             {{-- The same mark the opening card opens with, smaller and breathing:
              the wait is the one screen with nothing on it to look at, and a
@@ -223,10 +219,10 @@
                 alt=""
                 width="760"
                 height="983"
-                class="cupida-float wide:mb-[clamp(26px,4vw,42px)] wide:max-h-none mb-[min(clamp(26px,4vw,42px),2.4svh)] h-auto max-h-[32svh] w-[min(62vw,300px)] object-contain"
+                class="cupida-float mb-[clamp(26px,4vw,42px)] h-auto min-h-0 w-[min(62vw,300px)] object-contain"
             />
 
-            <span class="cupida-pulse font-display wide:text-[clamp(44px,5vw,68px)]/[1.05] text-[min(clamp(44px,5vw,68px),5.4svh)]/[1.05]">
+            <span class="cupida-pulse font-display text-[clamp(44px,5vw,68px)]/[1.05]">
                 {{ __('cupida.thinking.heading') }}
             </span>
 
@@ -234,14 +230,14 @@
              the panel this one is the other half of: both are the mark, a line
              of display type and one italic sentence, and a reader who has just
              met one at 26px should not find the other at 18px. --}}
-            <p class="wide:mt-6 wide:text-[clamp(26px,2.2vw,28px)]/[1.45] mt-[min(24px,2.6svh)] mb-0 max-w-[38ch] text-[min(clamp(26px,2.2vw,28px),3.1svh)]/[1.45] text-balance italic opacity-80">
+            <p class="mt-6 text-[clamp(26px,2.2vw,28px)]/[1.45] mb-0 max-w-[38ch] text-balance italic opacity-80">
                 {{ __('cupida.thinking.line') }}
             </p>
         </section>
 
     @else
-        <section class="wide:pt-[clamp(32px,5vw,72px)] wide:pb-[clamp(28px,4vw,56px)] bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[min(clamp(32px,5vw,72px),3svh)] pb-[min(clamp(28px,4vw,56px),2.2svh)] text-[var(--on-cover)]">
-            <p class="wide:mb-[14px] m-0 mb-[min(14px,1.6svh)] text-[14px] font-bold tracking-[0.26em] uppercase">
+        <section class="shrink-0 bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(32px,5vw,72px)] pb-[clamp(28px,4vw,56px)] text-[var(--on-cover)]">
+            <p class="mb-[14px] m-0 text-[14px] font-bold tracking-[0.26em] uppercase">
                 {{ __('cupida.progress', ['current' => $round + 1, 'total' => $rounds]) }}
             </p>
 
@@ -267,12 +263,12 @@
              `max-w-none` is part of it. The 14ch cap is what makes a desktop
              heading break into two good lines, and it would force this one to
              wrap however small the type got. --}}
-            <h1 class="font-display wide:max-w-[14ch] wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-none text-[min(clamp(40px,5.6vw,84px),4.4svh,calc((100vw-2*max(22px,5vw))/15.6))]/[0.96] font-normal tracking-[-0.01em] text-balance">
+            <h1 class="font-display wide:max-w-[14ch] wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-none text-[min(clamp(40px,5.6vw,84px),calc((100vw-2*max(22px,5vw))/15.6))]/[0.96] font-normal tracking-[-0.01em] text-balance">
                 {{ __("cupida.questions.{$question}") }}
             </h1>
         </section>
 
-        <main class="bg-paper text-ink wide:pt-[clamp(28px,4vw,52px)] wide:pb-[clamp(40px,5vw,80px)] flex flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[min(clamp(28px,4vw,52px),1.8svh)] pb-[min(clamp(40px,5vw,80px),2.2svh)]">
+        <main class="bg-paper text-ink flex min-h-0 flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,52px)] pb-[clamp(40px,5vw,80px)]">
             <div
                 class="mx-auto flex w-full max-w-[420px] min-h-0 flex-1 flex-col justify-center"
                 x-data="cupidaDeck()"
@@ -302,10 +298,14 @@
                  `items-center` matters: the default `stretch` would set the
                  width itself and the ratio would have nothing to say.
 
-                 `wide:min-h-[560px]` is what keeps a laptop's card the size it
-                 has always been -- from `wide:` up this panel is allowed to run
-                 past the fold, as it always has, rather than crushing the deck
-                 to fit a short window. --}}
+                 `max-h-[560px]` is the size the card was drawn at -- a ceiling,
+                 not a fit, and the deck reaches it the moment a window has the
+                 room. `wide:min-h-[560px]` is the same number as a floor, and it
+                 belongs to the half of the page that is a document: from `wide:`
+                 up the shell has no height, the question band is set at 5.6vw
+                 and can take most of a laptop window on its own, and a deck free
+                 to shrink there would shrink to nothing rather than let the page
+                 do what it has always done and scroll. --}}
                 <div class="flex min-h-0 flex-1 flex-col items-center">
                     {{-- The gesture is bound here rather than on the card. Alpine
                      binds `@pointerdown` and registers `x-ref` when it initialises
@@ -329,12 +329,12 @@
                                 wire:key="{{ $card->answer() }}"
                                 data-depth="{{ $depth }}"
                                 @class([
-                                'cupida-card wide:p-[clamp(22px,6vw,34px)] absolute inset-0 flex flex-col justify-between p-[min(clamp(22px,6vw,34px),3svh)]',
+                                'cupida-card p-[clamp(22px,6vw,34px)] absolute inset-0 flex flex-col justify-between',
                                 'cupida-card--top' => $depth === 0,
                                                         ])
                                 style="--card: {{ $card->palette->background }}; --on-card: {{ $card->palette->foreground }}; --depth: {{ $depth }}"
                             >
-                                <p class="wide:text-[13px] m-0 text-[min(13px,1.9svh)] font-bold tracking-[0.22em] uppercase opacity-70">
+                                <p class="m-0 shrink-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-70">
                                     {{ __("cupida.kinds.{$card->kind}") }}
                                 </p>
 
@@ -357,18 +357,18 @@
                                         height="640"
                                         loading="eager"
                                         decoding="async"
-                                        class="wide:max-h-none mx-auto max-h-[17svh] w-[58%] rounded-[3px] object-cover shadow-[0_8px_0_-5px_rgba(33,21,17,0.16),0_18px_36px_-18px_rgba(33,21,17,0.55)]"
+                                        class="mx-auto min-h-0 w-[58%] rounded-[3px] object-cover shadow-[0_8px_0_-5px_rgba(33,21,17,0.16),0_18px_36px_-18px_rgba(33,21,17,0.55)]"
                                         @style(['background: ' . $card->portrait->color => filled($card->portrait->color)])
                                     />
                                 @endif
 
                                 <div>
-                                    <h2 class="font-display wide:text-[clamp(30px,8vw,46px)]/[1.02] m-0 text-[min(clamp(30px,8vw,46px),4.2svh)]/[1.02] font-normal text-balance">
+                                    <h2 class="font-display text-[clamp(30px,8vw,46px)]/[1.02] m-0 font-normal text-balance">
                                         {{ $card->label }}
                                     </h2>
 
                                     @if ($card->note)
-                                        <p class="wide:mt-3 wide:text-[17px]/[1.35] mt-[min(12px,1.8svh)] mb-0 text-[min(17px,2.4svh)]/[1.35] italic opacity-75">{{ $card->note }}</p>
+                                        <p class="mt-3 text-[17px]/[1.35] mb-0 italic opacity-75">{{ $card->note }}</p>
                                     @endif
                                 </div>
 
@@ -390,7 +390,7 @@
                 {{-- The buttons are the real control, not a fallback: they are what
                  a keyboard and a screen reader get, and what the tests press.
                  The drag is decoration over the top of them. --}}
-                <div class="wide:mt-[clamp(22px,4vw,34px)] mt-[min(clamp(22px,4vw,34px),1.8svh)] flex items-center justify-center gap-[clamp(20px,6vw,40px)]">
+                <div class="mt-[clamp(22px,4vw,34px)] flex shrink-0 items-center justify-center gap-[clamp(20px,6vw,40px)]">
                     <button
                         type="button"
                         @click="answer(false)"

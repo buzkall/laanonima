@@ -7,6 +7,7 @@
          the one line of footer under it is a strip of cream the deck would
          rather have. It stays from `wide:` up. --}}
     :footer-on-phone="false"
+    fits-viewport
     :og-image="Vite::asset('resources/images/brand/la-cupida-og.jpg')"
 >
     <livewire:cupida :guest="$guest" />

@@ -254,16 +254,16 @@ The count on a card is the pool count, not the shop's total for the subject page
 
 A narrow code only works because the broad one is still a card to catch books filed coarsely — keep both in the list.
 
-## The opening panel is measured in `svh`, below `wide:` only
-La Cupida's `! $started` panel has to fit a phone screen without scrolling, and a phone never gives the page the whole window: on an iPhone 17 (402x874pt) the browser keeps ~190pt for its bars. Sized in px alone the card fitted 874 exactly and dropped the chevron off the bottom of the real device.
+## Nothing on this page is measured against the window
+Every panel of La Cupida fits a phone screen, and not one measurement in the view says so. The page opts into `fits-viewport` on `x-layouts.shelf`, which swaps the shell's `min-h-dvh` for a real `h-dvh` below `wide:`; from there ordinary flexbox does the work. `min-h-0` on every link in the chain (`[data-cupida]`, each `<section>`/`<main>`) is what allows a child to be squeezed at all, and the element that gives way is whichever one can afford to:
 
-Every vertical measurement in that panel is therefore `min(<original px>, <n>svh)`: the section's `pt`/`pb`, the mark's `max-h`, both paragraph margins, the rule's `pt`, both type sizes, the chevron's margin and icon size. Verified to fit at 402x600, 402x684, 402x874 and 430x660.
+- the mark on the opening and waiting panels is `min-h-0 object-contain` and nothing else. `flex: 0 1 auto` means it can lose height but never gain it, so a tall phone and a laptop get the natural size it was drawn at and a short window gets less; `object-contain` keeps it from being squashed on the way.
+- the deck is `flex-1` with an `aspect-[3/4]` — see the next rule.
+- the portrait inside a card, and the card's own box, likewise.
 
-`svh`, not `dvh` — the small viewport is the worst case (bars showing) and, unlike `dvh`, does not change while the reader scrolls, which would resize the type under their thumb.
+This replaced a version where roughly 35 measurements were `min(<px>, <n>svh)` with `wide:` twins, each `n` tuned by hand against a screenshot. It fitted, and it was wrong: the numbers encoded the copy, the fonts and the footer as they were on the day, nothing told you when they had gone stale, and the fitted sizes were smaller than the design at every width. If a panel stops fitting, look for the element that should be giving way and let it — do not reach for a cap.
 
-Each cap has a `wide:` twin restoring the original px value, so the desktop card is byte-for-byte what it was. Do not drop those overrides: `32svh` on a 900px-tall laptop shrinks the mark from 388px to 288px.
-
-`object-contain` on the mark is load-bearing: `max-h` on a replaced element whose width is set squashes it; contain letterboxes it at its own ratio instead.
+Sizes that remain in the view are the sizes the page was designed at. What survives with a `wide:` twin is a difference in *layout* between the folded phone version and the desktop one — the cover's width and shadow, the deck's floor, the title's measure — never a height fit.
 
 ## The deck is sized from the room left over, not from a fraction of the window
 The question band + card stack + buttons have to fit a phone screen without scrolling — the buttons are the control, and a control below the fold is not a control.
@@ -276,13 +276,13 @@ The stack is NOT capped with `svh`. That was tried and left cream all round the 
 
 A `flex-1` item in a **column** has a definite main size (height), and `aspect-ratio` transfers it to the width. Three traps: (1) `h-[calc(100%…)]` does not work — nothing above has a definite height (`min-h-dvh` is a minimum), so percentage heights resolve to `auto` and the aspect box collapses to 0; (2) in a **row** container the transfer does not happen — a stretched cross size gives width 0; (3) `items-center` is required — the default `stretch` sets the width itself and the ratio has nothing to say.
 
-`wide:min-h-[560px]` keeps a laptop's card at its original 420x560 and lets the panel run past the fold as it always has, rather than crushing the deck in a short window.
+`max-h-[560px]` is the size the card was drawn at — a ceiling, not a fit. `wide:min-h-[560px]` is the same number as a floor, and it belongs to the half of the page that is a document: from `wide:` up the shell has no height, the question band is set at 5.6vw and can take most of a laptop window on its own, and a deck free to shrink there would shrink to nothing rather than let the page scroll as it always has.
 
-Everything inside a card (`p`, kicker, `h2`, note, portrait `max-h`) is `min(px,svh)`-capped with a `wide:` twin, because the card is now much smaller on a phone than it used to be.
+Everything inside a card is set at its designed size; the portrait carries `min-h-0` so it, and not the type, gives way when the card is small.
 
 `cupida.swipe.help` is `hidden wide:block`: half of it is about arrow keys, and it was the one line on the screen that could go without costing a control.
 
-The result panel is deliberately NOT made to fit: measured at 402x684 it needs 1240px against 540 available, and most of that is the pitch and the title. It is a reading screen and it scrolls.
+The result panel is the one that scrolls: it carries `overflow-y-auto` so it scrolls inside the shell rather than being cut off by it.
 
 ## The result panel folds, it does not shrink
 The result used to be a centered poster on a phone — cover in the middle, title full width under it, then match line, pitch and controls each waiting their turn. Measured at 402x684 that needed 1240px of a 540px screen, and the reader had to scroll past the cover to find out whether the book was worth scrolling for.
@@ -294,7 +294,7 @@ It is now three grid areas (`.cupida-result` in `resources/css/cupida.css`), fol
 
 Keep the areas in the stylesheet. The two arrangements differ in shape, not in values, and a `wide:` twin for each of six grid properties is unreadable.
 
-The thumbnail column is `min(clamp(76px,26vw,112px), 13svh)`: a proportion first, then capped by height so a shorter window buys the difference back from the cover rather than from the words. `.cupida-result__head` is `align-self: center` on a phone (a two-line title pinned to the top of a taller thumbnail leaves the author adrift) and `start` from `wide:` up.
+The thumbnail column is `clamp(76px, 24vw, 108px)` — a proportion of the width it stands in, with nothing measured against the height: this is the one panel that scrolls (`overflow-y-auto` inside the fixed shell), and the cover should not pay for prose that was always going to be long. `.cupida-result__head` is `align-self: center` on a phone (a two-line title pinned to the top of a taller thumbnail leaves the author adrift) and `start` from `wide:` up.
 
 The pitch is `.cupida-pitch`, clamped to two lines with a `cupida.result.more` control that removes the clamp — Alpine adds `.cupida-pitch--open`, never the clamp itself, so a failure leaves a readable paragraph rather than a dead button. Unclamped from `wide:` up, where the control is not rendered.
 
@@ -308,3 +308,12 @@ Two more lines the deck took back below `wide:`. Measured at 402x684 the card we
 The question heading's third `min()` term is `calc((100vw - 2*max(22px,5vw)) / 15.6)`: the column -- the window less the section's own `px-[clamp(22px,5vw,80px)]`, whose ceiling never binds below `wide:` -- over the longest question there is, 15.45em for "What do you want from the book?" set in Gloock. A question longer than that wraps rather than overflows, so measure a new one (`canvas.measureText` at `100px Gloock`) and raise the divisor if it is wider. `max-w-none` is part of it: the desktop's `14ch` cap would force a wrap however small the type got. Never `whitespace-nowrap` -- that puts the heading off the side of the screen and gives the page a horizontal scroll.
 
 `<x-site-footer :on-phone="false">`, passed through `x-layouts.shelf`'s `:footer-on-phone`, is `hidden wide:block` and is for La Cupida alone: every panel of this page is measured to fill the window, so the one line of cream under it is room the cards want. `CupidaPageTest` pins both halves against the request form, which wears the same short footer at every width.
+
+## `fits-viewport` is what lets a page fit a phone without measuring it
+`x-layouts.shelf` takes `fits-viewport`. It swaps the shell's `min-h-dvh` for `h-dvh wide:h-auto wide:min-h-dvh`, and adds `min-h-0` to the slot wrapper.
+
+Why it matters: a minimum height bounds nothing. Flexbox can only take space away from a child when the parent has a ceiling, so under `min-h-dvh` a panel taller than the window simply grows and the page scrolls, whatever its children were told they may give up — `min-h-0`, `flex-1`, `object-contain` all do nothing. Put a height on the shell and the same flex rules that already share out the slack start reclaiming it. La Cupida went from ~35 hand-fitted `min(px, n svh)` caps to none on the strength of this one word.
+
+Opt-in, because it is only right for a page that is a screen rather than a document: the shelf, author and publisher pages are lists that must run past the fold. And only below `wide:` — a laptop has room for a heading set at 5.6vw *and* everything under it, and squeezing a document into a window that was never the constraint costs the design without buying anything.
+
+A page that opts in owns the consequence: anything in it that can outgrow the window must say how it scrolls (`overflow-y-auto` on the panel), or it is cut off rather than scrolled. See `.ai/rules/cupida.md` for the worked example.

@@ -20,11 +20,7 @@
        is not comfortably more than that leaves nothing showing. At these
        values a card behind peeks about fourteen pixels, which is enough to
        read as another card and not so much that it looks like a fan. */
-    /* Capped against the small viewport for the same reason every measurement
-       on this page is: on a phone the deck has to fit between the question and
-       the fold, and the step is paid for twice -- once behind the card and once
-       in the margin below it. */
-    --cupida-step: min(22px, 3svh);
+    --cupida-step: 22px;
     --cupida-shrink: 0.045;
 
     /* The cards behind hang below the aspect box they are positioned in, so
@@ -107,10 +103,8 @@
     align-items: center;
     justify-content: center;
 
-    /* 44px is the floor a thumb needs; the svh cap never reaches it above a
-       420px-tall viewport, which no phone is. */
-    width: min(clamp(58px, 16vw, 68px), 8svh);
-    height: min(clamp(58px, 16vw, 68px), 8svh);
+    width: clamp(58px, 16vw, 68px);
+    height: clamp(58px, 16vw, 68px);
 
     border: 2px solid var(--color-ink);
     border-radius: 50%;
@@ -232,18 +226,18 @@
  */
 .cupida-result {
     display: grid;
-    /* Width first -- a thumbnail beside a heading is a proportion, not a
-       fraction of the screen -- and then capped against the height, so a
-       shorter window buys back the difference from the cover rather than from
-       the words. */
-    grid-template-columns: min(clamp(76px, 26vw, 112px), 13svh) 1fr;
+    /* A thumbnail beside a heading is a proportion of the width it stands in,
+       not a fraction of the screen. Nothing here is measured against the
+       height: the panel scrolls when the prose is long, and the cover is not
+       what should pay for that. */
+    grid-template-columns: clamp(76px, 24vw, 108px) 1fr;
     grid-template-areas:
         'cover head'
         'body body';
     align-items: start;
 
     column-gap: clamp(16px, 4vw, 22px);
-    row-gap: clamp(14px, 2.4svh, 24px);
+    row-gap: clamp(14px, 3vw, 24px);
 }
 
 /* No cover on file: the band is the title's alone rather than a blank column
