@@ -1,4 +1,4 @@
-@props(['title', 'description', 'palette', 'footerCta' => true, 'ogImage' => null])
+@props(['title', 'description', 'palette', 'footerCta' => true, 'footerOnPhone' => true, 'ogImage' => null])
 
 {{-- A shelf of books: the home page, an author's page, an imprint's page.
      None of them belongs to a single book, so all three wear the house
@@ -52,6 +52,6 @@
 
     <div class="flex flex-1 flex-col">{{ $slot }}</div>
 
-    <x-site-footer :cta="$footerCta" />
+    <x-site-footer :cta="$footerCta" :on-phone="$footerOnPhone" />
 </body>
 </html>

@@ -232,7 +232,11 @@
  */
 .cupida-result {
     display: grid;
-    grid-template-columns: clamp(76px, 22vw, 104px) 1fr;
+    /* Width first -- a thumbnail beside a heading is a proportion, not a
+       fraction of the screen -- and then capped against the height, so a
+       shorter window buys back the difference from the cover rather than from
+       the words. */
+    grid-template-columns: min(clamp(76px, 26vw, 112px), 13svh) 1fr;
     grid-template-areas:
         'cover head'
         'body body';
@@ -257,6 +261,12 @@
 
 .cupida-result__head {
     grid-area: head;
+
+    /* Against the thumbnail rather than hanging from its top edge: the band is
+       as tall as the cover, and a two-line title pinned to the top of it leaves
+       the author adrift halfway up a picture. A title long enough to fill the
+       band ignores this. */
+    align-self: center;
 }
 
 .cupida-result__body {
@@ -302,6 +312,12 @@
         grid-template-areas:
             'head'
             'body';
+    }
+
+    /* The cover is a column of its own here, not a thumbnail the heading
+       stands beside, so the heading goes back to the top of the page. */
+    .cupida-result__head {
+        align-self: start;
     }
 
     /* There is room for the whole pitch, so it is never clamped and the

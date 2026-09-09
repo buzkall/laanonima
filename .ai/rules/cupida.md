@@ -22,6 +22,8 @@ paths:
   - app/Support/Cupida/CupidaPortrait.php
   - resources/views/cupida/contact-sheet.blade.php
   - 'app/Support/Cupida/**,config/cupida.php'
+  - resources/views/components/site-footer.blade.php
+  - resources/views/components/layouts/shelf.blade.php
 ---
 
 # La Cupida
@@ -281,3 +283,28 @@ Everything inside a card (`p`, kicker, `h2`, note, portrait `max-h`) is `min(px,
 `cupida.swipe.help` is `hidden wide:block`: half of it is about arrow keys, and it was the one line on the screen that could go without costing a control.
 
 The result panel is deliberately NOT made to fit: measured at 402x684 it needs 1240px against 540 available, and most of that is the pitch and the title. It is a reading screen and it scrolls.
+
+## The result panel folds, it does not shrink
+The result used to be a centered poster on a phone — cover in the middle, title full width under it, then match line, pitch and controls each waiting their turn. Measured at 402x684 that needed 1240px of a 540px screen, and the reader had to scroll past the cover to find out whether the book was worth scrolling for.
+
+It is now three grid areas (`.cupida-result` in `resources/css/cupida.css`), folded two ways rather than resized:
+
+- phone: `'cover head' / 'body body'` — the cover is a thumbnail and the title stands beside it, so the two cost one band instead of two; everything that is prose runs full width below.
+- `wide:`: `'cover head' / 'cover body'` — byte-for-byte the layout the desktop already had.
+
+Keep the areas in the stylesheet. The two arrangements differ in shape, not in values, and a `wide:` twin for each of six grid properties is unreadable.
+
+The thumbnail column is `min(clamp(76px,26vw,112px), 13svh)`: a proportion first, then capped by height so a shorter window buys the difference back from the cover rather than from the words. `.cupida-result__head` is `align-self: center` on a phone (a two-line title pinned to the top of a taller thumbnail leaves the author adrift) and `start` from `wide:` up.
+
+The pitch is `.cupida-pitch`, clamped to two lines with a `cupida.result.more` control that removes the clamp — Alpine adds `.cupida-pitch--open`, never the clamp itself, so a failure leaves a readable paragraph rather than a dead button. Unclamped from `wide:` up, where the control is not rendered.
+
+The mobile panel is left-aligned throughout. It used to centre the head and left-align the body; a folded layout with two left edges reads as neither.
+
+Verified: 402x684 and 402x874 fit with no scroll, opening the pitch costs 2px, and desktop is unchanged (cover 240 in its own column, 56px gap, head above body).
+
+## The question is one line on a phone, and the footer is gone
+Two more lines the deck took back below `wide:`. Measured at 402x684 the card went from 206x274 to 292x389.
+
+The question heading's third `min()` term is `calc((100vw - 2*max(22px,5vw)) / 15.6)`: the column -- the window less the section's own `px-[clamp(22px,5vw,80px)]`, whose ceiling never binds below `wide:` -- over the longest question there is, 15.45em for "What do you want from the book?" set in Gloock. A question longer than that wraps rather than overflows, so measure a new one (`canvas.measureText` at `100px Gloock`) and raise the divisor if it is wider. `max-w-none` is part of it: the desktop's `14ch` cap would force a wrap however small the type got. Never `whitespace-nowrap` -- that puts the heading off the side of the screen and gives the page a horizontal scroll.
+
+`<x-site-footer :on-phone="false">`, passed through `x-layouts.shelf`'s `:footer-on-phone`, is `hidden wide:block` and is for La Cupida alone: every panel of this page is measured to fill the window, so the one line of cream under it is room the cards want. `CupidaPageTest` pins both halves against the request form, which wears the same short footer at every width.

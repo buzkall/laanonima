@@ -166,3 +166,22 @@ it('leaves a shelf with no face of its own without a picture', function(): void 
         ->assertDontSee('og:image')
         ->assertSee('<meta name="twitter:card" content="summary" />', escape: false);
 });
+
+/*
+ | Every panel of this page is measured to fill a phone screen exactly, so the
+ | one line of footer under it is a strip of cream the deck wants back. The
+ | line still stands from `wide:` up, and it stands at every width on the other
+ | page that wears the same short footer -- the request form.
+ */
+it('takes the footer off a phone, and only on this page', function(): void {
+    $hiddenFooter = 'py-[clamp(16px,2.5vw,26px)] wide:block hidden';
+
+    $this->get(route('cupida'))
+        ->assertOk()
+        ->assertSee($hiddenFooter, escape: false);
+
+    $this->actingAs(User::factory()->client()->create())
+        ->get(route('book-requests.create'))
+        ->assertOk()
+        ->assertDontSee($hiddenFooter, escape: false);
+});

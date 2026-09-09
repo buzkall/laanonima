@@ -134,7 +134,7 @@
                         <img
                             src="{{ $recommendation->coverUrl }}"
                             alt="{{ __('books.fields.cover') }}: {{ $recommendation->title }}"
-                            class="cupida-result__cover wide:w-[min(56vw,240px)] w-full max-w-full shadow-[0_18px_0_-8px_rgba(33,21,17,0.18),0_28px_60px_-24px_rgba(33,21,17,0.6)]"
+                            class="cupida-result__cover wide:w-[min(56vw,240px)] wide:shadow-[0_18px_0_-8px_rgba(33,21,17,0.18),0_28px_60px_-24px_rgba(33,21,17,0.6)] w-full max-w-full shadow-[0_7px_0_-4px_rgba(33,21,17,0.18),0_12px_26px_-12px_rgba(33,21,17,0.6)]"
                         />
                     @endif
 
@@ -245,7 +245,29 @@
                 {{ __('cupida.progress', ['current' => $round + 1, 'total' => $rounds]) }}
             </p>
 
-            <h1 class="font-display wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-[14ch] text-[min(clamp(40px,5.6vw,84px),4.4svh)]/[0.96] font-normal tracking-[-0.01em] text-balance">
+            {{-- One line on a phone, and that is what the third term of the
+             `min()` buys. Every line this heading wraps to is a line the deck
+             below does not get: `main` is `flex-1` and the stack is sized from
+             what is left over, so the question band is the one thing on the
+             screen competing with the cards for height.
+
+             The term is the width of the column divided by the longest
+             question there is, measured in the heading's own font: 15.45em for
+             "What do you want from the book?" set in Gloock, rounded up for
+             slack (the Spanish questions are around 10.5em, Georgia and Times
+             are both narrower, and `tracking-[-0.01em]` takes a little more
+             off). The column is the window less the section's own padding,
+             which is why the `max(22px,5vw)` from `px-[clamp(22px,5vw,80px)]`
+             is repeated here -- the clamp's ceiling never binds below `wide:`.
+
+             A question longer than that wraps rather than overflows, which is
+             the failure worth having: `whitespace-nowrap` would push it off the
+             side of the screen and give the page a horizontal scroll.
+
+             `max-w-none` is part of it. The 14ch cap is what makes a desktop
+             heading break into two good lines, and it would force this one to
+             wrap however small the type got. --}}
+            <h1 class="font-display wide:max-w-[14ch] wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-none text-[min(clamp(40px,5.6vw,84px),4.4svh,calc((100vw-2*max(22px,5vw))/15.6))]/[0.96] font-normal tracking-[-0.01em] text-balance">
                 {{ __("cupida.questions.{$question}") }}
             </h1>
         </section>
