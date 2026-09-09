@@ -291,7 +291,7 @@ class ShopScraper
      */
     private function query(DOMDocument $document, string $expression): array
     {
-        $nodes = (new DOMXPath($document))->query($expression);
+        $nodes = new DOMXPath($document)->query($expression);
         $found = [];
 
         foreach ($nodes ?: [] as $node) {

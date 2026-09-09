@@ -26,7 +26,7 @@ final readonly class QrGenerator
     {
         [$innerSize, $margin] = $this->geometry($data, $size);
 
-        $result = (new Builder(
+        $result = new Builder(
             writer: new SvgWriter,
             writerOptions: [SvgWriter::WRITER_OPTION_EXCLUDE_XML_DECLARATION => true],
             data: $data,
@@ -35,7 +35,7 @@ final readonly class QrGenerator
             size: $innerSize,
             margin: $margin,
             roundBlockSizeMode: RoundBlockSizeMode::Margin,
-        ))->build();
+        )->build();
 
         return $this->composer->compose($result->getString(), (string)config('qr.assets.svg'));
     }
@@ -50,7 +50,7 @@ final readonly class QrGenerator
 
         [$innerSize, $margin] = $this->geometry($data, $size);
 
-        $result = (new Builder(
+        $result = new Builder(
             writer: new PngWriter,
             writerOptions: [PngWriter::WRITER_OPTION_NUMBER_OF_COLORS => null],
             data: $data,
@@ -59,7 +59,7 @@ final readonly class QrGenerator
             size: $innerSize,
             margin: $margin,
             roundBlockSizeMode: RoundBlockSizeMode::Margin,
-        ))->build();
+        )->build();
 
         $png = $this->stampLogo($result->getString(), $size);
 
@@ -144,7 +144,7 @@ final readonly class QrGenerator
 
     private function assertDecodes(string $png, string $expected): void
     {
-        $decoded = (new QrReader($png, QrReader::SOURCE_TYPE_BLOB))->text();
+        $decoded = new QrReader($png, QrReader::SOURCE_TYPE_BLOB)->text();
 
         if ($decoded !== $expected) {
             throw new RuntimeException('El QR generado no se puede leer: el logo tapa demasiados módulos.');

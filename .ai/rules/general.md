@@ -24,7 +24,9 @@ Deliberate skips in `rector.php`:
 - `ReadOnlyPropertyRector` — Livewire/Filament hydrate public properties by reflection.
 - `ClassPropertyAssignToConstructorPromotionRector` under `app/Filament` — static props carry union types like `string|BackedEnum|null` that promotion breaks.
 
-`withPhpSets()` takes its target from `composer.json`, which is `php: ^8.3` — so PHP 8.4+ rules (e.g. parenthesisless `new`) are NOT applied. Bump the constraint if the project actually requires 8.4+.
+`withPhpSets()` takes its target from `composer.json`, which is `php: ^8.5` — so the PHP 8.4 and 8.5 rules are live: parenthesisless `new` (`new DOMXPath($document)->query(...)`), `array_any`/`array_all` in place of a short-circuiting `foreach`, `ord($s[0])` over `ord(substr($s, 0, 1))`. The constraint was raised after those paragraphs were first written and the codebase was never run through the new rules, so the first `composer rector` afterwards touched nine files across app and tests — none of them a behavior change. Raising the constraint again means running `composer rector` in the same commit, or the next person's push is blocked by a diff that has nothing to do with their work.
+
+The `array_any` rewrite lands in `CupidaShortlist::matchesSubject()`, which the Cupida rules flag as a hot path. Measured on the real 5,393-book pool it is 69.8ms against the `foreach`'s 67.8ms per scoring pass — noise, and nowhere near the transliteration cost that paragraph is actually about. It is not worth a skip.
 
 ## `composer ci:check` runs before every push
 

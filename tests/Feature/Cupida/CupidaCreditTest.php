@@ -134,7 +134,7 @@ it('counts nothing against a balance with no date beside it', function(): void {
        written any other way lands here. Summing the whole table against it
        charged this balance for every dollar La Cupida ever spent, so a shop
        that had just topped up was told it was nearly out. */
-    cupidaToppedUp(10.00, null);
+    cupidaToppedUp(10.00);
 
     expect(cupidaBudget()->spent())->toBe(0.0)
         ->and(cupidaBudget()->remaining())->toBe(10.0)
@@ -258,7 +258,7 @@ it('mails whoever looks after the site, and rings the bell for whoever is in the
 });
 
 it('falls back to the shop when the environment names nobody', function(): void {
-    config()->set('site.admin_email', null);
+    config()->set('site.admin_email');
     config()->set('site.contact_email', 'hola@laanonimalibreria.com');
 
     cupidaToppedUp(1.20, now()->subDay());

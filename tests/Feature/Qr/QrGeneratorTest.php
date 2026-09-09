@@ -26,7 +26,7 @@ function withTemporaryImage(string $contents, string $extension, Closure $assert
 
 it('produces a thermal PNG that still decodes with the logo on top', function(string $url): void {
     withTemporaryImage(app(QrGenerator::class)->thermalPng($url, 576), 'png', function(string $path) use ($url): void {
-        expect((new QrReader($path))->text())->toBe($url);
+        expect(new QrReader($path)->text())->toBe($url);
     });
 })->with([
     'corta' => 'https://laanonimalibreria.com',
@@ -37,7 +37,7 @@ it('still decodes at the narrowest printer width, where modules are smallest', f
     $url = 'https://laanonimalibreria.com/editorial-del-mes/anagrama?utm_source=ticket&utm_medium=qr&utm_campaign=septiembre';
 
     withTemporaryImage(app(QrGenerator::class)->thermalPng($url, 384), 'png', function(string $path) use ($url): void {
-        expect((new QrReader($path))->text())->toBe($url);
+        expect(new QrReader($path)->text())->toBe($url);
     });
 });
 
@@ -77,7 +77,7 @@ it('composes an SVG that survives rasterising and decoding', function(): void {
     $image->setImageFormat('png');
 
     withTemporaryImage($image->getImageBlob(), 'png', function(string $path) use ($url): void {
-        expect((new QrReader($path))->text())->toBe($url);
+        expect(new QrReader($path)->text())->toBe($url);
     });
 })->skip(
     fn(): bool => ! extension_loaded('imagick') || (new Imagick)->queryFormats('SVG') === [],
@@ -132,7 +132,7 @@ it('produces a fully opaque PNG so the glyph reads as ink', function(int $size):
     $image = imagecreatefromstring($png);
 
     expect(imageistruecolor($image))->toBeTrue()
-        ->and(ord(substr($png, 25, 1)))->toBe(2); // PNG color type 2 = RGB, no alpha channel
+        ->and(ord(substr($png, 25, 1)[0]))->toBe(2); // PNG color type 2 = RGB, no alpha channel
 
     for ($x = 0; $x < $size; $x += 3) {
         for ($y = 0; $y < $size; $y += 3) {

@@ -302,13 +302,7 @@ final readonly class CupidaShortlist
      */
     private function matchesSubject(array $subjects, string $code): bool
     {
-        foreach ($subjects as $subject) {
-            if (str_starts_with($subject, $code)) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($subjects, fn(string $subject): bool => str_starts_with($subject, $code));
     }
 
     /**
