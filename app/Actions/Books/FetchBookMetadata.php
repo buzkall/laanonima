@@ -17,6 +17,14 @@ class FetchBookMetadata
 {
     public function __construct(private BookMetadataProvider $provider) {}
 
+    /**
+     * Where one ISBN's answer is kept, for anything that has to drop it.
+     */
+    public static function cacheKey(string $isbn13): string
+    {
+        return "book-metadata:v3:{$isbn13}";
+    }
+
     public function __invoke(?string $isbn): ?BookMetadata
     {
         $isbn13 = Isbn::toIsbn13($isbn);
@@ -37,13 +45,15 @@ class FetchBookMetadata
          | is perfectly findable again hours later, and only a cache flush would
          | bring it back.
          |
-         | The key carries a version. The cached payload is the DTO's own array
-         | shape, so adding a field to BookMetadata leaves every live entry
-         | silently short of it for a whole TTL -- which is how the physical
-         | measurements would have arrived as null for a day. Bump the version
-         | whenever that shape changes.
+         | The key carries a version. Bump it whenever what the payload holds
+         | changes, not only when its shape does: adding a field to BookMetadata
+         | leaves every live entry silently short of it for a whole TTL (which
+         | is how the physical measurements would have arrived as null for a
+         | day), and so does changing which source a field comes from -- v3
+         | shipped because v2 entries name a Google Books thumbnail as the cover
+         | of books that now have a real one.
          */
-        $key = "book-metadata:v2:{$isbn13}";
+        $key = self::cacheKey($isbn13);
         $cached = Cache::get($key);
 
         if (! is_array($cached)) {

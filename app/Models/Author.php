@@ -74,7 +74,22 @@ class Author extends Model
     {
         $name = PersonName::normalize($name);
 
-        return self::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name]);
+        $author = self::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name]);
+
+        /*
+         | A record filed before the name was tidied keeps its slug, and with it
+         | every contribution -- but not its shouting. Only a name written in
+         | nothing but capitals is rewritten, which no bookseller types and
+         | which "VV. AA." survives untouched, so this cannot overrule a name
+         | somebody corrected by hand.
+         */
+        $tidied = PersonName::normalize($author->name);
+
+        if ($author->name !== $tidied) {
+            $author->update(['name' => $tidied]);
+        }
+
+        return $author;
     }
 
     /**

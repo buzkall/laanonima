@@ -3,10 +3,13 @@
 use App\Actions\Cupida\RecommendBook;
 use App\Ai\Agents\CupidaAgent;
 use App\Models\Book;
+use App\Settings\CupidaSettings;
 use App\Support\Cupida\CupidaCatalog;
 use App\Support\Cupida\CupidaShortlist;
 use Illuminate\JsonSchema\JsonSchemaTypeFactory;
 use Illuminate\JsonSchema\Serializer;
+use Laravel\Ai\Ai;
+use Laravel\Ai\Prompts\AgentPrompt;
 
 beforeEach(function(): void {
     useCupidaFixture();
@@ -211,4 +214,49 @@ it('asks for Spanish twice, in the prompt and beside each field it writes', func
 
     expect($fields['pitch']['description'])->toStartWith('En español.')
         ->and($fields['match_line']['description'])->toStartWith('En español.');
+});
+
+it('hands the model what the reader actually swiped, in the words on the cards', function(): void {
+    /* Everything the reader said is scored in PHP and only the books cross to
+       the prompt, so before this the model was writing "porque buscas X" about
+       answers it had never been shown -- and inventing X out of whatever else
+       was in the prompt. */
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [[
+        'ean'        => '9788412976137',
+        'pitch'      => 'Se lee de una sentada.',
+        'match_line' => 'Porque dijiste que sí a la poesía.',
+    ]]);
+
+    app(RecommendBook::class)(
+        likes: ['theme:DC', 'author:guerriero-leila', 'mood:short'],
+        passes: ['theme:FM'],
+    );
+
+    CupidaAgent::assertPrompted(function(AgentPrompt $prompt): bool {
+        expect($prompt->prompt)
+            ->toContain('Ha dicho que sí a: Poesía, Leila Guerriero, Algo corto, que voy justa de tiempo.')
+            ->toContain('Y que no a: Fantasía.');
+
+        return true;
+    });
+});
+
+it('tells the model the shop\'s own block is the librera and never the reader', function(): void {
+    /* A bookseller writes a persona in the panel -- "es queer", "es de
+       izquierdas" -- and without the fence it comes back out of the prompt as
+       what the reader asked for, so every match line told a stranger they were
+       looking for something queer. */
+    $settings = app(CupidaSettings::class);
+    $settings->extra_instructions = 'La Cupida es queer.';
+    $settings->save();
+
+    $instructions = (string)new CupidaAgent([])->instructions();
+
+    expect($instructions)
+        ->toContain('La Cupida es queer.')
+        ->toContain('Todo lo que sigue te describe a ti. No describe a quien está leyendo')
+        ->and(new CupidaAgent([])->baseInstructions())
+        ->toContain('Nunca le atribuyas un tema, un gusto ni una identidad que no haya elegido.');
 });

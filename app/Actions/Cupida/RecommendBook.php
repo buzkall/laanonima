@@ -50,7 +50,7 @@ class RecommendBook
             return null;
         }
 
-        $recommendation = $this->decide($shortlist, $write);
+        $recommendation = $this->decide($shortlist, $likes, $passes, $write);
 
         $this->record($recommendation, $shortlist, $likes, $passes, $seed);
 
@@ -66,15 +66,17 @@ class RecommendBook
 
     /**
      * @param  array<int, array<string, mixed>>  $shortlist
+     * @param  array<int, string>  $likes
+     * @param  array<int, string>  $passes
      */
-    private function decide(array $shortlist, bool $write): Recommendation
+    private function decide(array $shortlist, array $likes, array $passes, bool $write): Recommendation
     {
         if (! $write || ! $this->configured()) {
             return $this->fallback($shortlist);
         }
 
         try {
-            return $this->written($shortlist);
+            return $this->written($shortlist, $likes, $passes);
         } catch (Throwable $exception) {
             Log::warning('La Cupida could not write a recommendation.', [
                 'exception' => $exception->getMessage(),
@@ -150,10 +152,18 @@ class RecommendBook
 
     /**
      * @param  array<int, array<string, mixed>>  $shortlist
+     * @param  array<int, string>  $likes
+     * @param  array<int, string>  $passes
      */
-    private function written(array $shortlist): Recommendation
+    private function written(array $shortlist, array $likes, array $passes): Recommendation
     {
-        $agent = new CupidaAgent($shortlist);
+        /* Labels, not "theme:FM". The agent is writing a sentence a reader will
+           read, and the words it needs are the ones that were on the cards. */
+        $agent = new CupidaAgent(
+            shortlist: $shortlist,
+            likes: $this->catalog->answerLabels($likes),
+            passes: $this->catalog->answerLabels($passes),
+        );
 
         $response = $agent->prompt(
             $this->promptFor($agent),
@@ -188,9 +198,19 @@ class RecommendBook
         );
     }
 
+    /**
+     * The answers first and the books second, because that is the order the
+     * question is asked in: this is what they said, now pick from these.
+     */
     private function promptFor(CupidaAgent $agent): string
     {
-        return "Estos son los libros entre los que puedes elegir:\n\n{$agent->catalog()}";
+        $answers = $agent->answers();
+
+        $books = "Estos son los libros entre los que puedes elegir:\n\n{$agent->catalog()}";
+
+        return $answers === ''
+            ? $books
+            : "Esto es lo que ha respondido:\n\n{$answers}\n\n{$books}";
     }
 
     /**

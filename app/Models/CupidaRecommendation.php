@@ -226,18 +226,15 @@ class CupidaRecommendation extends Model
     /**
      * The likes as a bookseller would read them.
      *
-     * "theme:FM" means nothing in a table; "Fantasía" does. Subjects, moods and
-     * the covers swiped in the last round all resolve, and an author is already
-     * a name once the slug is turned back round -- but anything that no longer
-     * resolves falls back to its key rather than disappearing, because a card
-     * the catalog has since dropped is exactly the kind of thing worth seeing
-     * here.
+     * "theme:FM" means nothing in a table; "Fantasía" does. The resolving is
+     * `CupidaCatalog::answerLabels()` because the prompt needs the same words
+     * for the same swipes, before there is a row to ask.
      *
      * @return array<int, string>
      */
     public function likeLabels(): array
     {
-        return $this->labels($this->likes ?? []);
+        return app(CupidaCatalog::class)->answerLabels($this->likes ?? []);
     }
 
     /**
@@ -245,27 +242,6 @@ class CupidaRecommendation extends Model
      */
     public function passLabels(): array
     {
-        return $this->labels($this->passes ?? []);
-    }
-
-    /**
-     * @param  array<int, string>  $answers
-     * @return array<int, string>
-     */
-    private function labels(array $answers): array
-    {
-        $catalog = app(CupidaCatalog::class);
-
-        return array_map(function(string $answer) use ($catalog): string {
-            [$kind, $key] = array_pad(explode(':', $answer, limit: 2), 2, '');
-
-            return match ($kind) {
-                'theme'  => $catalog->subjectLabel($key),
-                'author' => (string)(collect($catalog->authors())->firstWhere('slug', $key)['name'] ?? $key),
-                'mood'   => (string)__("cupida.moods.{$key}"),
-                'book'   => (string)($catalog->titles()[$key] ?? $key),
-                default  => $answer,
-            };
-        }, $answers);
+        return app(CupidaCatalog::class)->answerLabels($this->passes ?? []);
     }
 }

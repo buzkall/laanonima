@@ -51,7 +51,7 @@ class MeasureBooks extends Command
 
         $this->withProgressBar($books, function(Book $book) use ($fetchMetadata, &$measured, &$missed): void {
             if ($this->option('fresh')) {
-                Cache::forget("book-metadata:v2:{$book->isbn13}");
+                Cache::forget(FetchBookMetadata::cacheKey($book->isbn13));
             }
 
             $filled = $this->measure($book, $fetchMetadata($book->isbn13));

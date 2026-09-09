@@ -177,7 +177,7 @@ class BooksTable
             ], layout: FiltersLayout::AboveContent)
             /* Inside an author's or a publisher's tab one filter is hidden, so
                the five that remain fill the row instead of leaving a gap. */
-            ->filtersFormColumns(fn(HasTable $livewire): int => $livewire instanceof RelationManager ? 4 : 5)
+            ->filtersFormColumns(fn(HasTable $livewire): int => $livewire instanceof RelationManager ? 3 : 4)
             ->recordActions([
                 ViewOnSiteAction::make()->iconButton(),
                 EditAction::make()->iconButton(),

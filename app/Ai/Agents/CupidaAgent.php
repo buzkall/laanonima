@@ -30,9 +30,18 @@ class CupidaAgent implements Agent, HasStructuredOutput
     use Promptable;
 
     /**
+     * The swipes arrive already resolved to labels rather than as "theme:FM",
+     * because they are going into a prompt to be read, not into a lookup.
+     *
      * @param  array<int, array<string, mixed>>  $shortlist  scored books, best first
+     * @param  array<int, string>  $likes  what the reader swiped right on, as a person reads it
+     * @param  array<int, string>  $passes
      */
-    public function __construct(public array $shortlist) {}
+    public function __construct(
+        public array $shortlist,
+        public array $likes = [],
+        public array $passes = [],
+    ) {}
 
     /**
      * The baseline, plus whatever the shop has added in the panel.
@@ -41,10 +50,11 @@ class CupidaAgent implements Agent, HasStructuredOutput
      * recommendation trustworthy -- choose from what you are given, invent
      * nothing, do not claim to be a person -- and it is in code so that it can
      * only change with a deployment and a review. What a bookseller writes in the
-     * panel is taste: the season, the table by the door, the writer they are
-     * pushing this month. It is appended, and it is announced as coming from
-     * the shop, so it reads as more of the brief rather than as a license to
-     * ignore the brief.
+     * panel is taste: who La Cupida is, the season, the table by the door, the
+     * writer they are pushing this month. It is appended, and it is announced
+     * as the shop's own, so it reads as more of the brief rather than as a
+     * license to ignore the brief -- and, since it is often a persona, as
+     * something that is emphatically not the reader talking.
      */
     public function instructions(): Stringable|string
     {
@@ -53,9 +63,29 @@ class CupidaAgent implements Agent, HasStructuredOutput
            deploy. */
         $extra = trim((string)app(CupidaSettings::class)->extra_instructions) ?: null;
 
-        return $extra === null
-            ? $this->baseInstructions()
-            : $this->baseInstructions() . "\n\nY esto es lo que pide la librería esta temporada:\n\n{$extra}";
+        if ($extra === null) {
+            return $this->baseInstructions();
+        }
+
+        /* The fence, not the text, is what keeps this honest. What a bookseller
+           writes here is sometimes a brief ("este mes empujamos editoriales
+           gallegas") and sometimes a description of who La Cupida is -- and a
+           persona dropped into a prompt whose job is to say "porque buscas X"
+           comes back out as the reader's taste: write that she is queer and
+           every match line tells a stranger they were looking for something
+           queer. Both kinds are the shop's, never the reader's, so both are
+           announced that way. */
+        return $this->baseInstructions() . <<<PROMPT
+
+
+            Y esto es la librería: quién eres y qué le apetece empujar esta temporada.
+
+            Todo lo que sigue te describe a ti. No describe a quien está leyendo, que
+            no ha dicho nada de esto: puede inclinar qué libro eliges, pero nunca se
+            cuenta como una de sus respuestas ni aparece en la línea de por qué encaja.
+
+            {$extra}
+            PROMPT;
     }
 
     public function baseInstructions(): string
@@ -84,6 +114,14 @@ class CupidaAgent implements Agent, HasStructuredOutput
           ni que te han dado nada a elegir.
         - No inventes títulos, autorías ni argumentos: usa solo lo que te doy.
         - No repitas el título dentro del texto de la recomendación; ya se ve encima.
+
+        La línea de por qué encaja es sobre esa persona, no sobre ti:
+
+        - Nómbrale solo cosas que estén en su lista de "sí", con esas mismas palabras.
+        - Nunca le atribuyas un tema, un gusto ni una identidad que no haya elegido. Lo
+          que tú seas y lo que le guste a la librería no es lo que ella ha pedido.
+        - Si lo que ha dicho que sí no explica del todo el libro, di lo que sí explica y
+          para ahí. Una línea corta y cierta es mejor que una larga inventada.
 
         Elige el libro que mejor case con lo que ha dicho que sí, no el más famoso. Si dos
         encajan igual, quédate con el menos obvio: para lo obvio no hace falta una librera.
@@ -124,9 +162,39 @@ class CupidaAgent implements Agent, HasStructuredOutput
                 ->required(),
 
             'match_line' => $schema->string()
-                ->description('En español. Una sola línea corta diciendo con qué respuestas suyas encaja, empezando por "Porque".')
+                ->description('En español. Una sola línea corta, empezando por "Porque", diciendo con cuáles de sus respuestas encaja. Solo lo que él o ella dijo que sí; nunca los gustos de la librera.')
                 ->required(),
         ];
+    }
+
+    /**
+     * What the reader actually said, in the words they were shown.
+     *
+     * Without this the model was writing "porque buscas X" about someone whose
+     * answers it had never seen: the shortlist is scored in PHP and only the
+     * books come across, so the only material for a match line was the books
+     * themselves and whatever else was in the prompt. That is guessing, and it
+     * guesses whatever is loudest -- which is how a line in `instructions()`
+     * about who La Cupida is ended up on the page as what the reader wanted.
+     *
+     * The passes are here too and named as passes. They are weaker evidence
+     * than a like and the scoring already treats them that way; what they buy
+     * in the prompt is a model that does not reach for a genre the reader
+     * turned down to explain the choice.
+     */
+    public function answers(): string
+    {
+        $lines = [];
+
+        if ($this->likes !== []) {
+            $lines[] = 'Ha dicho que sí a: ' . implode(', ', $this->likes) . '.';
+        }
+
+        if ($this->passes !== []) {
+            $lines[] = 'Y que no a: ' . implode(', ', $this->passes) . '.';
+        }
+
+        return implode("\n", $lines);
     }
 
     /**

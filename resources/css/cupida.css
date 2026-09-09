@@ -20,7 +20,11 @@
        is not comfortably more than that leaves nothing showing. At these
        values a card behind peeks about fourteen pixels, which is enough to
        read as another card and not so much that it looks like a fan. */
-    --cupida-step: 22px;
+    /* Capped against the small viewport for the same reason every measurement
+       on this page is: on a phone the deck has to fit between the question and
+       the fold, and the step is paid for twice -- once behind the card and once
+       in the margin below it. */
+    --cupida-step: min(22px, 3svh);
     --cupida-shrink: 0.045;
 
     /* The cards behind hang below the aspect box they are positioned in, so
@@ -103,8 +107,10 @@
     align-items: center;
     justify-content: center;
 
-    width: clamp(58px, 16vw, 68px);
-    height: clamp(58px, 16vw, 68px);
+    /* 44px is the floor a thumb needs; the svh cap never reaches it above a
+       420px-tall viewport, which no phone is. */
+    width: min(clamp(58px, 16vw, 68px), 8svh);
+    height: min(clamp(58px, 16vw, 68px), 8svh);
 
     border: 2px solid var(--color-ink);
     border-radius: 50%;

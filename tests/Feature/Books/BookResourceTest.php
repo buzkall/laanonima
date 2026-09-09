@@ -323,6 +323,29 @@ describe('the ISBN lookup', function(): void {
         expect(Author::firstWhere('slug', 'ian-mcewan')?->name)->toBe('Ian McEwan');
     });
 
+    it('tidies the name of an author filed before the lookup learned to', function(): void {
+        $shouted = Author::factory()->create(['name' => 'IAN. MCEWAN', 'slug' => 'ian-mcewan']);
+
+        Http::fake([
+            'openlibrary.org/api/books*' => Http::response([
+                'ISBN:9788433950857' => [
+                    'title'   => 'Lo que podemos saber',
+                    'authors' => [['name' => 'IAN. MCEWAN']],
+                ],
+            ]),
+            'openlibrary.org/isbn/*'       => Http::response('', 404),
+            'covers.openlibrary.org/*'     => Http::response('', 404),
+            'imagessl*.casadellibro.com/*' => Http::response('', 404),
+        ]);
+
+        livewire(CreateBook::class)
+            ->fillForm(['isbn13' => '9788433950857'])
+            ->callFormComponentAction('isbn13', 'lookup');
+
+        expect($shouted->refresh())->name->toBe('Ian McEwan')
+            ->and(Author::where('slug', 'ian-mcewan')->count())->toBe(1);
+    });
+
     it('says so when the ISBN itself is wrong, without calling anyone', function(): void {
         Http::fake();
 

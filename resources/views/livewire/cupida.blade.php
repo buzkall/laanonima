@@ -194,7 +194,7 @@
          anything waits on a model. --}}
         <section
             wire:init="recommend"
-            class="flex flex-1 flex-col items-center justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] py-[clamp(48px,7vw,104px)] text-center text-[var(--on-cover)]"
+            class="wide:py-[clamp(48px,7vw,104px)] flex flex-1 flex-col items-center justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] py-[min(clamp(48px,7vw,104px),2.6svh)] text-center text-[var(--on-cover)]"
         >
             {{-- The same mark the opening card opens with, smaller and breathing:
              the wait is the one screen with nothing on it to look at, and a
@@ -206,10 +206,10 @@
                 alt=""
                 width="760"
                 height="983"
-                class="cupida-float mb-[clamp(26px,4vw,42px)] h-auto w-[min(62vw,300px)]"
+                class="cupida-float wide:mb-[clamp(26px,4vw,42px)] wide:max-h-none mb-[min(clamp(26px,4vw,42px),2.4svh)] h-auto max-h-[32svh] w-[min(62vw,300px)] object-contain"
             />
 
-            <span class="cupida-pulse font-display text-[clamp(44px,5vw,68px)]/[1.05]">
+            <span class="cupida-pulse font-display wide:text-[clamp(44px,5vw,68px)]/[1.05] text-[min(clamp(44px,5vw,68px),5.4svh)]/[1.05]">
                 {{ __('cupida.thinking.heading') }}
             </span>
 
@@ -217,25 +217,25 @@
              the panel this one is the other half of: both are the mark, a line
              of display type and one italic sentence, and a reader who has just
              met one at 26px should not find the other at 18px. --}}
-            <p class="mt-6 mb-0 max-w-[38ch] text-[clamp(26px,2.2vw,28px)]/[1.45] text-balance italic opacity-80">
+            <p class="wide:mt-6 wide:text-[clamp(26px,2.2vw,28px)]/[1.45] mt-[min(24px,2.6svh)] mb-0 max-w-[38ch] text-[min(clamp(26px,2.2vw,28px),3.1svh)]/[1.45] text-balance italic opacity-80">
                 {{ __('cupida.thinking.line') }}
             </p>
         </section>
 
     @else
-        <section class="bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(32px,5vw,72px)] pb-[clamp(28px,4vw,56px)] text-[var(--on-cover)]">
-            <p class="m-0 mb-[14px] text-[14px] font-bold tracking-[0.26em] uppercase">
+        <section class="wide:pt-[clamp(32px,5vw,72px)] wide:pb-[clamp(28px,4vw,56px)] bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[min(clamp(32px,5vw,72px),3svh)] pb-[min(clamp(28px,4vw,56px),2.2svh)] text-[var(--on-cover)]">
+            <p class="wide:mb-[14px] m-0 mb-[min(14px,1.6svh)] text-[14px] font-bold tracking-[0.26em] uppercase">
                 {{ __('cupida.progress', ['current' => $round + 1, 'total' => $rounds]) }}
             </p>
 
-            <h1 class="font-display m-0 max-w-[14ch] text-[clamp(40px,5.6vw,84px)]/[0.96] font-normal tracking-[-0.01em] text-balance">
+            <h1 class="font-display wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-[14ch] text-[min(clamp(40px,5.6vw,84px),4.4svh)]/[0.96] font-normal tracking-[-0.01em] text-balance">
                 {{ __("cupida.questions.{$question}") }}
             </h1>
         </section>
 
-        <main class="bg-paper text-ink flex flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,52px)] pb-[clamp(40px,5vw,80px)]">
+        <main class="bg-paper text-ink wide:pt-[clamp(28px,4vw,52px)] wide:pb-[clamp(40px,5vw,80px)] flex flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[min(clamp(28px,4vw,52px),1.8svh)] pb-[min(clamp(40px,5vw,80px),2.2svh)]">
             <div
-                class="mx-auto w-full max-w-[420px]"
+                class="mx-auto flex w-full max-w-[420px] min-h-0 flex-1 flex-col justify-center"
                 x-data="cupidaDeck()"
                 @keydown.window.arrow-left.prevent="answer(false)"
                 @keydown.window.arrow-right.prevent="answer(true)"
@@ -249,89 +249,109 @@
                  and `depth` is counted from the end. --}}
                 @php($stack = array_slice($cards, 0, 3))
 
-                {{-- The gesture is bound here rather than on the card. Alpine
-                 binds `@pointerdown` and registers `x-ref` when it initialises
-                 an element, and Livewire's morph patches attributes onto
-                 elements that are already initialised -- so a card promoted to
-                 the top by a re-render never gets either, and every swipe after
-                 the first silently does nothing. The stack is the same element
-                 all the way through, so binding here always works and the
-                 script asks the DOM which card is on top. --}}
-                <div
-                    class="cupida-stack relative aspect-[3/4] w-full"
-                    @pointerdown="grab($event)"
-                    @pointermove="drag($event)"
-                    @pointerup="release()"
-                    @pointercancel="release()"
-                >
-                    @foreach (array_reverse($stack) as $index => $card)
-                        @php($depth = count($stack) - 1 - $index)
+                {{-- The room the deck gets, and the reason it is a flex column
+                 rather than a wrapper with a height on it. Nothing above this
+                 has a definite height -- the layout's shell is `min-h-dvh`, a
+                 minimum, so a percentage height resolves to `auto` and an
+                 aspect box collapses to nothing. A flex item with `flex-1` in a
+                 column does have a definite main size, and `aspect-[3/4]`
+                 transfers it to the width: the deck is exactly as big as what
+                 is left between the question and the buttons, at every window
+                 height, with no measuring script and no guess at a fraction of
+                 the viewport.
 
-                        <article
-                            wire:key="{{ $card->answer() }}"
-                            data-depth="{{ $depth }}"
-                            @class([
-                            'cupida-card absolute inset-0 flex flex-col justify-between p-[clamp(22px,6vw,34px)]',
-                            'cupida-card--top' => $depth === 0,
-                                                    ])
-                            style="--card: {{ $card->palette->background }}; --on-card: {{ $card->palette->foreground }}; --depth: {{ $depth }}"
-                        >
-                            <p class="m-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-70">
-                                {{ __("cupida.kinds.{$card->kind}") }}
-                            </p>
+                 `items-center` matters: the default `stretch` would set the
+                 width itself and the ratio would have nothing to say.
 
-                            {{-- A face, where we have one. Only about four author
-                             cards in six carry a portrait, so this has to be
-                             absent rather than a placeholder: a silhouette
-                             among real faces reads as a missing image, and the
-                             card without one is a complete card already.
+                 `wide:min-h-[560px]` is what keeps a laptop's card the size it
+                 has always been -- from `wide:` up this panel is allowed to run
+                 past the fold, as it always has, rather than crushing the deck
+                 to fit a short window. --}}
+                <div class="flex min-h-0 flex-1 flex-col items-center">
+                    {{-- The gesture is bound here rather than on the card. Alpine
+                     binds `@pointerdown` and registers `x-ref` when it initialises
+                     an element, and Livewire's morph patches attributes onto
+                     elements that are already initialised -- so a card promoted to
+                     the top by a re-render never gets either, and every swipe after
+                     the first silently does nothing. The stack is the same element
+                     all the way through, so binding here always works and the
+                     script asks the DOM which card is on top. --}}
+                    <div
+                        class="cupida-stack wide:min-h-[560px] relative aspect-[3/4] max-h-[560px] w-auto max-w-full min-h-0 flex-1"
+                        @pointerdown="grab($event)"
+                        @pointermove="drag($event)"
+                        @pointerup="release()"
+                        @pointercancel="release()"
+                    >
+                        @foreach (array_reverse($stack) as $index => $card)
+                            @php($depth = count($stack) - 1 - $index)
 
-                             Eager, not lazy: three cards are ever in the stack,
-                             and a portrait that fades in as the reader is
-                             already dragging is worse than one that is simply
-                             there. The background is the portrait's own color
-                             so the frame is the right color before it paints. --}}
-                            @if ($card->portrait)
-                                <img
-                                    src="{{ $card->portrait->url() }}"
-                                    alt="{{ $card->label }}"
-                                    width="480"
-                                    height="640"
-                                    loading="eager"
-                                    decoding="async"
-                                    class="mx-auto w-[58%] rounded-[3px] object-cover shadow-[0_8px_0_-5px_rgba(33,21,17,0.16),0_18px_36px_-18px_rgba(33,21,17,0.55)]"
-                                    @style(['background: ' . $card->portrait->color => filled($card->portrait->color)])
-                                />
-                            @endif
+                            <article
+                                wire:key="{{ $card->answer() }}"
+                                data-depth="{{ $depth }}"
+                                @class([
+                                'cupida-card wide:p-[clamp(22px,6vw,34px)] absolute inset-0 flex flex-col justify-between p-[min(clamp(22px,6vw,34px),3svh)]',
+                                'cupida-card--top' => $depth === 0,
+                                                        ])
+                                style="--card: {{ $card->palette->background }}; --on-card: {{ $card->palette->foreground }}; --depth: {{ $depth }}"
+                            >
+                                <p class="wide:text-[13px] m-0 text-[min(13px,1.9svh)] font-bold tracking-[0.22em] uppercase opacity-70">
+                                    {{ __("cupida.kinds.{$card->kind}") }}
+                                </p>
 
-                            <div>
-                                <h2 class="font-display m-0 text-[clamp(30px,8vw,46px)]/[1.02] font-normal text-balance">
-                                    {{ $card->label }}
-                                </h2>
+                                {{-- A face, where we have one. Only about four author
+                                 cards in six carry a portrait, so this has to be
+                                 absent rather than a placeholder: a silhouette
+                                 among real faces reads as a missing image, and the
+                                 card without one is a complete card already.
 
-                                @if ($card->note)
-                                    <p class="mt-3 mb-0 text-[17px]/[1.35] italic opacity-75">{{ $card->note }}</p>
+                                 Eager, not lazy: three cards are ever in the stack,
+                                 and a portrait that fades in as the reader is
+                                 already dragging is worse than one that is simply
+                                 there. The background is the portrait's own color
+                                 so the frame is the right color before it paints. --}}
+                                @if ($card->portrait)
+                                    <img
+                                        src="{{ $card->portrait->url() }}"
+                                        alt="{{ $card->label }}"
+                                        width="480"
+                                        height="640"
+                                        loading="eager"
+                                        decoding="async"
+                                        class="wide:max-h-none mx-auto max-h-[17svh] w-[58%] rounded-[3px] object-cover shadow-[0_8px_0_-5px_rgba(33,21,17,0.16),0_18px_36px_-18px_rgba(33,21,17,0.55)]"
+                                        @style(['background: ' . $card->portrait->color => filled($card->portrait->color)])
+                                    />
                                 @endif
-                            </div>
 
-                            @if ($depth === 0)
-                                <span
-                                    class="cupida-stamp cupida-stamp--like"
-                                    aria-hidden="true"
-                                >{{ __('cupida.swipe.like') }}</span>
-                                <span
-                                    class="cupida-stamp cupida-stamp--pass"
-                                    aria-hidden="true"
-                                >{{ __('cupida.swipe.pass') }}</span>
-                            @endif
-                        </article>
-                    @endforeach
+                                <div>
+                                    <h2 class="font-display wide:text-[clamp(30px,8vw,46px)]/[1.02] m-0 text-[min(clamp(30px,8vw,46px),4.2svh)]/[1.02] font-normal text-balance">
+                                        {{ $card->label }}
+                                    </h2>
+
+                                    @if ($card->note)
+                                        <p class="wide:mt-3 wide:text-[17px]/[1.35] mt-[min(12px,1.8svh)] mb-0 text-[min(17px,2.4svh)]/[1.35] italic opacity-75">{{ $card->note }}</p>
+                                    @endif
+                                </div>
+
+                                @if ($depth === 0)
+                                    <span
+                                        class="cupida-stamp cupida-stamp--like"
+                                        aria-hidden="true"
+                                    >{{ __('cupida.swipe.like') }}</span>
+                                    <span
+                                        class="cupida-stamp cupida-stamp--pass"
+                                        aria-hidden="true"
+                                    >{{ __('cupida.swipe.pass') }}</span>
+                                @endif
+                            </article>
+                        @endforeach
+                    </div>
                 </div>
 
                 {{-- The buttons are the real control, not a fallback: they are what
                  a keyboard and a screen reader get, and what the tests press.
                  The drag is decoration over the top of them. --}}
-                <div class="mt-[clamp(22px,4vw,34px)] flex items-center justify-center gap-[clamp(20px,6vw,40px)]">
+                <div class="wide:mt-[clamp(22px,4vw,34px)] mt-[min(clamp(22px,4vw,34px),1.8svh)] flex items-center justify-center gap-[clamp(20px,6vw,40px)]">
                     <button
                         type="button"
                         @click="answer(false)"
@@ -351,7 +371,11 @@
                     </button>
                 </div>
 
-                <p class="mt-6 mb-0 text-center text-[16px] italic opacity-60">{{ __('cupida.swipe.help') }}</p>
+                {{-- Hidden below `wide:`. Half of what it says is about arrow keys, which a
+                 phone does not have, and the other half describes a gesture the
+                 stack already invites -- and it is the one line on this screen
+                 that can go without costing a control. --}}
+                <p class="wide:block mt-6 mb-0 hidden text-center text-[16px] italic opacity-60">{{ __('cupida.swipe.help') }}</p>
 
                 {{-- Who took the photo on the card in front of the reader.
 

@@ -309,6 +309,36 @@ class CupidaCatalog
     }
 
     /**
+     * Swipes as a person reads them: "theme:FM" -> "Fantasía".
+     *
+     * Lives here rather than on `CupidaRecommendation` because both readers of
+     * it need the same words: the panel, showing a bookseller what was asked
+     * for, and the prompt, telling the model what the reader actually said so
+     * that the match line names their answers instead of guessing at them.
+     *
+     * Anything that no longer resolves falls back to its key rather than
+     * disappearing -- a card the catalog has since dropped is exactly the kind
+     * of thing worth seeing in the panel.
+     *
+     * @param  array<int, string>  $answers  as "kind:key"
+     * @return array<int, string>
+     */
+    public function answerLabels(array $answers): array
+    {
+        return array_map(function(string $answer): string {
+            [$kind, $key] = array_pad(explode(':', $answer, limit: 2), 2, '');
+
+            return match ($kind) {
+                'theme'  => $this->subjectLabel($key),
+                'author' => (string)(collect($this->authors())->firstWhere('slug', $key)['name'] ?? $key),
+                'mood'   => (string)__("cupida.moods.{$key}"),
+                'book'   => (string)($this->titles()[$key] ?? $key),
+                default  => $answer,
+            };
+        }, $answers);
+    }
+
+    /**
      * "Guerriero, Leila" -> "Leila Guerriero".
      *
      * The shop writes every name surname first, which is right for a listing

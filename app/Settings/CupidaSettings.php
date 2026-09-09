@@ -30,8 +30,15 @@ use Spatie\LaravelSettings\Settings;
 class CupidaSettings extends Settings
 {
     /**
-     * Appended to the baseline, and announced as coming from the shop: the
-     * season, the table by the door, the writer they are pushing this month.
+     * Appended to the baseline, and announced as the shop's own: who La Cupida
+     * is, the season, the table by the door, the writer they are pushing this
+     * month.
+     *
+     * `CupidaAgent::instructions()` fences it as describing the bookseller and
+     * never the reader. Without that fence a persona written here comes back as
+     * the reader's taste -- "es queer" became a page telling strangers they had
+     * asked for something queer -- so anything added to how this is rendered
+     * keeps the fence with it.
      */
     public ?string $extra_instructions = null;
 

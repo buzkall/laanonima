@@ -200,7 +200,7 @@ return [
             'base_heading' => 'Instrucciones de base',
             'base_hint'    => 'Esto no se toca desde aquí: es lo que impide que se invente libros. Se cambia en el código.',
             'extra'        => 'Instrucciones extra',
-            'extra_hint'   => 'En español: cómo es La Cupida y qué quiere la librería que recomiende. Déjalo vacío para no añadir nada.',
+            'extra_hint'   => 'En español: cómo es La Cupida y qué quiere la librería que recomiende. Describe a la librera, no a quien lee: sus gustos inclinan la elección, pero nunca se cuentan como respuestas de quien está jugando. Déjalo vacío para no añadir nada.',
             'save'         => 'Guardar',
             'saved'        => 'Guardado. La próxima recomendación ya lo tiene en cuenta.',
         ],

@@ -38,4 +38,6 @@ Casa del Libro is a URL derived from the ISBN (`imagessl3.casadellibro.com/a/l/t
 
 openlibrary.org itself goes down for days at a time while covers.openlibrary.org stays up. Providers report that as a miss (they must not throw), so `FetchBookMetadata` caches a miss under `miss_cache_ttl` (minutes), never the day a hit gets.
 
-`Author::named()` normalizes through `App\Support\PersonName`: sources file people as "IAN. MCEWAN". The slug is unchanged by that, so an author filed under the shouted name stays the same record -- but its stored name is not rewritten, so rows created before this must be renamed by hand.
+`Author::named()` normalizes through `App\Support\PersonName`: sources file people as "IAN. MCEWAN". The slug is unchanged by that, so an author filed under the shouted name stays the same record -- and a stored name that is nothing but capitals is rewritten in place the next time that person is looked up, which no hand-typed name and no "VV. AA." can trigger.
+
+`FetchBookMetadata::cacheKey()` carries a version, and it is bumped for a change in what the payload *holds*, not only its shape: v2 entries named a Google Books thumbnail as the cover of books that now have a real one, and without the bump a deploy fixes nothing until the day-long TTL runs out.

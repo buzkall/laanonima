@@ -197,7 +197,7 @@ return [
             'base_heading' => 'Standing instructions',
             'base_hint'    => 'Not editable here: this is what stops it inventing books. It changes in the code.',
             'extra'        => 'Extra instructions',
-            'extra_hint'   => 'In Spanish: who La Cupida is and what the shop wants her to recommend. Leave it empty to add nothing.',
+            'extra_hint'   => 'In Spanish: who La Cupida is and what the shop wants her to recommend. It describes the bookseller, not the reader: her tastes tilt the choice, but they never count as the answers of whoever is playing. Leave it empty to add nothing.',
             'save'         => 'Save',
             'saved'        => 'Saved. The next recommendation takes it into account.',
         ],

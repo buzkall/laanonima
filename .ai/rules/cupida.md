@@ -262,3 +262,22 @@ Every vertical measurement in that panel is therefore `min(<original px>, <n>svh
 Each cap has a `wide:` twin restoring the original px value, so the desktop card is byte-for-byte what it was. Do not drop those overrides: `32svh` on a 900px-tall laptop shrinks the mark from 388px to 288px.
 
 `object-contain` on the mark is load-bearing: `max-h` on a replaced element whose width is set squashes it; contain letterboxes it at its own ratio instead.
+
+## The deck is sized from the room left over, not from a fraction of the window
+The question band + card stack + buttons have to fit a phone screen without scrolling — the buttons are the control, and a control below the fold is not a control.
+
+The stack is NOT capped with `svh`. That was tried and left cream all round the card: `main` is `flex-1`, so the slack it absorbs varies with how many lines the question wraps to. Instead the deck is given the leftover height directly:
+
+- `main > [x-data]` is `flex min-h-0 flex-1 flex-col justify-center`
+- inside it, `<div class="flex min-h-0 flex-1 flex-col items-center">` is the room
+- `.cupida-stack` is `aspect-[3/4] w-auto min-h-0 flex-1 max-h-[560px] max-w-full`
+
+A `flex-1` item in a **column** has a definite main size (height), and `aspect-ratio` transfers it to the width. Three traps: (1) `h-[calc(100%…)]` does not work — nothing above has a definite height (`min-h-dvh` is a minimum), so percentage heights resolve to `auto` and the aspect box collapses to 0; (2) in a **row** container the transfer does not happen — a stretched cross size gives width 0; (3) `items-center` is required — the default `stretch` sets the width itself and the ratio has nothing to say.
+
+`wide:min-h-[560px]` keeps a laptop's card at its original 420x560 and lets the panel run past the fold as it always has, rather than crushing the deck in a short window.
+
+Everything inside a card (`p`, kicker, `h2`, note, portrait `max-h`) is `min(px,svh)`-capped with a `wide:` twin, because the card is now much smaller on a phone than it used to be.
+
+`cupida.swipe.help` is `hidden wide:block`: half of it is about arrow keys, and it was the one line on the screen that could go without costing a control.
+
+The result panel is deliberately NOT made to fit: measured at 402x684 it needs 1240px against 540 available, and most of that is the pitch and the title. It is a reading screen and it scrolls.
