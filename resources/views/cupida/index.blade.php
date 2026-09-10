@@ -44,7 +44,10 @@
             /** Degrees of tilt at the edge of the card, which is all the rotation there is. */
             const TILT = 14;
 
-            Alpine.data('cupidaDeck', () => ({
+            /** How far the opening hint pulls the card, as a fraction of its width. */
+            const REACH = 0.18;
+
+            Alpine.data('cupidaDeck', (options = {}) => ({
                 dragging: false,
 
                 /**
@@ -85,6 +88,48 @@
                 busy: false,
 
                 /**
+                 * The timers the opening hint is still waiting on.
+                 *
+                 * Kept so the first touch can call them off. A step that fires
+                 * after a finger is down paints over the drag, and one that
+                 * fires after a button was pressed drags a card back that is
+                 * already on its way off the screen.
+                 */
+                hints: [],
+
+                /**
+                 * Show the reader, once, that the card moves.
+                 *
+                 * The deck has three inputs and only two of them announce
+                 * themselves: the buttons are on the screen and the arrow keys
+                 * are named in a line that is hidden below `wide:`. On a phone,
+                 * which is the width this page was drawn for, nothing says the
+                 * card can be thrown -- so the first card throws itself a
+                 * little, each way, and stops.
+                 *
+                 * `options.coach` comes from the server (`Cupida::$coached`),
+                 * so a reader who has answered a card is never shown it again,
+                 * including after "Otra vez".
+                 */
+                init() {
+                    if (! options.coach || this.reduced()) {
+                        return;
+                    }
+
+                    /* Not into a tab nobody is looking at. A hidden tab has its
+                       timers clamped into one-second buckets, so the four steps
+                       arrive in a lump rather than as a sequence -- and the
+                       reader comes back to a card either mid-twitch or already
+                       finished. A hint that is not watched is not worth
+                       spending; better no hint than that one. */
+                    if (document.hidden) {
+                        return;
+                    }
+
+                    this.coach();
+                },
+
+                /**
                  * The card on top right now, asked of the DOM every time.
                  *
                  * Never held in a variable and never an `x-ref`: Livewire replaces
@@ -103,6 +148,11 @@
                 },
 
                 grab(event) {
+                    /* Before the guards, and before `paint()`: a finger on the
+                       card ends the hint whether or not this particular pointer
+                       is allowed to drag it. */
+                    this.stopCoaching();
+
                     const card = this.top();
 
                     /* Same test as answer(): the card on top is fair game unless it
@@ -208,6 +258,11 @@
 
                 /** The one way a card is answered, whichever of the three inputs asked. */
                 answer(liked) {
+                    /* The buttons and the arrow keys can answer a card while the
+                       hint is still playing, and `fly()` writes a transform that
+                       a pending step would then undo mid-flight. */
+                    this.stopCoaching();
+
                     const card = this.top();
 
                     if (!card) {
@@ -279,6 +334,69 @@
                     card.style.transform = `translateX(${dx}px) rotate(${ratio * TILT}deg)`;
                     card.style.setProperty('--like', String(Math.max(0, ratio) * 2.5));
                     card.style.setProperty('--pass', String(Math.max(0, -ratio) * 2.5));
+                },
+
+                /**
+                 * The opening hint: right a little, back, left a little, back.
+                 *
+                 * Written through `paint()` rather than as a keyframe on the
+                 * card, and that is not a preference. The gesture owns the top
+                 * card's `transform` as an inline style, and an animated
+                 * property outranks an inline declaration -- so a CSS animation
+                 * on the card would go on overriding the drag until it ended,
+                 * and the card would ignore the finger. Going through `paint()`
+                 * writes the same inline style the drag writes: nothing to
+                 * fight, and nothing to tear down afterwards.
+                 *
+                 * It also means the tilt and the two stamps come for free, at
+                 * the strength `REACH` earns them. That is the half worth
+                 * having: the reader is not only shown that the card moves, but
+                 * that moving it one way says "Me gusta" and the other "Paso".
+                 *
+                 * `REACH` stays under `DISTANCE`, the threshold that commits a
+                 * real drag. The hint shows the beginning of the gesture, not a
+                 * completed one.
+                 *
+                 * Once, never on a loop. `.cupida-nudge` on the opening card
+                 * loops because nothing else on that panel moves and it is
+                 * asking to be pressed; a card that keeps moving under somebody
+                 * who is reading it is a card arguing with them.
+                 */
+                coach() {
+                    const card = this.top();
+
+                    if (! card) {
+                        return;
+                    }
+
+                    /* The lead-in is also what makes the measurement safe. The
+                       deck takes its size from `flex-1` and an aspect ratio, so
+                       asking for `offsetWidth` in the tick Alpine initialises
+                       the element is asking early -- and the fallback is the
+                       same one `answer()` uses. */
+                    const step = (at, run) => this.hints.push(window.setTimeout(run, at));
+
+                    card.classList.add('cupida-hint');
+
+                    step(600, () => this.paint((this.top()?.offsetWidth || 320) * REACH, true));
+                    step(1120, () => this.paint(0, true));
+                    step(1420, () => this.paint((this.top()?.offsetWidth || 320) * -REACH, true));
+                    step(1940, () => this.paint(0, true));
+                    step(2200, () => this.stopCoaching());
+                },
+
+                /**
+                 * Call the hint off, wherever it had got to.
+                 *
+                 * Safe to call at any time, including long after the hint has
+                 * finished and on a deck that never ran one: an empty list of
+                 * timers clears to an empty list, and the class is removed from
+                 * whichever card is on top whether or not it was ever added.
+                 */
+                stopCoaching() {
+                    this.hints.forEach((id) => window.clearTimeout(id));
+                    this.hints = [];
+                    this.top()?.classList.remove('cupida-hint');
                 },
 
                 reduced() {

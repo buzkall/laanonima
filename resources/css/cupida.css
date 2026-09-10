@@ -213,6 +213,26 @@ html:lang(es) {
 }
 
 /*
+ * The opening hint, which is on the top card only while it is running.
+ *
+ * The hint itself is not here -- it is the gesture's own `paint()`, driven by a
+ * timer instead of a finger, for the reason at the head of this file: the top
+ * card's transform is an inline style, and an animated property outranks one.
+ * This is the single thing about it a stylesheet has to say.
+ *
+ * The stamps have no transition and must not get one unconditionally. During a
+ * real drag `--like` and `--pass` arrive on every pointer move, so the stamp is
+ * already as smooth as the hand moving it, and 220ms of easing would only leave
+ * it trailing the card. The hint moves the card in two glides instead, and a
+ * stamp that snapped to full while the card was still travelling reads as a
+ * flash rather than as a stamp coming up. So it is scoped to a class that only
+ * exists for those two seconds.
+ */
+.cupida-hint .cupida-stamp {
+    transition: opacity 220ms ease-out;
+}
+
+/*
  * Nothing here is load-bearing: the stack still stacks, the stamps still show
  * which way a card is going, and the buttons still answer. Only the movement
  * goes.
@@ -227,6 +247,13 @@ html:lang(es) {
     .cupida-float,
     .cupida-nudge {
         animation: none;
+    }
+
+    /* `init()` declines to run the hint at all here, so this is belt and
+       braces -- but the stylesheet should not be depending on the script
+       having made the right call. */
+    .cupida-hint .cupida-stamp {
+        transition: none;
     }
 }
 

@@ -57,6 +57,22 @@ class Cupida extends Component
     #[Locked]
     public bool $started = false;
 
+    /**
+     * Whether the reader has answered a card and no longer needs showing how.
+     *
+     * The deck is answered three ways and only two of them announce
+     * themselves. The buttons are on the screen and the arrow keys are named
+     * in `cupida.swipe.help`, which is hidden below `wide:` -- so on a phone,
+     * where the drag is the natural input, nothing on the page says the card
+     * moves. The first card demonstrates it once, and this is what stops it
+     * happening a second time.
+     *
+     * It is the whole condition the view is given, because a round past the
+     * first cannot be reached without a swipe.
+     */
+    #[Locked]
+    public bool $coached = false;
+
     #[Locked]
     public int $round = 0;
 
@@ -128,6 +144,11 @@ class Cupida extends Component
         }
 
         $this->answered[] = $answer;
+
+        /* Here rather than at the top of the method: a duplicate swipe is
+           thrown away above, and a card that was not counted is not a card
+           anybody learned anything from. */
+        $this->coached = true;
 
         if ($liked) {
             $this->likes[] = $answer;
@@ -203,7 +224,12 @@ class Cupida extends Component
         $this->seed = random_int(0, PHP_INT_MAX);
 
         /* Straight back to the deck rather than to the opening card: somebody
-           asking for another book has read the instructions once already. */
+           asking for another book has read the instructions once already.
+
+           `coached` is missing from this list for the same reason and is not
+           an oversight. A reader who has reached the result panel has answered
+           eighteen cards; replaying the opening hint at them would be the page
+           explaining a gesture they have just spent a minute performing. */
         $this->started = true;
         $this->round = 0;
         $this->likes = [];
@@ -231,6 +257,7 @@ class Cupida extends Component
             'greeting'       => $this->greetingName(),
             'match'          => $this->matchWord(),
             'kicker'         => $this->kicker(),
+            'coach'          => ! $this->coached,
         ]);
     }
 

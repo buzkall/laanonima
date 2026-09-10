@@ -433,7 +433,11 @@
         <main class="bg-paper text-ink wide:pb-[clamp(40px,5vw,80px)] flex min-h-0 flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,52px)] pb-3">
             <div
                 class="mx-auto flex w-full max-w-[420px] min-h-0 flex-1 flex-col justify-center"
-                x-data="cupidaDeck()"
+                {{-- `@js($coach)` and not a `@js([...])` array: it renders as a
+                 bare `true` or `false` inside the attribute rather than an
+                 HTML-escaped JSON blob, which keeps both the attribute and the
+                 test that pins it readable. --}}
+                x-data="cupidaDeck({ coach: @js($coach) })"
                 @keydown.window.arrow-left.prevent="answer(false)"
                 @keydown.window.arrow-right.prevent="answer(true)"
             >

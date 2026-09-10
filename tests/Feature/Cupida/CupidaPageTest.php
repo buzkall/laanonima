@@ -45,6 +45,47 @@ it('finishes the swipe on the window, so a lost pointer capture cannot strand a 
         ->assertSeeHtml('@pointercancel.window="cancel($event)"');
 });
 
+/*
+ | The opening hint. The deck has three inputs and only two of them announce
+ | themselves -- the buttons are on the screen, the arrow keys are named in a
+ | line that is hidden below `wide:`, and on a phone nothing at all says the
+ | card can be thrown. The first card throws itself a little, each way, once.
+ |
+ | The motion is the browser's business; what is pinned here is the flag that
+ | decides whether it runs, and the attribute that carries it across.
+ */
+it('offers to show a reader who has answered nothing how the card moves', function(): void {
+    livewire(Cupida::class)
+        ->call('start')
+        ->assertSet('coached', false)
+        ->assertSeeHtml('cupidaDeck({ coach: true })');
+});
+
+it('stops showing it the moment a card has been answered', function(): void {
+    $component = livewire(Cupida::class)->call('start');
+
+    /* Read back off the render rather than guessed: the deck is rebuilt from
+       its seed on every request, which is also how the page itself works. */
+    $component->call('swipe', $component->viewData('cards')[0]->answer(), true)
+        ->assertSet('coached', true)
+        ->assertSeeHtml('cupidaDeck({ coach: false })');
+});
+
+/* `restart()` resets every other field on the component and deliberately not
+   this one -- the same argument that sends it back to the deck rather than to
+   the opening card. A reader asking for another book has just spent eighteen
+   swipes performing the gesture; explaining it to them now would be the page
+   not paying attention. Without this test the omission reads as a bug and the
+   next person tidies it away. */
+it('does not explain the gesture again to a reader asking for another book', function(): void {
+    $component = livewire(Cupida::class)->call('start');
+
+    $component->call('swipe', $component->viewData('cards')[0]->answer(), true)
+        ->call('restart')
+        ->assertSet('coached', true)
+        ->assertSeeHtml('cupidaDeck({ coach: false })');
+});
+
 it('greets a reader who is signed in by their first name', function(): void {
     $this->actingAs(User::factory()->create(['name' => 'Marta Llamas']));
 
