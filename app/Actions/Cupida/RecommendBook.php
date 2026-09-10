@@ -45,8 +45,9 @@ class RecommendBook
     /**
      * @param  array<int, string>  $likes  answers as "kind:key"
      * @param  array<int, string>  $passes
+     * @param  string|null  $promise  the phrase the opening card promised ("tu próxima cita")
      */
-    public function __invoke(array $likes, array $passes, bool $write = true, ?int $seed = null): ?Recommendation
+    public function __invoke(array $likes, array $passes, bool $write = true, ?int $seed = null, ?string $promise = null): ?Recommendation
     {
         $shortlist = $this->shortlist->for($this->catalog, $likes, $passes);
 
@@ -54,7 +55,7 @@ class RecommendBook
             return null;
         }
 
-        $recommendation = $this->decide($shortlist, $likes, $passes, $write);
+        $recommendation = $this->decide($shortlist, $likes, $passes, $write, $promise);
 
         /* Before the row, never after it: `record()` writes `book_id`, and a
            book filed afterwards would leave every automatically catalogd
@@ -78,14 +79,14 @@ class RecommendBook
      * @param  array<int, string>  $likes
      * @param  array<int, string>  $passes
      */
-    private function decide(array $shortlist, array $likes, array $passes, bool $write): Recommendation
+    private function decide(array $shortlist, array $likes, array $passes, bool $write, ?string $promise): Recommendation
     {
         if (! $write || ! $this->configured()) {
             return $this->fallback($shortlist);
         }
 
         try {
-            return $this->written($shortlist, $likes, $passes);
+            return $this->written($shortlist, $likes, $passes, $promise);
         } catch (Throwable $exception) {
             Log::warning('La Cupida could not write a recommendation.', [
                 'exception' => $exception->getMessage(),
@@ -111,7 +112,7 @@ class RecommendBook
      * carries everything a `books` row needs, so filing it costs a handful of
      * queries and no network at all -- it fits inside the wait the reader is
      * already spending on the model, and nothing on the page has to wait for it
-     * or poll for it afterwards.
+     * or poll for it afterward.
      *
      * What the free ISBN sources can add -- binding, measurements, a cover --
      * is three providers with a five-second timeout apiece, so it is deferred
@@ -237,7 +238,7 @@ class RecommendBook
      * @param  array<int, string>  $likes
      * @param  array<int, string>  $passes
      */
-    private function written(array $shortlist, array $likes, array $passes): Recommendation
+    private function written(array $shortlist, array $likes, array $passes, ?string $promise): Recommendation
     {
         /* Labels, not "theme:FM". The agent is writing a sentence a reader will
            read, and the words it needs are the ones that were on the cards. */
@@ -245,6 +246,7 @@ class RecommendBook
             shortlist: $shortlist,
             likes: $this->catalog->answerLabels($likes),
             passes: $this->catalog->answerLabels($passes),
+            promise: $promise,
         );
 
         $response = $agent->prompt(
@@ -281,24 +283,39 @@ class RecommendBook
     }
 
     /**
-     * The answers first and the books second, because that is the order the
-     * question is asked in: this is what they said, now pick from these.
+     * The promise first, the answers second and the books last, because that
+     * is the order the question is asked in: this is what you told them, this
+     * is what they said, now pick from these.
      *
-     * The line that introduces them says what they are for, because the list on
-     * its own reads as something to hand back -- and was handed back, as
-     * "porque dijiste que sí a X, a Y y a Z". The rule is in
+     * The promise is the phrase the opening card used -- "tu próxima cita",
+     * "tu próximo flechazo" -- and it is here rather than in the instructions
+     * because it changes per session. The base prompt says the word exists;
+     * this is where it is named, so the pitch and the send-off can close the
+     * loop the first screen opened.
+     *
+     * The line that introduces the answers says what they are for, because the
+     * list on its own reads as something to hand back -- and was handed back,
+     * as "porque dijiste que sí a X, a Y y a Z". The rule is in
      * `CupidaAgent::baseInstructions()`; this is the same rule where the
      * temptation actually sits.
      */
     private function promptFor(CupidaAgent $agent): string
     {
+        $parts = [];
+
+        if ($agent->promise !== null && $agent->promise !== '') {
+            $parts[] = "Le prometiste {$agent->promise}.";
+        }
+
         $answers = $agent->answers();
 
-        $books = "Estos son los libros entre los que puedes elegir:\n\n{$agent->catalog()}";
+        if ($answers !== '') {
+            $parts[] = "Esto es lo que ha respondido, y es para que elijas tú, no para recitárselo:\n\n{$answers}";
+        }
 
-        return $answers === ''
-            ? $books
-            : "Esto es lo que ha respondido, y es para que elijas tú, no para recitárselo:\n\n{$answers}\n\n{$books}";
+        $parts[] = "Estos son los libros entre los que puedes elegir:\n\n{$agent->catalog()}";
+
+        return implode("\n\n", $parts);
     }
 
     /**

@@ -120,6 +120,6 @@ it('sends the prompt in effect along with the pitches', function(): void {
 
     /* A pitch cannot be judged against nothing, and which half of the brief a
        complaint belongs to is the difference between a deploy and a modal. */
-    expect($prompt['base'])->toContain('Eres la librera de La Anónima')
+    expect($prompt['base'])->toContain('Eres La Cupida, la librera de La Anónima')
         ->and($prompt['extra'])->toBe('Este mes empujamos editoriales gallegas.');
 });

@@ -93,7 +93,9 @@ return [
     ],
 
     'result' => [
-        'kicker'         => 'Tu cita',
+        /* Parallel to `start.matches` and picked by the same seed: the heading
+           over the book says the same word the opening card promised. */
+        'kickers'        => ['Tu cita', 'Tu flechazo', 'Tu crush', 'Tu match'],
         'heading'        => 'Creemos que es este',
         'by'             => 'de :author',
         'read_more'      => 'Ver el libro',

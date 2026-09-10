@@ -4,6 +4,7 @@ use App\Ai\Agents\CupidaAgent;
 use App\Livewire\Cupida;
 use App\Support\Cupida\CupidaCatalog;
 use Laravel\Ai\Ai;
+use Laravel\Ai\Prompts\AgentPrompt;
 
 use function Pest\Livewire\livewire;
 
@@ -75,6 +76,35 @@ it('writes the recommendation with the model', function(): void {
         ->assertSee('Porque dijiste que sí a la poesía.');
 
     Ai::assertAgentWasPromptedTimes(CupidaAgent::class, 1);
+});
+
+it('keeps the word the opening card promised, in the prompt and over the book', function(): void {
+    /* One seed, one story: the opening card promises "tu próximo flechazo",
+       the model is told so, and the heading over the book reads "Tu
+       flechazo" -- not a fixed "Tu cita" whatever was promised. */
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [['ean' => '9788412976137', 'pitch' => 'x', 'match_line' => 'y']]);
+
+    $component = cupidaDeck();
+
+    $index = $component->get('seed') % count((array)__('cupida.start.matches'));
+
+    $promise = array_values((array)__('cupida.start.matches'))[$index];
+    $kicker = array_values((array)__('cupida.result.kickers'))[$index];
+
+    foreach (range(0, 2) as $round) {
+        swipeThroughRound($component);
+    }
+
+    $component->call('recommend')
+        ->assertSee($kicker);
+
+    CupidaAgent::assertPrompted(function(AgentPrompt $prompt) use ($promise): bool {
+        expect($prompt->prompt)->toStartWith("Le prometiste {$promise}.");
+
+        return true;
+    });
 });
 
 it('never prompts twice for one session', function(): void {

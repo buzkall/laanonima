@@ -426,3 +426,119 @@ it('tells the model the shop\'s own block is the librera and never the reader', 
         ->and(new CupidaAgent([])->baseInstructions())
         ->toContain('Nunca le atribuyas un tema, un gusto ni una identidad que no haya elegido.');
 });
+
+it('presents the book as a match and not as a review', function(): void {
+    /* Thirteen sessions in the log and not one pitch sounded like the page's
+       promise: ten opened with the author's name or the title, both of which
+       are printed right above the paragraph, and every one read like a ficha.
+       The prompt now names the register -- a casamentera sure of the pair --
+       and bars the author-first opening in both places that write the pitch. */
+    $agent = new CupidaAgent([]);
+
+    expect($agent->baseInstructions())
+        ->toContain('casamentera')
+        ->toContain('No empieces por el nombre de quien lo escribió ni por el título')
+        ->toContain('Nada de "creo que te gustará"');
+
+    $fields = array_map(
+        Serializer::serialize(...),
+        $agent->schema(new JsonSchemaTypeFactory),
+    );
+
+    expect($fields['pitch']['description'])
+        ->toContain('con quien va a saltar la chispa')
+        ->toContain('Sin empezar por el título ni por quien lo escribió')
+        ->toContain('Sin "porque dijiste" ni "porque buscas".');
+});
+
+it('never lets a pass become the argument', function(): void {
+    /* "sin que sea oscuro", "que no te robará semanas", "que no te deje con
+       esperanza": four pitches in the log sold the book by a card the reader
+       had turned down. A pass discards books; it is not a reason. */
+    expect(new CupidaAgent([])->baseInstructions())
+        ->toContain('Lo que ha dicho que no sirve para descartar libros, nunca como argumento.')
+        /* The list form was barred and the model quoted one card back on its
+           own ("porque dijiste que querías reírte en el metro"), so the single
+           quote is named too. */
+        ->toContain('"porque dijiste", "porque pediste", "porque buscas" no aparecen nunca');
+});
+
+it('holds what it says about the book to the synopsis', function(): void {
+    /* Realismo mágico on a thriller, "dibujo europeo" on an American, fantasía
+       romántica on an art-history book: the model reached for a liked card to
+       explain the book instead of for the synopsis it was handed. */
+    expect(new CupidaAgent([])->baseInstructions())
+        ->toContain('Una carta a la que ha dicho que sí no es una prueba')
+        ->toContain('quién lo ilustra, qué premio tiene ni de qué edición es');
+});
+
+it('sends her off to the date, not to a moral', function(): void {
+    /* The one send-off written under the previous prompt was "Que encuentres
+       en la penumbra tu propia verdad": life advice, nothing about the night
+       with the book. Both places that write the line say what it is now. */
+    $agent = new CupidaAgent([]);
+
+    expect($agent->baseInstructions())
+        ->toContain('Es una despedida en la puerta,')
+        ->toContain('no un consejo de vida')
+        ->toContain('palabra que le prometiste.');
+
+    $fields = array_map(
+        Serializer::serialize(...),
+        $agent->schema(new JsonSchemaTypeFactory),
+    );
+
+    expect($fields['match_line']['description'])
+        ->toContain('La despedida en la puerta antes de la cita')
+        ->toContain('Sobre la lectura, no sobre su vida.')
+        ->toContain('(cita, flechazo, crush, match)')
+        ->toContain('ni un consejo de vida');
+});
+
+it('tells the model the word the opening card promised', function(): void {
+    /* The first screen promises "tu próxima cita" or "tu próximo flechazo" by
+       seed, and until now the model never heard which, so nothing it wrote
+       could keep the promise. It is named beside the answers, where the
+       session-specific facts go; the base prompt only says the word exists. */
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [[
+        'ean'        => '9788412976137',
+        'pitch'      => 'Se lee de una sentada.',
+        'match_line' => 'Que te dure toda la noche.',
+    ]]);
+
+    app(RecommendBook::class)(
+        likes: ['theme:DC'],
+        passes: [],
+        promise: 'tu próximo flechazo',
+    );
+
+    CupidaAgent::assertPrompted(function(AgentPrompt $prompt): bool {
+        expect($prompt->prompt)
+            ->toStartWith('Le prometiste tu próximo flechazo.')
+            ->toContain('Ha dicho que sí a: Poesía.');
+
+        return true;
+    });
+});
+
+it('says nothing about a promise when none was made', function(): void {
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [[
+        'ean'        => '9788412976137',
+        'pitch'      => 'Se lee de una sentada.',
+        'match_line' => 'Que te dure toda la noche.',
+    ]]);
+
+    app(RecommendBook::class)(likes: ['theme:DC'], passes: []);
+
+    CupidaAgent::assertPrompted(function(AgentPrompt $prompt): bool {
+        expect($prompt->prompt)
+            ->not->toContain('Le prometiste')
+            ->toStartWith('Esto es lo que ha respondido');
+
+        return true;
+    });
+});

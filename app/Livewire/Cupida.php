@@ -182,6 +182,8 @@ class Cupida extends Component
                picks it -- they just do not get a written pitch. */
             write: $this->withinRateLimit(),
             seed: $this->seed,
+            /* The phrase the opening card promised, so the pitch can keep it. */
+            promise: $this->matchWord(),
         );
 
         $this->thinking = false;
@@ -228,6 +230,7 @@ class Cupida extends Component
             'empty'          => $this->catalog()->isEmpty(),
             'greeting'       => $this->greetingName(),
             'match'          => $this->matchWord(),
+            'kicker'         => $this->kicker(),
         ]);
     }
 
@@ -262,7 +265,28 @@ class Cupida extends Component
      */
     private function matchWord(): string
     {
-        $words = array_values((array)__('cupida.start.matches'));
+        return $this->promised('cupida.start.matches');
+    }
+
+    /**
+     * The heading over the book, in the same word the opening card promised:
+     * "Tu flechazo" over a book that was promised as a flechazo. It was a
+     * fixed "Tu cita" while the promise varied, which broke the loop the first
+     * screen opens.
+     */
+    private function kicker(): string
+    {
+        return $this->promised('cupida.result.kickers');
+    }
+
+    /**
+     * The two lists are parallel and the same seed picks the same index from
+     * both, which is what keeps the opening card and the result panel telling
+     * one story.
+     */
+    private function promised(string $key): string
+    {
+        $words = array_values((array)__($key));
 
         return (string)$words[$this->seed % count($words)];
     }

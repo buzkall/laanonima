@@ -90,7 +90,7 @@ return [
     ],
 
     'result' => [
-        'kicker'         => 'Your date',
+        'kickers'        => ['Your date', 'Your flechazo', 'Your crush', 'Your match'],
         'heading'        => 'We think it is this one',
         'by'             => 'by :author',
         'read_more'      => 'See the book',

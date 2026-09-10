@@ -133,7 +133,7 @@
                  layout with a centered heading over a left-aligned body has two
                  left edges and reads as neither. --}}
                 <p class="mb-[18px] m-0 text-[14px] font-bold tracking-[0.26em] uppercase">
-                    {{ __('cupida.result.kicker') }}
+                    {{ $kicker }}
                 </p>
 
                 <div @class(['cupida-result', 'cupida-result--no-cover' => ! $recommendation->coverUrl])>
