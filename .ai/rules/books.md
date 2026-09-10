@@ -9,6 +9,7 @@ paths:
   - 'app/Mail/**'
   - resources/views/books/request.blade.php
   - app/Policies/CupidaRecommendationPolicy.php
+  - app/Models/CupidaRecommendation.php
 ---
 
 # Books
@@ -26,4 +27,13 @@ Two resources over one model. The shop's (`App\Filament\Resources\BookRequests`)
 
 Mail to `site.contact_email` is sent inline (no queue worker in front of this site) with the reader's address as reply-to, both when a request arrives and when one is called off. Its panel link passes `panel: UserRole::Admin->panelId()` explicitly, because the withdrawal is sent from the client panel and an unqualified `getUrl()` resolves against whichever panel is current.
 
+Once a request is in, the receipt takes the whole page: it lives in the colored band instead of the form, and the form's half of the page is not rendered at all. Two panels each said their own thing over the other and each offered its own way back to the shelf. `book_request_sent` therefore flashes the request's **id**, not its title -- `BookRequestController::create()` reads the row back (scoped to the reader, because an id is guessable) so the receipt can show the book's cover and wear its color. A request with no `book_id` still finds one through `Isbn::toIsbn13()` on what the reader typed, which is what makes a hand-typed ISBN off a back cover worth trying.
+
 `x-site-footer` takes a `:cta` prop, passed down from `x-layouts.shelf` as `:footer-cta`, so the request page does not advertise itself.
+
+## The ULID key is the shared page's only authorization
+`cupida_recommendations.id` is a ULID, not a serial, and that is a security decision rather than a style one. `cupida.recommendation` publishes one row at `/la-cupida/recomendacion/{id}`, so a countable key would let anyone walk every reader's session — and the row carries `user_id`, `likes` and `passes`. Never swap it back, and never expose the row under any other addressable key.
+
+`SharedRecommendationController` deliberately runs no gate. `CupidaRecommendationPolicy` answers `isBookseller()` and takes a non-null `User`, so putting the public page behind it would refuse every reader who was handed a link. Unguessability *is* the access control, which is also why the page must render nothing about the reader: the book and the writing about it, never `user`, `likes` or `passes`. `SharedRecommendationPageTest` pins that.
+
+Replacing the key was contained because nothing points at this table — both its foreign keys point outwards, at `users` and `books`. That stops being true the moment something references a recommendation.

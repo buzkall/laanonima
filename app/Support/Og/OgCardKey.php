@@ -4,6 +4,7 @@ namespace App\Support\Og;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\CupidaRecommendation;
 use App\Models\Publisher;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Stringable;
@@ -26,7 +27,9 @@ final readonly class OgCardKey implements Stringable
 {
     private function __construct(
         private string $folder,
-        private int $id,
+        /* A ULID for a recommendation, a serial for everything else. It is only
+           ever a filename here, and the sweep matches on the same string. */
+        private int|string $id,
         private string $fingerprint,
     ) {}
 
@@ -64,6 +67,30 @@ final readonly class OgCardKey implements Stringable
             $bookCount,
             self::stamp($publisher->getFirstMedia(Publisher::LOGO_COLLECTION)),
             (string)$shelfStamp,
+        ]));
+    }
+
+    /**
+     * The card for one recommendation: the line La Cupida wrote, over the cover
+     * of the book she wrote it about.
+     *
+     * A recommendation is written once and never edited, so the fingerprint is
+     * not really guarding against a change to the row -- it is guarding against
+     * a change to the *book*, whose cover and color the card draws and which a
+     * bookseller can repaint any afternoon.
+     */
+    public static function forRecommendation(CupidaRecommendation $recommendation): self
+    {
+        $book = $recommendation->book;
+
+        return new self('cupida', $recommendation->id, self::hash([
+            'cupida',
+            $recommendation->id,
+            $recommendation->ean,
+            $recommendation->title,
+            (string)$recommendation->match_line,
+            (string)$book?->cover_color,
+            self::stamp($book?->cover()),
         ]));
     }
 

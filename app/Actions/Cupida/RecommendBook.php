@@ -62,7 +62,12 @@ class RecommendBook
            recommendation reading "not in our catalog" in the panel forever. */
         $recommendation = $this->fileLocally($recommendation);
 
-        $this->record($recommendation, $shortlist, $likes, $passes, $seed);
+        /* The row's key is what the panel's share button sends somebody, so it
+           has to come back out. `record()` is best-effort, so this is null
+           often enough that the button has to have an answer for it. */
+        $recommendation = $recommendation->withRecord(
+            $this->record($recommendation, $shortlist, $likes, $passes, $seed)?->id,
+        );
 
         /* After the row, never before it: what is left is the balance minus
            the rows, so a check that runs first is a check that has not seen the
@@ -195,12 +200,12 @@ class RecommendBook
      * @param  array<int, string>  $likes
      * @param  array<int, string>  $passes
      */
-    private function record(Recommendation $recommendation, array $shortlist, array $likes, array $passes, ?int $seed): void
+    private function record(Recommendation $recommendation, array $shortlist, array $likes, array $passes, ?int $seed): ?CupidaRecommendation
     {
         $top = $shortlist[0];
 
         try {
-            CupidaRecommendation::query()->create([
+            return CupidaRecommendation::query()->create([
                 'user_id'    => auth()->id(),
                 'seed'       => $seed ?? 0,
                 'likes'      => array_values($likes),
@@ -230,6 +235,8 @@ class RecommendBook
             Log::warning('La Cupida could not keep a recommendation.', [
                 'exception' => $exception->getMessage(),
             ]);
+
+            return null;
         }
     }
 

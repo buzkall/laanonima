@@ -119,6 +119,18 @@ return [
         'fallback_pitch_nothing_liked' => 'Has dicho que no a todo, y nos gusta la gente difícil de contentar. Este te lo damos a ojo, a ver si es el que te hace decir que sí. Ábrelo por cualquier página y ya verás.',
     ],
 
+    /*
+     | La página de una recomendación, la que se comparte. Lo que se manda no es
+     | el libro sino lo que La Cupida dijo de él: el texto se escribió para esa
+     | sesión y no está en ningún otro sitio.
+     */
+    'shared' => [
+        'title'  => 'Una recomendación de La Cupida',
+        'kicker' => 'La Cupida recomendó',
+        'lead'   => 'Esto es lo que le dijo a quien se lo pidió.',
+        'cta'    => 'Pide la tuya',
+    ],
+
     'empty' => [
         'heading' => 'La Cupida está cerrada un momento',
         'line'    => 'Todavía no tenemos las cartas preparadas. Vuelve en un rato.',

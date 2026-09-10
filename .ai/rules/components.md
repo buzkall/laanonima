@@ -2,6 +2,7 @@
 paths:
   - resources/views/components/site-header.blade.php
   - resources/views/components/share-button.blade.php
+  - resources/views/components/cupida-result.blade.php
 ---
 
 # Components
@@ -35,3 +36,10 @@ The panel is `absolute inset-x-0 top-full z-50` off a `relative` header, never a
 `navigator.share` first (called before any `await`, or the sheet loses the click's activation), then the clipboard, then a textarea + `execCommand`. The modern clipboard is *present and refusing* more often than it is absent — an unfocused document and a denied permission both reject — so try it and fall through on rejection rather than feature-detecting. The label only flashes "copied" when a copy actually succeeded.
 
 No button is rendered without JavaScript, which is deliberate: there is nothing useful to degrade to.
+
+## The result panel has one definition and two callers
+`<x-cupida-result>` is drawn by the Livewire panel at the end of a session and by `cupida/shared.blade.php`, the page its share button sends somebody. Its layout is the expensive part — the three folded areas of `.cupida-result`, the clamped `.cupida-pitch`, the synopsis riding the same disclosure — so edit it here, never by copying it.
+
+The controls are a **slot**, not flags: that is the only thing the two callers genuinely disagree about (another go vs. ask for your own). `:clamp="false"` is the shared page, which is a document with nothing to fit — it renders no Alpine at all rather than a disclosure that starts open.
+
+What is shared from the panel is the *recommendation*, not the book: the pitch was written for that one session and the book's page has never heard of it. `Cupida::shareUrl()` falls back to the book only because `RecommendBook::record()` is best-effort and swallows its own failure.

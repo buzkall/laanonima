@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookRequestController;
 use App\Http\Controllers\CupidaController;
+use App\Http\Controllers\SharedRecommendationController;
 use Illuminate\Support\Facades\Route;
 
 // Optional local-only helper. It may be a symlink into a path the running process is not allowed to read
@@ -23,6 +24,13 @@ Route::controller(BookController::class)->group(function(): void {
 });
 
 Route::get('/la-cupida', CupidaController::class)->name('cupida');
+
+/* One recommendation, on a page of its own, because what a reader passes on is
+   what La Cupida said about the book rather than the book. Declared above the
+   guest route below: that one's segment is unconstrained and would swallow
+   anything under /la-cupida that reached it first. */
+Route::get('/la-cupida/recomendacion/{recommendation}', SharedRecommendationController::class)
+    ->name('cupida.recommendation');
 
 /* The same page, opened already greeting somebody by name. The segment is a key
    in cupida.guests and never the name itself -- see the controller. */

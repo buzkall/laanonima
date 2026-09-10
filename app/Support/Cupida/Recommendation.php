@@ -3,6 +3,7 @@
 namespace App\Support\Cupida;
 
 use App\Models\Book;
+use App\Models\CupidaRecommendation;
 use App\Support\CoverPalette;
 
 /**
@@ -47,6 +48,7 @@ final readonly class Recommendation
         public ?Book $book,
         public bool $written,
         public ?PromptCost $cost = null,
+        public ?string $recordId = null,
     ) {}
 
     /**
@@ -73,6 +75,68 @@ final readonly class Recommendation
             book: $local,
             written: $written,
             cost: $cost,
+        );
+    }
+
+    /**
+     * The same recommendation, now that it has been written down.
+     *
+     * The key is the address of the page a reader sends somebody, which is why
+     * it travels back out of `RecommendBook` at all. It is null whenever the
+     * row was not written -- the write is best-effort and swallows its own
+     * failure -- and the panel falls back to the book's page then, which is
+     * where the button pointed before this page existed.
+     */
+    public function withRecord(?string $recordId): self
+    {
+        return new self(
+            ean: $this->ean,
+            title: $this->title,
+            author: $this->author,
+            publisher: $this->publisher,
+            pitch: $this->pitch,
+            matchLine: $this->matchLine,
+            synopsis: $this->synopsis,
+            url: $this->url,
+            shopUrl: $this->shopUrl,
+            coverUrl: $this->coverUrl,
+            palette: $this->palette,
+            book: $this->book,
+            written: $this->written,
+            cost: $this->cost,
+            recordId: $recordId,
+        );
+    }
+
+    /**
+     * The recommendation a shared page draws, rebuilt from its own row.
+     *
+     * Everything the panel needs is on the row except the two things that were
+     * never stored: the synopsis and the color. Both come from the `books` row
+     * when there is one, which is the same order `make()` uses and the same
+     * answer it would have given -- and when there is not, a book the shop has
+     * dropped still has its cover at the shop's resizer and the house red
+     * behind it, so the page reads rather than breaking.
+     */
+    public static function fromRecord(CupidaRecommendation $record): self
+    {
+        $book = $record->book;
+
+        return new self(
+            ean: $record->ean,
+            title: $record->title,
+            author: $record->author,
+            publisher: null,
+            pitch: $record->pitch,
+            matchLine: $record->match_line,
+            synopsis: self::text($book?->synopsis),
+            url: $book instanceof Book ? route('books.show', $book) : ($record->shopUrl() ?? route('cupida')),
+            shopUrl: $record->shopUrl() ?? route('cupida'),
+            coverUrl: $record->coverUrl(),
+            palette: CoverPalette::fromCover($book?->cover_color),
+            book: $book,
+            written: $record->written,
+            recordId: $record->id,
         );
     }
 
@@ -105,6 +169,7 @@ final readonly class Recommendation
             book: $book,
             written: $this->written,
             cost: $this->cost,
+            recordId: $this->recordId,
         );
     }
 

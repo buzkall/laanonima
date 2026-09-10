@@ -5,10 +5,12 @@ namespace App\Support\Og;
 use App\Actions\Images\MediaBytes;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\CupidaRecommendation;
 use App\Models\Publisher;
 use App\Support\CoverPalette;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 /**
  * The finished description of one share card: everything the compositor draws,
@@ -86,6 +88,63 @@ final readonly class OgCard
                     $bytes,
                 ),
         );
+    }
+
+    /**
+     * The card a shared recommendation is previewed with.
+     *
+     * The line goes in `title` and not in `subtitle`, which is the opposite of
+     * the other three and is the only reason this fits the same drawing: title
+     * is the slot that autoshrinks and wraps over `og.title.lines`, and a match
+     * line runs to a sentence where "de Paco Roca" runs to three words.
+     *
+     * Which is also why the subtitle names the writer and not the book: it is a
+     * fixed 22pt with no shrink and fits about thirty characters, so a title
+     * put there is a title that pushes the author off the end -- measured, on
+     * "La puerta del viaje sin retorno", which drew as "LA PUERTA DEL VIAJE SIN
+     * RETORN...". The book is already the largest thing on the card, printed on
+     * its own cover.
+     *
+     * The cover is read from our own media and never from the shop: a book we
+     * have not catalogd has its cover behind an HTTP request, and this runs
+     * inside the first page view. Handing over no image at all is the right
+     * answer there -- the compositor already draws its own plate with the
+     * isotipo on it, in this card's palette.
+     */
+    public static function forRecommendation(CupidaRecommendation $recommendation, MediaBytes $bytes = new MediaBytes): self
+    {
+        $book = $recommendation->book;
+        $cover = $book instanceof Book ? $bytes($book->cover(), 'retina') : null;
+
+        return new self(
+            title: self::line($recommendation),
+            subtitle: $recommendation->author === null
+                ? Str::limit($recommendation->title, 38)
+                : (string)__('cupida.result.by', ['author' => $recommendation->author]),
+            palette: CoverPalette::fromCover($book?->cover_color),
+            images: $cover === null ? [] : [$cover],
+        );
+    }
+
+    /**
+     * What the card says: the match line when there is one, and the pitch's
+     * first sentence when there is not.
+     *
+     * The fallback pitch is a paragraph and the whole of it on a card is a wall
+     * -- one sentence of it still sounds like her, which is what the card is
+     * for.
+     */
+    private static function line(CupidaRecommendation $recommendation): string
+    {
+        $line = trim((string)$recommendation->match_line);
+
+        if ($line !== '') {
+            return $line;
+        }
+
+        $first = preg_split('/(?<=[.!?])\s+/u', trim($recommendation->pitch), 2);
+
+        return Str::limit($first[0] ?? $recommendation->title, 120);
     }
 
     /**

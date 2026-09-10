@@ -8,8 +8,8 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/** | .ai/rules/app.md |
 | app/Filament/Auth/** | .ai/rules/auth.md |
 | app/Models/Author.php,app/Models/Book.php,app/Filament/Resources/Authors/** | .ai/rules/authors.md |
-| app/Http/Controllers/BookRequestController.php, app/Models/BookRequest.php, app/Filament/Resources/BookRequests/**, app/Filament/Client/Resources/BookRequests/**, app/Policies/BookRequestPolicy.php, app/Http/Requests/StoreBookRequest.php, app/Mail/**, resources/views/books/request.blade.php, app/Policies/CupidaRecommendationPolicy.php | .ai/rules/books.md |
-| resources/views/components/site-header.blade.php, resources/views/components/share-button.blade.php | .ai/rules/components.md |
+| app/Http/Controllers/BookRequestController.php, app/Models/BookRequest.php, app/Filament/Resources/BookRequests/**, app/Filament/Client/Resources/BookRequests/**, app/Policies/BookRequestPolicy.php, app/Http/Requests/StoreBookRequest.php, app/Mail/**, resources/views/books/request.blade.php, app/Policies/CupidaRecommendationPolicy.php, app/Models/CupidaRecommendation.php | .ai/rules/books.md |
+| resources/views/components/site-header.blade.php, resources/views/components/share-button.blade.php, resources/views/components/cupida-result.blade.php | .ai/rules/components.md |
 | app/Support/Correos/** | .ai/rules/correos.md |
 | resources/views/books/shelf.blade.php,resources/js/shelf.js,resources/css/shelf.css | .ai/rules/css.md |
 | config/cupida.php,app/Support/Cupida/CupidaDeck.php,app/Support/Cupida/CupidaCard.php | .ai/rules/cupida-support-cupida.md |

@@ -2,7 +2,9 @@
 
 use App\Ai\Agents\CupidaAgent;
 use App\Livewire\Cupida;
+use App\Models\CupidaRecommendation;
 use App\Support\Cupida\CupidaCatalog;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Ai\Ai;
 use Laravel\Ai\Prompts\AgentPrompt;
 
@@ -227,11 +229,11 @@ it('deals again from nothing when a reader starts over', function(): void {
         ->assertSee(__('cupida.questions.theme'));
 });
 
-/* A reader who has just been handed a book wants to tell somebody, and this
-   page keeps no session a link could reopen -- so what is shared is the book's
-   own address, which is ours when the book was filed and the shop's when it
-   was not. */
-it('offers the recommendation to be shared, pointed at the book rather than at the session', function(): void {
+/* What a reader passes on is what La Cupida said, not the book: the pitch was
+   written for this one session and the book's own page has never heard of it.
+   So the button sends the row's page, and the key it is addressed by is the
+   only thing keeping one reader's session out of another's hands. */
+it('offers the recommendation to be shared, pointed at the recommendation and not at the book', function(): void {
     config(['ai.providers.anthropic.key' => null]);
 
     $component = cupidaDeck();
@@ -243,15 +245,61 @@ it('offers the recommendation to be shared, pointed at the book rather than at t
     $component->call('recommend');
 
     $recommendation = $component->viewData('recommendation');
+    $kept = CupidaRecommendation::query()->sole();
 
-    expect($recommendation->author)->not->toBeNull();
+    expect($recommendation->author)->not->toBeNull()
+        ->and($component->get('shareKey'))->toBe($kept->id);
 
     $component->assertSee(__('cupida.result.share'))
-        ->assertSeeHtml('data-share-url="' . e($recommendation->url) . '"')
+        ->assertSeeHtml('data-share-url="' . e(route('cupida.recommendation', $kept)) . '"')
+        ->assertDontSeeHtml('data-share-url="' . e($recommendation->url) . '"')
         ->assertSee(__('cupida.result.share_message_by', [
             'title'  => $recommendation->title,
             'author' => $recommendation->author,
         ]));
+
+    /* Nobody can walk from one session to the next. */
+    expect($kept->id)->toHaveLength(26)
+        ->and($kept->id)->not->toBe('1');
+});
+
+/* The row is written best-effort -- `record()` swallows its own failure -- so
+   the button has to have an answer when there is no page to point at. It is the
+   one the button had before that page existed. */
+it('falls back to the book when the recommendation could not be written down', function(): void {
+    config(['ai.providers.anthropic.key' => null]);
+
+    Schema::drop('cupida_recommendations');
+
+    $component = cupidaDeck();
+
+    foreach (range(0, 2) as $round) {
+        swipeThroughRound($component);
+    }
+
+    $component->call('recommend');
+
+    $recommendation = $component->viewData('recommendation');
+
+    expect($component->get('shareKey'))->toBeNull();
+
+    $component->assertSee($recommendation->title)
+        ->assertSeeHtml('data-share-url="' . e($recommendation->url) . '"');
+});
+
+it('forgets the key when a reader starts over, so the next share is not the last book', function(): void {
+    config(['ai.providers.anthropic.key' => null]);
+
+    $component = cupidaDeck();
+
+    foreach (range(0, 2) as $round) {
+        swipeThroughRound($component);
+    }
+
+    $component->call('recommend')
+        ->assertSet('shareKey', CupidaRecommendation::query()->sole()->id)
+        ->call('restart')
+        ->assertSet('shareKey', null);
 });
 
 /* A mood is defined in three places -- keywords in config, a label in lang,

@@ -7,6 +7,7 @@ use Database\Factories\CupidaRecommendationFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +28,13 @@ use Illuminate\Support\Carbon;
  * readable. `book_id` is the exception and is set only for the books we
  * catalog here too.
  *
- * @property int $id
+ * The key is a ULID because a recommendation has an address of its own now --
+ * `cupida.recommendation`, the page a reader sends somebody. A serial key would
+ * have made that page walkable, and the row carries `user_id`, `likes` and
+ * `passes`. Nothing points at this table, so the key being unguessable costs
+ * nothing and is the whole of the page's authorization.
+ *
+ * @property string $id
  * @property int|null $user_id
  * @property int $seed
  * @property array<int, string> $likes
@@ -63,6 +70,8 @@ class CupidaRecommendation extends Model
 {
     /** @use HasFactory<CupidaRecommendationFactory> */
     use HasFactory;
+
+    use HasUlids;
 
     /**
      * @return array<string, string>

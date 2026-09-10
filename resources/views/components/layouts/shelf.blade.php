@@ -1,4 +1,4 @@
-@props(['title', 'description', 'palette', 'footerCta' => true, 'footerOnPhone' => true, 'fitsViewport' => false, 'ogImage' => null, 'ogImageAlt' => null])
+@props(['title', 'description', 'palette', 'footerCta' => true, 'footerOnPhone' => true, 'fitsViewport' => false, 'ogImage' => null, 'ogImageAlt' => null, 'indexable' => true])
 
 {{-- A shelf of books: the home page, an author's page, an imprint's page.
      None of them belongs to a single book, so all three wear the house
@@ -13,6 +13,16 @@
     <title>{{ $title }} — {{ config('app.name') }}</title>
     <meta name="description" content="{{ str($description)->limit(155) }}" />
     <meta name="theme-color" content="{{ $palette->background }}" />
+
+    {{-- `:indexable="false"` is a shared recommendation, and only that. One
+         reader's session is not a page the shop is publishing: there is one per
+         game played, each is a paragraph about a book that already has a page
+         of its own, and the only person who should ever reach one is somebody
+         who was handed the link. `noindex` and not `nofollow` -- the links out
+         of it go to our own book pages and are worth following. --}}
+    @unless ($indexable)
+        <meta name="robots" content="noindex" />
+    @endunless
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ $title }}" />

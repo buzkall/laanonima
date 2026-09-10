@@ -111,6 +111,18 @@ return [
         'fallback_pitch_nothing_liked' => 'You said no to everything, and we like people who are hard to please. This one is a hunch, to see if it is the one that makes you say yes. Open it at any page and you will see.',
     ],
 
+    /*
+     | One recommendation on a page of its own, which is the thing that gets
+     | shared. What travels is not the book but what La Cupida said about it:
+     | the text was written for that session and is nowhere else.
+     */
+    'shared' => [
+        'title'  => 'A recommendation from La Cupida',
+        'kicker' => 'La Cupida recommended',
+        'lead'   => 'This is what she told the reader who asked.',
+        'cta'    => 'Ask for your own',
+    ],
+
     'empty' => [
         'heading' => 'La Cupida is closed for a moment',
         'line'    => 'The cards are not ready yet. Come back in a little while.',

@@ -165,156 +165,42 @@
                  (`.cupida-result` in `resources/css/cupida.css`), and a folded
                  layout with a centered heading over a left-aligned body has two
                  left edges and reads as neither. --}}
-                <p class="mb-[18px] m-0 text-[14px] font-bold tracking-[0.26em] uppercase">
-                    {{ $kicker }}
-                </p>
+                <x-cupida-result :recommendation="$recommendation" :kicker="$kicker">
+                    <a
+                        href="{{ $recommendation->url }}"
+                        @if (! $recommendation->book) target="_blank" rel="noopener" @endif
+                        class="bg-[var(--on-card)] px-6 py-3 text-[18px] font-semibold tracking-[0.08em] text-[var(--card)] uppercase no-underline transition-opacity duration-150 hover:opacity-85"
+                    >
+                        {{ $recommendation->book ? __('cupida.result.read_more') : __('cupida.result.buy') }}
+                    </a>
 
-                <div @class(['cupida-result', 'cupida-result--no-cover' => ! $recommendation->coverUrl])>
-                    @if ($recommendation->coverUrl)
-                        <img
-                            src="{{ $recommendation->coverUrl }}"
-                            alt="{{ __('books.fields.cover') }}: {{ $recommendation->title }}"
-                            class="cupida-result__cover wide:w-[min(56vw,240px)] wide:shadow-[0_18px_0_-8px_rgba(33,21,17,0.18),0_28px_60px_-24px_rgba(33,21,17,0.6)] w-full max-w-full shadow-[0_7px_0_-4px_rgba(33,21,17,0.18),0_12px_26px_-12px_rgba(33,21,17,0.6)]"
-                        />
-                    @endif
+                    <button
+                        type="button"
+                        wire:click="restart"
+                        class="text-[18px] cursor-pointer border-0 border-b-2 border-current bg-transparent pb-[3px] font-serif font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
+                    >
+                        {{ __('cupida.result.again') }}
+                    </button>
 
-                    {{-- The band the cover shares on a phone: which book it is, and
-                     nothing else. Everything that is prose waits below. --}}
-                    <div class="cupida-result__head">
-                        <h1 class="font-display text-[clamp(38px,5.2vw,76px)]/[0.98] m-0 max-w-[18ch] font-normal tracking-[-0.01em] text-balance">
-                            {{ $recommendation->title }}
-                        </h1>
+                    {{-- What travels is the recommendation and not the book:
+                         the pitch was written for this session and is nowhere
+                         else, so the page it points at is the one that keeps
+                         it. `$shareUrl` falls back to the book when the row
+                         was not written -- the write is best-effort.
 
-                        @if ($recommendation->author)
-                            <p class="mt-3 text-[clamp(22px,2vw,24px)] mb-0 italic opacity-85">
-                                {{ __('cupida.result.by', ['author' => $recommendation->author]) }}
-                            </p>
-                        @endif
-                    </div>
-
-                    <div class="cupida-result__body" x-data="{ open: false }">
-                        @if ($recommendation->matchLine)
-                            <p class="wide:mt-7 pt-6 text-[14px]/[1.65] mt-0 mb-0 border-t border-[var(--rule)] font-bold tracking-[0.16em] uppercase">
-                                {{ $recommendation->matchLine }}
-                            </p>
-                        @endif
-
-                        {{-- Three lines on a phone, all of it from `wide:` up. The
-                         clamp lives in the stylesheet and Alpine only opens it,
-                         so the fallback is a paragraph that reads short rather
-                         than one that never opens. --}}
-                        <p
-                            :class="open && 'cupida-pitch--open'"
-                            @class([
-                            'cupida-pitch text-[clamp(22px,2.1vw,25px)]/[1.5] mb-0 max-w-[52ch] italic',
-                            'mt-5'                                      => $recommendation->matchLine,
-                            'wide:mt-7 pt-6 mt-0 border-t border-[var(--rule)]' => ! $recommendation->matchLine,
-                                                    ])
-                        >
-                            {{ $recommendation->pitch }}
-                        </p>
-
-                        <button
-                            type="button"
-                            x-show="! open"
-                            @click="open = true"
-                            class="wide:hidden mt-[8px] cursor-pointer border-0 border-b border-current bg-transparent p-0 pb-[2px] font-serif text-[15px] font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase opacity-70 transition-opacity duration-150 hover:opacity-100"
-                        >
-                            {{ __('cupida.result.more') }}
-                        </button>
-
-                        {{-- The shop's own description of the book, under the
-                         librera's. It is the other half of deciding: the pitch
-                         is somebody telling you to read this, and this is what
-                         it is about, in the catalog's words rather than hers.
-
-                         It rides the same `open` as the pitch instead of
-                         bringing a second control -- "Seguir leyendo" already
-                         means "there is more of this book below", and two
-                         disclosures stacked on a phone are two decisions where
-                         the reader wanted one. Hidden by CSS and revealed by
-                         the class, the way the pitch is clamped, so the failure
-                         is a panel that reads short rather than a dead button;
-                         from `wide:` up it is simply there. --}}
-                        @if ($recommendation->synopsis)
-                            <div :class="open && 'cupida-synopsis--open'" class="cupida-synopsis mt-8 border-t border-[var(--rule)] pt-6">
-                                <p class="m-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-60">
-                                    {{ __('cupida.result.synopsis') }}
-                                </p>
-
-                                <p class="mt-3 mb-0 max-w-[60ch] text-[16px]/[1.6] opacity-80">
-                                    {{ $recommendation->synopsis }}
-                                </p>
-                            </div>
-                        @endif
-
-                        <div class="mt-9 gap-4 flex flex-wrap items-center">
-                            <a
-                                href="{{ $recommendation->url }}"
-                                @if (! $recommendation->book) target="_blank" rel="noopener" @endif
-                                class="bg-[var(--on-card)] px-6 py-3 text-[18px] font-semibold tracking-[0.08em] text-[var(--card)] uppercase no-underline transition-opacity duration-150 hover:opacity-85"
-                            >
-                                {{ $recommendation->book ? __('cupida.result.read_more') : __('cupida.result.buy') }}
-                            </a>
-
-                            {{-- The rule stays under the word alone. An icon
-                                 sitting on the same underline reads as a
-                                 second, empty letter of it -- so the border
-                                 moves onto the label and the glyph travels
-                                 beside it, the way the share control's does. --}}
-                            <button
-                                type="button"
-                                wire:click="restart"
-                                class="text-[18px] inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent font-serif font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
-                            >
-                                <svg class="size-[1.1em] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                                </svg>
-
-                                <span class="border-b-2 border-current pb-[3px]">
-                                    {{ __('cupida.result.again') }}
-                                </span>
-                            </button>
-
-                            {{-- A reader who has just been handed a book wants
-                                 to tell somebody, and the panel is the only
-                                 place that book exists for them -- the page
-                                 keeps no session a link could reopen, so what
-                                 travels is `url`: our page for the book when it
-                                 is filed, the shop's when it is not. Lightest
-                                 of the three controls, and outside `wire:` on
-                                 purpose: it must not cost a round trip. --}}
-                            <x-share-button
-                                :url="$recommendation->url"
-                                :title="$recommendation->title"
-                                :text="$shareMessage"
-                                :label="__('cupida.result.share')"
-                                :copied="__('cupida.result.share_copied')"
-                                class="text-[18px] text-[var(--on-card)] opacity-70 hover:opacity-100"
-                            />
-                        </div>
-
-                        {{-- The old site, kept and demoted. The button above is
-                         our own page for the book now -- La Cupida files what
-                         it recommends -- but the shop's page is where a reader
-                         who knows the site expects to end up, and it is the one
-                         that takes an order today. A line of text rather than a
-                         second button: two boxes of equal weight ask a question
-                         nobody came here to answer. --}}
-                        @if ($recommendation->book)
-                            <p class="mt-5 mb-0 text-[15px]">
-                                <a
-                                    href="{{ $recommendation->shopUrl }}"
-                                    target="_blank"
-                                    rel="noopener"
-                                    class="border-0 border-b border-current pb-[2px] font-serif font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase no-underline opacity-70 transition-opacity duration-150 hover:opacity-100"
-                                >
-                                    {{ __('cupida.result.at_the_shop') }}
-                                </a>
-                            </p>
-                        @endif
-                    </div>
-                </div>
+                         Icon alone on a phone, where a fourth word would push
+                         these three onto two lines. Outside `wire:` on
+                         purpose: sharing must not cost a round trip. --}}
+                    <x-share-button
+                        :url="$shareUrl"
+                        :title="$recommendation->title"
+                        :text="$shareMessage"
+                        :label="__('cupida.result.share')"
+                        :copied="__('cupida.result.share_copied')"
+                        labelled="wide"
+                        class="text-[18px] text-[var(--on-card)] opacity-70 hover:opacity-100"
+                    />
+                </x-cupida-result>
             </div>
         </section>
 

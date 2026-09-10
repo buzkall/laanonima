@@ -18,11 +18,15 @@
  | second failure mode; the button simply does nothing, which is the same thing
  | the browser does with a link it cannot follow).
  |
- | `:labelled="false"` is the phone bar's version: the word is still in the
- | markup, hidden the way a screen reader still reads it, because a button
- | whose whole name is a drawing has no name at all. What it costs is the
- | confirmation -- so the tick is what changes, and the label follows it for
- | the widths where there is room to read one.
+ | `labelled` is `true`, `false`, or `"wide"` for a label that appears only
+ | once there is room for one. `false` and `"wide"` still put the word in the
+ | markup and only hide it from the eye, because a button whose whole name is a
+ | drawing has no name at all. `sr-only` is `position: absolute`, so the span
+ | stops being a flex item and the `gap-2` costs nothing -- the icon sits alone
+ | rather than beside a gap holding nothing.
+ |
+ | What a hidden label costs is the confirmation, which is why the tick is what
+ | changes on a copy; the word follows it wherever one is rendered.
  --}}
 <button
     type="button"
@@ -45,5 +49,11 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
     </svg>
 
-    <span data-share-label @class(['sr-only' => ! $labelled])>{{ $label }}</span>
+    <span
+        data-share-label
+        @class([
+            'sr-only'                  => $labelled === false,
+            'sr-only wide:not-sr-only' => $labelled === 'wide',
+        ])
+    >{{ $label }}</span>
 </button>

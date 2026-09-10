@@ -103,6 +103,16 @@ class Cupida extends Component
     #[Locked]
     public bool $written = false;
 
+    /* The key of the row the recommendation was written to, and the address of
+       the page the share button sends somebody. A ULID string is exactly the
+       kind of scalar this class is willing to round-trip; the object the view
+       draws is still rebuilt from the EAN and carries none of it.
+
+       Null when the row was not written -- the write is best-effort -- and the
+       button falls back to the book's own page then. */
+    #[Locked]
+    public ?string $shareKey = null;
+
     private ?CupidaDeck $deck = null;
 
     public function mount(?string $guest = null): void
@@ -217,6 +227,7 @@ class Cupida extends Component
         $this->pitch = $recommendation->pitch;
         $this->matchLine = $recommendation->matchLine;
         $this->written = $recommendation->written;
+        $this->shareKey = $recommendation->recordId;
     }
 
     public function restart(): void
@@ -240,6 +251,7 @@ class Cupida extends Component
         $this->pitch = null;
         $this->matchLine = null;
         $this->written = false;
+        $this->shareKey = null;
     }
 
     public function render(): View
@@ -258,7 +270,26 @@ class Cupida extends Component
             'match'          => $this->matchWord(),
             'kicker'         => $this->kicker(),
             'coach'          => ! $this->coached,
+            'shareUrl'       => $this->shareUrl(),
         ]);
+    }
+
+    /**
+     * What the share button sends.
+     *
+     * The recommendation's own page when it was written down, because what a
+     * reader wants to pass on is what La Cupida said about the book and not the
+     * book -- the pitch was written for this one session and is nowhere else.
+     * The book's page when there is no row, which is where the button pointed
+     * before that page existed.
+     */
+    private function shareUrl(): ?string
+    {
+        if ($this->shareKey !== null) {
+            return route('cupida.recommendation', $this->shareKey);
+        }
+
+        return $this->recommendation()?->url;
     }
 
     /**
