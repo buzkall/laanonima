@@ -2,34 +2,34 @@
 
 namespace App\Support\Correos;
 
+use Arzcode\LaravelCorreos\Auth\CorreosAuthenticator;
+use Arzcode\LaravelCorreos\Connectors\CorreosConnector;
+use Arzcode\LaravelCorreos\Connectors\LabelsConnector;
+use Arzcode\LaravelCorreos\Connectors\PreregisterConnector;
+use Arzcode\LaravelCorreos\Connectors\TrackingConnector;
+use Arzcode\LaravelCorreos\Requests\Labels\GetDocumentBackofficeRequest;
+use Arzcode\LaravelCorreos\Requests\Labels\PrintDocumentsRequest;
+use Arzcode\LaravelCorreos\Requests\Labels\PrintLabelsRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\CancelExpeditionRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\CancelShipmentRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\CreateShipmentsRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\GenerateShipmentCodeRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\GetBackofficeErrorsRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\GetBackofficeShipmentRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\GetBackofficeTotalRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\GetBackofficeWaitingRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\GetExpeditionPackagesRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\GetPackagesByReferenceRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\ModifyShipmentRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\QueryShipmentsRequest;
+use Arzcode\LaravelCorreos\Requests\Preregister\ValidateShipmentsRequest;
+use Arzcode\LaravelCorreos\Requests\Tracking\GetExpeditionRequest;
+use Arzcode\LaravelCorreos\Requests\Tracking\SearchShipmentRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Str;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 use Saloon\Http\PendingRequest;
-use SmartDato\CorreosShipping\Auth\CorreosAuthenticator;
-use SmartDato\CorreosShipping\Connectors\CorreosConnector;
-use SmartDato\CorreosShipping\Connectors\LabelsConnector;
-use SmartDato\CorreosShipping\Connectors\PreregisterConnector;
-use SmartDato\CorreosShipping\Connectors\TrackingConnector;
-use SmartDato\CorreosShipping\Requests\Labels\GetDocumentBackofficeRequest;
-use SmartDato\CorreosShipping\Requests\Labels\PrintDocumentsRequest;
-use SmartDato\CorreosShipping\Requests\Labels\PrintLabelsRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\CancelExpeditionRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\CancelShipmentRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\CreateShipmentsRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\GenerateShipmentCodeRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\GetBackofficeErrorsRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\GetBackofficeShipmentRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\GetBackofficeTotalRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\GetBackofficeWaitingRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\GetExpeditionPackagesRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\GetPackagesByReferenceRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\ModifyShipmentRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\QueryShipmentsRequest;
-use SmartDato\CorreosShipping\Requests\Preregister\ValidateShipmentsRequest;
-use SmartDato\CorreosShipping\Requests\Tracking\GetExpeditionRequest;
-use SmartDato\CorreosShipping\Requests\Tracking\SearchShipmentRequest;
 
 /**
  * Answers the Correos SDK from memory instead of over the network.

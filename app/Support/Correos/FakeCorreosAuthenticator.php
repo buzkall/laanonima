@@ -2,8 +2,8 @@
 
 namespace App\Support\Correos;
 
+use Arzcode\LaravelCorreos\Auth\CorreosAuthenticator;
 use Saloon\Http\PendingRequest;
-use SmartDato\CorreosShipping\Auth\CorreosAuthenticator;
 
 /**
  * Signs requests without minting a token.

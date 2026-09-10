@@ -20,7 +20,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | lang/es.json | .ai/rules/lang.md |
 | app/Models/Book.php | .ai/rules/models.md |
 | app/Models/Author.php, app/Support/Og/OgCard.php, tests/** | .ai/rules/og.md |
-| app/Filament/Pages/CorreosPlayground.php,config/correos.php,config/correos-shipping-sdk.php | .ai/rules/pages.md |
+| app/Filament/Pages/CorreosPlayground.php,config/correos.php,config/laravel-correos.php | .ai/rules/pages.md |
 | app/Providers/** | .ai/rules/providers.md |
 | app/Filament/Resources/Users/Schemas/UserForm.php | .ai/rules/schemas.md |
 | app/Models/Subject.php, app/Models/Book.php, app/Console/Commands/ImportBookSubjects.php, database/seeders/SubjectSeeder.php, app/Support/BookMetadata/**, app/Support/Shop/**, app/Filament/Resources/Books/** | .ai/rules/subjects.md |

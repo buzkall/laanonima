@@ -3,6 +3,20 @@
 namespace App\Filament\Pages;
 
 use App\Support\Correos\FakeCorreos;
+use Arzcode\LaravelCorreos\Correos;
+use Arzcode\LaravelCorreos\Data\Labels\DocumentResponseData;
+use Arzcode\LaravelCorreos\Data\Labels\LabelsResponseData;
+use Arzcode\LaravelCorreos\Data\Labels\PrintDocumentsRequestData;
+use Arzcode\LaravelCorreos\Data\Labels\PrintLabelsRequestData;
+use Arzcode\LaravelCorreos\Data\Preregister\AnnulmentRequestData;
+use Arzcode\LaravelCorreos\Data\Preregister\DeliveryRequestData;
+use Arzcode\LaravelCorreos\Data\Preregister\GenerateShipmentCodeRequestData;
+use Arzcode\LaravelCorreos\Data\Preregister\QueryRequestData;
+use Arzcode\LaravelCorreos\Enums\DocumentationType;
+use Arzcode\LaravelCorreos\Enums\LabelFormat;
+use Arzcode\LaravelCorreos\Enums\LabelPrintMode;
+use Arzcode\LaravelCorreos\Enums\ProductCode;
+use Arzcode\LaravelCorreos\Exceptions\CorreosApiException;
 use BackedEnum;
 use Closure;
 use Filament\Actions\Action;
@@ -16,20 +30,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use SmartDato\CorreosShipping\CorreosShipping;
-use SmartDato\CorreosShipping\Data\Labels\DocumentResponseData;
-use SmartDato\CorreosShipping\Data\Labels\LabelsResponseData;
-use SmartDato\CorreosShipping\Data\Labels\PrintDocumentsRequestData;
-use SmartDato\CorreosShipping\Data\Labels\PrintLabelsRequestData;
-use SmartDato\CorreosShipping\Data\Preregister\AnnulmentRequestData;
-use SmartDato\CorreosShipping\Data\Preregister\DeliveryRequestData;
-use SmartDato\CorreosShipping\Data\Preregister\GenerateShipmentCodeRequestData;
-use SmartDato\CorreosShipping\Data\Preregister\QueryRequestData;
-use SmartDato\CorreosShipping\Enums\DocumentationType;
-use SmartDato\CorreosShipping\Enums\LabelFormat;
-use SmartDato\CorreosShipping\Enums\LabelPrintMode;
-use SmartDato\CorreosShipping\Enums\ProductCode;
-use SmartDato\CorreosShipping\Exceptions\CorreosApiException;
 use Spatie\LaravelData\Data;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
@@ -149,7 +149,7 @@ class CorreosPlayground extends Page
      */
     public function getEnvironmentUrl(): string
     {
-        return (string)config('correos-shipping-sdk.base_urls.preregister');
+        return (string)config('laravel-correos.base_urls.preregister');
     }
 
     /**
@@ -169,10 +169,10 @@ class CorreosPlayground extends Page
     public function hasCredentials(): bool
     {
         return collect([
-            'correos-shipping-sdk.oauth.client_id',
-            'correos-shipping-sdk.oauth.client_secret',
-            'correos-shipping-sdk.gateway.client_id',
-            'correos-shipping-sdk.gateway.client_secret',
+            'laravel-correos.oauth.client_id',
+            'laravel-correos.oauth.client_secret',
+            'laravel-correos.gateway.client_id',
+            'laravel-correos.gateway.client_secret',
         ])->every(fn(string $key): bool => filled(config($key)));
     }
 
@@ -295,7 +295,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires(...self::DELIVERY_FIELDS) && $this->run(
                 __('correos.actions.validate'),
-                fn(CorreosShipping $correos): Data => $correos->preregister()->validateShipments($this->deliveryRequest()),
+                fn(Correos $correos): Data => $correos->preregister()->validateShipments($this->deliveryRequest()),
             ));
     }
 
@@ -309,7 +309,7 @@ class CorreosPlayground extends Page
             ->modalDescription(__('correos.confirmations.create'))
             ->action(fn(): bool => $this->requires(...self::DELIVERY_FIELDS) && $this->run(
                 __('correos.actions.create'),
-                function(CorreosShipping $correos): Data {
+                function(Correos $correos): Data {
                     $response = $correos->preregister()->createShipments($this->deliveryRequest());
 
                     // Carry the codes over so the label and tracking calls have
@@ -334,7 +334,7 @@ class CorreosPlayground extends Page
             ->modalDescription(__('correos.confirmations.generate_code'))
             ->action(fn(): bool => $this->requires('contractNumber', 'clientNumber', 'labellerCode', 'product', 'deliveryMethod') && $this->run(
                 __('correos.actions.generate_code'),
-                fn(CorreosShipping $correos): Data => $correos->preregister()->generateShipmentCode(
+                fn(Correos $correos): Data => $correos->preregister()->generateShipmentCode(
                     GenerateShipmentCodeRequestData::from($this->strip([
                         'contractNumber' => $this->value('contractNumber'),
                         'clientNumber'   => $this->value('clientNumber'),
@@ -355,7 +355,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires('shipmentCode') && $this->run(
                 __('correos.actions.query'),
-                fn(CorreosShipping $correos): Data => $correos->preregister()->queryShipments(
+                fn(Correos $correos): Data => $correos->preregister()->queryShipments(
                     QueryRequestData::from(['shipments' => [$this->value('shipmentCode')]]),
                 ),
             ));
@@ -373,7 +373,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires('clientReference') && $this->run(
                 __('correos.actions.by_reference'),
-                fn(CorreosShipping $correos): Data => $correos->preregister()->getPackagesByReference(
+                fn(Correos $correos): Data => $correos->preregister()->getPackagesByReference(
                     $this->value('clientReference'),
                     $this->value('contractNumber') ?: null,
                     $this->value('clientNumber') ?: null,
@@ -389,7 +389,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires('expeditionCode') && $this->run(
                 __('correos.actions.expedition_packages'),
-                fn(CorreosShipping $correos): Data => $correos->preregister()->getExpeditionPackages(
+                fn(Correos $correos): Data => $correos->preregister()->getExpeditionPackages(
                     $this->value('expeditionCode'),
                 ),
             ));
@@ -405,7 +405,7 @@ class CorreosPlayground extends Page
             ->modalDescription(__('correos.confirmations.cancel'))
             ->action(fn(): bool => $this->requires('packageCode') && $this->run(
                 __('correos.actions.cancel'),
-                fn(CorreosShipping $correos): Data => $correos->preregister()->cancelShipment(
+                fn(Correos $correos): Data => $correos->preregister()->cancelShipment(
                     AnnulmentRequestData::from(['packageCode' => $this->value('packageCode')]),
                 ),
             ));
@@ -434,7 +434,7 @@ class CorreosPlayground extends Page
 
                 $response = $this->attempt(
                     __('correos.actions.print_label'),
-                    fn(CorreosShipping $correos): LabelsResponseData => $correos->labels()->printLabels(PrintLabelsRequestData::from([
+                    fn(Correos $correos): LabelsResponseData => $correos->labels()->printLabels(PrintLabelsRequestData::from([
                         'documentationType' => (int)$this->value('documentationType'),
                         'print'             => [
                             'shipments'      => [$this->value('shipmentCode')],
@@ -463,7 +463,7 @@ class CorreosPlayground extends Page
             ->action(function(): ?StreamedResponse {
                 $response = $this->attempt(
                     __('correos.actions.print_document'),
-                    fn(CorreosShipping $correos): DocumentResponseData => $correos->labels()->printDocuments(PrintDocumentsRequestData::from($this->strip([
+                    fn(Correos $correos): DocumentResponseData => $correos->labels()->printDocuments(PrintDocumentsRequestData::from($this->strip([
                         'documentationType' => (int)$this->value('documentationType'),
                         'documentData'      => [
                             'destinationName' => $this->value('destinationName'),
@@ -494,7 +494,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires('shipmentCode') && $this->run(
                 __('correos.actions.document_backoffice'),
-                fn(CorreosShipping $correos): Data => $correos->labels()->getDocumentBackoffice(
+                fn(Correos $correos): Data => $correos->labels()->getDocumentBackoffice(
                     $this->value('shipmentCode'),
                 ),
             ));
@@ -514,7 +514,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires('packageCode') && $this->run(
                 __('correos.actions.track'),
-                fn(CorreosShipping $correos): Data => $correos->tracking()->searchShipment($this->value('packageCode')),
+                fn(Correos $correos): Data => $correos->tracking()->searchShipment($this->value('packageCode')),
             ));
     }
 
@@ -526,7 +526,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires('expeditionCode') && $this->run(
                 __('correos.actions.expedition'),
-                fn(CorreosShipping $correos): Data => $correos->tracking()->getExpedition($this->value('expeditionCode')),
+                fn(Correos $correos): Data => $correos->tracking()->getExpedition($this->value('expeditionCode')),
             ));
     }
 
@@ -544,7 +544,7 @@ class CorreosPlayground extends Page
             ->color('gray')
             ->action(fn(): bool => $this->requires('shipmentCode') && $this->run(
                 __('correos.actions.backoffice_shipment'),
-                fn(CorreosShipping $correos): Data => $correos->preregister()->getBackofficeShipment(
+                fn(Correos $correos): Data => $correos->preregister()->getBackofficeShipment(
                     $this->value('shipmentCode'),
                 ),
             ));
@@ -581,7 +581,7 @@ class CorreosPlayground extends Page
             ->label($label)
             ->icon(Heroicon::OutlinedClipboardDocumentList)
             ->color('gray')
-            ->action(fn(): bool => $this->run($label, fn(CorreosShipping $correos): Data => $correos->preregister()->{$method}(
+            ->action(fn(): bool => $this->run($label, fn(Correos $correos): Data => $correos->preregister()->{$method}(
                 $this->value('contractNumber') ?: null,
                 $this->value('clientNumber') ?: null,
                 $this->value('dateFrom') ?: null,
@@ -593,7 +593,7 @@ class CorreosPlayground extends Page
      * Runs a call and renders whatever came back, so the error handling is
      * written once.
      *
-     * @param  Closure(CorreosShipping): Data  $callback
+     * @param  Closure(Correos): Data  $callback
      */
     protected function run(string $label, Closure $callback): bool
     {
@@ -616,13 +616,13 @@ class CorreosPlayground extends Page
     /**
      * @template TResponse of Data
      *
-     * @param  Closure(CorreosShipping): TResponse  $callback
+     * @param  Closure(Correos): TResponse  $callback
      * @return TResponse|null
      */
     protected function attempt(string $label, Closure $callback): ?Data
     {
         try {
-            $result = $callback(app(CorreosShipping::class));
+            $result = $callback(app(Correos::class));
 
             Notification::make()
                 ->success()

@@ -28,7 +28,7 @@ return [
     |
     | The three numbers Correos hands over with the commercial agreement. The
     | SDK does not read them -- every call carries them in the payload -- so
-    | they live here rather than in config/correos-shipping-sdk.php, which is
+    | they live here rather than in config/laravel-correos.php, which is
     | the package's own file and is overwritten by a re-publish.
     |
     | They only prefill the diagnostics page today. Anything that books a real

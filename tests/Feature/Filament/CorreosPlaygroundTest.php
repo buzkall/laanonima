@@ -2,17 +2,17 @@
 
 use App\Filament\Pages\CorreosPlayground;
 use App\Models\User;
+use Arzcode\LaravelCorreos\Correos;
+use Arzcode\LaravelCorreos\Data\Labels\LabelsResponseData;
+use Arzcode\LaravelCorreos\Data\Preregister\DeliveryResponseData;
+use Arzcode\LaravelCorreos\Exceptions\CorreosApiException;
+use Arzcode\LaravelCorreos\Resources\LabelsResource;
+use Arzcode\LaravelCorreos\Resources\PreregisterResource;
+use Arzcode\LaravelCorreos\Resources\TrackingResource;
 use Filament\Notifications\Notification;
 use Livewire\Livewire;
 use Mockery\CompositeExpectation;
 use Saloon\Http\Response;
-use SmartDato\CorreosShipping\CorreosShipping;
-use SmartDato\CorreosShipping\Data\Labels\LabelsResponseData;
-use SmartDato\CorreosShipping\Data\Preregister\DeliveryResponseData;
-use SmartDato\CorreosShipping\Exceptions\CorreosApiException;
-use SmartDato\CorreosShipping\Resources\LabelsResource;
-use SmartDato\CorreosShipping\Resources\PreregisterResource;
-use SmartDato\CorreosShipping\Resources\TrackingResource;
 
 beforeEach(function(): void {
     $this->actingAs(User::factory()->admin()->create());
@@ -35,7 +35,7 @@ beforeEach(function(): void {
 
 /**
  * Swap the SDK in the container for a mock of one of its three resources. The
- * page resolves CorreosShipping on every call, so nothing else has to be
+ * page resolves Correos on every call, so nothing else has to be
  * touched.
  */
 function fakeCorreos(string $resource, string $method): CompositeExpectation
@@ -46,10 +46,10 @@ function fakeCorreos(string $resource, string $method): CompositeExpectation
         'tracking'    => TrackingResource::class,
     ][$resource]);
 
-    $correos = Mockery::mock(CorreosShipping::class);
+    $correos = Mockery::mock(Correos::class);
     $correos->shouldReceive($resource)->andReturn($mock);
 
-    app()->instance(CorreosShipping::class, $correos);
+    app()->instance(Correos::class, $correos);
 
     return $mock->shouldReceive($method)->once();
 }
@@ -106,7 +106,7 @@ it('warns about missing credentials', function(): void {
        CORREOS_FAKE set in a developer's .env this test read the flag off their
        machine and failed there and nowhere else. */
     config()->set('correos.fake', false);
-    config()->set('correos-shipping-sdk.oauth.client_id', '');
+    config()->set('laravel-correos.oauth.client_id', '');
 
     Livewire::test(CorreosPlayground::class)->assertSee(__('correos.credentials.heading'));
 });
@@ -135,11 +135,11 @@ it('carries the codes of a created shipment into the label and tracking fields',
 
 it('shows the raw body when Correos answers with an error', function(): void {
     fakeCorreos('preregister', 'validateShipments')->andThrow(new CorreosApiException(
+        response: fakeFailedResponse(401, '{"code":"401","message":"Unauthorized"}'),
         message: 'Unauthorized',
         code: 401,
         errorCode: '401',
         moreInformation: 'Credenciales no válidas',
-        response: fakeFailedResponse(401, '{"code":"401","message":"Unauthorized"}'),
     ));
 
     Livewire::test(CorreosPlayground::class)
@@ -163,7 +163,7 @@ it('reports a connection failure instead of blowing up the page', function(): vo
 
 it('stops a call whose payload is incomplete before it leaves', function(): void {
     // No resource mock: reaching the SDK at all would be the failure here.
-    app()->instance(CorreosShipping::class, Mockery::mock(CorreosShipping::class));
+    app()->instance(Correos::class, Mockery::mock(Correos::class));
 
     Livewire::test(CorreosPlayground::class)
         ->fillForm(['packageCode' => ''])
