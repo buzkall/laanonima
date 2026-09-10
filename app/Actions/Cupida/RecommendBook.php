@@ -17,8 +17,6 @@ use Laravel\Ai\Responses\StructuredAgentResponse;
 use RuntimeException;
 use Throwable;
 
-use function Illuminate\Support\defer;
-
 /**
  * Eighteen swipes in, one book out.
  *
@@ -151,20 +149,6 @@ class RecommendBook
             return $recommendation;
         }
 
-        /* The namespaced function, never the global helper. The global one is
-           only defined `if (! function_exists('defer'))`, and the Swoole
-           extension registers a global `defer()` of its own the moment
-           `swoole.use_shortname` is on -- which is its default. Laravel's
-           helper is then never declared at all, every call here reaches
-           Swoole's coroutine defer instead, and outside a coroutine that
-           throws `Swoole\Error: API must be called in the coroutine` as an
-           uncaught fatal: it kills the PHP-FPM worker with exit code 255,
-           which nginx reports as a 502 with nothing in `storage/logs` to
-           explain it. The row is already written by then, so what it looks
-           like from the shop is a book filed with no cover and a bad gateway
-           on a page that worked a moment ago.
-           `use function` binds at compile time and cannot be shadowed, so this
-           holds whatever the box's extensions are doing. */
         defer(fn() => app(EnrichImportedBook::class)($book));
 
         return $recommendation->withLocalBook($book);

@@ -29,3 +29,31 @@ Providers often return a record with no cover, so a cover is never guaranteed. `
 `SyncCoverColor` must read the row, not the object (`$book->fresh('media')`). The instance a media event hands over is stale in both directions — its attributes predate the form's save, so a color just emptied still looks present — and it is gone entirely when the book itself is being deleted.
 
 Reordering is deliberately not a trigger any more (see `AppServiceProvider::syncBookCoverColors`): it can no longer change a stored color, and `setNewOrder` raises one event per row, so a book whose color had been emptied would read the collection while two images still shared an `order_column`.
+
+## A 502 with an empty log means an extension took a global helper
+
+In September 2026 `/la-cupida` and every Filament save that reached a `defer()`
+started answering 502 while the database write went through -- the record was
+created, the response never came back. Nothing was in `storage/logs`, and the
+FPM log only said `child NNN exited with code 255`.
+
+The cause was the **Swoole extension** installed on the production PHP: with
+`swoole.use_shortname` at its default it registers a global `defer()`, and
+Laravel only declares its own `if (! function_exists('defer'))`
+(`Foundation/helpers.php`). Laravel's helper was therefore never declared and
+every `defer()` in the app and its vendors reached Swoole's coroutine defer,
+which throws `Swoole\Error: API must be called in the coroutine` as an
+*uncaught* fatal -- killing the worker before the response was flushed. It was
+fixed by disabling the extension on the server; the app was left unchanged.
+
+Two things worth keeping from it:
+
+- **A 502 is never in `storage/logs`.** The worker is gone before Laravel's
+  handler runs. `ini_set('error_log', ...)` at the top of `public/index.php`,
+  above `vendor/autoload.php`, is what makes those fatals readable -- it was
+  the only thing that found this, after the Laravel log, the nginx log and the
+  FPM log had all come back empty.
+- **Suspect a shadowed global function** whenever a plain Laravel helper fails
+  on one machine and not another. `Illuminate\Support\defer()` (and the other
+  namespaced functions) are import-and-call, so `use function` is the immune
+  form if this ever needs guarding in code again.

@@ -44,26 +44,6 @@ return [
         'timeout' => 5,
 
         /*
-         | A line in the log before every step of an import, not a summary after
-         | the last one.
-         |
-         | The enrichment runs in a terminating callback, where the two things
-         | that actually kill it -- the execution time running out and the heap
-         | running out -- are fatals no `catch` sees, and where a child the pool
-         | terminates writes nothing at all. A summary is therefore never
-         | written on the runs worth reading about. The breadcrumb before each
-         | step is, and the last one in the file is where the process stopped.
-         |
-         | Left on: this is a handful of books a day, not a hot path, and a
-         | trail nobody remembered to switch on is a trail that is off on the
-         | afternoon it was needed. `trace_level` is here for the opposite
-         | reason -- production runs at whatever LOG_LEVEL says, and a stack
-         | sitting at `error` swallows every one of these lines.
-         */
-        'trace'       => env('BOOK_TRACE', true),
-        'trace_level' => env('BOOK_TRACE_LEVEL', 'info'),
-
-        /*
          | Seconds a book filed off the Cupida pool gets to be enriched, once
          | the reader's response has already gone out. It restarts the clock
          | rather than adding to it: the request that dispatched it has usually
