@@ -105,15 +105,26 @@
     @elseif ($recommendation)
         @php($palette = $recommendation->palette)
 
+        {{-- Centered with `my-auto` on the column rather than `justify-center`
+         here, and the difference only shows once "Seguir leyendo" is pressed.
+         This panel is the one screen that can grow after it is painted: the
+         pitch unclamps and the synopsis appears, and on a phone the result is
+         taller than the window. A flex item centered by `justify-content` in a
+         scroll container overflows *both* ends and the scroller cannot reach
+         backwards past its own start, so the top of the panel -- the title of
+         the book it just recommended -- was cut off and unreachable. An auto
+         margin resolves to zero the moment the free space runs out, so the
+         column is centered while it fits and top-aligned the instant it does
+         not, which is the behavior this panel wanted in both states. --}}
         <section
-            class="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto bg-[var(--card)] px-[clamp(22px,5vw,80px)] pt-[clamp(40px,6vw,88px)] pb-[clamp(44px,6vw,88px)] text-[var(--on-card)]"
+            class="flex min-h-0 flex-1 flex-col overflow-y-auto bg-[var(--card)] px-[clamp(22px,5vw,80px)] pt-[clamp(40px,6vw,88px)] pb-[clamp(44px,6vw,88px)] text-[var(--on-card)]"
             style="--card: {{ $palette->background }}; --on-card: {{ $palette->foreground }}"
         >
             {{-- Held to a column rather than run the width of a desktop screen: a
              pitch set across 1900 pixels is three long lines adrift in a lot of
              color, and the same words in a column are a paragraph that fills
              the panel it is standing in. --}}
-            <div class="mx-auto w-full max-w-[1040px]">
+            <div class="mx-auto my-auto w-full max-w-[1040px]">
                 {{-- The editorial left edge, at every width. This panel used to be
                  a centered poster on a phone -- cover in the middle, title
                  under it -- and it cost 1240px of a 540px screen. It is now the
@@ -349,7 +360,16 @@
             </div>
         </section>
 
-        <main class="bg-paper text-ink flex min-h-0 flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,52px)] pb-[clamp(40px,5vw,80px)]">
+        {{-- The bottom padding is two numbers, not one clamp. Below `wide:` the
+         footer is off the page entirely (`:footer-on-phone="false"`) and this
+         panel is measured to fill the window, so every pixel under the credit
+         line is cream the deck is not using -- and the deck is the one thing
+         here whose size is whatever is left over, so that padding comes
+         straight off the portrait. `pb-3` is the smallest gap that still reads
+         as a margin rather than a crop. From `wide:` up the footer is back and
+         the panel is a document again, so the padding it was drawn with
+         stands. --}}
+        <main class="bg-paper text-ink wide:pb-[clamp(40px,5vw,80px)] flex min-h-0 flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,52px)] pb-3">
             <div
                 class="mx-auto flex w-full max-w-[420px] min-h-0 flex-1 flex-col justify-center"
                 x-data="cupidaDeck()"
@@ -415,7 +435,19 @@
                                                         ])
                                 style="--card: {{ $card->palette->background }}; --on-card: {{ $card->palette->foreground }}; --depth: {{ $depth }}"
                             >
-                                <p class="m-0 shrink-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-70">
+                                {{-- Hidden below `wide:`. The band above the deck already
+                                 asks the round's question -- "¿Y con quién?" over a
+                                 card that says AUTORÍA -- so on a phone the label is
+                                 a line of small caps charging the portrait a line of
+                                 height for something the reader has just read. On a
+                                 laptop the deck is at its drawn size and the room is
+                                 not the constraint, so the card keeps its heading.
+
+                                 Hidden for every kind, not only the ones with a face:
+                                 it is the same card in the same round, and a heading
+                                 that comes and goes as the stack advances reads as a
+                                 bug. --}}
+                                <p class="wide:block m-0 hidden shrink-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-70">
                                     {{ __("cupida.kinds.{$card->kind}") }}
                                 </p>
 
@@ -536,7 +568,7 @@
                  is the changes-were-made clause CC BY-SA asks for: every
                  portrait is recropped to the card. --}}
                 @if (($stack[0] ?? null)?->portrait?->license)
-                    <p class="mx-auto mt-3 mb-0 max-w-[34em] text-center text-[10px]/[1.4] tracking-[0.04em] text-balance opacity-45">
+                    <p class="wide:mt-3 mx-auto mt-2 mb-0 max-w-[34em] text-center text-[10px]/[1.4] tracking-[0.04em] text-balance opacity-45">
                         {{
                             __('cupida.portraits.credit', [
                             'artist'  => $stack[0]->portrait->artistLabel() ?: __('cupida.portraits.unknown_artist'),
