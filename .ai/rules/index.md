@@ -21,6 +21,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Filament/Resources/Users/Schemas/UserForm.php | .ai/rules/schemas.md |
 | app/Models/Subject.php, app/Models/Book.php, app/Console/Commands/ImportBookSubjects.php, database/seeders/SubjectSeeder.php, app/Support/BookMetadata/**, app/Support/Shop/**, app/Filament/Resources/Books/** | .ai/rules/subjects.md |
 | resources/views/books/shelf.blade.php,resources/js/shelf.js,resources/css/shelf.css,app/Support/ShelfBook.php | .ai/rules/support.md |
+| app/Filament/Resources/**/Tables/*.php | .ai/rules/tables.md |
 | tests/** | .ai/rules/tests.md |
 | app/Filament/Resources/Users/** | .ai/rules/users.md |
 | lang/vendor/** | .ai/rules/vendor.md |

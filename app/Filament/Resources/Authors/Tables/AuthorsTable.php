@@ -52,7 +52,7 @@ class AuthorsTable
                         false: fn(Builder $query): Builder => $query->doesntHave('books'),
                         blank: fn(Builder $query): Builder => $query,
                     ),
-            ], layout: FiltersLayout::AboveContent)
+            ], layout: FiltersLayout::AboveContentCollapsible)
             ->recordActions([
                 EditAction::make()->iconButton(),
             ])

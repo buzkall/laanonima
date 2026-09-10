@@ -174,7 +174,7 @@ class BooksTable
 
                 TernaryFilter::make('is_active')
                     ->label(__('books.filters.active')),
-            ], layout: FiltersLayout::AboveContent)
+            ], layout: FiltersLayout::AboveContentCollapsible)
             /* Inside an author's or a publisher's tab one filter is hidden, so
                the five that remain fill the row instead of leaving a gap. */
             ->filtersFormColumns(fn(HasTable $livewire): int => $livewire instanceof RelationManager ? 3 : 4)

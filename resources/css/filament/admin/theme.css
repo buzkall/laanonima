@@ -24,3 +24,29 @@
         @apply px-1.5 py-0.5;
     }
 }
+
+/* Filters above a listing: a panel on a desktop, a button on anything smaller.
+
+   Every listing asks for `FiltersLayout::AboveContentCollapsible`, which is the
+   only layout that draws the "Filtros" trigger above the table -- the plain
+   `AboveContent` has no trigger at all, so there is nothing to collapse into.
+   Collapsed is Filament's own starting state (`areFiltersOpen: false`), and on
+   a phone or a portrait iPad that is what we want: the filter row costs half
+   the screen before a single book shows.
+
+   A desktop keeps the panel open, so the rule is inverted back from `lg` up
+   rather than the layout being chosen per device -- the server cannot know the
+   viewport, and `lg` (64rem) is the same breakpoint Filament itself uses to
+   stop collapsing the before/after-content layouts and to stop folding the
+   sidebar. The `!` is not optional: `x-show` writes `display: none` inline, and
+   only an important declaration outranks it. The trigger goes with it, since a
+   panel that cannot be closed has no use for a button that would close it. */
+.fi-ta-filters-above-content-ctn {
+    & > .fi-ta-filters {
+        @apply lg:grid!;
+    }
+
+    & > .fi-ta-filters-trigger-action-ctn {
+        @apply lg:hidden;
+    }
+}

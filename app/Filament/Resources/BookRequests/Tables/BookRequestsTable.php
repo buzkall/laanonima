@@ -89,7 +89,7 @@ class BookRequestsTable
                         false: fn(Builder $query): Builder => $query->whereNull('book_id'),
                         blank: fn(Builder $query): Builder => $query,
                     ),
-            ], layout: FiltersLayout::AboveContent)
+            ], layout: FiltersLayout::AboveContentCollapsible)
             ->recordActions([
                 EditAction::make()->iconButton(),
             ])

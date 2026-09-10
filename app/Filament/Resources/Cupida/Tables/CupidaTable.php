@@ -247,7 +247,7 @@ class CupidaTable
                columns of one word. */
             ->contentGrid(['lg' => 2])
             ->defaultSort('created_at', 'desc')
-            ->filters(self::filters(), layout: FiltersLayout::AboveContent)
+            ->filters(self::filters(), layout: FiltersLayout::AboveContentCollapsible)
             ->filtersFormColumns(4);
     }
 
