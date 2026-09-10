@@ -79,7 +79,7 @@
     'min-h-dvh' => ! $fitsViewport,
     'h-dvh wide:h-auto wide:min-h-dvh' => $fitsViewport,
                 ])
-    style="--cover: {{ $palette->background }}; --on-cover: {{ $palette->foreground }}; --accent: {{ $palette->accent }}; --rule: {{ $palette->foregroundFaded() }}"
+    style="--cover: {{ $palette->background }}; --on-cover: {{ $palette->foreground }}; --accent: {{ $palette->accent }}; --rule: {{ $palette->foregroundFaded() }}; --wordmark-blend: {{ $palette->wordmarkBlend() }}"
 >
     <x-site-header />
 

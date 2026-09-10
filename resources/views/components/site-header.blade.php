@@ -22,14 +22,17 @@
      shove the floating cover down the page every time it was opened. --}}
 <header class="relative flex items-center justify-between border-b border-[var(--rule)] bg-[var(--cover)] px-[clamp(22px,4vw,44px)] py-[18px] text-[var(--on-cover)]">
     {{-- The wordmark carries its own brand colors, so unlike the rest of the
-         header it does NOT recolour with --on-cover. --}}
+         header it does NOT recolour with --on-cover. The `wordmark` class is
+         where that costs something and what it costs: the "LA" is the house
+         mint, invisible on a cover painted in it, and the class multiplies the
+         wordmark over the covers where that happens. --}}
     <a href="{{ route('home') }}" class="transition-opacity duration-150 hover:opacity-65">
         <img
             src="{{ Vite::asset('resources/images/brand/la-anonima-logo.png') }}"
             alt="{{ config('app.name') }}"
             width="922"
             height="242"
-            class="h-[clamp(28px,4vw,36px)] w-auto drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
+            class="wordmark h-[clamp(28px,4vw,36px)] w-auto"
         />
     </a>
 

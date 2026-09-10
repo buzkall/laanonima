@@ -47,6 +47,33 @@ final readonly class CoverPalette
     }
 
     /**
+     * How the wordmark should be blended over this background: `multiply`
+     * where its own colors cannot be read on it, `normal` everywhere else.
+     *
+     * The wordmark carries its own brand colors and is never recolored, and
+     * the "LA" in it is the brand mint -- which is also the house cover color,
+     * so on the shelf and on La Cupida those two letters are painted in the
+     * background they sit on and there is nothing to see. Multiply is the way
+     * out that costs no weight: it can only darken, so the mint over mint
+     * comes back as a deeper green, the black stays black, and no glyph gains
+     * the pixel an outline would have given every one of them.
+     *
+     * Decided by contrast, like the other two, so the near-mint cover of a
+     * real book is caught as well as the house color itself, and left at
+     * `normal` everywhere the mint reads -- multiply is not free, it takes the
+     * magenta down with it. `site.palette.wordmark_min_contrast` is where the
+     * line is drawn and why.
+     */
+    public function wordmarkBlend(): string
+    {
+        $minContrast = (float)config('site.palette.wordmark_min_contrast');
+
+        return self::contrast($this->background, self::color('wordmark')) < $minContrast
+            ? 'multiply'
+            : 'normal';
+    }
+
+    /**
      * Only the "#rrggbb" that ExtractCoverColor writes is accepted; anything
      * else -- a null, a legacy value, a hand-edited row -- falls back.
      */

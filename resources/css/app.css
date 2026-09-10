@@ -20,10 +20,35 @@
     --breakpoint-wide: 1000px;
 }
 
-/* Prose from the panel's rich editor (an author's biography). It inherits the
-   size and color of wherever it is placed; this only spaces the paragraphs
-   and gives inline marks their look. */
 @layer components {
+    /* The wordmark, and the one thing done to it to keep all of it visible.
+       Its colors are its own -- black, mint and magenta, pasted and never
+       recolored -- and the "LA" is drawn in the same mint as the house cover
+       color, so on a page painted in that mint those two letters ARE the
+       background: a shadow under them shows nothing, because there is nothing
+       there to cast one.
+
+       Multiply is what brings them back, and it does it without adding a
+       pixel to anything: the blend can only darken, so the mint over mint
+       resolves to a deeper green while the black stays black. An outline was
+       tried first and is the reason this is not one -- a ring lands on every
+       glyph, not only the two that need it, and at the 28px the wordmark is
+       tall on a phone the hairlines of "LIBRERIA" clog and the whole mark
+       reads bulky.
+
+       `--wordmark-blend` comes in on the body beside `--cover` and is
+       `normal` on every page whose cover the mint can be read over, so those
+       pages are untouched; CoverPalette decides which is which. The soft
+       shadow is the one the wordmark has always had -- it is inside the
+       blend, which deepens it a little on the pages that multiply. */
+    .wordmark {
+        mix-blend-mode: var(--wordmark-blend, normal);
+        filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.45));
+    }
+
+    /* Prose from the panel's rich editor (an author's biography). It
+       inherits the size and color of wherever it is placed; this only spaces
+       the paragraphs and gives inline marks their look. */
     .rich-text > * + * {
         margin-top: 0.75em;
     }

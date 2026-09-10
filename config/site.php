@@ -59,6 +59,23 @@ return [
         'fallback' => '#80d7ac',
 
         /*
+         | The mint the "LA" of the wordmark is drawn in, and the contrast it
+         | has to manage against a cover before it can be left to stand on its
+         | own. The wordmark is pasted, never recolored, so on a cover of this
+         | luminance the letters are the background -- the house color above IS
+         | this mint, so on the shelf and on La Cupida they simply are not
+         | there -- and CoverPalette answers that by multiplying the wordmark
+         | over those covers instead of drawing it straight.
+         |
+         | 1.4:1 is chosen to sit just under the 1.50:1 the mint manages on the
+         | cream page: every page that reads today keeps exactly the wordmark
+         | it has. Raise it and pale covers start multiplying too; move
+         | "cream" and check this again.
+         */
+        'wordmark'              => '#80d7ac',
+        'wordmark_min_contrast' => 1.4,
+
+        /*
          | The cream page and the ink written on it.
          */
         'paper' => '#f4efe4',

@@ -11,6 +11,31 @@
  * will fight on every pointer move.
  */
 
+/*
+ * How wide the longest question is, in ems of the question heading's own font.
+ *
+ * The utility on the `h1` in `resources/views/livewire/cupida.blade.php`
+ * divides the column by this to size the type on a phone, so the number is
+ * what keeps the longest question of the *active* locale on one line without
+ * setting every shorter one smaller than it has to be. A locale is the only
+ * place this can live: a utility class cannot ask what language the page is
+ * in, and the strings are two thirds wider in English than in Spanish.
+ *
+ * Measured in Gloock at `tracking-[-0.01em]`, plus about 3% of slack: "What
+ * do you want from the book?" is 15.15em, "¿Qué esperas del libro?" 10.27em.
+ * Georgia and Times, the fallbacks, are both narrower, so Gloock is the case
+ * that binds. A new locale wants a line of its own here; without one it gets
+ * the English number and a heading smaller than it needs, which is the safe
+ * way to be wrong.
+ */
+:root {
+    --cupida-question-em: 15.6;
+}
+
+html:lang(es) {
+    --cupida-question-em: 10.6;
+}
+
 .cupida-stack {
     /* The cards behind step back and down, so the stack reads as a stack
        rather than as one card with a shadow.

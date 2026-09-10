@@ -72,6 +72,23 @@ it('leaves a color that already reads on the cream page alone', function(): void
     expect(CoverPalette::fromCover('#211511')->accent)->toBe('#211511');
 });
 
+it('multiplies the wordmark over a cover its own mint disappears into', function(): void {
+    /* The house color IS the mint the wordmark's "LA" is drawn in, so on the
+       shelf and on La Cupida those letters are the background. */
+    expect(CoverPalette::fromCover(config('site.palette.fallback'))->wordmarkBlend())
+        ->toBe('multiply');
+});
+
+it('leaves the wordmark alone on a cover its mint can be read over', function(string $cover) use ($contrast): void {
+    expect($contrast($cover, config('site.palette.wordmark')))
+        ->toBeGreaterThanOrEqual((float)config('site.palette.wordmark_min_contrast'))
+        ->and(CoverPalette::fromCover($cover)->wordmarkBlend())->toBe('normal');
+})->with([
+    'the cream page' => ['#f4efe4'],
+    'a near-black'   => ['#211511'],
+    'a mid teal'     => ['#3a7b86'],
+]);
+
 it('fades the foreground for rules drawn over the cover color', function(): void {
     expect(CoverPalette::fromCover('#211511')->foregroundFaded())
         ->toBe('color-mix(in srgb, ' . config('site.palette.cream') . ' 45%, transparent)');

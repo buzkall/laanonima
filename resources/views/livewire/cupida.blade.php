@@ -290,20 +290,19 @@
              reader who has just answered one card does not need telling twice
              what the number counts.
 
-             `flex-row-reverse` is why the counter is first in the DOM and last
-             on the screen: from `wide:` up the row goes back to a block and the
-             label sits above the heading, which is the order it reads in. --}}
-            <div class="wide:block flex flex-row-reverse items-baseline justify-between gap-[16px]">
-                <p class="wide:mb-[14px] m-0 shrink-0 text-[14px] font-bold tracking-[0.26em] uppercase">
-                    <span class="wide:hidden">
-                        {{ __('cupida.progress_short', ['current' => $round + 1, 'total' => $rounds]) }}
-                    </span>
+             The heading comes first in the DOM and the counter reads after
+             it, which is the order it is spoken in; `wide:order-first` is what
+             lifts the label back above the heading from `wide:` up. Doing it
+             the other way round -- counter first, `flex-row-reverse` to put it
+             on the right -- is a row whose painted order disagrees with its
+             source, and it laid out un-reversed on iOS.
 
-                    <span class="wide:inline hidden">
-                        {{ __('cupida.progress', ['current' => $round + 1, 'total' => $rounds]) }}
-                    </span>
-                </p>
-
+             The negative margin hangs the counter half a gutter into the
+             section's own padding, out of the question's way, where it reads
+             as a note in the margin rather than as part of the line. The
+             `-0.26em` is the tracking's trailing space, which would otherwise
+             leave the last digit short of where the eye puts the edge. --}}
+            <div class="wide:flex-col wide:items-stretch wide:gap-0 flex items-baseline justify-between gap-[16px]">
                 {{-- One line on a phone, and that is what the third term of the
                  `min()` buys. Every line this heading wraps to is a line the
                  deck below does not get: `main` is `flex-1` and the stack is
@@ -311,17 +310,20 @@
                  thing on the screen competing with the cards for height.
 
                  The term is the width of the column divided by the longest
-                 question there is, measured in the heading's own font:
-                 15.45em for "What do you want from the book?" set in Gloock,
-                 rounded up for slack (the Spanish questions are around
-                 10.5em, Georgia and Times are both narrower, and
-                 `tracking-[-0.01em]` takes a little more off). The column is
-                 the window less the section's own padding, which is why the
-                 `max(22px,5vw)` from `px-[clamp(22px,5vw,80px)]` is repeated
-                 here -- the clamp's ceiling never binds below `wide:`. The
-                 counter shares that column now, so its own width and the
-                 row's gap come off it too: "1/3" measures 28px at 14px with
-                 0.26em of tracking, plus the 16px gap, rounded up to 48px.
+                 question there is in ems of this font, which is a number only
+                 the locale knows: `--cupida-question-em`, set per language in
+                 `resources/css/cupida.css`, where it is measured and
+                 explained.
+
+                 The column is the window less the section's own padding,
+                 which is why the `max(22px,5vw)` from
+                 `px-[clamp(22px,5vw,80px)]` is repeated here -- the clamp's
+                 ceiling never binds below `wide:`. The counter shares that
+                 column, so what it takes comes off too: 28px of digits and a
+                 16px gap, less the half gutter it hangs back into the
+                 padding, is a little under 30px on a phone. 32px, rounded up,
+                 is the figure at every width where this term is the one that
+                 wins.
 
                  A question longer than that wraps rather than overflows,
                  which is the failure worth having: `whitespace-nowrap` would
@@ -331,9 +333,19 @@
                  `max-w-none` is part of it. The 14ch cap is what makes a
                  desktop heading break into two good lines, and it would force
                  this one to wrap however small the type got. --}}
-                <h1 class="font-display wide:max-w-[14ch] wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-none text-[min(clamp(40px,5.6vw,84px),calc((100vw-2*max(22px,5vw)-48px)/15.6))]/[0.96] font-normal tracking-[-0.01em] text-balance">
+                <h1 class="font-display wide:max-w-[14ch] wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-none text-[min(clamp(40px,5.6vw,84px),calc((100vw-2*max(22px,5vw)-32px)/var(--cupida-question-em)))]/[0.96] font-normal tracking-[-0.01em] text-balance">
                     {{ __("cupida.questions.{$question}") }}
                 </h1>
+
+                <p class="wide:order-first wide:mb-[14px] wide:mr-0 m-0 mr-[calc(-0.26em-max(22px,5vw)/2)] shrink-0 text-[14px] font-bold tracking-[0.26em] uppercase">
+                    <span class="wide:hidden">
+                        {{ __('cupida.progress_short', ['current' => $round + 1, 'total' => $rounds]) }}
+                    </span>
+
+                    <span class="wide:inline hidden">
+                        {{ __('cupida.progress', ['current' => $round + 1, 'total' => $rounds]) }}
+                    </span>
+                </p>
             </div>
         </section>
 
@@ -398,7 +410,7 @@
                                 wire:key="{{ $card->answer() }}"
                                 data-depth="{{ $depth }}"
                                 @class([
-                                'cupida-card overflow-hidden p-[clamp(22px,6vw,34px)] absolute inset-0 flex flex-col justify-between',
+                                '@container cupida-card overflow-hidden p-[clamp(22px,6vw,34px)] absolute inset-0 flex flex-col justify-between',
                                 'cupida-card--top' => $depth === 0,
                                                         ])
                                 style="--card: {{ $card->palette->background }}; --on-card: {{ $card->palette->foreground }}; --depth: {{ $depth }}"
@@ -431,12 +443,26 @@
                                     />
                                 @endif
 
-                                {{-- `hyphens-auto` and `break-words` together, and both are
-                                 needed. The card is a box about 150px wide inside its
-                                 padding on a phone and the heading's floor is 30px, so a
-                                 long word is wider than the card it is written on and has
-                                 nowhere to go: "Vidas contemporáneas" ran out of the side
-                                 of the card and over the ones behind it in the stack.
+                                {{-- The card is the only thing that can say how big
+                                 its own type should be, which is what the `cqw` term
+                                 is for. The deck is sized from the height left over
+                                 between the question and the buttons and takes its
+                                 width from that, so on a short window -- a phone with
+                                 a browser's own bars top and bottom -- the card is
+                                 narrow while `8vw` is exactly as big as ever, and
+                                 "Voces de Latinoamérica" was written off the side of
+                                 it. 100cqw is the card's content box -- its padding
+                                 is already out of it -- over the widest word the
+                                 catalog is likely to hand us: near 6.8em in Gloock,
+                                 which is "Latinoamérica".
+
+                                 `min()`, not a replacement: where the card has the
+                                 room the viewport term still wins and the type is the
+                                 size it has always been. The cq term only bites when
+                                 the card is squeezed.
+
+                                 `hyphens-auto` and `break-words` stay as the floor
+                                 under all of it, for the word longer than that.
                                  Hyphenation is the half that looks right -- the page
                                  carries `lang="es"`, so "contem-poráneas" breaks where
                                  Spanish breaks -- and it does nothing at all for a name,
@@ -444,7 +470,7 @@
                                  splits "Sigurdardóttir". `break-words` is what catches
                                  those, and only after hyphenation has had its turn. --}}
                                 <div class="min-w-0">
-                                    <h2 class="font-display text-[clamp(30px,8vw,46px)]/[1.02] m-0 font-normal text-balance hyphens-auto break-words">
+                                    <h2 class="font-display text-[min(clamp(30px,8vw,46px),calc(100cqw/6.8))]/[1.02] m-0 font-normal text-balance hyphens-auto break-words">
                                         {{ $card->label }}
                                     </h2>
 

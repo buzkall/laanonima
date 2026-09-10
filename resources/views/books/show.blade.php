@@ -112,7 +112,7 @@
 </head>
 <body
     class="bg-paper text-ink selection:text-paper font-serif text-[20px]/[1.65] antialiased selection:bg-[var(--accent)]"
-    style="--top-bar: 57px; --cover: {{ $palette->background }}; --on-cover: {{ $palette->foreground }}; --accent: {{ $palette->accent }}; --rule: {{ $palette->foregroundFaded() }}"
+    style="--top-bar: 57px; --cover: {{ $palette->background }}; --on-cover: {{ $palette->foreground }}; --accent: {{ $palette->accent }}; --rule: {{ $palette->foregroundFaded() }}; --wordmark-blend: {{ $palette->wordmarkBlend() }}"
 >
     <x-site-header />
 
