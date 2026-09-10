@@ -44,7 +44,7 @@ class BookRequestController extends Controller
             ->with('book')
             ->first();
 
-        $sentBook = $sent?->book ?? $this->catalogBookFor($sent);
+        $sentBook = $sent->book ?? $this->catalogBookFor($sent);
 
         return view('books.request', [
             'book'     => $book,
