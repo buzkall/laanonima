@@ -2,6 +2,8 @@
     :title="$publisher->name"
     :description="$publisher->description ?? __('books.public.publisher.intro', ['publisher' => $publisher->name])"
     :palette="$palette"
+    :og-image="$shareCard"
+    :og-image-alt="__('books.public.share.publisher_alt', ['publisher' => $publisher->name])"
 >
     <section class="bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(48px,7vw,104px)] pb-[clamp(52px,6vw,96px)] text-[var(--on-cover)]">
         <p class="m-0 mb-[18px] text-[14px] font-bold tracking-[0.26em] uppercase">

@@ -33,6 +33,10 @@ return [
 
     'progress' => 'Pregunta :current de :total',
 
+    /* The same counter with no room for words: it rides in the question's own
+     row below `wide:`, where the label would cost the deck a line. */
+    'progress_short' => ':current/:total',
+
     'cards' => [
         'stocked' => '{0} nada en la mesa|{1} :count libro en la librería|[2,*] :count libros en la librería',
     ],

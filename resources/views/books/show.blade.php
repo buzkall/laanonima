@@ -1,6 +1,11 @@
 @use('App\Models\BookContributor')
 @php
     $cover = $book->coverUrl();
+
+    /* The card, not the cover. A bare cover is a 2:3 portrait, and every
+       scraper crops it to 1.91:1 -- what a reader saw in a chat thread was a
+       horizontal strip of the middle of a cover with no title on it. */
+    $shareAlt = __('books.public.share.book_alt', ['title' => $book->title]);
     $inStock = $book->stock > 0;
     $stock = $inStock ? 'in_stock' : 'out_of_stock';
 
@@ -76,8 +81,25 @@
         content="{{ str(strip_tags($book->synopsis ?? $book->subtitle ?? $book->title))->limit(155) }}"
     />
     <meta property="og:url" content="{{ route('books.show', $book) }}" />
-    @if ($cover)
-        <meta property="og:image" content="{{ $cover }}" />
+    <meta property="og:site_name" content="{{ config('app.name') }}" />
+    <meta property="og:locale" content="es_ES" />
+
+    @if ($shareCard)
+        <meta property="og:image" content="{{ $shareCard }}" />
+        <meta property="og:image:secure_url" content="{{ $shareCard }}" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="{{ config('og.width') }}" />
+        <meta property="og:image:height" content="{{ config('og.height') }}" />
+        <meta property="og:image:alt" content="{{ $shareAlt }}" />
+
+        {{-- This page carried no twitter:card at all, so every X preview of a
+             book was a bare link. The card is 1.91:1 by construction, which is
+             the shape summary_large_image asks for. --}}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="{{ $shareCard }}" />
+        <meta name="twitter:image:alt" content="{{ $shareAlt }}" />
+    @else
+        <meta name="twitter:card" content="summary" />
     @endif
 
     <link rel="icon" href="/favicon.ico" sizes="any" />

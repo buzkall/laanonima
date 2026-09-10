@@ -65,6 +65,25 @@ return [
             'report'     => false,
         ],
 
+        /*
+         | The generated share cards.
+         |
+         | Its own disk for the same two reasons as 'portraits': a test can
+         | Storage::fake() it, and the one place that knows where these files
+         | live is this array. Nothing here is committed and nothing regenerates
+         | it on deploy -- a card is drawn the first time somebody opens the
+         | page it belongs to, and its name carries a fingerprint of the record,
+         | so a machine with an empty directory is one nobody has asked yet.
+         */
+        'og' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public/og'),
+            'url'        => rtrim((string)env('APP_URL', 'http://localhost'), '/') . '/storage/og',
+            'visibility' => 'public',
+            'throw'      => false,
+            'report'     => false,
+        ],
+
         's3' => [
             'driver'                  => 's3',
             'key'                     => env('AWS_ACCESS_KEY_ID'),

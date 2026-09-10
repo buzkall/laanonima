@@ -129,7 +129,7 @@ class ScrapeCupidaCatalog extends Command
         foreach ($catalog->books() as $book) {
             $this->books[(string)$book['ean']] = [
                 ...$book,
-                'author' => self::canonicalAuthor($book['author'] ?? null),
+                'author' => $this->canonicalAuthor($book['author'] ?? null),
             ];
         }
 
@@ -367,7 +367,7 @@ class ScrapeCupidaCatalog extends Command
         $this->books[$ean] = [
             ...$book,
             'ean'       => $ean,
-            'author'    => self::canonicalAuthor($book['author'] ?? null),
+            'author'    => $this->canonicalAuthor($book['author'] ?? null),
             'subjects'  => array_values(array_unique($subjects)),
             'synopsis'  => $existing['synopsis'] ?? null,
             'publisher' => $existing['publisher'] ?? null,
@@ -491,7 +491,7 @@ class ScrapeCupidaCatalog extends Command
      * liked author card, so a name corrected in one file and not the other is a
      * card that scores none of its own books.
      */
-    private static function canonicalAuthor(?string $name): ?string
+    private function canonicalAuthor(?string $name): ?string
     {
         if (! is_string($name) || blank($name)) {
             return null;
@@ -559,7 +559,7 @@ class ScrapeCupidaCatalog extends Command
             $authors[$name]['titles'][$title] = ($authors[$name]['titles'][$title] ?? 0) + 1;
         }
 
-        $authors = array_map(self::counted(...), array_values($authors));
+        $authors = array_map($this->counted(...), array_values($authors));
 
         usort($authors, fn(array $a, array $b): int => [$b['books'], $a['name']] <=> [$a['books'], $b['name']]);
 
@@ -572,7 +572,7 @@ class ScrapeCupidaCatalog extends Command
      * @param  array<string, mixed>  $author
      * @return array<string, mixed>
      */
-    private static function counted(array $author): array
+    private function counted(array $author): array
     {
         /** @var array<string, int> $copies */
         $copies = $author['titles'];

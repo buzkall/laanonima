@@ -6,13 +6,19 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Support\CoverPalette;
+use App\Support\Og\OgCard;
+use App\Support\Og\OgCardKey;
+use App\Support\Og\OgCardStore;
 use App\Support\ShelfArrangement;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
 {
+    public function __construct(private readonly OgCardStore $shareCards = new OgCardStore) {}
+
     /**
      * The shop window: everything we have put on the web, in shelf order.
      */
@@ -55,9 +61,13 @@ class BookController extends Controller
         abort_if($books->total() === 0, 404);
 
         return view('books.author', [
-            'author'  => $author,
-            'books'   => $books,
-            'palette' => CoverPalette::fromCover(null),
+            'author'    => $author,
+            'books'     => $books,
+            'palette'   => CoverPalette::fromCover(null),
+            'shareCard' => $this->shareCards->url(
+                OgCardKey::forAuthor($author, $books->total(), $this->shelfStamp($author->books())),
+                fn(): OgCard => OgCard::forAuthor($author, $books->total()),
+            ),
         ]);
     }
 
@@ -72,10 +82,16 @@ class BookController extends Controller
     {
         $publisher->load('media');
 
+        $books = Book::query()->onShelf()->whereBelongsTo($publisher)->paginate($this->perPage());
+
         return view('books.publisher', [
             'publisher' => $publisher,
-            'books'     => Book::query()->onShelf()->whereBelongsTo($publisher)->paginate($this->perPage()),
+            'books'     => $books,
             'palette'   => CoverPalette::fromCover(null),
+            'shareCard' => $this->shareCards->url(
+                OgCardKey::forPublisher($publisher, $books->total(), $this->shelfStamp($publisher->books())),
+                fn(): OgCard => OgCard::forPublisher($publisher, $books->total()),
+            ),
         ]);
     }
 
@@ -96,6 +112,12 @@ class BookController extends Controller
             'palette'       => CoverPalette::fromCover($book->cover_color),
             'alsoByAuthors' => $book->alsoByAuthors(),
             'fromPublisher' => $book->fromSamePublisher(),
+            /* Only a book that is actually on the web gets a card. A bookseller
+               previewing a draft shares without a picture rather than having
+               its title and cover written to a public path before it is out. */
+            'shareCard' => $book->is_active
+                ? $this->shareCards->url(OgCardKey::forBook($book), fn(): OgCard => OgCard::forBook($book))
+                : null,
         ]);
     }
 
@@ -106,5 +128,20 @@ class BookController extends Controller
     private function perPage(): int
     {
         return (int)config('site.shelf.per_page');
+    }
+
+    /**
+     * When anything on a shelf last moved, so a card that shows three covers is
+     * redrawn once one of them changes.
+     *
+     * Deliberately one aggregate rather than a listener per book: a shelf card
+     * depends on rows that have no idea it exists, and hanging invalidation off
+     * every one of them is how SyncCoverColor's docblock says this goes wrong.
+     *
+     * @param  Relation<Book, *, *>  $books
+     */
+    private function shelfStamp(Relation $books): ?string
+    {
+        return $books->getQuery()->clone()->active()->max('books.updated_at');
     }
 }

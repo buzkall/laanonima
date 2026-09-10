@@ -192,6 +192,19 @@ return [
 
         'shelf_back' => 'Ver toda la estantería',
 
+        /*
+         | La tarjeta que se dibuja para compartir la página. El nombre de la
+         | librería no está aquí a propósito: es una marca, no una cadena que se
+         | traduzca, y en la tarjeta se pega el logotipo tal cual.
+         */
+        'share' => [
+            'by'            => 'de :authors',
+            'count'         => '{0} Sin libros en la web|{1} :count libro en la librería|[2,*] :count libros en la librería',
+            'book_alt'      => 'Cubierta de :title',
+            'author_alt'    => 'Libros de :name en La Anónima',
+            'publisher_alt' => 'Libros de :publisher en La Anónima',
+        ],
+
         'author' => [
             'kicker' => 'Libros de',
             'intro'  => 'Todo lo que tenemos de :name en la librería. Si falta algo suyo, pídenoslo y lo encargamos.',

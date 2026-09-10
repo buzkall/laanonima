@@ -12,7 +12,7 @@ use GdImage;
  * image API arrive at. It costs one GD decode and no new dependency.
  *
  * The result is a tint to sit behind an image while it loads, or to color the
- * card around it -- not a palette. Bytes that GD cannot read yield null rather
+ * surrounding card -- not a palette. Bytes that GD cannot read yield null rather
  * than an exception, so nothing here is allowed to break a save.
  *
  * Taking bytes rather than a stored file is what lets a portrait be normalized

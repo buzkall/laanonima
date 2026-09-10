@@ -282,35 +282,59 @@
 
     @else
         <section class="shrink-0 bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(32px,5vw,72px)] pb-[clamp(28px,4vw,56px)] text-[var(--on-cover)]">
-            <p class="mb-[14px] m-0 text-[14px] font-bold tracking-[0.26em] uppercase">
-                {{ __('cupida.progress', ['current' => $round + 1, 'total' => $rounds]) }}
-            </p>
+            {{-- Below `wide:` the counter rides in the heading's own row,
+             right-aligned, rather than on a line of its own: the label line
+             plus its margin is 28px of the band, and the band is the one thing
+             on the screen competing with the cards for height. The words go
+             with it -- "Pregunta 1 de 3" does not fit beside a question, and a
+             reader who has just answered one card does not need telling twice
+             what the number counts.
 
-            {{-- One line on a phone, and that is what the third term of the
-             `min()` buys. Every line this heading wraps to is a line the deck
-             below does not get: `main` is `flex-1` and the stack is sized from
-             what is left over, so the question band is the one thing on the
-             screen competing with the cards for height.
+             `flex-row-reverse` is why the counter is first in the DOM and last
+             on the screen: from `wide:` up the row goes back to a block and the
+             label sits above the heading, which is the order it reads in. --}}
+            <div class="wide:block flex flex-row-reverse items-baseline justify-between gap-[16px]">
+                <p class="wide:mb-[14px] m-0 shrink-0 text-[14px] font-bold tracking-[0.26em] uppercase">
+                    <span class="wide:hidden">
+                        {{ __('cupida.progress_short', ['current' => $round + 1, 'total' => $rounds]) }}
+                    </span>
 
-             The term is the width of the column divided by the longest
-             question there is, measured in the heading's own font: 15.45em for
-             "What do you want from the book?" set in Gloock, rounded up for
-             slack (the Spanish questions are around 10.5em, Georgia and Times
-             are both narrower, and `tracking-[-0.01em]` takes a little more
-             off). The column is the window less the section's own padding,
-             which is why the `max(22px,5vw)` from `px-[clamp(22px,5vw,80px)]`
-             is repeated here -- the clamp's ceiling never binds below `wide:`.
+                    <span class="wide:inline hidden">
+                        {{ __('cupida.progress', ['current' => $round + 1, 'total' => $rounds]) }}
+                    </span>
+                </p>
 
-             A question longer than that wraps rather than overflows, which is
-             the failure worth having: `whitespace-nowrap` would push it off the
-             side of the screen and give the page a horizontal scroll.
+                {{-- One line on a phone, and that is what the third term of the
+                 `min()` buys. Every line this heading wraps to is a line the
+                 deck below does not get: `main` is `flex-1` and the stack is
+                 sized from what is left over, so the question band is the one
+                 thing on the screen competing with the cards for height.
 
-             `max-w-none` is part of it. The 14ch cap is what makes a desktop
-             heading break into two good lines, and it would force this one to
-             wrap however small the type got. --}}
-            <h1 class="font-display wide:max-w-[14ch] wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-none text-[min(clamp(40px,5.6vw,84px),calc((100vw-2*max(22px,5vw))/15.6))]/[0.96] font-normal tracking-[-0.01em] text-balance">
-                {{ __("cupida.questions.{$question}") }}
-            </h1>
+                 The term is the width of the column divided by the longest
+                 question there is, measured in the heading's own font:
+                 15.45em for "What do you want from the book?" set in Gloock,
+                 rounded up for slack (the Spanish questions are around
+                 10.5em, Georgia and Times are both narrower, and
+                 `tracking-[-0.01em]` takes a little more off). The column is
+                 the window less the section's own padding, which is why the
+                 `max(22px,5vw)` from `px-[clamp(22px,5vw,80px)]` is repeated
+                 here -- the clamp's ceiling never binds below `wide:`. The
+                 counter shares that column now, so its own width and the
+                 row's gap come off it too: "1/3" measures 28px at 14px with
+                 0.26em of tracking, plus the 16px gap, rounded up to 48px.
+
+                 A question longer than that wraps rather than overflows,
+                 which is the failure worth having: `whitespace-nowrap` would
+                 push it off the side of the screen and give the page a
+                 horizontal scroll.
+
+                 `max-w-none` is part of it. The 14ch cap is what makes a
+                 desktop heading break into two good lines, and it would force
+                 this one to wrap however small the type got. --}}
+                <h1 class="font-display wide:max-w-[14ch] wide:text-[clamp(40px,5.6vw,84px)]/[0.96] m-0 max-w-none text-[min(clamp(40px,5.6vw,84px),calc((100vw-2*max(22px,5vw)-48px)/15.6))]/[0.96] font-normal tracking-[-0.01em] text-balance">
+                    {{ __("cupida.questions.{$question}") }}
+                </h1>
+            </div>
         </section>
 
         <main class="bg-paper text-ink flex min-h-0 flex-1 flex-col justify-center px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,52px)] pb-[clamp(40px,5vw,80px)]">

@@ -192,6 +192,19 @@ return [
 
         'shelf_back' => 'See the whole shelf',
 
+        /*
+         | The drawn card a page is shared with. The shop's name is deliberately
+         | not here: it is a mark rather than a translatable string, and the
+         | card pastes the wordmark itself.
+         */
+        'share' => [
+            'by'            => 'by :authors',
+            'count'         => '{0} Nothing on the shelf|{1} :count book in the shop|[2,*] :count books in the shop',
+            'book_alt'      => 'Cover of :title',
+            'author_alt'    => 'Books by :name at La Anónima',
+            'publisher_alt' => 'Books from :publisher at La Anónima',
+        ],
+
         'author' => [
             'kicker' => 'Books by',
             'intro'  => 'Everything we have by :name in the shop. If something of theirs is missing, ask us and we will order it.',

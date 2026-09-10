@@ -2,6 +2,8 @@
     :title="$author->name"
     :description="$author->bioExcerpt() ?? __('books.public.author.intro', ['name' => $author->name])"
     :palette="$palette"
+    :og-image="$shareCard"
+    :og-image-alt="__('books.public.share.author_alt', ['name' => $author->name])"
 >
     <section class="bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(48px,7vw,104px)] pb-[clamp(52px,6vw,96px)] text-[var(--on-cover)]">
         <p class="m-0 mb-[18px] text-[14px] font-bold tracking-[0.26em] uppercase">

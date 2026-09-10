@@ -1,4 +1,4 @@
-@props(['title', 'description', 'palette', 'footerCta' => true, 'footerOnPhone' => true, 'fitsViewport' => false, 'ogImage' => null])
+@props(['title', 'description', 'palette', 'footerCta' => true, 'footerOnPhone' => true, 'fitsViewport' => false, 'ogImage' => null, 'ogImageAlt' => null])
 
 {{-- A shelf of books: the home page, an author's page, an imprint's page.
      None of them belongs to a single book, so all three wear the house
@@ -18,15 +18,25 @@
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:description" content="{{ str($description)->limit(155) }}" />
     <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:site_name" content="{{ config('app.name') }}" />
+    <meta property="og:locale" content="es_ES" />
 
-    {{-- A shelf is a list of covers and no one of them speaks for the page, so
-         most of these pages share without a picture. `:og-image` is for the
-         page that does have a face of its own -- La Cupida -- and it takes an
-         absolute URL, which is what `Vite::asset()` already returns. The card
-         only grows to the wide format once there is something to put in it. --}}
+    {{-- `:og-image` takes an absolute URL. La Cupida passes a committed JPEG,
+         which is what `Vite::asset()` returns; an author's page and an
+         imprint's pass a card drawn for them. The home page and the estantería
+         still pass nothing -- neither is about one thing, so there is no
+         picture that speaks for them -- and get the small card. --}}
     @if ($ogImage)
         <meta property="og:image" content="{{ $ogImage }}" />
+        <meta property="og:image:secure_url" content="{{ $ogImage }}" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="{{ config('og.width') }}" />
+        <meta property="og:image:height" content="{{ config('og.height') }}" />
+        @if ($ogImageAlt)
+            <meta property="og:image:alt" content="{{ $ogImageAlt }}" />
+        @endif
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="{{ $ogImage }}" />
     @else
         <meta name="twitter:card" content="summary" />
     @endif

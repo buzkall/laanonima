@@ -3,44 +3,28 @@
 namespace App\Actions\Books;
 
 use App\Actions\Images\ColorOfImage;
-use Illuminate\Support\Facades\Storage;
+use App\Actions\Images\MediaBytes;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Throwable;
 
 /**
  * The dominant color of a cover, as a "#rrggbb" string.
  *
- * Reading the pixels is `ColorOfImage`'s job; what belongs here is finding the
- * bytes. Nothing is allowed to break a save, so a missing, unreadable or
- * non-image file yields null rather than an exception.
+ * Reading the pixels is `ColorOfImage`'s job and finding the bytes is
+ * `MediaBytes`'; what is left here is the pair of them. Nothing is allowed to
+ * break a save, so a missing, unreadable or non-image file yields null rather
+ * than an exception -- both collaborators already hold to that.
  */
 class ExtractCoverColor
 {
-    public function __construct(private ColorOfImage $color = new ColorOfImage) {}
+    public function __construct(
+        private ColorOfImage $color = new ColorOfImage,
+        private MediaBytes $bytes = new MediaBytes,
+    ) {}
 
-    /**
-     * Read through the disk rather than Media::getPath(), which resolves to a
-     * local filesystem path and would stop working the day covers move to S3.
-     */
     public function __invoke(?Media $cover): ?string
     {
-        if (! $cover instanceof Media) {
-            return null;
-        }
+        $bytes = ($this->bytes)($cover);
 
-        try {
-            $disk = Storage::disk($cover->disk);
-            $path = $cover->getPathRelativeToRoot();
-
-            if (! $disk->exists($path)) {
-                return null;
-            }
-
-            $bytes = (string)$disk->get($path);
-        } catch (Throwable) {
-            return null;
-        }
-
-        return ($this->color)($bytes);
+        return $bytes === null ? null : ($this->color)($bytes);
     }
 }

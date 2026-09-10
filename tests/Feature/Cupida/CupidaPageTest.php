@@ -90,6 +90,7 @@ it('deals the first question once a reader starts', function(): void {
         ->call('start')
         ->assertSee(__('cupida.questions.theme'))
         ->assertSee(__('cupida.progress', ['current' => 1, 'total' => 3]))
+        ->assertSee(__('cupida.progress_short', ['current' => 1, 'total' => 3]))
         ->assertSee(__('cupida.swipe.help'));
 });
 
