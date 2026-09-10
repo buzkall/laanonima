@@ -368,7 +368,8 @@ it('bars the single English word as well as the English sentence', function(): v
     $agent = new CupidaAgent([]);
 
     expect($agent->baseInstructions())
-        ->toContain('Ni una frase entera ni una palabra suelta')
+        ->toContain('frase en inglés echa a perder la respuesta')
+        ->toContain('Si la palabra existe en español')
         ->toContain('como "cruising" o "thriller"');
 
     $fields = array_map(
@@ -568,7 +569,7 @@ it('says nothing about a promise when none was made', function(): void {
 
 it('tells the model why the liked writers are missing from the list', function(): void {
     expect(new CupidaAgent([])->baseInstructions())
-        ->toContain('no están en la lista, a propósito')
+        ->toContain('no están en la lista. Es a propósito')
         ->toContain('presentarle a alguien nuevo que se lea parecido');
 });
 

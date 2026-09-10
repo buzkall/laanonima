@@ -316,7 +316,7 @@ it('heads every card with its kind at every width, and keeps the title under it'
             expect($html)->toContain(__("cupida.kinds.{$card->kind}"))
                 /* The label before the heading, which is what puts the type at
                    the foot of a card spread by `justify-between`. */
-                ->and(strpos($html, __("cupida.kinds.{$card->kind}")))
+                ->and(strpos($html, (string)__("cupida.kinds.{$card->kind}")))
                 ->toBeLessThan(strpos($html, e($card->label)));
         }
 
