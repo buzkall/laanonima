@@ -40,7 +40,7 @@
             <img
                 src="{{ Vite::asset('resources/images/brand/la-cupida.webp') }}"
                 alt="{{ __('cupida.title') }}"
-                width="760"
+                width="788"
                 height="983"
                 class="mx-auto h-auto min-h-0 w-[min(62vw,300px)] object-contain"
             />
@@ -262,7 +262,7 @@
             <img
                 src="{{ Vite::asset('resources/images/brand/la-cupida.webp') }}"
                 alt=""
-                width="760"
+                width="788"
                 height="983"
                 class="cupida-float mb-[clamp(26px,4vw,42px)] h-auto min-h-0 w-[min(62vw,300px)] object-contain"
             />
