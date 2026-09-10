@@ -31,7 +31,8 @@ use Throwable;
         {--details : Also fetch the own page of every book that still has no synopsis}
         {--limit= : Fetch at most this many book pages this run}
         {--subjects= : Only these deck subject codes, comma separated}
-        {--fresh : Throw away what is already on disk and start the pool over}')]
+        {--fresh : Throw away what is already on disk and start the pool over}
+        {--rebuild : Rewrite authors.json from the committed pool, with no requests}')]
 class ScrapeCupidaCatalog extends Command
 {
     /** @var array<string, array<string, mixed>> keyed by EAN */
@@ -54,6 +55,10 @@ class ScrapeCupidaCatalog extends Command
 
         $this->resume();
 
+        if ($this->option('rebuild')) {
+            return $this->rebuild();
+        }
+
         try {
             $this->collectThemes($shop);
             $this->collectSpecials($shop);
@@ -70,6 +75,28 @@ class ScrapeCupidaCatalog extends Command
             }
 
             $this->components->warn('Writing what was collected before the failure.');
+        }
+
+        $this->write();
+
+        return self::SUCCESS;
+    }
+
+    /**
+     * Rewrite the files from the pool already on disk, asking the shop nothing.
+     *
+     * `authors()` is a function of books.json, so a change to how it counts or
+     * what it puts on a card only reaches a reader once the file is written
+     * again -- and a scrape run to get there is an afternoon of traffic to a
+     * small bookseller for an answer we already hold. This is how that change
+     * ships.
+     */
+    private function rebuild(): int
+    {
+        if ($this->books === []) {
+            $this->components->error('Nothing on disk to rebuild from. --rebuild cannot be used with --fresh.');
+
+            return self::FAILURE;
         }
 
         $this->write();
@@ -100,7 +127,10 @@ class ScrapeCupidaCatalog extends Command
         $catalog = app(CupidaCatalog::class);
 
         foreach ($catalog->books() as $book) {
-            $this->books[(string)$book['ean']] = $book;
+            $this->books[(string)$book['ean']] = [
+                ...$book,
+                'author' => self::canonicalAuthor($book['author'] ?? null),
+            ];
         }
 
         foreach ($catalog->themes() as $theme) {
@@ -337,6 +367,7 @@ class ScrapeCupidaCatalog extends Command
         $this->books[$ean] = [
             ...$book,
             'ean'       => $ean,
+            'author'    => self::canonicalAuthor($book['author'] ?? null),
             'subjects'  => array_values(array_unique($subjects)),
             'synopsis'  => $existing['synopsis'] ?? null,
             'publisher' => $existing['publisher'] ?? null,
@@ -448,6 +479,31 @@ class ScrapeCupidaCatalog extends Command
     }
 
     /**
+     * The shop's spelling of a name, corrected where we know it is wrong.
+     *
+     * Applied on both ways in -- the listing and the pool already on disk --
+     * because a correction added to the config has to reach the five thousand
+     * books we are not going to fetch again. `cupida:scrape --rebuild` is what
+     * carries it there.
+     *
+     * It rewrites books.json rather than only authors.json on purpose:
+     * `CupidaShortlist::authorOf()` slugs this string to match a book against a
+     * liked author card, so a name corrected in one file and not the other is a
+     * card that scores none of its own books.
+     */
+    private static function canonicalAuthor(?string $name): ?string
+    {
+        if (! is_string($name) || blank($name)) {
+            return null;
+        }
+
+        /** @var array<string, string> $aliases */
+        $aliases = (array)config('cupida.scrape.author_aliases');
+
+        return $aliases[$name] ?? $name;
+    }
+
+    /**
      * The authors deck, built out of the pool rather than fetched.
      *
      * The shop writes a name as "Guerriero, Leila". That is right for a listing
@@ -460,6 +516,24 @@ class ScrapeCupidaCatalog extends Command
      * scrape and then disappear, with nothing thrown and nothing logged. See
      * `cupida:portraits:resolve` and resources/data/cupida/author-photos.json.
      *
+     * `books` counts a writer's distinct titles, not the rows filed under
+     * their name. The shop stocks a novel in hardback, paperback and an
+     * illustrated edition, which is three rows and one book -- counting rows
+     * put James Islington (two novels, four editions) above writers with three
+     * of their own, and `cupida.deck.author_min_books` is a floor that has to
+     * mean something.
+     *
+     * `titles` is what a card says under the name, and it is ordered by how
+     * many copies the shop has of each rather than by which row the scrape met
+     * first. Depth of stock is the only signal a listing carries about which of
+     * a writer's books is the one somebody might have heard of, and it is a
+     * real one: it changed the subtitle on 203 of the 685 writers the floor
+     * lets through, and it is why García Márquez's card reads "Cien años de
+     * soledad" rather than "Cien años de soledad (edición ilustrada)", and Mr
+     * Tan's opens his series at volume one. Ties break on the title itself, so
+     * a re-scrape meeting the listing in another order cannot silently reword
+     * every card.
+     *
      * @param  array<int, array<string, mixed>>  $books
      * @return array<int, array<string, mixed>>
      */
@@ -469,8 +543,9 @@ class ScrapeCupidaCatalog extends Command
 
         foreach ($books as $book) {
             $name = $book['author'] ?? null;
+            $title = $book['title'] ?? null;
 
-            if (! is_string($name) || blank($name)) {
+            if (! is_string($name) || blank($name) || ! is_string($title) || blank($title)) {
                 continue;
             }
 
@@ -479,21 +554,37 @@ class ScrapeCupidaCatalog extends Command
                 'shop_name' => $name,
                 'slug'      => Str::slug($name),
                 'titles'    => [],
-                'books'     => 0,
             ];
 
-            $authors[$name]['titles'][] = $book['title'];
-            $authors[$name]['books']++;
+            $authors[$name]['titles'][$title] = ($authors[$name]['titles'][$title] ?? 0) + 1;
         }
 
-        $authors = array_values($authors);
+        $authors = array_map(self::counted(...), array_values($authors));
 
         usort($authors, fn(array $a, array $b): int => [$b['books'], $a['name']] <=> [$a['books'], $b['name']]);
 
-        return array_map(
-            fn(array $author): array => [...$author, 'titles' => array_slice($author['titles'], 0, 3)],
-            $authors,
-        );
+        return $authors;
+    }
+
+    /**
+     * One author's titles turned into the card's subtitle and their book count.
+     *
+     * @param  array<string, mixed>  $author
+     * @return array<string, mixed>
+     */
+    private static function counted(array $author): array
+    {
+        /** @var array<string, int> $copies */
+        $copies = $author['titles'];
+        $titles = array_keys($copies);
+
+        usort($titles, fn(string $a, string $b): int => [$copies[$b], $a] <=> [$copies[$a], $b]);
+
+        return [
+            ...$author,
+            'titles' => array_slice($titles, 0, 3),
+            'books'  => count($copies),
+        ];
     }
 
     /**

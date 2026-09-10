@@ -192,6 +192,12 @@ function useCupidaFixture(): void
        broken. */
     config()->set('cupida.deck.min_books', 1);
 
+    /* And the floor under an author, for the same reason. The real pool holds
+       seven hundred writers with two books or more; the fixture holds eleven
+       authors, ten of them with one book, so left alone the authors round
+       would be Leila Guerriero and nobody else. */
+    config()->set('cupida.deck.author_min_books', 1);
+
     /* The portraits disk goes with it. A card only carries a face when the JPEG
        is actually on this machine, so without this a test reads whatever
        `cupida:portraits:fetch` last left in storage on the developer's laptop --

@@ -15,8 +15,8 @@ use Stringable;
  *
  * It is handed a shortlist that has already been scored against what the reader
  * swiped, and its job is the half a score cannot do: pick which of thirty good
- * matches is *the* one, and say why in a way that makes somebody want to read
- * it.
+ * matches is *the* one, and introduce it the way the page has been promising
+ * since the first card -- as a date, not as a search result.
  *
  * What it explicitly cannot do is invent a book. The shortlist's EANs are
  * pinned into the response schema as an enum, so an EAN that is not in stock is
@@ -70,7 +70,7 @@ class CupidaAgent implements Agent, HasStructuredOutput
         /* The fence, not the text, is what keeps this honest. What a bookseller
            writes here is sometimes a brief ("este mes empujamos editoriales
            gallegas") and sometimes a description of who La Cupida is -- and a
-           persona dropped into a prompt whose job is to say "porque buscas X"
+           persona dropped into a prompt that also writes about the reader
            comes back out as the reader's taste: write that she is queer and
            every match line tells a stranger they were looking for something
            queer. Both kinds are the shop's, never the reader's, so both are
@@ -82,7 +82,7 @@ class CupidaAgent implements Agent, HasStructuredOutput
 
             Todo lo que sigue te describe a ti. No describe a quien está leyendo, que
             no ha dicho nada de esto: puede inclinar qué libro eliges, pero nunca se
-            cuenta como una de sus respuestas ni aparece en la línea de por qué encaja.
+            cuenta como una de sus respuestas ni se le atribuye a ella.
 
             {$extra}
             PROMPT;
@@ -96,13 +96,19 @@ class CupidaAgent implements Agent, HasStructuredOutput
         tres preguntas deslizando cartas: ha dicho que sí a unos géneros, a unas autoras y
         autores, y a unos estados de ánimo, y que no a otros.
 
-        Te doy una lista de libros que están en la librería ahora mismo. Elige UNO y
-        explícale por qué es ese.
+        Esto no es un buscador, es una cita a ciegas. Te doy una lista de libros que están
+        en la librería ahora mismo: elige UNO y preséntaselo como quien le presenta a
+        alguien con quien cree que va a saltar la chispa.
 
         Escribe en español de España y solo en español de España: la recomendación
         entera, hasta la última palabra. Los libros que te doy están en español y sus
         sinopsis también; no las traduzcas ni las parafrasees en otro idioma. Una sola
         frase en inglés echa a perder la respuesta.
+
+        Ni una frase entera ni una palabra suelta: un adjetivo inglés en mitad de una
+        frase española ("es confessional, rabiosa") es el mismo error. Si la palabra
+        existe en español, escríbela en español ("confesional"); en inglés solo se quedan
+        las que en español se dicen así de verdad, como "cruising" o "thriller".
 
         Cómo escribir:
 
@@ -115,13 +121,21 @@ class CupidaAgent implements Agent, HasStructuredOutput
         - No inventes títulos, autorías ni argumentos: usa solo lo que te doy.
         - No repitas el título dentro del texto de la recomendación; ya se ve encima.
 
-        La línea de por qué encaja es sobre esa persona, no sobre ti:
+        Sus respuestas son cómo eliges tú, no de qué va lo que escribes:
 
-        - Nómbrale solo cosas que estén en su lista de "sí", con esas mismas palabras.
+        - No se las recites. Nada de "porque dijiste que sí a esto, a esto y a esto": eso es
+          el recibo de lo que acaba de pulsar, y ya sabe lo que ha pulsado.
+        - Las cartas están escritas en su boca ("que me tenga en vilo"). Si te hace falta
+          algo de aquello, dilo con tus palabras y hablándole a ella ("te va a tener en
+          vilo"), y como mucho una cosa: la que de verdad explique este libro.
         - Nunca le atribuyas un tema, un gusto ni una identidad que no haya elegido. Lo
           que tú seas y lo que le guste a la librería no es lo que ella ha pedido.
-        - Si lo que ha dicho que sí no explica del todo el libro, di lo que sí explica y
-          para ahí. Una línea corta y cierta es mejor que una larga inventada.
+        - Si lo que ha dicho que sí no explica del todo el libro, no lo rellenes: habla del
+          libro y ya está.
+
+        Y despídela como se despide a alguien que se va a una cita: deséale la noche que le
+        espera con este libro, en una línea corta y suya. Ni un resumen de sus respuestas ni
+        una promesa de que es el libro perfecto; el gusto de abrirlo.
 
         Elige el libro que mejor case con lo que ha dicho que sí, no el más famoso. Si dos
         encajan igual, quédate con el menos obvio: para lo obvio no hace falta una librera.
@@ -143,9 +157,17 @@ class CupidaAgent implements Agent, HasStructuredOutput
      * Both written fields say "en español" as well, and it is not redundant with
      * the prompt. Haiku answering a Spanish prompt about a Spanish book has been
      * seen opening a pitch with an English translation of the synopsis it was
-     * given -- and `match_line`, whose description pins how it starts, stayed in
-     * Spanish through the same answer. What is written next to the field is what
-     * the field is written against, so the language belongs in both places.
+     * given -- and `match_line`, whose description pins the shape of the line,
+     * stayed in Spanish through the same answer. What is written next to the
+     * field is what the field is written against, so the language belongs in
+     * both places.
+     *
+     * `pitch` carries the extra clause because both misses landed there and one
+     * of them is not a translated sentence at all: a single English adjective
+     * inside a Spanish one ("es confessional, rabiosa"), which reads as Spanish
+     * until it is looked at. A blanket ban would be wrong -- "cruising" in a
+     * pitch about queer desire is the word Spanish uses -- so what the rule
+     * bars is the English spelling of a word Spanish already has.
      *
      * @return array<string, mixed>
      */
@@ -158,11 +180,11 @@ class CupidaAgent implements Agent, HasStructuredOutput
                 ->required(),
 
             'pitch' => $schema->string()
-                ->description('En español. Dos o tres frases contándole por qué le va a gustar. Sin repetir el título.')
+                ->description('En español. Dos o tres frases presentándole el libro como a una cita: qué hay dentro y cómo se lee. Sin repetir el título. Ni una frase ni un adjetivo en inglés.')
                 ->required(),
 
             'match_line' => $schema->string()
-                ->description('En español. Una sola línea corta, empezando por "Porque", diciendo con cuáles de sus respuestas encaja. Solo lo que él o ella dijo que sí; nunca los gustos de la librera.')
+                ->description('En español. La despedida antes de la cita: una sola línea muy corta, de ocho palabras o menos, deseándole lo que le espera con este libro. Nunca una lista de sus respuestas ni una frase que empiece por "Porque".')
                 ->required(),
         ];
     }
@@ -181,6 +203,13 @@ class CupidaAgent implements Agent, HasStructuredOutput
      * than a like and the scoring already treats them that way; what they buy
      * in the prompt is a model that does not reach for a genre the reader
      * turned down to explain the choice.
+     *
+     * Handing the list over is not the same as asking for it back. Read out, it
+     * is a receipt for eighteen swipes the reader has just made, and it was:
+     * every line came back as "porque dijiste que sí a X, a Y y a Z", card
+     * labels and all -- including the moods, which are written in the reader's
+     * own mouth ("que me tenga en vilo") and so came back ungrammatical too.
+     * `baseInstructions()` and `promptFor()` both say what it is for.
      */
     public function answers(): string
     {

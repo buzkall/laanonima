@@ -200,7 +200,7 @@ it('lifts the neighbors of a liked book, not only the book', function(): void {
 it('asks for Spanish twice, in the prompt and beside each field it writes', function(): void {
     /* Haiku has been seen opening a pitch with an English translation of the
        Spanish synopsis it was handed, while `match_line` -- whose description
-       pins how the line starts -- stayed in Spanish through the same answer.
+       pins the shape of the line -- stayed in Spanish through the same answer.
        Saying it in the prompt alone was not enough, so both places are held
        here. */
     $agent = new CupidaAgent([]);
@@ -214,6 +214,27 @@ it('asks for Spanish twice, in the prompt and beside each field it writes', func
 
     expect($fields['pitch']['description'])->toStartWith('En español.')
         ->and($fields['match_line']['description'])->toStartWith('En español.');
+});
+
+it('bars the single English word as well as the English sentence', function(): void {
+    /* Both misses in the log are in the pitch and only one is a translation: a
+       whole opening sentence in English, and "es confessional, rabiosa" -- an
+       English adjective inside a Spanish sentence, which reads as Spanish until
+       it is looked at. What is barred is the English spelling of a word Spanish
+       already has, not every English word: "cruising" in a pitch about queer
+       desire is the word Spanish uses. */
+    $agent = new CupidaAgent([]);
+
+    expect($agent->baseInstructions())
+        ->toContain('Ni una frase entera ni una palabra suelta')
+        ->toContain('como "cruising" o "thriller"');
+
+    $fields = array_map(
+        Serializer::serialize(...),
+        $agent->schema(new JsonSchemaTypeFactory),
+    );
+
+    expect($fields['pitch']['description'])->toContain('Ni una frase ni un adjetivo en inglés.');
 });
 
 it('hands the model what the reader actually swiped, in the words on the cards', function(): void {
@@ -241,6 +262,29 @@ it('hands the model what the reader actually swiped, in the words on the cards',
 
         return true;
     });
+});
+
+it('bars the match line from reading back the swipes, in the prompt and beside the field', function(): void {
+    /* Handing the model the reader's answers stopped it inventing a taste and
+       started it reciting one: every line came back as "porque dijiste que sí a
+       X, a Y y a Z" -- the card labels verbatim, moods included, which are
+       written in the reader's own mouth ("que me tenga en vilo") and so came
+       back ungrammatical as well. The line is a send-off to a date now, and
+       both places that write it say so. */
+    $agent = new CupidaAgent([]);
+
+    expect($agent->baseInstructions())
+        ->toContain('No se las recites.')
+        ->toContain('es una cita a ciegas');
+
+    $fields = array_map(
+        Serializer::serialize(...),
+        $agent->schema(new JsonSchemaTypeFactory),
+    );
+
+    expect($fields['match_line']['description'])
+        ->toContain('Nunca una lista de sus respuestas')
+        ->not->toContain('empezando por "Porque"');
 });
 
 it('tells the model the shop\'s own block is the librera and never the reader', function(): void {

@@ -55,6 +55,19 @@ the card has to fall back to no face rather than to a broken one. One directory
 listing per request answers it for all six cards -- never a `Storage::exists()`
 per card.
 
+A pool of seven hundred also means the deck reaches entities the shop files
+under an author name that are not writers at all -- "Shine", the production
+company behind the MasterChef books, was dealt as a card before it was marked
+`--none`. Most of the pool has never been through a portraits review, so nothing
+has said "not a person" about it. When one surfaces, `--none` is the answer; a
+spelling that will come back with the next scrape belongs in
+`collective_patterns` instead.
+
+`cupida.portraits.pool` is what the resolve command walks, and it is not the
+deck's floor. Every name costs two requests whether or not it comes back with a
+face, and the answers are reviewed by hand, so it is sized as an afternoon's work
+and raised a chunk at a time. The run resumes, so nothing recorded is asked twice.
+
 `status` carries five verdicts and the misses matter as much as the hits: without
 a `no_match`/`no_image` row, the names Wikidata will never answer cost two
 requests apiece on every run, forever. `pinned` rows are what a person decided by
@@ -68,7 +81,7 @@ silently. `--forget-pins` is how to mean it.
 a `P106` in `cupida.portraits.occupations`. Drop the second half and searching
 "Mary Oliver" reaches a Dutch jazz singer (who has a photo) instead of the poet
 (who does not), and "Michael McDowell" reaches an Irish politician instead of the
-novelist. Measured over the whole 150-name pool it finds 118 faces; over a
+novelist. Measured over the whole 150-name portraits pool it finds 118 faces; over a
 19-name sample checked by hand, unguarded gave thirteen photos of which two were
 the wrong person, guarded gave eleven and none wrong. Losing two faces to keep
 two strangers off the cards is the trade. Do not relax it to raise the number.
@@ -83,13 +96,18 @@ step is part of the job rather than a nice-to-have.
 The pool is a scrape of a shop's author field, so it carries anthology markers
 ("Vv. Aa.", "Varios Autores", "Vv.Aa.3") and shared pen names among the writers.
 "¿Te gusta Vv. Aa.?" is a card nobody can answer. They are recorded as
-`status: no_person` and `CupidaDeck::authorCards()` filters them **before** the
-slice, so the pool stays 150 real writers deep rather than 145.
+`status: no_person`, and `CupidaDeck::authorCards()` drops them in the same pass
+as the floor.
 
-The recurring shop-ism is matched by `cupida.portraits.collective_patterns`
-before any request is made, because it comes back under a new spelling every time
-the catalog grows. A shared byline with a real Wikidata item is a judgment
-call no pattern expresses: mark it with `--none`.
+The recurring shop-ism is matched by `cupida.portraits.collective_patterns`,
+because it comes back under a new spelling every time the catalog grows. That
+check lives in `CupidaCatalog::isCollectiveName()` and is asked twice: by
+`cupida:portraits:resolve` before any request is made, and by the deck on every
+draw. Both are needed. author-photos.json only reaches `cupida.portraits.pool`
+names and the deck reaches every writer above the floor -- several times
+further -- so a `no_person` row cannot be the only answer. A shared byline with
+a real Wikidata item is a judgment call no pattern expresses: mark it with
+`--none`.
 
 ## The photo credit sits under the deck, and is not a link
 
@@ -117,6 +135,75 @@ and some of it is provenance rather than a name.
 There was a credits list at the foot of /la-cupida naming every portrait we hold.
 It is gone on purpose: a reader meets six author cards and the list credited a
 hundred and thirteen photographs, nearly all for faces that session never showed.
+
+## The authors round has a floor, not a ranking
+
+`cupida.deck.author_min_books` is two, and every writer at or above it is
+dealable. It was `author_pool`, the best-stocked 150 names, and that is worth
+knowing because of how it failed rather than because it was wrong to try.
+
+There has to be some floor: 2,798 of the 3,512 names in the pool have exactly one
+book, so a flat shuffle deals six writers nobody has heard of. But a **rank** cut
+lands wherever it lands. The 150th name sat in the middle of the four-book tie,
+which the scrape breaks alphabetically, so the last fifth of the pool was frozen
+as the four-book writers sorting before "Masashi" -- and the twenty-odd with the
+identical claim sorting after it could never be dealt at all. A floor on the books
+has no inside and outside to be arbitrary about.
+
+Two rather than four is a trade with a named price. Six drawn out of 150 repeats
+a writer about every fourth session, which a reader who plays twice in a week
+notices; six out of 685 does not. In exchange the pool reaches further down the
+shelf, so more cards are names to be met rather than recognized. Do not read a
+run of unfamiliar cards as a bug -- that is the setting, and the lever is this
+number.
+
+`cupida.portraits.pool` is a **different** number on purpose (see below): raising
+the deck's reach costs nothing, raising the portraits' reach costs an afternoon
+of Wikidata requests reviewed by hand. Most of the pool is dealt faceless, which
+is the ordinary case the card was always built for.
+
+`useCupidaFixture()` lowers the floor to one, the way it lowers
+`deck.min_books`: the fixture is eleven authors and one of them has two books.
+
+## `books` counts titles, never copies
+
+`ScrapeCupidaCatalog::authors()` counts a writer's **distinct** titles. The shop
+stocks a novel in hardback, paperback and an illustrated edition -- three rows,
+one book -- and counting rows put James Islington (two novels, four editions)
+above writers with three of their own. A floor has to mean something.
+
+The same count orders `titles`, whose first entry is the card's subtitle. Depth
+of stock is the only signal a listing carries about which of a writer's books
+somebody might have heard of, and it is a real one: it changed 203 of the 685
+subtitles, and it is why García Márquez's card reads "Cien años de soledad"
+rather than "Cien años de soledad (edición ilustrada)". Ties break on the title
+itself so a re-scrape meeting the listing in another order cannot silently reword
+every card.
+
+`authors.json` is a function of `books.json`, so a change here only reaches a
+reader once the file is written again. `cupida:scrape --rebuild` does exactly
+that and asks the shop nothing -- an afternoon of traffic to a small bookseller
+for an answer already on disk is not a trade worth making.
+
+## The shop's listing loses the letters Spanish does not use
+
+There is not one å, ø or æ in five thousand books, and where one belongs the
+shop leaves a space. Nothing in `ShopScraper` does this -- the pages are
+ISO-8859-1, the conversion happens before parsing and every Spanish accent in
+the pool is intact -- so it is their data, and a re-scrape brings it back every
+time. That is why the fix is `cupida.scrape.author_aliases`, keyed by the shop's
+spelling exactly as it appears, and not an edit to books.json.
+
+Knausgård is the case that shows why it matters: filed as both "Knausg rd" and
+"Knausgard", he was two authors with a book and two books, neither deep enough
+to be dealt. `ScrapeCupidaCatalog::canonicalAuthor()` runs on both ways in --
+the listing and the pool already on disk -- and rewrites **books.json**, not
+just authors.json, because `CupidaShortlist::authorOf()` slugs that same string
+to match a book against a liked card. Corrected in one file and not the other is
+a card that scores none of its own books.
+
+Known and not fixed: "Kamo No, Ch& X0014d" is a numeric entity that arrived
+already broken, not a lost character, and guessing at it is a different job.
 
 ## The scrape resumes; build the pool over several runs
 Every run reads the committed JSON first, adds to it, and re-fetches nothing it has. The synopsis pass is one request per book and only looks at books without one; `--limit` takes a chunk and the closing line reports what is left. `--fresh` is the only way a dropped book leaves the pool. Never try to fetch the whole catalog in one sitting -- that is what gets the address blocked.

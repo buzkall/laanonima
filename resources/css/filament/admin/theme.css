@@ -50,3 +50,20 @@
         @apply lg:hidden;
     }
 }
+
+/* Header actions on the reading edge, on a phone only.
+
+   `.fi-header` is a column below `sm` and a `justify-between` row from there
+   up, so on a desktop the action group already sits at the far end of the
+   header and this rule changes nothing. Stacked, though, the group is a
+   full-width row that Filament packs at the start (`Alignment::Start` is the
+   default in the `actions` component, and nothing here overrides it), leaving
+   the buttons under the heading and the rest of the row empty.
+
+   Done here rather than with `getHeaderActionsAlignment()`, because
+   `fi-align-end` right-aligns by reversing the row -- the buttons would come
+   out in the opposite order, on every viewport. `justify-end` moves them
+   without touching the order. */
+.fi-header-actions-ctn > .fi-ac.fi-align-start {
+    @apply max-sm:justify-end;
+}

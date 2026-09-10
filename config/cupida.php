@@ -35,16 +35,31 @@ return [
         'min_books' => 20,
 
         /*
-         | How many of the best-stocked names the authors round draws from.
+         | The fewest distinct titles by one writer the authors round will deal.
          |
          | A flat shuffle of every author the shop lists is a deck of six
-         | writers nobody has heard of: the long tail is almost all the list.
-         | But too narrow a slice is six household names, and this is a shop
-         | that specializes in women and independent imprints -- the writers it
-         | is actually known for sit below the first page of the ranking. This
-         | is the width that reaches them and still recognizes itself.
+         | writers nobody has heard of: two thousand seven hundred of the three
+         | and a half thousand names in the pool have exactly one book. So there
+         | has to be a floor, and this is it.
+         |
+         | It used to be a rank cut -- the best-stocked hundred and fifty names
+         | -- and a rank cut falls where it falls. The boundary landed in the
+         | middle of the four-book tie, which the scrape breaks alphabetically,
+         | so the last fifth of the pool was the four-book writers whose name
+         | sorts before "Masashi" and the ones after it could never be dealt at
+         | all. A floor on the books has no such inside and outside.
+         |
+         | Two rather than four is a trade, and it is worth naming: six drawn
+         | out of a hundred and fifty is a writer repeated about every fourth
+         | session, which a reader who plays twice in a week notices, and six
+         | out of seven hundred is not. The price is that the pool reaches
+         | further down the shelf and more of the cards are names to be met
+         | rather than recognized.
+         |
+         | It counts titles, never copies. Two editions of one novel are one
+         | book here -- see `ScrapeCupidaCatalog::authors()`.
          */
-        'author_pool' => 150,
+        'author_min_books' => 2,
 
         /*
          | Every card is painted like a book card: one flat color with cream or
@@ -178,6 +193,22 @@ return [
     */
 
     'portraits' => [
+        /*
+         | How many of the best-stocked names `cupida:portraits:resolve` asks
+         | about.
+         |
+         | Not the same number as the deck's pool, and deliberately so. Every
+         | name costs two requests to Wikidata and Commons whether or not it
+         | comes back with a face, and the answers are reviewed by hand -- so
+         | this is an afternoon's work, sized on purpose, while the deck's floor
+         | is sized on what makes a good card. The deck reaching a writer this
+         | has not reached yet is the ordinary case, and it deals them faceless.
+         |
+         | Raise it to buy more faces, a chunk at a time. The run resumes, so
+         | nothing already recorded is asked about twice.
+         */
+        'pool' => 150,
+
         /*
          | Wikimedia answers an unidentified client with a 403, so this must
          | name the project and carry a contact address.
@@ -520,6 +551,35 @@ return [
          | parsed or every accent arrives as mojibake.
          */
         'challenge_cookie' => 'ew_hc',
+
+        /*
+         | Names the shop's own listing spells wrong, and what they are.
+         |
+         | Nothing in this scraper mangles a character: the pages are ISO-8859-1
+         | and the conversion keeps every Spanish accent in the pool intact.
+         | What the shop has lost is the letters Spanish does not use. There is
+         | not one å, ø or æ in five thousand books, and where one belongs there
+         | is a space -- so "Knausgård" is listed as "Knausg rd" and comes back
+         | as the card "Karl Ove Knausg Rd".
+         |
+         | Left alone that is worse than a typo. Knausgård is filed under both
+         | spellings, which splits his books across two authors, and neither
+         | half is deep enough to be worth dealing -- and because
+         | `CupidaShortlist::authorOf()` matches a book to a liked card by the
+         | slug of this very string, saying yes to one of him scores the other's
+         | books at nothing.
+         |
+         | So it is corrected here, on the way in, and the key is the shop's
+         | spelling exactly as it appears. A re-scrape brings the broken name
+         | back every time -- it is their data, not ours -- which is why this
+         | is a map in the config and not an edit to books.json.
+         */
+        'author_aliases' => [
+            'Knausg Rd, Karl Ove' => 'Knausgård, Karl Ove',
+            'Knausgard, Karl Ove' => 'Knausgård, Karl Ove',
+            'Bj Rk, Samuel'       => 'Bjørk, Samuel',
+            'Lindstr M, Merethe'  => 'Lindstrøm, Merethe',
+        ],
 
         'user_agent' => env(
             'CUPIDA_USER_AGENT',

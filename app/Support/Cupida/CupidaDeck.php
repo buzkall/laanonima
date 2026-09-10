@@ -76,37 +76,41 @@ final readonly class CupidaDeck
     }
 
     /**
-     * The authors round, drawn off the top of the catalog rather than out of
-     * all of it.
+     * The authors round, drawn from every writer the shop stocks more than one
+     * book by.
      *
-     * A flat shuffle of every name the shop stocks is a deck of six writers
-     * nobody has heard of, because the long tail is almost all of the list. So
-     * the draw is from the best-stocked `pool` names -- which is where the
-     * writers a reader might recognize are -- and the shuffle happens inside
-     * that.
+     * A flat shuffle of every name in the pool is a deck of six writers nobody
+     * has heard of, because the long tail -- four names in five -- is authors
+     * with a single title. So there is a floor, `cupida.deck.author_min_books`,
+     * and the shuffle happens above it.
      *
-     * Collectives are dropped first: see `CupidaCatalog::isCollective()`.
+     * The floor is on the books and not on the ranking, which it was: a rank
+     * cut lands wherever it lands, and this one landed inside the four-book
+     * tie the scrape breaks alphabetically, so a fifth of the pool was frozen
+     * and the writers on the far side of the alphabet were unreachable.
+     *
+     * Collectives are dropped with it: see `CupidaCatalog::isCollective()`.
      *
      * @return array<int, CupidaCard>
      */
     private static function authorCards(CupidaCatalog $catalog, Randomizer $randomizer, int $size): array
     {
-        /* Before the slice, not after: the shop files anthologies under an
-           author name, so the pool carries "Vv. Aa." and "Varios Autores"
-           among the writers, and a byline like Carmen Mola is three people.
-           None of them is a question a reader can answer by swiping. Dropping
-           them first also keeps the pool a hundred and fifty real writers deep
-           rather than a hundred and forty-five. */
+        $minimum = (int)config('cupida.deck.author_min_books');
+
+        /* The shop files anthologies under an author name, so the pool carries
+           "Vv. Aa." and "Varios Autores" among the writers, and a byline like
+           Carmen Mola is three people. None of them is a question a reader can
+           answer by swiping. */
         $authors = array_values(array_filter(
             $catalog->authors(),
-            fn(array $author): bool => ! $catalog->isCollective((string)$author['slug']),
+            fn(array $author): bool => (int)$author['books'] >= $minimum
+                && ! $catalog->isCollective((string)$author['slug'], (string)$author['name']),
         ));
 
-        $authors = array_slice($authors, 0, (int)config('cupida.deck.author_pool'));
         $authors = array_slice($randomizer->shuffleArray($authors), 0, $size);
 
-        /* The portrait is looked up here, after both randomizer calls, so the
-           sequence of draws is untouched by whether we happen to have a face. */
+        /* The portrait is looked up here, after the shuffle, so the sequence
+           of draws is untouched by whether we happen to have a face. */
         return self::paint($randomizer, array_map(
             fn(array $author): array => [
                 'kind'     => 'author',

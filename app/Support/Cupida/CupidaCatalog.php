@@ -4,6 +4,7 @@ namespace App\Support\Cupida;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * The three JSON files under resources/data/cupida, read once.
@@ -272,10 +273,36 @@ class CupidaCatalog
      * "Vv. Aa." and "Varios Autores" alongside real writers, and a byline like
      * Carmen Mola is three people. None of them is a question a reader can
      * answer by swiping, and none of them has a face.
+     *
+     * Two answers, because there are two kinds. A `no_person` row is somebody's
+     * judgment, recorded while reviewing portraits, and it is the only thing
+     * that catches a shared pen name with a real Wikidata item behind it. The
+     * patterns catch the shop-ism, and they have to be asked here rather than
+     * only in `cupida:portraits:resolve`: author-photos.json reaches as far as
+     * `cupida.portraits.pool` and the deck reaches every writer above
+     * `cupida.deck.author_min_books`, which is several times further. Without
+     * the second half, "Vv.Aa.12" is a card the moment it turns up outside the
+     * portraits pool -- and it turns up under a new spelling every time the
+     * catalog grows.
      */
-    public function isCollective(string $slug): bool
+    public function isCollective(string $slug, ?string $name = null): bool
     {
-        return ($this->portraits()[$slug]['status'] ?? null) === 'no_person';
+        if (($this->portraits()[$slug]['status'] ?? null) === 'no_person') {
+            return true;
+        }
+
+        return $name !== null && self::isCollectiveName($name);
+    }
+
+    /**
+     * A name that says "this is not one writer" before anything is asked of it.
+     */
+    public static function isCollectiveName(string $name): bool
+    {
+        return Str::is(
+            (array)config('cupida.portraits.collective_patterns'),
+            Str::lower(Str::ascii($name)),
+        );
     }
 
     /**

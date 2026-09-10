@@ -3201,6 +3201,19 @@
         },
         "checked_at": "2026-09-08"
     },
+    "shine": {
+        "slug": "shine",
+        "name": "Shine",
+        "status": "no_person",
+        "qid": null,
+        "pinned": true,
+        "wikidata": null,
+        "photo": null,
+        "image_url": null,
+        "color": null,
+        "credit": null,
+        "checked_at": "2026-09-10"
+    },
     "silva-lorenzo": {
         "slug": "silva-lorenzo",
         "name": "Lorenzo Silva",

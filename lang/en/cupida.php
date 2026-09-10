@@ -86,14 +86,14 @@ return [
     ],
 
     'result' => [
-        'kicker'         => 'Your book',
+        'kicker'         => 'Your date',
         'heading'        => 'We think it is this one',
         'by'             => 'by :author',
         'read_more'      => 'See the book',
         'buy'            => 'See it in the shop',
         'more'           => 'Read the rest',
         'again'          => 'Again',
-        'fallback_pitch' => 'It is the closest thing to what you told us. Come by the shop and we will tell you why.',
+        'fallback_pitch' => 'This is the one we would bet the date on. Come by the shop and we will tell you why.',
     ],
 
     'empty' => [
@@ -165,6 +165,11 @@ return [
         'shortlist' => [
             'same'    => 'Without the model we would have given this one',
             'instead' => 'Without the model we would have given: :book',
+        ],
+
+        'export' => [
+            'action'  => 'Download the log',
+            'tooltip' => 'A JSON of whatever is on screen: the answers, the book, the pitch we wrote and what it cost. Meant to be handed to a model to say how well it is doing.',
         ],
 
         'credit' => [

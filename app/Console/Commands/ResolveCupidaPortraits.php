@@ -178,22 +178,29 @@ class ResolveCupidaPortraits extends Command
      */
     private function outstanding(CupidaCatalog $catalog): array
     {
-        $pool = array_slice($catalog->authors(), 0, (int)config('cupida.deck.author_pool'));
+        $pool = array_slice($catalog->authors(), 0, (int)config('cupida.portraits.pool'));
         $asked = $this->slugsAsked();
 
         if ($asked !== []) {
             $known = array_column($pool, 'slug');
 
             foreach (array_diff($asked, $known) as $stranger) {
-                $this->components->warn("{$stranger} is not in the deck pool; asking anyway.");
+                $this->components->warn("{$stranger} is not in the portraits pool; asking anyway.");
             }
 
             $wanted = array_values(array_filter($pool, fn(array $a): bool => in_array($a['slug'], $asked, true)));
 
-            /* An --only slug that is not in the pool is still answerable: it may
-               be a name that has just dropped out of the top of the ranking. */
+            /* An --only slug outside the pool is the ordinary case rather than
+               the odd one: the deck deals every writer above
+               `cupida.deck.author_min_books` and this command walks the top
+               `cupida.portraits.pool` of them, which is several times fewer. So
+               the name is looked up in the whole catalog, and only a slug that
+               is in no file at all falls back to standing for itself -- a row
+               named "shine" rather than "Shine" is what that fallback writes. */
+            $everyone = array_column($catalog->authors(), null, 'slug');
+
             foreach (array_diff($asked, $known) as $stranger) {
-                $wanted[] = ['slug' => $stranger, 'name' => $stranger];
+                $wanted[] = $everyone[$stranger] ?? ['slug' => $stranger, 'name' => $stranger];
             }
 
             return $wanted;
@@ -270,7 +277,7 @@ class ResolveCupidaPortraits extends Command
         /* The shop files anthologies under an author name, and the spelling
            changes every time the catalog grows. Caught here, before any
            request, because there is nothing to ask about. */
-        if ($this->isCollectiveName($name)) {
+        if (CupidaCatalog::isCollectiveName($name)) {
             $this->record($slug, $name, 'no_person', pinned: false);
             $this->components->twoColumnDetail($name, '<fg=gray>not a person</>');
 
@@ -405,13 +412,6 @@ class ResolveCupidaPortraits extends Command
         }
     }
 
-    private function isCollectiveName(string $name): bool
-    {
-        $folded = Str::lower(Str::ascii($name));
-
-        return Str::is((array)config('cupida.portraits.collective_patterns'), $folded);
-    }
-
     private function report(CupidaCatalog $catalog): void
     {
         $count = fn(string $status): int => count(array_filter(
@@ -444,7 +444,7 @@ class ResolveCupidaPortraits extends Command
            face. Keeping it is right -- deleting an afternoon's work on the
            strength of one scrape run is not a trade worth making -- but it has
            to say so. */
-        $pool = array_column(array_slice($catalog->authors(), 0, (int)config('cupida.deck.author_pool')), 'slug');
+        $pool = array_column(array_slice($catalog->authors(), 0, (int)config('cupida.portraits.pool')), 'slug');
         $orphans = array_diff(array_keys($this->portraits), $pool);
 
         if ($orphans !== []) {
@@ -452,7 +452,7 @@ class ResolveCupidaPortraits extends Command
                 '%d %s for authors no longer in the top %d (kept, not deleted).',
                 count($orphans),
                 Str::plural('portrait', count($orphans)),
-                (int)config('cupida.deck.author_pool'),
+                (int)config('cupida.portraits.pool'),
             ));
         }
 

@@ -201,6 +201,12 @@ class RecommendBook
     /**
      * The answers first and the books second, because that is the order the
      * question is asked in: this is what they said, now pick from these.
+     *
+     * The line that introduces them says what they are for, because the list on
+     * its own reads as something to hand back -- and was handed back, as
+     * "porque dijiste que sí a X, a Y y a Z". The rule is in
+     * `CupidaAgent::baseInstructions()`; this is the same rule where the
+     * temptation actually sits.
      */
     private function promptFor(CupidaAgent $agent): string
     {
@@ -210,7 +216,7 @@ class RecommendBook
 
         return $answers === ''
             ? $books
-            : "Esto es lo que ha respondido:\n\n{$answers}\n\n{$books}";
+            : "Esto es lo que ha respondido, y es para que elijas tú, no para recitárselo:\n\n{$answers}\n\n{$books}";
     }
 
     /**

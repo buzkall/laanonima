@@ -89,14 +89,14 @@ return [
     ],
 
     'result' => [
-        'kicker'         => 'Tu libro',
+        'kicker'         => 'Tu cita',
         'heading'        => 'Creemos que es este',
         'by'             => 'de :author',
         'read_more'      => 'Ver el libro',
         'buy'            => 'Verlo en la librería',
         'more'           => 'Seguir leyendo',
         'again'          => 'Otra vez',
-        'fallback_pitch' => 'Es lo que más se parece a lo que nos has dicho. Pásate por la librería y te contamos por qué.',
+        'fallback_pitch' => 'Nos jugamos la cita a este. Pásate por la librería y te contamos por qué.',
     ],
 
     'empty' => [
@@ -168,6 +168,11 @@ return [
         'shortlist' => [
             'same'    => 'Sin IA habríamos dado este mismo',
             'instead' => 'Sin IA habríamos dado: :book',
+        ],
+
+        'export' => [
+            'action'  => 'Descargar registro',
+            'tooltip' => 'Un JSON con lo que hay en pantalla: las respuestas, el libro, la ficha que le escribimos y lo que costó. Pensado para dárselo a una IA y que te diga qué tal lo está haciendo.',
         ],
 
         'credit' => [

@@ -5,54 +5,43 @@
         "slug": "sanderson-brandon",
         "titles": [
             "El aliento de los Dioses",
-            "El aliento de los Dioses",
-            "El aliento de los Dioses"
+            "Arcanum Ilimitado",
+            "El Héroe de las Eras (Nacidos de la bruma Mistborn 3)"
         ],
-        "books": 64
+        "books": 53
     },
     {
         "name": "Dav Pilkey",
         "shop_name": "Pilkey, Dav",
         "slug": "pilkey-dav",
         "titles": [
-            "El Club de Cómic de Chikigato. Perspectivas",
-            "El Capitán Calzoncillos y el contraataque de Cocoliso Cacapipi",
-            "El Capitán Calzoncillos y el perverso plan del profesor Pipicaca"
+            "El Capitán Calzoncillos y la furia de la Supermujer Macroelástica",
+            "El Capitán Calzoncillos y la repugnante revancha de los calzones robótico-radiactivos",
+            "El Capitán Calzoncillos y el contraataque de Cocoliso Cacapipi"
         ],
-        "books": 34
+        "books": 32
     },
     {
         "name": "Juan Gómez-Jurado",
         "shop_name": "Gómez-Jurado, Juan",
         "slug": "gomez-jurado-juan",
         "titles": [
-            "Mentira",
             "Todo muere (Todo arde 3)",
-            "Todo muere (Todo arde 3)"
+            "Amanda Black - Escape Book: El secreto de la mansión Black",
+            "Amanda Black 1 - Una herencia peligrosa"
         ],
-        "books": 27
+        "books": 26
     },
     {
         "name": "Ursula K. Le Guin",
         "shop_name": "K. Le Guin, Ursula",
         "slug": "k-le-guin-ursula",
         "titles": [
-            "El cumpleaños del mundo",
-            "El nombre del mundo es Bosque",
-            "La rueda celeste"
+            "La mano izquierda de la oscuridad",
+            "Los desposeídos",
+            "Contar es escuchar"
         ],
-        "books": 25
-    },
-    {
-        "name": "Santiago Posteguillo",
-        "shop_name": "Posteguillo, Santiago",
-        "slug": "posteguillo-santiago",
-        "titles": [
-            "Maldita Roma (Serie Julio César 2)",
-            "Roma soy yo (Serie Julio César 1)",
-            "El hijo del cónsul (Campaña edición limitada) (Trilogía Africanus 1) (Trilogía Africanus 1)"
-        ],
-        "books": 24
+        "books": 23
     },
     {
         "name": "J. R. R. Tolkien",
@@ -60,65 +49,98 @@
         "slug": "tolkien-j-r-r",
         "titles": [
             "El Hobbit",
-            "El Señor de los Anillos 1. La Comunidad del Anillo (edición revisada)",
-            "El Silmarillion. Edición ilustrada por el autor"
+            "Cartas de Papá Noel (edición de lujo)",
+            "Cuentos inconclusos Ilustrada por A.Lee, J.Howe,T.Nasmith (revisada)"
         ],
-        "books": 22
+        "books": 21
+    },
+    {
+        "name": "Santiago Posteguillo",
+        "shop_name": "Posteguillo, Santiago",
+        "slug": "posteguillo-santiago",
+        "titles": [
+            "El hijo del cónsul (Trilogía Africanus 1)",
+            "Maldita Roma (Serie Julio César 2)",
+            "Roma soy yo (Serie Julio César 1)"
+        ],
+        "books": 18
     },
     {
         "name": "Stephen King",
         "shop_name": "King, Stephen",
         "slug": "king-stephen",
         "titles": [
+            "Carrie",
             "Cementerio de animales",
-            "22/11/63",
-            "Almuerzo en el café Gotham"
+            "Cuento de hadas"
         ],
-        "books": 22
+        "books": 18
     },
     {
         "name": "Roberto Santiago",
         "shop_name": "Santiago, Roberto",
         "slug": "santiago-roberto",
         "titles": [
-            "Cómic Los Futbolísimos 1: El misterio de los árbitros voladores",
+            "Adolescer 2055",
             "Ana Tramel",
-            "Cómic Los Futbolísimos 2: El misterio del torneo de Navidad"
+            "Cómic Los Futbolísimos 1: El misterio de los árbitros voladores"
         ],
         "books": 16
-    },
-    {
-        "name": "María Oruña",
-        "shop_name": "Oruña, María",
-        "slug": "oruna-maria",
-        "titles": [
-            "La Cámara de las Maravillas",
-            "Los inocentes",
-            "El albatros negro"
-        ],
-        "books": 15
-    },
-    {
-        "name": "Gabriel García Márquez",
-        "shop_name": "García Márquez, Gabriel",
-        "slug": "garcia-marquez-gabriel",
-        "titles": [
-            "Cien años de soledad (edición ilustrada)",
-            "Cien años de soledad",
-            "Cien años de soledad"
-        ],
-        "books": 14
     },
     {
         "name": "Federico García Lorca",
         "shop_name": "García Lorca, Federico",
         "slug": "garcia-lorca-federico",
         "titles": [
-            "Granada en un poeta",
-            "Romancero gitano (Edición ilustrada)",
-            "Nueva York en un poeta"
+            "Biblioteca Lorca. POESÍA",
+            "Canciones (1921-1924)",
+            "Canción novísima de los gatos"
         ],
         "books": 13
+    },
+    {
+        "name": "Mr Tan",
+        "shop_name": "Mr Tan",
+        "slug": "mr-tan",
+        "titles": [
+            "Ajax 1. ¡El gato está bien!",
+            "Ajax 2. ¡Ga todo mal!",
+            "Ajax 3. ¡Gatocórcholis!"
+        ],
+        "books": 12
+    },
+    {
+        "name": "Neil Gaiman",
+        "shop_name": "Gaiman, Neil",
+        "slug": "gaiman-neil",
+        "titles": [
+            "Biblioteca Sandman vol. 03: País de sueños (Segunda edición)",
+            "Biblioteca Sandman vol. 04: Estación de nieblas (segunda edición)",
+            "Biblioteca Sandman vol. 05: Juego a ser tú"
+        ],
+        "books": 12
+    },
+    {
+        "name": "Virginia Woolf",
+        "shop_name": "Woolf, Virginia",
+        "slug": "woolf-virginia",
+        "titles": [
+            "Al faro",
+            "Cartas a Vita- A Virginia le gustaba Vita",
+            "Cartas a mujeres"
+        ],
+        "books": 12
+    },
+    {
+        "name": "Gabriel García Márquez",
+        "shop_name": "García Márquez, Gabriel",
+        "slug": "garcia-marquez-gabriel",
+        "titles": [
+            "Cien años de soledad",
+            "Crónica de una muerte anunciada",
+            "Cien años de soledad (Edición aniversario)"
+        ],
+        "books": 11
     },
     {
         "name": "Joe Abercrombie",
@@ -129,93 +151,16 @@
             "Antes de que los cuelguen",
             "El problema de la paz"
         ],
-        "books": 13
-    },
-    {
-        "name": "Susana Martín Gijón",
-        "shop_name": "Martín Gijón, Susana",
-        "slug": "martin-gijon-susana",
-        "titles": [
-            "Desde la eternidad (Saga del trébol 2)",
-            "Especie (Inspectora Camino Vargas 2)",
-            "Especie (Inspectora Camino Vargas 2)"
-        ],
-        "books": 13
-    },
-    {
-        "name": "Dolores Redondo",
-        "shop_name": "Redondo, Dolores",
-        "slug": "redondo-dolores",
-        "titles": [
-            "El guardián invisible",
-            "Las que no duermen NASH",
-            "El guardián invisible. Edición especial con cantos decorados"
-        ],
-        "books": 12
-    },
-    {
-        "name": "Mr Tan",
-        "shop_name": "Mr Tan",
-        "slug": "mr-tan",
-        "titles": [
-            "Ajax 3. ¡Gatocórcholis!",
-            "La terrible Adèle 13. Súper besos babosos",
-            "La terrible Adèle en el País de los Cuentos de Bobhadas"
-        ],
-        "books": 12
-    },
-    {
-        "name": "Neil Gaiman",
-        "shop_name": "Gaiman, Neil",
-        "slug": "gaiman-neil",
-        "titles": [
-            "Biblioteca Sandman vol. 09: Las Benévolas (Segunda edición)",
-            "Biblioteca Sandman vol. 10: El velatorio (segunda edición)",
-            "Biblioteca Sandman vol. 03: País de sueños (Segunda edición)"
-        ],
-        "books": 12
-    },
-    {
-        "name": "Virginia Woolf",
-        "shop_name": "Woolf, Virginia",
-        "slug": "woolf-virginia",
-        "titles": [
-            "Al faro",
-            "Una habitación propia",
-            "Diario de escritora"
-        ],
-        "books": 12
-    },
-    {
-        "name": "Bram Stoker",
-        "shop_name": "Stoker, Bram",
-        "slug": "stoker-bram",
-        "titles": [
-            "Drácula",
-            "Drácula Tomás Hijo",
-            "El invitado de Drácula"
-        ],
-        "books": 10
-    },
-    {
-        "name": "Carmen Mola",
-        "shop_name": "Mola, Carmen",
-        "slug": "mola-carmen",
-        "titles": [
-            "El Clan (Inspectora Elena Blanco 5)",
-            "El Clan (Inspectora Elena Blanco 5)",
-            "Elena Blanco. El origen (Volúmenes 1, 2, 3 y 4)"
-        ],
-        "books": 10
+        "books": 11
     },
     {
         "name": "Edgar Allan Poe",
         "shop_name": "Poe, Edgar Allan",
         "slug": "poe-edgar-allan",
         "titles": [
-            "Trilogía de la Antártida",
             "Cuentos",
-            "Cuentos completos"
+            "Cuentos completos",
+            "Cuentos de imaginación y misterio"
         ],
         "books": 10
     },
@@ -227,28 +172,6 @@
             "Harry Potter y el cáliz de fuego (Harry Potter ediciones ilustradas interactivas 4)",
             "Harry Potter y el cáliz de fuego (Tapa dura) (Harry Potter 4)",
             "Harry Potter y el misterio del príncipe (Tapa dura) (Harry Potter 6)"
-        ],
-        "books": 10
-    },
-    {
-        "name": "Ken Follett",
-        "shop_name": "Follett, Ken",
-        "slug": "follett-ken",
-        "titles": [
-            "El círculo de los días",
-            "La armadura de la luz (Saga Los pilares de la Tierra 4)",
-            "La armadura de la luz (Saga Los pilares de la Tierra 4)"
-        ],
-        "books": 10
-    },
-    {
-        "name": "Santiago Díaz",
-        "shop_name": "Díaz, Santiago",
-        "slug": "diaz-santiago",
-        "titles": [
-            "El amo (Jotadé 2)",
-            "Jotadé (Jotadé 1)",
-            "Talión"
         ],
         "books": 10
     },
@@ -269,19 +192,19 @@
         "slug": "perez-galdos-benito",
         "titles": [
             "Bodas reales",
-            "De Oñate a La Granja",
-            "Cartas inéditas"
+            "Cartas inéditas",
+            "De Oñate a La Granja"
         ],
         "books": 9
     },
     {
-        "name": "Camilla Läckberg",
-        "shop_name": "Läckberg, Camilla",
-        "slug": "lackberg-camilla",
+        "name": "Dolores Redondo",
+        "shop_name": "Redondo, Dolores",
+        "slug": "redondo-dolores",
         "titles": [
-            "El llanto de los muertos (Los crímenes de Fjällbacka)",
-            "El espejismo",
-            "El mentalista"
+            "La cara norte del corazón",
+            "Las que no duermen NASH",
+            "El guardián invisible"
         ],
         "books": 9
     },
@@ -290,9 +213,9 @@
         "shop_name": "Orwell, George",
         "slug": "orwell-george",
         "titles": [
+            "1984 (edición definitiva avalada por The Orwell Estate)",
             "1984 (edición definitiva avalada por The Orwell Estate) (edición con cantos tintados)",
-            "1984 (edición ilustrada)",
-            "1984 (edición definitiva avalada por The Orwell Estate)"
+            "1984 (edición ilustrada)"
         ],
         "books": 9
     },
@@ -312,8 +235,8 @@
         "shop_name": "Zueco, Luis",
         "slug": "zueco-luis",
         "titles": [
-            "El escalón 33",
             "El castillo (Trilogía Medieval 1)",
+            "El escalón 33",
             "El juicio"
         ],
         "books": 9
@@ -323,20 +246,20 @@
         "shop_name": "Chaves Nogales, Manuel",
         "slug": "chaves-nogales-manuel",
         "titles": [
-            "Guerra total",
             "A sangre y fuego",
-            "La Guerra Civil"
+            "Defensa de Madrid",
+            "Diarios de la Segunda Guerra Mundial. 1 Desde París"
         ],
         "books": 9
     },
     {
-        "name": "Patricia Highsmith",
-        "shop_name": "Highsmith, Patricia",
-        "slug": "highsmith-patricia",
+        "name": "María Oruña",
+        "shop_name": "Oruña, María",
+        "slug": "oruna-maria",
         "titles": [
-            "El talento de Mr. Ripley",
-            "La máscara de Ripley",
-            "Ripley en peligro"
+            "Un lugar a donde ir",
+            "El albatros negro",
+            "El bosque de los cuatro vientos"
         ],
         "books": 9
     },
@@ -345,53 +268,31 @@
         "shop_name": "Pujol, Romain",
         "slug": "pujol-romain",
         "titles": [
-            "Avni 8. Una mudanza sorpresa",
-            "Avni 9. Una bola de energía",
-            "Avni 1. Animal verdaderamente no identificado"
+            "Avni 1. Animal verdaderamente no identificado",
+            "Avni 2. ¡Un superamigo!",
+            "Avni 3. ¡Recre-acción!"
         ],
         "books": 9
     },
     {
-        "name": "Antoine De Saint-Exupéry",
-        "shop_name": "Saint-Exupéry, Antoine De",
-        "slug": "saint-exupery-antoine-de",
+        "name": "Susana Martín Gijón",
+        "shop_name": "Martín Gijón, Susana",
+        "slug": "martin-gijon-susana",
         "titles": [
-            "El Principito",
-            "El Principito - (Ilustraciones originales)",
-            "El Principito"
+            "Especie (Inspectora Camino Vargas 2)",
+            "La Babilonia, 1580",
+            "Planeta (Inspectora Camino Vargas 3)"
         ],
-        "books": 8
-    },
-    {
-        "name": "Arturo Pérez-Reverte",
-        "shop_name": "Pérez-Reverte, Arturo",
-        "slug": "perez-reverte-arturo",
-        "titles": [
-            "El problema final (edición limitada)",
-            "El capitán Alatriste (Las aventuras del capitán Alatriste 1)",
-            "El capitán Alatriste"
-        ],
-        "books": 8
+        "books": 9
     },
     {
         "name": "Byung-Chul Han",
         "shop_name": "Han, Byung-Chul",
         "slug": "han-byung-chul",
         "titles": [
-            "La sociedad del cansancio",
-            "Vida contemplativa",
-            "El espíritu de la esperanza"
-        ],
-        "books": 8
-    },
-    {
-        "name": "Cixin Liu",
-        "shop_name": "Liu, Cixin",
-        "slug": "liu-cixin",
-        "titles": [
-            "El bosque oscuro (ed. ilustrada) (Trilogía de los Tres Cuerpos 2)",
-            "El bosque oscuro (Trilogía de los Tres Cuerpos 2)",
-            "El bosque oscuro (Trilogía de los Tres Cuerpos 2)"
+            "El espíritu de la esperanza",
+            "Estuche Byung Chul Han",
+            "La crisis de la narración"
         ],
         "books": 8
     },
@@ -400,31 +301,9 @@
         "shop_name": "Pardo Bazán, Emilia",
         "slug": "pardo-bazan-emilia",
         "titles": [
-            "La cita",
-            "Cuentos góticos",
-            "Las frases frágiles"
-        ],
-        "books": 8
-    },
-    {
-        "name": "Ildefonso Falcones",
-        "shop_name": "Falcones, Ildefonso",
-        "slug": "falcones-ildefonso",
-        "titles": [
-            "El pintor de almas",
-            "En el amor y en la guerra (La catedral del mar 3)",
-            "Esclava de la libertad"
-        ],
-        "books": 8
-    },
-    {
-        "name": "Mary Shelley",
-        "shop_name": "Shelley, Mary",
-        "slug": "shelley-mary",
-        "titles": [
-            "Frankenstein",
-            "Frankenstein",
-            "Frankenstein anotado"
+            "\"Miquiño mío\"",
+            "Algo de feminismo (Serie Great Ideas)",
+            "Cuentos góticos"
         ],
         "books": 8
     },
@@ -435,7 +314,7 @@
         "titles": [
             "Buenos presagios",
             "El Color de la Magia (Mundodisco 1)",
-            "Trilogía Johnny Maxwell nº 02/03 Johnny y los muertos"
+            "El pueblo de la Alfombra"
         ],
         "books": 8
     },
@@ -444,9 +323,20 @@
         "shop_name": "Camilleri, Andrea",
         "slug": "camilleri-andrea",
         "titles": [
-            "El comisario Montalbano: Tres nuevos casos",
-            "La guerra privada de Samuele y otras historias de Vigàta",
-            "El comisario Montalbano 3 (Comisario Montalbano)"
+            "El comisario Montalbano 3 (Comisario Montalbano)",
+            "El comisario Montalbano. Los primeros casos (Comisario Montalbano)",
+            "El comisario Montalbano: Tres nuevos casos"
+        ],
+        "books": 7
+    },
+    {
+        "name": "Antoine De Saint-Exupéry",
+        "shop_name": "Saint-Exupéry, Antoine De",
+        "slug": "saint-exupery-antoine-de",
+        "titles": [
+            "El Principito",
+            "El Principito (edición ilustrada y animada por MinaLima)",
+            "El Principito (estuche de lujo)"
         ],
         "books": 7
     },
@@ -462,24 +352,35 @@
         "books": 7
     },
     {
-        "name": "H. P. Lovecraft",
-        "shop_name": "Lovecraft, H. P.",
-        "slug": "lovecraft-h-p",
+        "name": "Arturo Pérez-Reverte",
+        "shop_name": "Pérez-Reverte, Arturo",
+        "slug": "perez-reverte-arturo",
         "titles": [
-            "Dagón y otros relatos",
-            "La llamada de Cthulhu y otros cuentos (edición conmemorativa)",
-            "Bestiario"
+            "Una historia de España",
+            "El capitán Alatriste",
+            "El capitán Alatriste (Las aventuras del capitán Alatriste 1)"
         ],
         "books": 7
     },
     {
-        "name": "Javier Cercas",
-        "shop_name": "Cercas, Javier",
-        "slug": "cercas-javier",
+        "name": "Camilla Läckberg",
+        "shop_name": "Läckberg, Camilla",
+        "slug": "lackberg-camilla",
         "titles": [
-            "Soldados de Salamina",
-            "El periódico de la democracia",
-            "Anatomía de un instante"
+            "Las huellas imborrables",
+            "Verdad o reto",
+            "El espejismo"
+        ],
+        "books": 7
+    },
+    {
+        "name": "H. P. Lovecraft",
+        "shop_name": "Lovecraft, H. P.",
+        "slug": "lovecraft-h-p",
+        "titles": [
+            "Bestiario",
+            "Cuentos de H.P. Lovecraft para niños y niñas",
+            "Dagón y otros relatos"
         ],
         "books": 7
     },
@@ -495,24 +396,13 @@
         "books": 7
     },
     {
-        "name": "Lorenzo Silva",
-        "shop_name": "Silva, Lorenzo",
-        "slug": "silva-lorenzo",
+        "name": "Ken Follett",
+        "shop_name": "Follett, Ken",
+        "slug": "follett-ken",
         "titles": [
-            "El alquimista impaciente",
-            "El mal de Corcira",
-            "La llama de Focea"
-        ],
-        "books": 7
-    },
-    {
-        "name": "Mary Beard",
-        "shop_name": "Beard, Mary",
-        "slug": "beard-mary",
-        "titles": [
-            "Clásicos sin filtros",
-            "Mujeres y poder",
-            "El Coliseo"
+            "La armadura de la luz (Saga Los pilares de la Tierra 4)",
+            "Las tinieblas y el alba (La precuela de Los pilares de la Tierra)",
+            "Los pilares de la Tierra (Saga Los pilares de la Tierra 1)"
         ],
         "books": 7
     },
@@ -528,13 +418,24 @@
         "books": 7
     },
     {
+        "name": "Patricia Highsmith",
+        "shop_name": "Highsmith, Patricia",
+        "slug": "highsmith-patricia",
+        "titles": [
+            "El amigo americano",
+            "Tras los pasos de Ripley",
+            "Crímenes imaginarios"
+        ],
+        "books": 7
+    },
+    {
         "name": "Raquel Díaz Reguera",
         "shop_name": "Díaz Reguera, Raquel",
         "slug": "diaz-reguera-raquel",
         "titles": [
-            "El caos de Beca 2. ¿Por qué todo es tan complicado?",
-            "El nuevo mundo",
-            "Julia y Los Mortimort 3 - Escuela de hechizos"
+            "Ada Trenza Roja 1 - El secreto de Jon Garfio",
+            "Ada Trenza Roja 2 - El acertijo de Saurus",
+            "Ada Trenza Roja 3 - El Corazón de Coral"
         ],
         "books": 7
     },
@@ -543,9 +444,9 @@
         "shop_name": "Yarros, Rebecca",
         "slug": "yarros-rebecca",
         "titles": [
-            "Alas de ónix (Empíreo 3)",
             "Alas de hierro (Empíreo 2)",
-            "Alas de hierro (Empíreo 2) Edición coleccionista enriquecida y limitada"
+            "Alas de hierro (Empíreo 2) Edición coleccionista enriquecida y limitada",
+            "Alas de sangre (Empíreo 1)"
         ],
         "books": 7
     },
@@ -554,20 +455,9 @@
         "shop_name": "Dahl, Roald",
         "slug": "dahl-roald",
         "titles": [
-            "El librero",
-            "Cuentos en verso para niños perversos (Colección Alfaguara Clásicos)",
-            "Cuentos"
-        ],
-        "books": 7
-    },
-    {
-        "name": "Sandra Ferrer Valero",
-        "shop_name": "Ferrer Valero, Sandra",
-        "slug": "ferrer-valero-sandra",
-        "titles": [
-            "Pioneras del feminismo",
-            "El taller de Artemisia",
-            "La revolución de las invisibles"
+            "Agu Trot (Colección Alfaguara Clásicos)",
+            "Cuentos",
+            "Cuentos en verso para niños perversos (Colección Alfaguara Clásicos)"
         ],
         "books": 7
     },
@@ -576,31 +466,20 @@
         "shop_name": "Alba Rico, Santiago",
         "slug": "alba-rico-santiago",
         "titles": [
-            "Gaza y el destino del mundo",
             "Capitalismo y nihilismo",
+            "Caídas",
             "De la moral terrestre entre las nubes"
         ],
         "books": 7
     },
     {
-        "name": "Simone Weil",
-        "shop_name": "Weil, Simone",
-        "slug": "weil-simone",
+        "name": "Santiago Díaz",
+        "shop_name": "Díaz, Santiago",
+        "slug": "diaz-santiago",
         "titles": [
-            "Sobre el trabajo",
-            "Contra el colonialismo",
-            "En el corazón repentino"
-        ],
-        "books": 7
-    },
-    {
-        "name": "Teresa Cardona",
-        "shop_name": "Cardona, Teresa",
-        "slug": "cardona-teresa",
-        "titles": [
-            "Tierra quemada",
-            "Un asunto pendiente",
-            "A la vista de todos"
+            "El buen padre (Indira Ramos 1)",
+            "Indira (Indira Ramos 3)",
+            "Las otras niñas (Indira Ramos 2)"
         ],
         "books": 7
     },
@@ -609,9 +488,9 @@
         "shop_name": "Varios Autores",
         "slug": "varios-autores",
         "titles": [
-            "Distopías maestras (pack con: 1984 de Orwell Un mundo feliz de Huxley Fahrenheit 451 de Bradbury)",
             "Antología de cuentos de terror, 2",
-            "MUNDO WEIRD VOL. 2 'ANTOLOGÍA DE NUEVA FICCIÓN EXTRAÑA'"
+            "Antología del grupo poético de 1927",
+            "Cíborgs, zombis y quimeras"
         ],
         "books": 7
     },
@@ -620,9 +499,9 @@
         "shop_name": "Vv. Aa.",
         "slug": "vv-aa",
         "titles": [
-            "Nueva poesía social",
+            "Chapapote",
             "Grecorromanas. Lírica superviviente de la Antigüedad clásica",
-            "Chapapote"
+            "Madrid Bohemio"
         ],
         "books": 7
     },
@@ -631,31 +510,31 @@
         "shop_name": "Vv.Aa.3",
         "slug": "vvaa3",
         "titles": [
-            "DESDE ESTA OSCURIDAD HABLAMOS 'ANTOLOGIA DE POETAS AFGANAS CONTEMPORANEAS'",
             "BERLÍN OCULTO",
-            "BRUTALISMOS"
+            "BRUTALISMOS",
+            "DESDE ESTA OSCURIDAD HABLAMOS 'ANTOLOGIA DE POETAS AFGANAS CONTEMPORANEAS'"
         ],
         "books": 7
     },
     {
-        "name": "Almudena Grandes",
-        "shop_name": "Grandes, Almudena",
-        "slug": "grandes-almudena",
+        "name": "Carmen Mola",
+        "shop_name": "Mola, Carmen",
+        "slug": "mola-carmen",
         "titles": [
-            "El lector de Julio Verne",
-            "Voces que cuentan (novela gráfica)",
-            "El lector de Julio Verne"
+            "El Clan (Inspectora Elena Blanco 5)",
+            "La Nena (La novia gitana 3)",
+            "La red púrpura (La novia gitana 2)"
         ],
         "books": 6
     },
     {
-        "name": "Andy Weir",
-        "shop_name": "Weir, Andy",
-        "slug": "weir-andy",
+        "name": "Cixin Liu",
+        "shop_name": "Liu, Cixin",
+        "slug": "liu-cixin",
         "titles": [
-            "El marciano",
-            "Proyecto Hail Mary",
-            "Proyecto Hail Mary"
+            "El bosque oscuro (Trilogía de los Tres Cuerpos 2)",
+            "El problema de los tres cuerpos (Trilogía de los Tres Cuerpos 1)",
+            "El bosque oscuro (ed. ilustrada) (Trilogía de los Tres Cuerpos 2)"
         ],
         "books": 6
     },
@@ -664,9 +543,9 @@
         "shop_name": "Dexter, Colin",
         "slug": "dexter-colin",
         "titles": [
-            "Los muertos de Jericó",
-            "Réquiem por todos los muertos",
-            "El misterio de la tercera milla"
+            "El misterio de la tercera milla",
+            "El secreto de la habitación número 3",
+            "Los muertos de Jericó"
         ],
         "books": 6
     },
@@ -686,20 +565,9 @@
         "shop_name": "Villar, Domingo",
         "slug": "villar-domingo",
         "titles": [
-            "Ojos de agua",
             "El último barco (Inspector Leo Caldas 3)",
-            "La playa de los ahogados"
-        ],
-        "books": 6
-    },
-    {
-        "name": "Douglas Adams",
-        "shop_name": "Adams, Douglas",
-        "slug": "adams-douglas",
-        "titles": [
-            "El restaurante del fin del mundo",
-            "Guía del autoestopista galáctico",
-            "Los autoestopistas galácticos II"
+            "La playa de los ahogados",
+            "La playa de los ahogados (Inspector Leo Caldas 2)"
         ],
         "books": 6
     },
@@ -709,8 +577,8 @@
         "slug": "sastre-elvira",
         "titles": [
             "Adiós al frío",
-            "Baluarte",
-            "Cuarenta y tres maneras de soltarse el pelo"
+            "Aquella orilla nuestra",
+            "Baluarte"
         ],
         "books": 6
     },
@@ -720,7 +588,7 @@
         "slug": "dickinson-emily",
         "titles": [
             "71 poemas (Nueva edición revisada)",
-            "La miniatura incandescente",
+            "Cartas",
             "El secreto de la oropéndola"
         ],
         "books": 6
@@ -730,9 +598,9 @@
         "shop_name": "García Sáenz De Urturi, Eva",
         "slug": "garcia-saenz-de-urturi-eva",
         "titles": [
-            "El silencio de la ciudad blanca",
-            "El Ángel de la Ciudad (edición especial con cantos decorados)",
-            "El Libro Negro de las Horas (edición especial con cantos decorados)"
+            "El Libro Negro de las Horas (edición especial con cantos decorados)",
+            "El Silencio de la Ciudad Blanca (edición especial con cantos decorados)",
+            "El silencio de la ciudad blanca"
         ],
         "books": 6
     },
@@ -741,31 +609,20 @@
         "shop_name": "Fuertes, Gloria",
         "slug": "fuertes-gloria",
         "titles": [
-            "La gente corre tanto",
-            "Lo que pasa es que te quiero",
-            "El libro de Gloria Fuertes. Edición especial en tela y cantos pintados"
+            "El libro de Gloria Fuertes. Edición especial en tela y cantos pintados",
+            "El libro de Gloria Fuertes. Nueva edición",
+            "La gente corre tanto"
         ],
         "books": 6
     },
     {
-        "name": "Grady Hendrix",
-        "shop_name": "Hendrix, Grady",
-        "slug": "hendrix-grady",
+        "name": "Ildefonso Falcones",
+        "shop_name": "Falcones, Ildefonso",
+        "slug": "falcones-ildefonso",
         "titles": [
-            "Cómo vender una casa encantada",
-            "El exorcismo de mi mejor amiga",
-            "Brujería para chicas descarriadas"
-        ],
-        "books": 6
-    },
-    {
-        "name": "Irene Vallejo Moreu",
-        "shop_name": "Vallejo Moreu, Irene",
-        "slug": "vallejo-moreu-irene",
-        "titles": [
-            "El infinito en un junco",
-            "Alguien habló de nosotros",
-            "El futuro recordado"
+            "La catedral del mar",
+            "Los herederos de la tierra (La catedral del mar 2)",
+            "El pintor de almas"
         ],
         "books": 6
     },
@@ -774,9 +631,9 @@
         "shop_name": "Asimov, Isaac",
         "slug": "asimov-isaac",
         "titles": [
-            "El sol desnudo (Serie de los robots 3)",
-            "Fundación (Ciclo de la Fundación 3)",
-            "Constantinopla"
+            "Constantinopla",
+            "El Imperio Romano",
+            "El sol desnudo (Serie de los robots 3)"
         ],
         "books": 6
     },
@@ -785,8 +642,8 @@
         "shop_name": "Hallett, Janice",
         "slug": "hallett-janice",
         "titles": [
-            "El examinador",
             "El código Twyford",
+            "El examinador",
             "El misterioso caso de los Ángeles de Alperton"
         ],
         "books": 6
@@ -803,46 +660,24 @@
         "books": 6
     },
     {
-        "name": "Juan Eslava Galán",
-        "shop_name": "Eslava Galán, Juan",
-        "slug": "eslava-galan-juan",
-        "titles": [
-            "Amor y sexo en España contado para escépticos",
-            "Historia de España contada para escépticos",
-            "Historia de España contada para escépticos"
-        ],
-        "books": 6
-    },
-    {
         "name": "Katja Brandis",
         "shop_name": "Brandis, Katja",
         "slug": "brandis-katja",
         "titles": [
+            "Amistades peligrosas",
             "El Gran Día de la Venganza",
-            "Huellas enemigas",
-            "Parajes desconocidos"
+            "Huellas enemigas"
         ],
         "books": 6
     },
     {
-        "name": "Leonardo Padura",
-        "shop_name": "Padura, Leonardo",
-        "slug": "padura-leonardo",
+        "name": "Lorenzo Silva",
+        "shop_name": "Silva, Lorenzo",
+        "slug": "silva-lorenzo",
         "titles": [
-            "El hombre que amaba a los perros",
-            "El hombre que amaba a los perros",
-            "La neblina del ayer"
-        ],
-        "books": 6
-    },
-    {
-        "name": "Lewis Carroll",
-        "shop_name": "Carroll, Lewis",
-        "slug": "carroll-lewis",
-        "titles": [
-            "Alicia (Panorama)",
-            "Alicia - Obra completa",
-            "Alicia en el país de las maravillas"
+            "Lejos del corazón",
+            "El alquimista impaciente",
+            "El mal de Corcira"
         ],
         "books": 6
     },
@@ -851,9 +686,9 @@
         "shop_name": "Enriquez, Mariana",
         "slug": "enriquez-mariana",
         "titles": [
-            "Nuestra parte de noche",
             "Alguien camina sobre tu tumba",
-            "Los peligros de fumar en la cama"
+            "Archipiélago",
+            "La hermana menor"
         ],
         "books": 6
     },
@@ -862,9 +697,20 @@
         "shop_name": "Sanz, Marta",
         "slug": "sanz-marta",
         "titles": [
-            "Persianas metálicas bajan de golpe",
             "Amarilla",
+            "Black, black, black",
             "Clavícula"
+        ],
+        "books": 6
+    },
+    {
+        "name": "Mary Beard",
+        "shop_name": "Beard, Mary",
+        "slug": "beard-mary",
+        "titles": [
+            "SPQR",
+            "Clásicos sin filtros",
+            "El Coliseo"
         ],
         "books": 6
     },
@@ -891,17 +737,6 @@
         "books": 6
     },
     {
-        "name": "Miguel Hernández",
-        "shop_name": "Hernández, Miguel",
-        "slug": "hernandez-miguel",
-        "titles": [
-            "El rayo que no cesa",
-            "Viento del pueblo",
-            "Cancionero y romancero de ausencias"
-        ],
-        "books": 6
-    },
-    {
         "name": "Míriam Tirado Torras",
         "shop_name": "Tirado Torras, Míriam",
         "slug": "tirado-torras-miriam",
@@ -909,39 +744,6 @@
             "Me llamo Goa",
             "Me llamo Goa 11 - No puedo más, Goa",
             "Me llamo Goa 9 - Ho, ho, Goa"
-        ],
-        "books": 6
-    },
-    {
-        "name": "Orson Scott Card",
-        "shop_name": "Card, Orson Scott",
-        "slug": "card-orson-scott",
-        "titles": [
-            "El juego de Ender (Saga de Ender 1)",
-            "El juego de Ender (Saga de Ender 1)",
-            "Ender el xenocida (Saga de Ender 3)"
-        ],
-        "books": 6
-    },
-    {
-        "name": "Patrick Rothfuss",
-        "shop_name": "Rothfuss, Patrick",
-        "slug": "rothfuss-patrick",
-        "titles": [
-            "El estrecho sendero entre deseos",
-            "El nombre del viento (Crónica del asesino de reyes 1)",
-            "El nombre del viento (Crónica del asesino de reyes 1)"
-        ],
-        "books": 6
-    },
-    {
-        "name": "Ray Bradbury",
-        "shop_name": "Bradbury, Ray",
-        "slug": "bradbury-ray",
-        "titles": [
-            "Otras crónicas marcianas",
-            "Crónicas marcianas",
-            "El hombre ilustrado"
         ],
         "books": 6
     },
@@ -968,57 +770,68 @@
         "books": 6
     },
     {
+        "name": "Simone Weil",
+        "shop_name": "Weil, Simone",
+        "slug": "weil-simone",
+        "titles": [
+            "El poder de las palabras",
+            "Contra el colonialismo",
+            "En el corazón repentino"
+        ],
+        "books": 6
+    },
+    {
         "name": "Steven Erikson",
         "shop_name": "Erikson, Steven",
         "slug": "erikson-steven",
         "titles": [
             "Doblan por los mastines (Malaz: El Libro de los Caídos 8)",
-            "La tempestad del segador (Malaz: El Libro de los Caídos 7)",
-            "Los cazahuesos (Malaz: El Libro de los Caídos 6)"
+            "El Dios Tullido. Malaz X (Malaz: El Libro de los Caídos 10)",
+            "La tempestad del segador (Malaz: El Libro de los Caídos 7)"
         ],
         "books": 6
     },
     {
-        "name": "Víctor Del Árbol",
-        "shop_name": "Árbol, Víctor Del",
-        "slug": "arbol-victor-del",
+        "name": "Teresa Cardona",
+        "shop_name": "Cardona, Teresa",
+        "slug": "cardona-teresa",
         "titles": [
-            "Las buenas intenciones",
-            "El tiempo de las fieras",
-            "El tiempo de las fieras"
+            "Los dos lados",
+            "A la vista de todos",
+            "La carne del cisne"
         ],
         "books": 6
+    },
+    {
+        "name": "Andy Weir",
+        "shop_name": "Weir, Andy",
+        "slug": "weir-andy",
+        "titles": [
+            "Proyecto Hail Mary",
+            "El marciano",
+            "Proyecto Hail Mary (edición especial limitada)"
+        ],
+        "books": 5
+    },
+    {
+        "name": "Bram Stoker",
+        "shop_name": "Stoker, Bram",
+        "slug": "stoker-bram",
+        "titles": [
+            "Drácula",
+            "Drácula (edición cantos tintados)",
+            "Drácula Tomás Hijo"
+        ],
+        "books": 5
     },
     {
         "name": "Donna Haraway",
         "shop_name": "Haraway, Donna",
         "slug": "haraway-donna",
         "titles": [
+            "Como una hoja",
             "La conexión infinita",
-            "Manifiesto de las especies de compañía",
-            "Como una hoja"
-        ],
-        "books": 5
-    },
-    {
-        "name": "Elaine Vilar Madruga",
-        "shop_name": "Vilar Madruga, Elaine",
-        "slug": "vilar-madruga-elaine",
-        "titles": [
-            "El cielo de la selva",
-            "La piel hembra",
-            "MOIRAS"
-        ],
-        "books": 5
-    },
-    {
-        "name": "Elizabeth Duval",
-        "shop_name": "Duval, Elizabeth",
-        "slug": "duval-elizabeth",
-        "titles": [
-            "Reina",
-            "Después de lo trans",
-            "Después de lo trans"
+            "Manifiesto cíborg"
         ],
         "books": 5
     },
@@ -1030,28 +843,6 @@
             "Ariol 1. Un burrito como tú y como yo",
             "Ariol 10. Bailarines por un día",
             "Ariol 4. Una preciosa vaquilla"
-        ],
-        "books": 5
-    },
-    {
-        "name": "Epicteto",
-        "shop_name": "Epicteto",
-        "slug": "epicteto",
-        "titles": [
-            "El arte de vivir (en tiempos difíciles)",
-            "Manual de vida",
-            "Manual de vida"
-        ],
-        "books": 5
-    },
-    {
-        "name": "Flavita Banana",
-        "shop_name": "Flavita Banana",
-        "slug": "flavita-banana",
-        "titles": [
-            "Archivos cósmicos",
-            "Archivos cósmicos",
-            "Archivos espaciales"
         ],
         "books": 5
     },
@@ -1078,13 +869,35 @@
         "books": 5
     },
     {
+        "name": "Grady Hendrix",
+        "shop_name": "Hendrix, Grady",
+        "slug": "hendrix-grady",
+        "titles": [
+            "Guía del club de lectura para matar vampiros",
+            "Brujería para chicas descarriadas",
+            "Cómo vender una casa encantada"
+        ],
+        "books": 5
+    },
+    {
         "name": "Ian Mcewan",
         "shop_name": "Mcewan, Ian",
         "slug": "mcewan-ian",
         "titles": [
             "Amor perdurable",
             "Amsterdam",
-            "Máquinas como yo"
+            "Cáscara de nuez"
+        ],
+        "books": 5
+    },
+    {
+        "name": "Irene Vallejo Moreu",
+        "shop_name": "Vallejo Moreu, Irene",
+        "slug": "vallejo-moreu-irene",
+        "titles": [
+            "El infinito en un junco",
+            "Alguien habló de nosotros",
+            "El futuro recordado"
         ],
         "books": 5
     },
@@ -1111,13 +924,35 @@
         "books": 5
     },
     {
+        "name": "Javier Cercas",
+        "shop_name": "Cercas, Javier",
+        "slug": "cercas-javier",
+        "titles": [
+            "Anatomía de un instante",
+            "El castillo de Barbazul",
+            "El loco de Dios en el fin del mundo"
+        ],
+        "books": 5
+    },
+    {
         "name": "José Soto Chica",
         "shop_name": "Soto Chica, José",
         "slug": "soto-chica-jose",
         "titles": [
             "Egilona, reina de Hispania",
-            "Pelayo",
+            "El dios incomprendido",
             "El águila y los cuervos"
+        ],
+        "books": 5
+    },
+    {
+        "name": "Juan Eslava Galán",
+        "shop_name": "Eslava Galán, Juan",
+        "slug": "eslava-galan-juan",
+        "titles": [
+            "Historia de España contada para escépticos",
+            "Amor y sexo en España contado para escépticos",
+            "Historia de Roma contada para escépticos"
         ],
         "books": 5
     },
@@ -1128,7 +963,7 @@
         "titles": [
             "Ana de Tejas Verdes",
             "Ana de las tejas verdes",
-            "Ana la de Tejas Verdes"
+            "Ana de las tejas verdes 2 - Una amistad para siempre"
         ],
         "books": 5
     },
@@ -1148,9 +983,20 @@
         "shop_name": "Oliver, Mary",
         "slug": "oliver-mary",
         "titles": [
-            "Devociones. Poesía reunida",
             "A Thousand Mornings",
+            "Devociones. Poesía reunida",
             "Felicity"
+        ],
+        "books": 5
+    },
+    {
+        "name": "Mary Shelley",
+        "shop_name": "Shelley, Mary",
+        "slug": "shelley-mary",
+        "titles": [
+            "Frankenstein",
+            "Frankenstein o el moderno Prometeo",
+            "El elegido"
         ],
         "books": 5
     },
@@ -1159,9 +1005,20 @@
         "shop_name": "Hesse, María",
         "slug": "hesse-maria",
         "titles": [
+            "Bowie. Una biografía",
             "El miedo",
-            "Frida Kahlo. Una biografía (Edición especial)",
-            "Malas mujeres"
+            "Frida Kahlo. Una biografía (Edición especial)"
+        ],
+        "books": 5
+    },
+    {
+        "name": "Orson Scott Card",
+        "shop_name": "Card, Orson Scott",
+        "slug": "card-orson-scott",
+        "titles": [
+            "El juego de Ender (Saga de Ender 1)",
+            "Ender el xenocida (Saga de Ender 3)",
+            "Ender en el exilio (Saga de Ender 5)"
         ],
         "books": 5
     },
@@ -1170,9 +1027,31 @@
         "shop_name": "Rilke, Rainer Maria",
         "slug": "rilke-rainer-maria",
         "titles": [
-            "Sonetos a Orfeo",
+            "Cartas a un joven poeta. Elegías de Duino",
             "El libro de horas",
             "Elegías de Duino. Nueva edición con poemas y cartas inéditos"
+        ],
+        "books": 5
+    },
+    {
+        "name": "Ray Bradbury",
+        "shop_name": "Bradbury, Ray",
+        "slug": "bradbury-ray",
+        "titles": [
+            "Fahrenheit 451 (nueva traducción)",
+            "Crónicas marcianas",
+            "El hombre ilustrado"
+        ],
+        "books": 5
+    },
+    {
+        "name": "Sandra Ferrer Valero",
+        "shop_name": "Ferrer Valero, Sandra",
+        "slug": "ferrer-valero-sandra",
+        "titles": [
+            "Mujeres silenciadas en el Renacimiento",
+            "Mujeres silenciadas en la Edad Media",
+            "El taller de Artemisia"
         ],
         "books": 5
     },
@@ -1181,9 +1060,9 @@
         "shop_name": "Torres, Sara",
         "slug": "torres-sara",
         "titles": [
-            "La abundancia del deseo",
             "Conjuros y cantos",
-            "Deseo de perro"
+            "Deseo de perro",
+            "El pensamiento erótico"
         ],
         "books": 5
     },
@@ -1194,18 +1073,7 @@
         "titles": [
             "El castillo de arena",
             "El expreso de Tokio",
-            "Un lugar desconocido"
-        ],
-        "books": 5
-    },
-    {
-        "name": "Sylvia Plath",
-        "shop_name": "Plath, Sylvia",
-        "slug": "plath-sylvia",
-        "titles": [
-            "Antología",
-            "Antología poética",
-            "Ariel"
+            "La chica de Kyushu"
         ],
         "books": 5
     },
@@ -1214,9 +1082,9 @@
         "shop_name": "Zerocalcare",
         "slug": "zerocalcare",
         "titles": [
+            "Kobane Calling (ed. actualizada)",
             "La profecía del armadillo",
-            "Olvida mi nombre",
-            "Será todo para mí"
+            "Olvida mi nombre"
         ],
         "books": 5
     },
@@ -1226,8 +1094,8 @@
         "slug": "christie-agatha",
         "titles": [
             "Estuche Agatha Christie y el cine",
-            "Y no quedó ninguno",
-            "Y no quedó ninguno (edición con recursos didácticos)"
+            "Los pájaros y otras historias de cine",
+            "Y no quedó ninguno"
         ],
         "books": 4
     },
@@ -1265,13 +1133,24 @@
         "books": 4
     },
     {
+        "name": "Almudena Grandes",
+        "shop_name": "Grandes, Almudena",
+        "slug": "grandes-almudena",
+        "titles": [
+            "El lector de Julio Verne",
+            "Inés y la alegría",
+            "Escalera interior"
+        ],
+        "books": 4
+    },
+    {
         "name": "Amélie Nothomb",
         "shop_name": "Nothomb, Amélie",
         "slug": "nothomb-amelie",
         "titles": [
             "Antichrista",
-            "Japón eterno",
-            "Biografía del hambre"
+            "Biografía del hambre",
+            "El sabotaje amoroso"
         ],
         "books": 4
     },
@@ -1324,9 +1203,9 @@
         "shop_name": "Beka",
         "slug": "beka",
         "titles": [
-            "EL CLUB DE LAS MARGINADAS",
-            "Escuela de detectives, 2. Los misterios del cole",
-            "Academia de Monstruos, 1. ¡Qué duro es ser un buenazo!"
+            "Academia de Monstruos, 1. ¡Qué duro es ser un buenazo!",
+            "Academia de Monstruos, 2. ¡Siempre estás leyendo!",
+            "EL CLUB DE LAS MARGINADAS"
         ],
         "books": 4
     },
@@ -1347,8 +1226,8 @@
         "slug": "martin-gaite-carmen",
         "titles": [
             "Caperucita en Manhattan",
-            "Macanaz y Aldecoa",
-            "Usos amorosos de la postguerra española"
+            "Carmiña",
+            "Macanaz y Aldecoa"
         ],
         "books": 4
     },
@@ -1380,8 +1259,8 @@
         "slug": "gutman-colas",
         "titles": [
             "Perro Apestoso",
-            "Perro Apestoso en el Museo del Louvre",
-            "Perro Apestoso en Hollywood"
+            "Perro Apestoso en Hollywood",
+            "Perro Apestoso en el Museo del Louvre"
         ],
         "books": 4
     },
@@ -1390,9 +1269,9 @@
         "shop_name": "Thompson, Craig",
         "slug": "thompson-craig",
         "titles": [
+            "Almóndigas del espacio",
             "Blankets",
-            "Blankets. Edición 20 aniversario",
-            "Raíces de ginseng"
+            "Blankets. Edición 20 aniversario"
         ],
         "books": 4
     },
@@ -1401,20 +1280,31 @@
         "shop_name": "Pérez Gellida, César",
         "slug": "perez-gellida-cesar",
         "titles": [
-            "Memento mori (Versos, canciones y trocitos de carne 1)",
             "Consummatum est (Versos, canciones y trocitos de carne 3)",
-            "Dies irae (Versos, canciones y trocitos de carne 2)"
+            "Dies irae (Versos, canciones y trocitos de carne 2)",
+            "Memento mori (Versos, canciones y trocitos de carne 1)"
         ],
         "books": 4
     },
     {
-        "name": "David B. Gil",
-        "shop_name": "Gil, David B.",
-        "slug": "gil-david-b",
+        "name": "Douglas Adams",
+        "shop_name": "Adams, Douglas",
+        "slug": "adams-douglas",
         "titles": [
-            "El señor Búho y el País de los Muertos",
-            "El guerrero a la sombra del cerezo",
-            "El guerrero a la sombra del cerezo"
+            "El restaurante del fin del mundo",
+            "La vida, el universo y todo lo demás",
+            "Guía del autoestopista galáctico"
+        ],
+        "books": 4
+    },
+    {
+        "name": "Elaine Vilar Madruga",
+        "shop_name": "Vilar Madruga, Elaine",
+        "slug": "vilar-madruga-elaine",
+        "titles": [
+            "El cielo de la selva",
+            "La piel hembra",
+            "Las tarántulas"
         ],
         "books": 4
     },
@@ -1426,6 +1316,28 @@
             "Olga viaja al espacio exterior (o no)",
             "Olga viaja al espacio exterior (o no). Nueva edición.",
             "Olga y la extraña criatura sin nombre. Nueva edición."
+        ],
+        "books": 4
+    },
+    {
+        "name": "Elizabeth Duval",
+        "shop_name": "Duval, Elizabeth",
+        "slug": "duval-elizabeth",
+        "titles": [
+            "Después de lo trans",
+            "Melancolía",
+            "Poserótica"
+        ],
+        "books": 4
+    },
+    {
+        "name": "Flavita Banana",
+        "shop_name": "Flavita Banana",
+        "slug": "flavita-banana",
+        "titles": [
+            "Archivos cósmicos",
+            "Archivos espaciales",
+            "Archivos expiatorios"
         ],
         "books": 4
     },
@@ -1456,8 +1368,8 @@
         "shop_name": "Arendt, Hannah",
         "slug": "arendt-hannah",
         "titles": [
-            "Nosotros, refugiados",
             "Los orígenes del totalitarismo",
+            "Nosotros, refugiados",
             "Sobre Palestina"
         ],
         "books": 4
@@ -1467,9 +1379,9 @@
         "shop_name": "Thoreau, Henry David",
         "slug": "thoreau-henry-david",
         "titles": [
+            "Caminar",
             "Todo lo bueno es libre y salvaje",
-            "Walden o la vida en los bosques",
-            "Caminar"
+            "Walden"
         ],
         "books": 4
     },
@@ -1478,9 +1390,9 @@
         "shop_name": "Kashiwai, Hisashi",
         "slug": "kashiwai-hisashi",
         "titles": [
+            "Las deliciosas historias de la taberna Kamogawa (Taberna Kamogawa 2)",
             "Las recetas perdidas de la taberna Kamogawa (Taberna Kamogawa 3)",
-            "Los sabores secretos de la taberna Kamogawa (Taberna Kamogawa 4)",
-            "Las deliciosas historias de la taberna Kamogawa (Taberna Kamogawa 2)"
+            "Los misterios de la taberna Kamogawa (La taberna Kamogawa 1)"
         ],
         "books": 4
     },
@@ -1496,35 +1408,13 @@
         "books": 4
     },
     {
-        "name": "Ibon Martín",
-        "shop_name": "Martín, Ibon",
-        "slug": "martin-ibon",
-        "titles": [
-            "El ladrón de rostros (Inspectora Ane Cestero 3)",
-            "El ladrón de rostros (Inspectora Ane Cestero 3)",
-            "La danza de los tulipanes (Inspectora Ane Cestero 1)"
-        ],
-        "books": 4
-    },
-    {
         "name": "Irene Solà Saez",
         "shop_name": "Solà Saez, Irene",
         "slug": "sola-saez-irene",
         "titles": [
-            "Te di ojos y miraste las tinieblas",
             "Canto jo i la muntanya balla",
-            "Canto yo y la montaña baila"
-        ],
-        "books": 4
-    },
-    {
-        "name": "James Islington",
-        "shop_name": "Islington, James",
-        "slug": "islington-james",
-        "titles": [
-            "La fuerza de pocos",
-            "La fuerza de pocos",
-            "La voluntad de muchos"
+            "Canto yo y la montaña baila",
+            "Et vaig donar ulls i vas mirar les tenebres"
         ],
         "books": 4
     },
@@ -1555,8 +1445,8 @@
         "shop_name": "Ovejero, José",
         "slug": "ovejero-jose",
         "titles": [
-            "Bajo la luna negra",
             "Añoranza del héroe",
+            "Bajo la luna negra",
             "La ética de la crueldad"
         ],
         "books": 4
@@ -1567,8 +1457,8 @@
         "slug": "marques-juan",
         "titles": [
             "Creo que el sol nos sigue",
-            "El hombre que ordenaba bibliotecas",
-            "Diez mil cien"
+            "Diez mil cien",
+            "El hombre que ordenaba bibliotecas"
         ],
         "books": 4
     },
@@ -1577,9 +1467,9 @@
         "shop_name": "Arguiñano, Karlos",
         "slug": "arguinano-karlos",
         "titles": [
-            "Cocina para todos",
             "545 recetas para triunfar",
-            "Cocina de 10 con Karlos Arguiñano"
+            "Cocina de 10 con Karlos Arguiñano",
+            "Cocina fácil y rico"
         ],
         "books": 4
     },
@@ -1588,8 +1478,8 @@
         "shop_name": "Miller, Kayla",
         "slug": "miller-kayla",
         "titles": [
-            "Besties 2: Confía en ti",
             "Act (Serie Click 3)",
+            "Besties 2: Confía en ti",
             "Besties. Cuenta conmigo"
         ],
         "books": 4
@@ -1602,17 +1492,6 @@
             "Hierba",
             "La espera",
             "Mi amigo Kim Jong-un"
-        ],
-        "books": 4
-    },
-    {
-        "name": "Laetitia Colombani",
-        "shop_name": "Colombani, Laetitia",
-        "slug": "colombani-laetitia",
-        "titles": [
-            "La trenza",
-            "La trenza (edición limitada Verano)",
-            "La trenza (edición limitada Verano)"
         ],
         "books": 4
     },
@@ -1639,13 +1518,35 @@
         "books": 4
     },
     {
+        "name": "Leonardo Padura",
+        "shop_name": "Padura, Leonardo",
+        "slug": "padura-leonardo",
+        "titles": [
+            "El hombre que amaba a los perros",
+            "Personas decentes",
+            "La neblina del ayer"
+        ],
+        "books": 4
+    },
+    {
+        "name": "Lewis Carroll",
+        "shop_name": "Carroll, Lewis",
+        "slug": "carroll-lewis",
+        "titles": [
+            "Alicia en el país de las maravillas",
+            "Alicia (Panorama)",
+            "Alicia - Obra completa"
+        ],
+        "books": 4
+    },
+    {
         "name": "Liv Strömquist",
         "shop_name": "Strömquist, Liv",
         "slug": "stromquist-liv",
         "titles": [
+            "Astrología Liviana",
             "El fruto prohibido",
-            "La sala de los espejos",
-            "No siento nada"
+            "La sala de los espejos"
         ],
         "books": 4
     },
@@ -1654,20 +1555,9 @@
         "shop_name": "Vilas, Manuel",
         "slug": "vilas-manuel",
         "titles": [
+            "América",
             "Ciudades en venta",
-            "El hundimiento",
-            "Listen to me"
-        ],
-        "books": 4
-    },
-    {
-        "name": "Marco Aurelio",
-        "shop_name": "Aurelio, Marco",
-        "slug": "aurelio-marco",
-        "titles": [
-            "Meditaciones",
-            "Meditaciones",
-            "Meditaciones (Serie Great Ideas 12)"
+            "El hundimiento"
         ],
         "books": 4
     },
@@ -1688,8 +1578,8 @@
         "slug": "zambrano-maria",
         "titles": [
             "Claros del bosque",
-            "Poemas",
-            "El hombre y lo divino"
+            "El hombre y lo divino",
+            "La ambigüedad cervantina"
         ],
         "books": 4
     },
@@ -1705,24 +1595,13 @@
         "books": 4
     },
     {
-        "name": "Mona Chollet",
-        "shop_name": "Chollet, Mona",
-        "slug": "chollet-mona",
+        "name": "Miguel Hernández",
+        "shop_name": "Hernández, Miguel",
+        "slug": "hernandez-miguel",
         "titles": [
-            "Brujas",
-            "Brujas",
-            "Contra la culpabilización"
-        ],
-        "books": 4
-    },
-    {
-        "name": "Naomi Klein",
-        "shop_name": "Klein, Naomi",
-        "slug": "klein-naomi",
-        "titles": [
-            "Decir no no basta",
-            "La doctrina del shock",
-            "La doctrina del shock"
+            "El rayo que no cesa",
+            "Cancionero y romancero de ausencias",
+            "Elegías y nanas"
         ],
         "books": 4
     },
@@ -1742,9 +1621,20 @@
         "shop_name": "González Gutiérrez, Patricia",
         "slug": "gonzalez-gutierrez-patricia",
         "titles": [
-            "Sirenas, amazonas y adúlteras",
             "Cunnus. Sexo y poder en Roma Cvnnvs",
+            "Sirenas, amazonas y adúlteras",
             "Soror. Mujeres en Roma"
+        ],
+        "books": 4
+    },
+    {
+        "name": "Patrick Rothfuss",
+        "shop_name": "Rothfuss, Patrick",
+        "slug": "rothfuss-patrick",
+        "titles": [
+            "El nombre del viento (Crónica del asesino de reyes 1)",
+            "El temor de un hombre sabio (Crónica del asesino de reyes 2)",
+            "El estrecho sendero entre deseos"
         ],
         "books": 4
     },
@@ -1760,24 +1650,13 @@
         "books": 4
     },
     {
-        "name": "R.F. Kuang",
-        "shop_name": "Kuang, R.F.",
-        "slug": "kuang-rf",
-        "titles": [
-            "Babel",
-            "Catábasis",
-            "Una historia de Taipéi"
-        ],
-        "books": 4
-    },
-    {
         "name": "Rebecca F. Kuang",
         "shop_name": "Kuang, Rebecca F.",
         "slug": "kuang-rebecca-f",
         "titles": [
             "Amarilla",
-            "La Guerra de la Amapola",
-            "El dios en llamas"
+            "El dios en llamas",
+            "La Guerra de la Amapola"
         ],
         "books": 4
     },
@@ -1787,8 +1666,8 @@
         "slug": "goscinny-rene",
         "titles": [
             "Astérix el galo. Edición 2024",
-            "Las XII pruebas de Astérix. Edición especial",
-            "Astérix en Bretaña. Edición 2023"
+            "Astérix en Bretaña. Edición 2023",
+            "Astérix en Lusitania"
         ],
         "books": 4
     },
@@ -1819,20 +1698,9 @@
         "shop_name": "Kapuscinski, Ryszard",
         "slug": "kapuscinski-ryszard",
         "titles": [
-            "Ébano",
             "Los cínicos no sirven para este oficio",
-            "Un día más con vida"
-        ],
-        "books": 4
-    },
-    {
-        "name": "Simon Scarrow",
-        "shop_name": "Scarrow, Simon",
-        "slug": "scarrow-simon",
-        "titles": [
-            "El honor de Roma (XX)",
-            "El honor de Roma (XX)",
-            "Los generales (II)"
+            "Un día más con vida",
+            "Viajes con Heródoto"
         ],
         "books": 4
     },
@@ -1865,18 +1733,7 @@
         "titles": [
             "Lightfall 2: la sombra del pájaro",
             "Lightfall. La última llama",
-            "Lightfall: los tiempos oscuros (libro 3)"
-        ],
-        "books": 4
-    },
-    {
-        "name": "Truman Capote",
-        "shop_name": "Capote, Truman",
-        "slug": "capote-truman",
-        "titles": [
-            "A sangre fría",
-            "Desayuno en Tiffany's",
-            "Música para camaleones"
+            "Lightfall: Un Lugar entre Mundos (Libro 4)"
         ],
         "books": 4
     },
@@ -1896,22 +1753,11 @@
         "shop_name": "Gornick, Vivian",
         "slug": "gornick-vivian",
         "titles": [
-            "Por qué algunos hombres odian a las mujeres",
             "Apegos feroces",
-            "El fin de la novela de amor"
+            "El fin de la novela de amor",
+            "La situación y la historia"
         ],
         "books": 4
-    },
-    {
-        "name": "Adam Silvera",
-        "shop_name": "Silvera, Adam",
-        "slug": "silvera-adam",
-        "titles": [
-            "AL FINAL MUERE EL PRIMERO",
-            "Al final mueren los dos",
-            "Al final mueren los dos"
-        ],
-        "books": 3
     },
     {
         "name": "Adrian Tchaikovsky",
@@ -1930,8 +1776,8 @@
         "slug": "kim-ae-ran",
         "titles": [
             "Afuera es verano",
-            "ESTELA DE CONDENSACIÓN",
-            "Cuatro verdades y una mentira"
+            "Cuatro verdades y una mentira",
+            "ESTELA DE CONDENSACIÓN"
         ],
         "books": 3
     },
@@ -1984,9 +1830,9 @@
         "shop_name": "Moore, Alan",
         "slug": "moore-alan",
         "titles": [
+            "Batman: La Broma Asesina (Grandes Novelas Gráficas de Batman)",
             "El gran libro de magia de la luna y la serpiente",
-            "From Hell (nueva edición)",
-            "Batman: La Broma Asesina (Grandes Novelas Gráficas de Batman)"
+            "From Hell (nueva edición)"
         ],
         "books": 3
     },
@@ -1995,8 +1841,8 @@
         "shop_name": "Garín, Alberto",
         "slug": "garin-alberto",
         "titles": [
-            "Historia irreverente del arte",
             "Contra la Revolución Francesa",
+            "Historia irreverente del arte",
             "Renacimiento"
         ],
         "books": 3
@@ -2006,9 +1852,9 @@
         "shop_name": "Martínez De Miguel, Alejandra",
         "slug": "martinez-de-miguel-alejandra",
         "titles": [
+            "Al cuerpo de una mujer",
             "Báilatelo sola",
-            "Revelaciones",
-            "Al cuerpo de una mujer"
+            "Revelaciones"
         ],
         "books": 3
     },
@@ -2040,8 +1886,8 @@
         "slug": "gimenez-bartlett-alicia",
         "titles": [
             "Bajo el cielo infernal",
-            "Una buena pieza",
-            "La mujer fugitiva"
+            "La mujer fugitiva",
+            "Una buena pieza"
         ],
         "books": 3
     },
@@ -2057,24 +1903,13 @@
         "books": 3
     },
     {
-        "name": "Amor Towles",
-        "shop_name": "Towles, Amor",
-        "slug": "towles-amor",
-        "titles": [
-            "Normas de cortesía",
-            "Normas de cortesía",
-            "Normas de cortesía"
-        ],
-        "books": 3
-    },
-    {
         "name": "Ana Carrasco-Conde",
         "shop_name": "Carrasco-Conde, Ana",
         "slug": "carrasco-conde-ana",
         "titles": [
-            "La muerte en común- rústica",
             "El cuerpo de la Gorgona",
-            "La muerte en común"
+            "La muerte en común",
+            "La muerte en común- rústica"
         ],
         "books": 3
     },
@@ -2116,9 +1951,9 @@
         "shop_name": "Ricard, Anouk",
         "slug": "ricard-anouk",
         "titles": [
+            "Ana y Froga, tomo 1: ¿Quieres un chicle? (Nueva edición)",
             "Ana y Froga, tomo 2: ¿Qué hacemos ahora? (Nueva edición)",
-            "Ana y Froga. ¡Todas las historias!",
-            "Ana y Froga, tomo 1: ¿Quieres un chicle? (Nueva edición)"
+            "Ana y Froga. ¡Todas las historias!"
         ],
         "books": 3
     },
@@ -2127,9 +1962,9 @@
         "shop_name": "Machado Ruiz, Antonio",
         "slug": "machado-ruiz-antonio",
         "titles": [
-            "También la verdad se inventa",
             "Campos de Castilla",
-            "Juan de Mairena"
+            "Juan de Mairena",
+            "También la verdad se inventa"
         ],
         "books": 3
     },
@@ -2139,8 +1974,8 @@
         "slug": "ranea-trivino-beatriz",
         "titles": [
             "Desarmar la masculinidad",
-            "extrarradio",
-            "Puteros"
+            "Puteros",
+            "extrarradio"
         ],
         "books": 3
     },
@@ -2193,8 +2028,8 @@
         "shop_name": "Vasallo, Brigitte",
         "slug": "vasallo-brigitte",
         "titles": [
-            "Lenguaje inclusivo y exclusión de clase",
             "La fosa abierta",
+            "Lenguaje inclusivo y exclusión de clase",
             "Mentes insanas. Ungüentos feministas para males cotidianos"
         ],
         "books": 3
@@ -2204,8 +2039,8 @@
         "shop_name": "Nyman, Carla",
         "slug": "nyman-carla",
         "titles": [
-            "Líquida tuya y vertebrada",
             "Elegías para un avión común",
+            "Líquida tuya y vertebrada",
             "MOVERNOS EN LA SED"
         ],
         "books": 3
@@ -2227,8 +2062,8 @@
         "slug": "perez-sacau-carlos",
         "titles": [
             "Ardinal",
-            "Surco Dehesa Cauce",
-            "Los gorriones futuros"
+            "Los gorriones futuros",
+            "Surco Dehesa Cauce"
         ],
         "books": 3
     },
@@ -2238,8 +2073,8 @@
         "slug": "de-burgos-carmen",
         "titles": [
             "Espiritistas",
-            "Los que vuelven",
-            "La mujer moderna y sus derechos"
+            "La mujer moderna y sus derechos",
+            "Los que vuelven"
         ],
         "books": 3
     },
@@ -2262,17 +2097,6 @@
             "Catalina, la fugitiva de San Benito",
             "La saga de los malditos",
             "La vida que nos separa"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Claudio Magris",
-        "shop_name": "Magris, Claudio",
-        "slug": "magris-claudio",
-        "titles": [
-            "Cruz del Sur",
-            "El Danubio",
-            "El Danubio"
         ],
         "books": 3
     },
@@ -2303,9 +2127,9 @@
         "shop_name": "Canals, Cuca",
         "slug": "canals-cuca",
         "titles": [
-            "4. EL ENIGMA DE LA CARTA",
             "1. EL MISTERIO DE LA CALLE MORGUE",
-            "2. EL EXTRAÑO CRIMEN DE MARY ROGET"
+            "2. EL EXTRAÑO CRIMEN DE MARY ROGET",
+            "4. EL ENIGMA DE LA CARTA"
         ],
         "books": 3
     },
@@ -2314,9 +2138,9 @@
         "shop_name": "Brown, Dan",
         "slug": "brown-dan",
         "titles": [
-            "Ángeles y demonios",
             "El código Da Vinci",
-            "El código Da Vinci. Edición especial con cantos decorados"
+            "El código Da Vinci. Edición especial con cantos decorados",
+            "Ángeles y demonios"
         ],
         "books": 3
     },
@@ -2332,6 +2156,17 @@
         "books": 3
     },
     {
+        "name": "David B. Gil",
+        "shop_name": "Gil, David B.",
+        "slug": "gil-david-b",
+        "titles": [
+            "El guerrero a la sombra del cerezo",
+            "El señor Búho y el País de los Muertos",
+            "Ocho millones de dioses"
+        ],
+        "books": 3
+    },
+    {
         "name": "David Foster Wallace",
         "shop_name": "Wallace, David Foster",
         "slug": "wallace-david-foster",
@@ -2343,24 +2178,13 @@
         "books": 3
     },
     {
-        "name": "Doris Lessing",
-        "shop_name": "Lessing, Doris",
-        "slug": "lessing-doris",
-        "titles": [
-            "El cuaderno dorado",
-            "El cuaderno dorado",
-            "El quinto hijo"
-        ],
-        "books": 3
-    },
-    {
         "name": "Elvira Roca Barea",
         "shop_name": "Roca Barea, Elvira",
         "slug": "roca-barea-elvira",
         "titles": [
+            "Imperiofobia y leyenda negra",
             "Ingrata patria",
-            "Las brujas y el inquisidor",
-            "Imperiofobia y leyenda negra"
+            "Las brujas y el inquisidor"
         ],
         "books": 3
     },
@@ -2369,20 +2193,9 @@
         "shop_name": "Ferris, Emil",
         "slug": "ferris-emil",
         "titles": [
-            "Lo que más me gusta son los monstruos (edición estuche con los libros primero y segundo)",
             "Lo que más me gusta son los monstruos",
+            "Lo que más me gusta son los monstruos (edición estuche con los libros primero y segundo)",
             "Lo que más me gusta son los monstruos 2"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Emily Brontë",
-        "shop_name": "Brontë, Emily",
-        "slug": "bronte-emily",
-        "titles": [
-            "Cumbres borrascosas",
-            "Cumbres borrascosas",
-            "Cumbres borrascosas"
         ],
         "books": 3
     },
@@ -2391,9 +2204,20 @@
         "shop_name": "Carrère, Emmanuel",
         "slug": "carrere-emmanuel",
         "titles": [
-            "El adversario",
             "De vidas ajenas",
+            "El adversario",
             "V13"
+        ],
+        "books": 3
+    },
+    {
+        "name": "Epicteto",
+        "shop_name": "Epicteto",
+        "slug": "epicteto",
+        "titles": [
+            "Manual de vida",
+            "El arte de vivir (en tiempos difíciles)",
+            "Manual para la vida feliz"
         ],
         "books": 3
     },
@@ -2405,17 +2229,6 @@
             "La mirada inquieta",
             "La mirada inquieta (edición especial)",
             "Las mujeres detrás de Picasso"
-        ],
-        "books": 3
-    },
-    {
-        "name": "F. Scott Fitzgerald",
-        "shop_name": "Fitzgerald, F. Scott",
-        "slug": "fitzgerald-f-scott",
-        "titles": [
-            "El gran Gatsby",
-            "El gran Gatsby",
-            "El Gran Gatsby"
         ],
         "books": 3
     },
@@ -2435,8 +2248,8 @@
         "shop_name": "Dostoievski, Fiódor M.",
         "slug": "dostoievski-fiodor-m",
         "titles": [
-            "Noches Blancas",
             "El jugador",
+            "Noches Blancas",
             "Novela en nueve cartas y otros cuentos"
         ],
         "books": 3
@@ -2446,9 +2259,9 @@
         "shop_name": "Ibáñez, Francisco",
         "slug": "ibanez-francisco",
         "titles": [
-            "Mundiales del Humor (Súper Humor Mortadelo 69)",
+            "13, Rúe del Percebe (edición integral)",
             "Mi primer Mortadelo y Filemón - ¡Cracks del balón!",
-            "13, Rúe del Percebe (edición integral)"
+            "Mundiales del Humor (Súper Humor Mortadelo 69)"
         ],
         "books": 3
     },
@@ -2491,8 +2304,8 @@
         "slug": "agamben-giorgio",
         "titles": [
             "Desnudez",
-            "Profanaciones",
-            "EL CUERPO DE LA LENGUA"
+            "EL CUERPO DE LA LENGUA",
+            "Profanaciones"
         ],
         "books": 3
     },
@@ -2501,8 +2314,8 @@
         "shop_name": "Bécquer, Gustavo Adolfo",
         "slug": "becquer-gustavo-adolfo",
         "titles": [
-            "El Monte de las Ánimas ilustrado",
             "El Monte de las Ánimas",
+            "El Monte de las Ánimas ilustrado",
             "Tan solos los muertos"
         ],
         "books": 3
@@ -2530,6 +2343,17 @@
         "books": 3
     },
     {
+        "name": "Ibon Martín",
+        "shop_name": "Martín, Ibon",
+        "slug": "martin-ibon",
+        "titles": [
+            "El ladrón de rostros (Inspectora Ane Cestero 3)",
+            "La danza de los tulipanes (Inspectora Ane Cestero 1)",
+            "La hora de las gaviotas (Inspectora Ane Cestero 2)"
+        ],
+        "books": 3
+    },
+    {
         "name": "Ibán Martín",
         "shop_name": "Martín, Ibán",
         "slug": "martin-iban",
@@ -2546,19 +2370,8 @@
         "slug": "welsh-irvine",
         "titles": [
             "Acid House",
-            "Los cuchillos largos",
-            "La vida sexual de las gemelas siamesas"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Isabel Allende",
-        "shop_name": "Allende, Isabel",
-        "slug": "allende-isabel",
-        "titles": [
-            "La casa de los espíritus",
-            "Mujeres del alma mía",
-            "Mujeres del alma mía"
+            "La vida sexual de las gemelas siamesas",
+            "Los cuchillos largos"
         ],
         "books": 3
     },
@@ -2567,8 +2380,8 @@
         "shop_name": "Yogis, Jaimal",
         "slug": "yogis-jaimal",
         "titles": [
-            "Sangre de Dragón 2: El ataque de los fuegoscuros",
             "Sangre de Dragón 1: El despertar de la tormenta",
+            "Sangre de Dragón 2: El ataque de los fuegoscuros",
             "Sangre de Dragón 3: En busca del rey dragón"
         ],
         "books": 3
@@ -2589,9 +2402,9 @@
         "shop_name": "Bilbao, Jon",
         "slug": "bilbao-jon",
         "titles": [
-            "Esta es tu casa",
             "Antes del volcán",
-            "Araña"
+            "Araña",
+            "Esta es tu casa"
         ],
         "books": 3
     },
@@ -2601,8 +2414,8 @@
         "slug": "fosse-jon",
         "titles": [
             "Blancura: Premio Nobel de literatura 2023",
-            "Poesía completa",
-            "Misterio y fe"
+            "Misterio y fe",
+            "Poesía completa"
         ],
         "books": 3
     },
@@ -2612,8 +2425,8 @@
         "slug": "freire-jorge",
         "titles": [
             "Agitación",
-            "La banalidad del bien",
-            "Hazte quien eres"
+            "Hazte quien eres",
+            "La banalidad del bien"
         ],
         "books": 3
     },
@@ -2644,9 +2457,9 @@
         "shop_name": "Villacañas Berlanga, José Luis",
         "slug": "villacanas-berlanga-jose-luis",
         "titles": [
-            "Érase una vez España",
             "Max Weber en contexto",
-            "Senderos que se bifurcan"
+            "Senderos que se bifurcan",
+            "Érase una vez España"
         ],
         "books": 3
     },
@@ -2666,9 +2479,9 @@
         "shop_name": "Oates, Joyce Carol",
         "slug": "oates-joyce-carol",
         "titles": [
-            "Perversas. Nuevas historias de Body Horror escritas por mujeres",
             "Bestias",
-            "El señor Fox"
+            "El señor Fox",
+            "Perversas. Nuevas historias de Body Horror escritas por mujeres"
         ],
         "books": 3
     },
@@ -2706,17 +2519,6 @@
         "books": 3
     },
     {
-        "name": "Julián Casanova",
-        "shop_name": "Casanova, Julián",
-        "slug": "casanova-julian",
-        "titles": [
-            "España partida en dos",
-            "Franco",
-            "España partida en dos"
-        ],
-        "books": 3
-    },
-    {
         "name": "June Fernández Casete",
         "shop_name": "Fernández Casete, June",
         "slug": "fernandez-casete-june",
@@ -2728,46 +2530,13 @@
         "books": 3
     },
     {
-        "name": "Junichiro Tanizaki",
-        "shop_name": "Tanizaki, Junichiro",
-        "slug": "tanizaki-junichiro",
+        "name": "Karl Ove Knausgård",
+        "shop_name": "Knausgård, Karl Ove",
+        "slug": "knausgard-karl-ove",
         "titles": [
-            "El elogio de la sombra",
-            "El elogio de la sombra",
-            "EL ELOGIO DE LA SOMBRA (Bolsillo)"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Karel Capek",
-        "shop_name": "Capek, Karel",
-        "slug": "capek-karel",
-        "titles": [
-            "La guerra de las salamandras",
-            "R.U.R. Robots Universales Rossum",
-            "R.U.R. Robots Universales Rossum"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Kazuo Ishiguro",
-        "shop_name": "Ishiguro, Kazuo",
-        "slug": "ishiguro-kazuo",
-        "titles": [
-            "Klara y el Sol",
-            "Klara y el Sol",
-            "El gigante enterrado"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Kiran Millwood Hargrave",
-        "shop_name": "Millwood Hargrave, Kiran",
-        "slug": "millwood-hargrave-kiran",
-        "titles": [
-            "Vardo",
-            "Vardo (ed. especial limitada con cantos pintados)",
-            "Vardo"
+            "Bailando en la oscuridad",
+            "La estrella de la mañana",
+            "Los lobos del bosque de la eternidad"
         ],
         "books": 3
     },
@@ -2779,6 +2548,17 @@
             "Call of the Night 01",
             "Call of the Night 02",
             "Call of the Night 03"
+        ],
+        "books": 3
+    },
+    {
+        "name": "Laetitia Colombani",
+        "shop_name": "Colombani, Laetitia",
+        "slug": "colombani-laetitia",
+        "titles": [
+            "La trenza (edición limitada Verano)",
+            "La trenza",
+            "La trenza (edición limitada a precio especial)"
         ],
         "books": 3
     },
@@ -2798,8 +2578,8 @@
         "shop_name": "Guerriero, Leila",
         "slug": "guerriero-leila",
         "titles": [
-            "La llamada",
             "Frutos extraños (edición definitiva)",
+            "La llamada",
             "Los suicidas del fin del mundo"
         ],
         "books": 3
@@ -2809,9 +2589,9 @@
         "shop_name": "Slimani, Leila",
         "slug": "slimani-leila",
         "titles": [
-            "El perfume de las flores de noche",
             "El diablo está en los detalles / Así escribo",
-            "El país de los otros"
+            "El país de los otros",
+            "El perfume de las flores de noche"
         ],
         "books": 3
     },
@@ -2831,8 +2611,8 @@
         "shop_name": "O'Farrell, Maggie",
         "slug": "ofarrell-maggie",
         "titles": [
-            "Hamnet",
             "El retrato de casada",
+            "Hamnet",
             "Sigo aquí"
         ],
         "books": 3
@@ -2860,13 +2640,24 @@
         "books": 3
     },
     {
+        "name": "Marco Aurelio",
+        "shop_name": "Aurelio, Marco",
+        "slug": "aurelio-marco",
+        "titles": [
+            "Meditaciones",
+            "Meditaciones (Serie Great Ideas 12)",
+            "Pensamientos Cartas Testimonios"
+        ],
+        "books": 3
+    },
+    {
         "name": "Margaret Atwood",
         "shop_name": "Atwood, Margaret",
         "slug": "atwood-margaret",
         "titles": [
             "Catorce días",
-            "Sinceramente",
-            "Libro de mis vidas"
+            "Libro de mis vidas",
+            "Sinceramente"
         ],
         "books": 3
     },
@@ -2887,8 +2678,8 @@
         "slug": "mark-siegel",
         "titles": [
             "5 MUNDOS 1. EL GUERRERO DE ARENA (NUEVO PVP)",
-            "5 MUNDOS 3. EL LABERINTO ROJO",
-            "5 MUNDOS 2. EL PRINCIPE COBALTO (NUEVO PVP)"
+            "5 MUNDOS 2. EL PRINCIPE COBALTO (NUEVO PVP)",
+            "5 MUNDOS 3. EL LABERINTO ROJO"
         ],
         "books": 3
     },
@@ -2897,8 +2688,8 @@
         "shop_name": "Jiménez Serrano, Marta",
         "slug": "jimenez-serrano-marta",
         "titles": [
-            "Los nombres propios",
             "La edad ligera",
+            "Los nombres propios",
             "Oxígeno"
         ],
         "books": 3
@@ -2909,8 +2700,8 @@
         "slug": "wells-martha",
         "titles": [
             "Los diarios de Matabot: Condición artificial",
-            "Sistemas críticos",
-            "Rey Brujo"
+            "Rey Brujo",
+            "Sistemas críticos"
         ],
         "books": 3
     },
@@ -2919,9 +2710,9 @@
         "shop_name": "Caparrós, Martín",
         "slug": "caparros-martin",
         "titles": [
-            "Otras historias del Archivo de Indias",
+            "Ahorita",
             "Antes que nada",
-            "Ahorita"
+            "Otras historias del Archivo de Indias"
         ],
         "books": 3
     },
@@ -2941,8 +2732,8 @@
         "shop_name": "Pastoureau, Michel",
         "slug": "pastoureau-michel",
         "titles": [
-            "Azul. Historia de un color",
             "Animales célebres",
+            "Azul. Historia de un color",
             "Rojo. Historia de un color"
         ],
         "books": 3
@@ -2952,9 +2743,9 @@
         "shop_name": "Brieva, Miguel",
         "slug": "brieva-miguel",
         "titles": [
+            "Bienvenido al mundo",
             "Dinero",
-            "Se busca un futuro posible en el que desear vivir",
-            "Bienvenido al mundo"
+            "Se busca un futuro posible en el que desear vivir"
         ],
         "books": 3
     },
@@ -2981,13 +2772,24 @@
         "books": 3
     },
     {
+        "name": "Mona Chollet",
+        "shop_name": "Chollet, Mona",
+        "slug": "chollet-mona",
+        "titles": [
+            "Brujas",
+            "Contra la culpabilización",
+            "Reinventar el amor"
+        ],
+        "books": 3
+    },
+    {
         "name": "Monique Wittig",
         "shop_name": "Wittig, Monique",
         "slug": "wittig-monique",
         "titles": [
-            "Las guerrilleras",
             "Borrador para un diccionario de las amantes",
-            "El Opoponax"
+            "El Opoponax",
+            "Las guerrilleras"
         ],
         "books": 3
     },
@@ -3003,6 +2805,17 @@
         "books": 3
     },
     {
+        "name": "Naomi Klein",
+        "shop_name": "Klein, Naomi",
+        "slug": "klein-naomi",
+        "titles": [
+            "La doctrina del shock",
+            "Decir no no basta",
+            "No logo"
+        ],
+        "books": 3
+    },
+    {
         "name": "Natalia Ginzburg",
         "shop_name": "Ginzburg, Natalia",
         "slug": "ginzburg-natalia",
@@ -3010,17 +2823,6 @@
             "Domingo",
             "Las pequeñas virtudes",
             "Léxico familiar"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Nicolás Maquiavelo",
-        "shop_name": "Maquiavelo, Nicolás",
-        "slug": "maquiavelo-nicolas",
-        "titles": [
-            "El príncipe",
-            "El príncipe",
-            "El príncipe"
         ],
         "books": 3
     },
@@ -3047,17 +2849,6 @@
         "books": 3
     },
     {
-        "name": "Oscar Wilde",
-        "shop_name": "Wilde, Oscar",
-        "slug": "wilde-oscar",
-        "titles": [
-            "El retrato de Dorian Gray",
-            "El retrato de Dorian Gray",
-            "El retrato de Dorian Gray"
-        ],
-        "books": 3
-    },
-    {
         "name": "Patricia García-Rojo",
         "shop_name": "García-Rojo, Patricia",
         "slug": "garcia-rojo-patricia",
@@ -3074,8 +2865,8 @@
         "slug": "smith-patti",
         "titles": [
             "Augurios de inocencia",
-            "Éramos unos niños",
-            "Pan de ángeles"
+            "Pan de ángeles",
+            "Éramos unos niños"
         ],
         "books": 3
     },
@@ -3117,9 +2908,9 @@
         "shop_name": "Lemaitre, Pierre",
         "slug": "lemaitre-pierre",
         "titles": [
-            "Vestido de novia",
             "El ancho mundo",
-            "Recursos inhumanos"
+            "Recursos inhumanos",
+            "Vestido de novia"
         ],
         "books": 3
     },
@@ -3139,9 +2930,20 @@
         "shop_name": "Pedraza Martínez, Pilar",
         "slug": "pedraza-martinez-pilar",
         "titles": [
-            "Perseidas",
+            "Brujas, sapos y aquelarres",
             "La perra de Alejandría",
-            "Brujas, sapos y aquelarres"
+            "Perseidas"
+        ],
+        "books": 3
+    },
+    {
+        "name": "R.F. Kuang",
+        "shop_name": "Kuang, R.F.",
+        "slug": "kuang-rf",
+        "titles": [
+            "Catábasis",
+            "Babel",
+            "Una historia de Taipéi"
         ],
         "books": 3
     },
@@ -3195,8 +2997,8 @@
         "slug": "stevenson-robert-louis",
         "titles": [
             "El Extraño caso del doctor Jekyll y el señor Hyde",
-            "El extraño caso del doctor Jekyll y Mr. Hyde",
-            "El extraño caso del Dr. Jekyll y Mr. Hyde"
+            "El extraño caso del Dr. Jekyll y Mr. Hyde",
+            "El extraño caso del doctor Jekyll y Mr. Hyde"
         ],
         "books": 3
     },
@@ -3206,8 +3008,8 @@
         "slug": "calasso-roberto",
         "titles": [
             "Bobi",
-            "El libro de todos los libros",
-            "Cómo ordenar una biblioteca"
+            "Cómo ordenar una biblioteca",
+            "El libro de todos los libros"
         ],
         "books": 3
     },
@@ -3249,9 +3051,9 @@
         "shop_name": "Búho, Sara",
         "slug": "buho-sara",
         "titles": [
-            "Y yo a ti",
             "La ataraxia del corazón",
-            "Perdón a la lluvia"
+            "Perdón a la lluvia",
+            "Y yo a ti"
         ],
         "books": 3
     },
@@ -3278,13 +3080,13 @@
         "books": 3
     },
     {
-        "name": "Sergio Sarria",
-        "shop_name": "Sarria, Sergio",
-        "slug": "sarria-sergio",
+        "name": "Simon Scarrow",
+        "shop_name": "Scarrow, Simon",
+        "slug": "scarrow-simon",
         "titles": [
-            "Dios sabrá vengarnos",
-            "Terral",
-            "Terral"
+            "El honor de Roma (XX)",
+            "Los generales (II)",
+            "Sangre joven (I)"
         ],
         "books": 3
     },
@@ -3333,24 +3135,13 @@
         "books": 3
     },
     {
-        "name": "Stephen Greenblatt",
-        "shop_name": "Greenblatt, Stephen",
-        "slug": "greenblatt-stephen",
+        "name": "Sylvia Plath",
+        "shop_name": "Plath, Sylvia",
+        "slug": "plath-sylvia",
         "titles": [
-            "El giro",
-            "El giro",
-            "El Renacimiento oscuro"
-        ],
-        "books": 3
-    },
-    {
-        "name": "Sun-Tzu",
-        "shop_name": "Sun-Tzu",
-        "slug": "sun-tzu",
-        "titles": [
-            "El arte de la guerra",
-            "El arte de la guerra",
-            "El arte de la guerra"
+            "Ariel",
+            "Antología",
+            "Antología poética"
         ],
         "books": 3
     },
@@ -3370,9 +3161,20 @@
         "shop_name": "Muir, Tamsyn",
         "slug": "muir-tamsyn",
         "titles": [
-            "Nona la Novena (Saga de la Tumba Sellada 3)",
             "Gideon la Novena (Saga de la Tumba Sellada 1)",
-            "Harrow la Novena (Saga de la Tumba Sellada 2)"
+            "Harrow la Novena (Saga de la Tumba Sellada 2)",
+            "Nona la Novena (Saga de la Tumba Sellada 3)"
+        ],
+        "books": 3
+    },
+    {
+        "name": "Truman Capote",
+        "shop_name": "Capote, Truman",
+        "slug": "capote-truman",
+        "titles": [
+            "A sangre fría",
+            "Desayuno en Tiffany's",
+            "Música para camaleones"
         ],
         "books": 3
     },
@@ -3381,9 +3183,20 @@
         "shop_name": "Eco, Umberto",
         "slug": "eco-umberto",
         "titles": [
-            "El nombre de la rosa (la novela gráfica) 2",
             "El nombre de la rosa",
+            "El nombre de la rosa (la novela gráfica) 2",
             "Filósofos en libertad"
+        ],
+        "books": 3
+    },
+    {
+        "name": "Víctor Del Árbol",
+        "shop_name": "Árbol, Víctor Del",
+        "slug": "arbol-victor-del",
+        "titles": [
+            "Nadie en esta tierra",
+            "El tiempo de las fieras",
+            "Las buenas intenciones"
         ],
         "books": 3
     },
@@ -3392,9 +3205,9 @@
         "shop_name": "Khadra, Yasmina",
         "slug": "khadra-yasmina",
         "titles": [
-            "El atentado (cómic)",
             "Amor sicario",
-            "Corazón de almendra"
+            "Corazón de almendra",
+            "El atentado (cómic)"
         ],
         "books": 3
     },
@@ -3420,6 +3233,16 @@
         "books": 2
     },
     {
+        "name": "Adam Silvera",
+        "shop_name": "Silvera, Adam",
+        "slug": "silvera-adam",
+        "titles": [
+            "Al final mueren los dos",
+            "AL FINAL MUERE EL PRIMERO"
+        ],
+        "books": 2
+    },
+    {
         "name": "Adriana Cavarero",
         "shop_name": "Cavarero, Adriana",
         "slug": "cavarero-adriana",
@@ -3434,8 +3257,8 @@
         "shop_name": "Parlange, Adrien",
         "slug": "parlange-adrien",
         "titles": [
-            "Las desastrosas consecuencias de la caída de una gota de lluvia",
-            "Al abrigo"
+            "Al abrigo",
+            "Las desastrosas consecuencias de la caída de una gota de lluvia"
         ],
         "books": 2
     },
@@ -3454,8 +3277,8 @@
         "shop_name": "Portero, Alana S.",
         "slug": "portero-alana-s",
         "titles": [
-            "La mala costumbre",
-            "La habitación de las ahogadas"
+            "La habitación de las ahogadas",
+            "La mala costumbre"
         ],
         "books": 2
     },
@@ -3494,8 +3317,8 @@
         "shop_name": "Palomas, Alejandro",
         "slug": "palomas-alejandro",
         "titles": [
-            "Casa",
-            "Amalia"
+            "Amalia",
+            "Casa"
         ],
         "books": 2
     },
@@ -3514,8 +3337,8 @@
         "shop_name": "Lacroix, Alexandre",
         "slug": "lacroix-alexandre",
         "titles": [
-            "Cómo no ser un esclavo del sistema",
-            "Aprender a hacer el amor"
+            "Aprender a hacer el amor",
+            "Cómo no ser un esclavo del sistema"
         ],
         "books": 2
     },
@@ -3584,8 +3407,8 @@
         "shop_name": "Louzao, Alicia",
         "slug": "louzao-alicia",
         "titles": [
-            "Diarios del año de las moscas",
-            "Cabeza de familia"
+            "Cabeza de familia",
+            "Diarios del año de las moscas"
         ],
         "books": 2
     },
@@ -3594,8 +3417,8 @@
         "shop_name": "Valdés, Alicia",
         "slug": "valdes-alicia",
         "titles": [
-            "Política del malestar",
-            "La potencia afectiva"
+            "La potencia afectiva",
+            "Política del malestar"
         ],
         "books": 2
     },
@@ -3614,8 +3437,8 @@
         "shop_name": "Blandiana, Ana",
         "slug": "blandiana-ana",
         "titles": [
-            "El tercer sacramento",
-            "El sueño dentro del sueño y otros poemas"
+            "El sueño dentro del sueño y otros poemas",
+            "El tercer sacramento"
         ],
         "books": 2
     },
@@ -3704,8 +3527,8 @@
         "shop_name": "Martín, Andreu",
         "slug": "martin-andreu",
         "titles": [
-            "Productos tóxicos",
-            "Lo que solo les pasa a los demás"
+            "Lo que solo les pasa a los demás",
+            "Productos tóxicos"
         ],
         "books": 2
     },
@@ -3714,8 +3537,8 @@
         "shop_name": "Trapiello, Andrés",
         "slug": "trapiello-andres",
         "titles": [
-            "Madrid 1945",
-            "Las armas y las letras"
+            "Las armas y las letras",
+            "Madrid 1945"
         ],
         "books": 2
     },
@@ -3854,8 +3677,8 @@
         "shop_name": "Blexbolex",
         "slug": "blexbolex",
         "titles": [
-            "Los magos",
-            "El tiempo del capitán Brett"
+            "El tiempo del capitán Brett",
+            "Los magos"
         ],
         "books": 2
     },
@@ -3864,8 +3687,8 @@
         "shop_name": "Pop, Bob",
         "slug": "pop-bob",
         "titles": [
-            "De cuerpo presente",
-            "Como las grecas"
+            "Como las grecas",
+            "De cuerpo presente"
         ],
         "books": 2
     },
@@ -3914,8 +3737,8 @@
         "shop_name": "Sosa Villada, Camila",
         "slug": "sosa-villada-camila",
         "titles": [
-            "La novia de Sandro",
-            "El viaje inútil"
+            "El viaje inútil",
+            "La novia de Sandro"
         ],
         "books": 2
     },
@@ -3954,18 +3777,8 @@
         "shop_name": "Domingo, Carmen",
         "slug": "domingo-carmen",
         "titles": [
-            "De silenciadas a protagonistas",
-            "Con voz y voto"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Carmen Gallardo Tomé",
-        "shop_name": "Gallardo Tomé, Carmen",
-        "slug": "gallardo-tome-carmen",
-        "titles": [
-            "La reina de las lavanderas",
-            "La reina de las lavanderas"
+            "Con voz y voto",
+            "De silenciadas a protagonistas"
         ],
         "books": 2
     },
@@ -3994,8 +3807,8 @@
         "shop_name": "Pavese, Cesare",
         "slug": "pavese-cesare",
         "titles": [
-            "El diablo en las colinas",
-            "Cartas de desamor"
+            "Cartas de desamor",
+            "El diablo en las colinas"
         ],
         "books": 2
     },
@@ -4014,8 +3827,8 @@
         "shop_name": "Bukowski, Charles",
         "slug": "bukowski-charles",
         "titles": [
-            "La enfermedad de escribir",
-            "Ausencia del héroe"
+            "Ausencia del héroe",
+            "La enfermedad de escribir"
         ],
         "books": 2
     },
@@ -4024,8 +3837,8 @@
         "shop_name": "Dickens, Charles",
         "slug": "dickens-charles",
         "titles": [
-            "Cuento de Navidad. Edición anotada",
-            "13 de fantasmas"
+            "13 de fantasmas",
+            "Cuento de Navidad. Edición anotada"
         ],
         "books": 2
     },
@@ -4160,6 +3973,16 @@
         "books": 2
     },
     {
+        "name": "Claudio Magris",
+        "shop_name": "Magris, Claudio",
+        "slug": "magris-claudio",
+        "titles": [
+            "El Danubio",
+            "Cruz del Sur"
+        ],
+        "books": 2
+    },
+    {
         "name": "Coral Herrera Gómez",
         "shop_name": "Herrera Gómez, Coral",
         "slug": "herrera-gomez-coral",
@@ -4264,8 +4087,8 @@
         "shop_name": "Valero, Daniel",
         "slug": "valero-daniel",
         "titles": [
-            "Más allá de las siglas",
-            "Confundidas, indecisas, promiscuas"
+            "Confundidas, indecisas, promiscuas",
+            "Más allá de las siglas"
         ],
         "books": 2
     },
@@ -4304,8 +4127,8 @@
         "shop_name": "Sánchez Fernández, David Miguel",
         "slug": "sanchez-fernandez-david-miguel",
         "titles": [
-            "Cines de Madrid",
-            "Animales de combate"
+            "Animales de combate",
+            "Cines de Madrid"
         ],
         "books": 2
     },
@@ -4334,8 +4157,8 @@
         "shop_name": "Arancibia, Desiree",
         "slug": "arancibia-desiree",
         "titles": [
-            "El recetario Mágico",
-            "El día que me tragué a mi mamá"
+            "El día que me tragué a mi mamá",
+            "El recetario Mágico"
         ],
         "books": 2
     },
@@ -4354,8 +4177,8 @@
         "shop_name": "Dk,",
         "slug": "dk",
         "titles": [
-            "El gran libro de la cocina casera",
-            "Aprendo a cocinar"
+            "Aprendo a cocinar",
+            "El gran libro de la cocina casera"
         ],
         "books": 2
     },
@@ -4396,6 +4219,16 @@
         "titles": [
             "El hombre del laberinto",
             "La casa de las voces"
+        ],
+        "books": 2
+    },
+    {
+        "name": "Doris Lessing",
+        "shop_name": "Lessing, Doris",
+        "slug": "lessing-doris",
+        "titles": [
+            "El cuaderno dorado",
+            "El quinto hijo"
         ],
         "books": 2
     },
@@ -4464,8 +4297,8 @@
         "shop_name": "El Hematocrítico,",
         "slug": "el-hematocritico",
         "titles": [
-            "Legendario",
-            "Campeones del mundo"
+            "Campeones del mundo",
+            "Legendario"
         ],
         "books": 2
     },
@@ -4494,8 +4327,8 @@
         "shop_name": "Moreno, Eloy",
         "slug": "moreno-eloy",
         "titles": [
-            "Redes (Invisible 2)",
-            "Invisible"
+            "Invisible",
+            "Redes (Invisible 2)"
         ],
         "books": 2
     },
@@ -4504,8 +4337,8 @@
         "shop_name": "Vila-Matas, Enrique",
         "slug": "vila-matas-enrique",
         "titles": [
-            "Historia abreviada de la literatura portátil",
-            "Canon de cámara oscura"
+            "Canon de cámara oscura",
+            "Historia abreviada de la literatura portátil"
         ],
         "books": 2
     },
@@ -4524,8 +4357,8 @@
         "shop_name": "Peñas Domingo, Esther",
         "slug": "penas-domingo-esther",
         "titles": [
-            "De la estirpe de las amazonas",
-            "Ardiente balbuceo"
+            "Ardiente balbuceo",
+            "De la estirpe de las amazonas"
         ],
         "books": 2
     },
@@ -4544,8 +4377,8 @@
         "shop_name": "Trías, Eugenio",
         "slug": "trias-eugenio",
         "titles": [
-            "Los límites del mundo",
-            "La memoria perdida de las cosas"
+            "La memoria perdida de las cosas",
+            "Los límites del mundo"
         ],
         "books": 2
     },
@@ -4570,6 +4403,16 @@
         "books": 2
     },
     {
+        "name": "F. Scott Fitzgerald",
+        "shop_name": "Fitzgerald, F. Scott",
+        "slug": "fitzgerald-f-scott",
+        "titles": [
+            "El gran Gatsby",
+            "El Gran Gatsby"
+        ],
+        "books": 2
+    },
+    {
         "name": "Fermina Cañaveras",
         "shop_name": "Cañaveras, Fermina",
         "slug": "canaveras-fermina",
@@ -4584,18 +4427,8 @@
         "shop_name": "Solís, Fermín",
         "slug": "solis-fermin",
         "titles": [
-            "Charles loves Josefa",
-            "Astro-Ratón y Bombillita 2"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Fernando Aramburu",
-        "shop_name": "Aramburu, Fernando",
-        "slug": "aramburu-fernando",
-        "titles": [
-            "El niño",
-            "El niño"
+            "Astro-Ratón y Bombillita 2",
+            "Charles loves Josefa"
         ],
         "books": 2
     },
@@ -4606,16 +4439,6 @@
         "titles": [
             "El canto de la Pardala",
             "Hermanos de guerra"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Fiodor Mijaïlovich Dostoevskiï",
-        "shop_name": "Dostoevskiï, Fiodor Mijaïlovich",
-        "slug": "dostoevskii-fiodor-mijailovich",
-        "titles": [
-            "El jugador",
-            "El jugador"
         ],
         "books": 2
     },
@@ -4684,8 +4507,8 @@
         "shop_name": "Uzcanga Meinecke, Francisco",
         "slug": "uzcanga-meinecke-francisco",
         "titles": [
-            "Tú que bailas con la muerte",
-            "El café sobre el volcán"
+            "El café sobre el volcán",
+            "Tú que bailas con la muerte"
         ],
         "books": 2
     },
@@ -4704,8 +4527,8 @@
         "shop_name": "Cattana, Gata",
         "slug": "cattana-gata",
         "titles": [
-            "Poesía completa",
-            "La escala de Mohs"
+            "La escala de Mohs",
+            "Poesía completa"
         ],
         "books": 2
     },
@@ -4764,8 +4587,8 @@
         "shop_name": "Trujillo, Gracia",
         "slug": "trujillo-gracia",
         "titles": [
-            "El feminismo queer es para todo el mundo",
-            "Deseo y resistencia"
+            "Deseo y resistencia",
+            "El feminismo queer es para todo el mundo"
         ],
         "books": 2
     },
@@ -4776,16 +4599,6 @@
         "titles": [
             "El americano tranquilo",
             "El final del affaire"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Greta Alonso",
-        "shop_name": "Alonso, Greta",
-        "slug": "alonso-greta",
-        "titles": [
-            "La dama y la muerte",
-            "La dama y la muerte"
         ],
         "books": 2
     },
@@ -4854,8 +4667,8 @@
         "shop_name": "Murakami, Haruki",
         "slug": "murakami-haruki",
         "titles": [
-            "Murakami. El séptimo hombre y otros cuentos",
-            "Crónica del pájaro que da cuerda al mundo"
+            "Crónica del pájaro que da cuerda al mundo",
+            "Murakami. El séptimo hombre y otros cuentos"
         ],
         "books": 2
     },
@@ -4864,8 +4677,8 @@
         "shop_name": "Larretxea, Hasier",
         "slug": "larretxea-hasier",
         "titles": [
-            "Hijos del peligro",
-            "Escribir es aprender a contar hacia atrás"
+            "Escribir es aprender a contar hacia atrás",
+            "Hijos del peligro"
         ],
         "books": 2
     },
@@ -4874,8 +4687,8 @@
         "shop_name": "Mccloy, Helen",
         "slug": "mccloy-helen",
         "titles": [
-            "Muerte en escena",
-            "Bajo la nieve"
+            "Bajo la nieve",
+            "Muerte en escena"
         ],
         "books": 2
     },
@@ -4944,8 +4757,8 @@
         "shop_name": "Morales, Irene",
         "slug": "morales-irene",
         "titles": [
-            "Larga vida al rey - vol. 1",
-            "Larga vida al Rey Vol. 2: Flores"
+            "Larga vida al Rey Vol. 2: Flores",
+            "Larga vida al rey - vol. 1"
         ],
         "books": 2
     },
@@ -4970,6 +4783,16 @@
         "books": 2
     },
     {
+        "name": "Isabel Allende",
+        "shop_name": "Allende, Isabel",
+        "slug": "allende-isabel",
+        "titles": [
+            "Mujeres del alma mía",
+            "La casa de los espíritus"
+        ],
+        "books": 2
+    },
+    {
         "name": "Isabel Greenberg",
         "shop_name": "Greenberg, Isabel",
         "slug": "greenberg-isabel",
@@ -4984,8 +4807,8 @@
         "shop_name": "Domínguez, Iñaki",
         "slug": "dominguez-inaki",
         "titles": [
-            "Macarras interseculares",
-            "Macarras ibéricos"
+            "Macarras ibéricos",
+            "Macarras interseculares"
         ],
         "books": 2
     },
@@ -4996,16 +4819,6 @@
         "titles": [
             "El pacto",
             "Las abandonadas"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Jacqueline Harpman",
-        "shop_name": "Harpman, Jacqueline",
-        "slug": "harpman-jacqueline",
-        "titles": [
-            "Yo que nunca supe de los hombres",
-            "Yo que nunca supe de los hombres"
         ],
         "books": 2
     },
@@ -5026,6 +4839,16 @@
         "titles": [
             "L.A. Confidential (Cuarteto de Los Ángeles 3)",
             "Los seductores"
+        ],
+        "books": 2
+    },
+    {
+        "name": "James Islington",
+        "shop_name": "Islington, James",
+        "slug": "islington-james",
+        "titles": [
+            "La fuerza de pocos",
+            "La voluntad de muchos"
         ],
         "books": 2
     },
@@ -5054,18 +4877,8 @@
         "shop_name": "Miro, Javier",
         "slug": "miro-javier",
         "titles": [
-            "REBELIÓN",
-            "Gris era el páramo"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Javier Padilla",
-        "shop_name": "Padilla, Javier",
-        "slug": "padilla-javier",
-        "titles": [
-            "A finales de enero",
-            "A finales de enero"
+            "Gris era el páramo",
+            "REBELIÓN"
         ],
         "books": 2
     },
@@ -5084,8 +4897,8 @@
         "shop_name": "Kristoff, Jay",
         "slug": "kristoff-jay",
         "titles": [
-            "LIFEL1K3: Más humano que los humanos",
-            "El imperio del vampiro"
+            "El imperio del vampiro",
+            "LIFEL1K3: Más humano que los humanos"
         ],
         "books": 2
     },
@@ -5096,16 +4909,6 @@
         "titles": [
             "Babar: Las vacaciones de Zefir",
             "El rey Babar"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Jeanette Winterson",
-        "shop_name": "Winterson, Jeanette",
-        "slug": "winterson-jeanette",
-        "titles": [
-            "¿Por qué ser feliz cuando puedes ser normal?",
-            "¿Por qué ser feliz cuando puedes ser normal?"
         ],
         "books": 2
     },
@@ -5134,8 +4937,8 @@
         "shop_name": "Didion, Joan",
         "slug": "didion-joan",
         "titles": [
-            "El año del pensamiento mágico",
-            "Apuntes para John"
+            "Apuntes para John",
+            "El año del pensamiento mágico"
         ],
         "books": 2
     },
@@ -5184,8 +4987,8 @@
         "shop_name": "Steinbeck, John",
         "slug": "steinbeck-john",
         "titles": [
-            "La taza de oro (bolsillo)",
-            "Hubo una vez una guerra (bolsillo)"
+            "Hubo una vez una guerra (bolsillo)",
+            "La taza de oro (bolsillo)"
         ],
         "books": 2
     },
@@ -5200,22 +5003,12 @@
         "books": 2
     },
     {
-        "name": "Jokin Azpiazu Carballo",
-        "shop_name": "Azpiazu Carballo, Jokin",
-        "slug": "azpiazu-carballo-jokin",
-        "titles": [
-            "Masculinidades y feminismo",
-            "Masculinidades y feminismo"
-        ],
-        "books": 2
-    },
-    {
         "name": "Jordi Soler",
         "shop_name": "Soler, Jordi",
         "slug": "soler-jordi",
         "titles": [
-            "Ámala locamente (Serie ENDEBATE)",
-            "Svalbard"
+            "Svalbard",
+            "Ámala locamente (Serie ENDEBATE)"
         ],
         "books": 2
     },
@@ -5224,8 +5017,8 @@
         "shop_name": "Carrión, Jorge",
         "slug": "carrion-jorge",
         "titles": [
-            "Librerías",
-            "Contra Amazon- 2024"
+            "Contra Amazon- 2024",
+            "Librerías"
         ],
         "books": 2
     },
@@ -5244,8 +5037,8 @@
         "shop_name": "Merino Molinero, Jorge",
         "slug": "merino-molinero-jorge",
         "titles": [
-            "Urdimbre",
-            "La ceguera del lanzador de cuchillos"
+            "La ceguera del lanzador de cuchillos",
+            "Urdimbre"
         ],
         "books": 2
     },
@@ -5256,16 +5049,6 @@
         "titles": [
             "Invasión alienígena (Serie ENDEBATE)",
             "La invención de todas las cosas"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Josan Hatero",
-        "shop_name": "Hatero, Josan",
-        "slug": "hatero-josan",
-        "titles": [
-            "La memoria de las bicicletas",
-            "La memoria de las bicicletas"
         ],
         "books": 2
     },
@@ -5364,8 +5147,8 @@
         "shop_name": "F. Rivero, Juan",
         "slug": "f-rivero-juan",
         "titles": [
-            "Raíz dulce",
-            "Las hogueras azules"
+            "Las hogueras azules",
+            "Raíz dulce"
         ],
         "books": 2
     },
@@ -5460,6 +5243,26 @@
         "books": 2
     },
     {
+        "name": "Julián Casanova",
+        "shop_name": "Casanova, Julián",
+        "slug": "casanova-julian",
+        "titles": [
+            "España partida en dos",
+            "Franco"
+        ],
+        "books": 2
+    },
+    {
+        "name": "Junichiro Tanizaki",
+        "shop_name": "Tanizaki, Junichiro",
+        "slug": "tanizaki-junichiro",
+        "titles": [
+            "El elogio de la sombra",
+            "EL ELOGIO DE LA SOMBRA (Bolsillo)"
+        ],
+        "books": 2
+    },
+    {
         "name": "Junji Ito",
         "shop_name": "Ito, Junji",
         "slug": "ito-junji",
@@ -5474,8 +5277,18 @@
         "shop_name": "Kamome Shirahama",
         "slug": "kamome-shirahama",
         "titles": [
-            "Atelier of Witch Hat Edición Grimorio 4",
-            "ATELIER OF WITCH HAT EDICION GRIMORIO N 03"
+            "ATELIER OF WITCH HAT EDICION GRIMORIO N 03",
+            "Atelier of Witch Hat Edición Grimorio 4"
+        ],
+        "books": 2
+    },
+    {
+        "name": "Karel Capek",
+        "shop_name": "Capek, Karel",
+        "slug": "capek-karel",
+        "titles": [
+            "R.U.R. Robots Universales Rossum",
+            "La guerra de las salamandras"
         ],
         "books": 2
     },
@@ -5500,16 +5313,6 @@
         "books": 2
     },
     {
-        "name": "Karl Ove Knausg Rd",
-        "shop_name": "Knausg Rd, Karl Ove",
-        "slug": "knausg-rd-karl-ove",
-        "titles": [
-            "Bailando en la oscuridad",
-            "Los lobos del bosque de la eternidad"
-        ],
-        "books": 2
-    },
-    {
         "name": "Kate Atkinson",
         "shop_name": "Atkinson, Kate",
         "slug": "atkinson-kate",
@@ -5524,8 +5327,8 @@
         "shop_name": "Winkler, Katharina",
         "slug": "winkler-katharina",
         "titles": [
-            "Cárdeno adorno",
-            "Corazón de siete leguas"
+            "Corazón de siete leguas",
+            "Cárdeno adorno"
         ],
         "books": 2
     },
@@ -5536,6 +5339,16 @@
         "titles": [
             "El gran terremoto",
             "En defensa del error"
+        ],
+        "books": 2
+    },
+    {
+        "name": "Kazuo Ishiguro",
+        "shop_name": "Ishiguro, Kazuo",
+        "slug": "ishiguro-kazuo",
+        "titles": [
+            "Klara y el Sol",
+            "El gigante enterrado"
         ],
         "books": 2
     },
@@ -5560,12 +5373,22 @@
         "books": 2
     },
     {
+        "name": "Kiran Millwood Hargrave",
+        "shop_name": "Millwood Hargrave, Kiran",
+        "slug": "millwood-hargrave-kiran",
+        "titles": [
+            "Vardo",
+            "Vardo (ed. especial limitada con cantos pintados)"
+        ],
+        "books": 2
+    },
+    {
         "name": "Kitty Crowther",
         "shop_name": "Crowther, Kitty",
         "slug": "crowther-kitty",
         "titles": [
-            "Farwest",
-            "Ana del Lago"
+            "Ana del Lago",
+            "Farwest"
         ],
         "books": 2
     },
@@ -5584,8 +5407,8 @@
         "shop_name": "Fernández Nogales, Laura",
         "slug": "fernandez-nogales-laura",
         "titles": [
-            "Hay un monstruo en el lago",
-            "Damas, caballeros y planetas"
+            "Damas, caballeros y planetas",
+            "Hay un monstruo en el lago"
         ],
         "books": 2
     },
@@ -5594,8 +5417,8 @@
         "shop_name": "Freixas, Laura",
         "slug": "freixas-laura",
         "titles": [
-            "Madres e hijas",
-            "A todos nos falta algo"
+            "A todos nos falta algo",
+            "Madres e hijas"
         ],
         "books": 2
     },
@@ -5604,8 +5427,8 @@
         "shop_name": "Kié, Laure",
         "slug": "kie-laure",
         "titles": [
-            "La cocina japonesa ilustrada",
-            "La Vida japonesa ilustrada"
+            "La Vida japonesa ilustrada",
+            "La cocina japonesa ilustrada"
         ],
         "books": 2
     },
@@ -5664,8 +5487,8 @@
         "shop_name": "Moore, Liz",
         "slug": "moore-liz",
         "titles": [
-            "El largo río de las almas (AdN)",
-            "El dios de los bosques"
+            "El dios de los bosques",
+            "El largo río de las almas (AdN)"
         ],
         "books": 2
     },
@@ -5754,8 +5577,8 @@
         "shop_name": "Nelson, Maggie",
         "slug": "nelson-maggie",
         "titles": [
-            "Como el amor",
-            "Bluets"
+            "Bluets",
+            "Como el amor"
         ],
         "books": 2
     },
@@ -5766,16 +5589,6 @@
         "titles": [
             "27 MUJERES EN LA ENCRUCIJADA",
             "Vida cotidiana en la España de la posguerra"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Manuel Moreno Herranz",
-        "shop_name": "Moreno Herranz, Manuel",
-        "slug": "moreno-herranz-manuel",
-        "titles": [
-            "Todo era posible",
-            "Todo era posible"
         ],
         "books": 2
     },
@@ -5820,16 +5633,6 @@
         "books": 2
     },
     {
-        "name": "Marga Sánchez Romero",
-        "shop_name": "Sánchez Romero, Marga",
-        "slug": "sanchez-romero-marga",
-        "titles": [
-            "Prehistorias de mujeres",
-            "Prehistorias de mujeres"
-        ],
-        "books": 2
-    },
-    {
         "name": "Maria Nicolau",
         "shop_name": "Nicolau, Maria",
         "slug": "nicolau-maria",
@@ -5870,22 +5673,12 @@
         "books": 2
     },
     {
-        "name": "Marina Sáez",
-        "shop_name": "Sáez, Marina",
-        "slug": "saez-marina",
-        "titles": [
-            "Aguagim",
-            "Aguagim"
-        ],
-        "books": 2
-    },
-    {
         "name": "Marina Tsvietáieva",
         "shop_name": "Tsvietáieva, Marina",
         "slug": "tsvietaieva-marina",
         "titles": [
-            "El diablo",
-            "Cartas del verano de 1926"
+            "Cartas del verano de 1926",
+            "El diablo"
         ],
         "books": 2
     },
@@ -5904,8 +5697,8 @@
         "shop_name": "Satrapi, Marjane",
         "slug": "satrapi-marjane",
         "titles": [
-            "Persépolis (Estuche - edición 25 aniversario)",
-            "Bordados"
+            "Bordados",
+            "Persépolis (Estuche - edición 25 aniversario)"
         ],
         "books": 2
     },
@@ -5944,8 +5737,8 @@
         "shop_name": "Dueñas, María",
         "slug": "duenas-maria",
         "titles": [
-            "Misión Olvido",
-            "La Templanza"
+            "La Templanza",
+            "Misión Olvido"
         ],
         "books": 2
     },
@@ -5964,8 +5757,8 @@
         "shop_name": "Sánchez, María",
         "slug": "sanchez-maria",
         "titles": [
-            "Tierra de mujeres",
-            "Fuego la sed"
+            "Fuego la sed",
+            "Tierra de mujeres"
         ],
         "books": 2
     },
@@ -5974,8 +5767,8 @@
         "shop_name": "Tanaka, Masato",
         "slug": "tanaka-masato",
         "titles": [
-            "Gran historia visual de la filosofía",
-            "Gran guía visual de la historia"
+            "Gran guía visual de la historia",
+            "Gran historia visual de la filosofía"
         ],
         "books": 2
     },
@@ -6024,8 +5817,8 @@
         "shop_name": "Sarton, May",
         "slug": "sarton-may",
         "titles": [
-            "La casa junto al mar",
-            "Anhelo de raíces"
+            "Anhelo de raíces",
+            "La casa junto al mar"
         ],
         "books": 2
     },
@@ -6104,8 +5897,8 @@
         "shop_name": "Nieva, Michel",
         "slug": "nieva-michel",
         "titles": [
-            "La infancia del mundo",
-            "Ciencia ficción capitalista"
+            "Ciencia ficción capitalista",
+            "La infancia del mundo"
         ],
         "books": 2
     },
@@ -6144,8 +5937,8 @@
         "shop_name": "Mignola, Mike",
         "slug": "mignola-mike",
         "titles": [
-            "JUGANDO A BOLOS CON CADAVERES Y OTRAS HISTORIAS EXTRAÑAS DE TIERRAS DESCONOCIDAS",
-            "AIDP INTEGRAL VOL.9"
+            "AIDP INTEGRAL VOL.9",
+            "JUGANDO A BOLOS CON CADAVERES Y OTRAS HISTORIAS EXTRAÑAS DE TIERRAS DESCONOCIDAS"
         ],
         "books": 2
     },
@@ -6214,8 +6007,8 @@
         "shop_name": "Rodríguez, Mónica",
         "slug": "rodriguez-monica",
         "titles": [
-            "La mujer del retrato",
-            "El día que Úrsula Mon se convirtió en oso"
+            "El día que Úrsula Mon se convirtió en oso",
+            "La mujer del retrato"
         ],
         "books": 2
     },
@@ -6224,8 +6017,8 @@
         "shop_name": "Rodríguez Suárez, Mónica",
         "slug": "rodriguez-suarez-monica",
         "titles": [
-            "Umiko",
-            "La tía Clío y la máquina de escribir"
+            "La tía Clío y la máquina de escribir",
+            "Umiko"
         ],
         "books": 2
     },
@@ -6270,32 +6063,12 @@
         "books": 2
     },
     {
-        "name": "Niklas Natt Och Dag",
-        "shop_name": "Natt Och Dag, Niklas",
-        "slug": "natt-och-dag-niklas",
-        "titles": [
-            "1793 (Trilogía de Estocolmo 1)",
-            "1793 (Trilogía de Estocolmo 1)"
-        ],
-        "books": 2
-    },
-    {
         "name": "Noemí López Trujillo",
         "shop_name": "López Trujillo, Noemí",
         "slug": "lopez-trujillo-noemi",
         "titles": [
-            "Me dibujaron así",
-            "El vientre vacío"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Nohda Tatsuki",
-        "shop_name": "Tatsuki, Nohda",
-        "slug": "tatsuki-nohda",
-        "titles": [
-            "Agente de fútbol",
-            "Agente de fútbol"
+            "El vientre vacío",
+            "Me dibujaron así"
         ],
         "books": 2
     },
@@ -6354,8 +6127,8 @@
         "shop_name": "Tokarczuk, Olga",
         "slug": "tokarczuk-olga",
         "titles": [
-            "Un lugar llamado Antaño",
-            "Los libros de Jacob"
+            "Los libros de Jacob",
+            "Un lugar llamado Antaño"
         ],
         "books": 2
     },
@@ -6364,8 +6137,8 @@
         "shop_name": "Sacks, Oliver",
         "slug": "sacks-oliver",
         "titles": [
-            "Gratitud",
-            "Cartas"
+            "Cartas",
+            "Gratitud"
         ],
         "books": 2
     },
@@ -6384,8 +6157,8 @@
         "shop_name": "Batalla Cueto, Pablo",
         "slug": "batalla-cueto-pablo",
         "titles": [
-            "Yo podría haber sido Fidel Castro",
-            "La ira azul"
+            "La ira azul",
+            "Yo podría haber sido Fidel Castro"
         ],
         "books": 2
     },
@@ -6446,16 +6219,6 @@
         "titles": [
             "Niko 3 Una casa llena de sorpresas",
             "Niko 4. ¡Caos en el laboratorio!"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Paloma Sánchez-Garnica",
-        "shop_name": "Sánchez-Garnica, Paloma",
-        "slug": "sanchez-garnica-paloma",
-        "titles": [
-            "Últimos días en Berlín",
-            "Últimos días en Berlín"
         ],
         "books": 2
     },
@@ -6524,18 +6287,8 @@
         "shop_name": "Díaz Altozano, Paula",
         "slug": "diaz-altozano-paula",
         "titles": [
-            "El lamento de la selva",
-            "Ballenas invisibles"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Paula Melchor",
-        "shop_name": "Melchor, Paula",
-        "slug": "melchor-paula",
-        "titles": [
-            "Amor y pan",
-            "Amor y pan"
+            "Ballenas invisibles",
+            "El lamento de la selva"
         ],
         "books": 2
     },
@@ -6614,8 +6367,8 @@
         "shop_name": "Sands, Philippe",
         "slug": "sands-philippe",
         "titles": [
-            "Calle Londres 38",
-            "Calle Este-Oeste"
+            "Calle Este-Oeste",
+            "Calle Londres 38"
         ],
         "books": 2
     },
@@ -6636,16 +6389,6 @@
         "titles": [
             "El arte de hablar sobre el amor",
             "El sofista"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Polly Barton",
-        "shop_name": "Barton, Polly",
-        "slug": "barton-polly",
-        "titles": [
-            "Porno",
-            "Porno"
         ],
         "books": 2
     },
@@ -6700,16 +6443,6 @@
         "books": 2
     },
     {
-        "name": "Rafael Tarradas Bultó",
-        "shop_name": "Tarradas Bultó, Rafael",
-        "slug": "tarradas-bulto-rafael",
-        "titles": [
-            "El hijo del Reich",
-            "El hijo del Reich"
-        ],
-        "books": 2
-    },
-    {
         "name": "Reid Rachel",
         "shop_name": "Reid Rachel",
         "slug": "reid-rachel",
@@ -6756,16 +6489,6 @@
         "titles": [
             "Conspiración (Trilogía de Cicerón 2)",
             "Dictator (Trilogía de Cicerón 3)"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Robert W. Chambers",
-        "shop_name": "W. Chambers, Robert",
-        "slug": "w-chambers-robert",
-        "titles": [
-            "El Rey de Amarillo",
-            "El Rey de Amarillo"
         ],
         "books": 2
     },
@@ -6904,8 +6627,8 @@
         "shop_name": "Grauer, Sandra",
         "slug": "grauer-sandra",
         "titles": [
-            "La guerrera de los elfos",
-            "El príncipe de los dragones"
+            "El príncipe de los dragones",
+            "La guerrera de los elfos"
         ],
         "books": 2
     },
@@ -6934,8 +6657,8 @@
         "shop_name": "Juliá, Santos",
         "slug": "julia-santos",
         "titles": [
-            "Transición- rústica",
-            "Transición"
+            "Transición",
+            "Transición- rústica"
         ],
         "books": 2
     },
@@ -6966,6 +6689,16 @@
         "titles": [
             "A Miyoshi le gusta Hosaka, vol. 1",
             "A Miyoshi le gusta Hosaka, vol. 2"
+        ],
+        "books": 2
+    },
+    {
+        "name": "Sergio Sarria",
+        "shop_name": "Sarria, Sergio",
+        "slug": "sarria-sergio",
+        "titles": [
+            "Terral",
+            "Dios sabrá vengarnos"
         ],
         "books": 2
     },
@@ -7020,16 +6753,6 @@
         "books": 2
     },
     {
-        "name": "Simone De Beauvoir",
-        "shop_name": "De Beauvoir, Simone",
-        "slug": "de-beauvoir-simone",
-        "titles": [
-            "El segundo sexo",
-            "El segundo sexo"
-        ],
-        "books": 2
-    },
-    {
         "name": "Sir Steve Stevenson",
         "shop_name": "Stevenson, Sir Steve",
         "slug": "stevenson-sir-steve",
@@ -7054,8 +6777,8 @@
         "shop_name": "Encinas, Sonia",
         "slug": "encinas-sonia",
         "titles": [
-            "Feminidad salvaje",
-            "El niño que quería dar abrazos"
+            "El niño que quería dar abrazos",
+            "Feminidad salvaje"
         ],
         "books": 2
     },
@@ -7064,8 +6787,18 @@
         "shop_name": "Juana Inés De Asuaje Ramírez, Sor Juana Inés De La",
         "slug": "juana-ines-de-asuaje-ramirez-sor-juana-ines-de-la",
         "titles": [
-            "Poemas de Amora - Corramos libres ahora",
-            "Alas"
+            "Alas",
+            "Poemas de Amora - Corramos libres ahora"
+        ],
+        "books": 2
+    },
+    {
+        "name": "Stephen Greenblatt",
+        "shop_name": "Greenblatt, Stephen",
+        "slug": "greenblatt-stephen",
+        "titles": [
+            "El giro",
+            "El Renacimiento oscuro"
         ],
         "books": 2
     },
@@ -7076,16 +6809,6 @@
         "titles": [
             "La ovejita que vino a cenar (La ovejita que vino a cenar)",
             "Las ovejas que vinieron a cenar (La ovejita que vino a cenar. Libro de cartón)"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Susan Sontag",
-        "shop_name": "Sontag, Susan",
-        "slug": "sontag-susan",
-        "titles": [
-            "De las mujeres",
-            "De las mujeres"
         ],
         "books": 2
     },
@@ -7104,8 +6827,8 @@
         "shop_name": "Collins, Suzanne",
         "slug": "collins-suzanne",
         "titles": [
-            "Los Juegos del Hambre 5 - Amanecer en la cosecha",
-            "Los Juegos del Hambre 1 - Los Juegos del Hambre"
+            "Los Juegos del Hambre 1 - Los Juegos del Hambre",
+            "Los Juegos del Hambre 5 - Amanecer en la cosecha"
         ],
         "books": 2
     },
@@ -7124,18 +6847,8 @@
         "shop_name": "Tibuleac, Tatiana",
         "slug": "tibuleac-tatiana",
         "titles": [
-            "El verano en que mi madre tuvo los ojos verdes",
-            "El jardín de vidrio"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Taylor Jenkins Reid",
-        "shop_name": "Jenkins Reid, Taylor",
-        "slug": "jenkins-reid-taylor",
-        "titles": [
-            "Los siete maridos de Evelyn Hugo",
-            "Los siete maridos de Evelyn Hugo"
+            "El jardín de vidrio",
+            "El verano en que mi madre tuvo los ojos verdes"
         ],
         "books": 2
     },
@@ -7154,8 +6867,8 @@
         "shop_name": "Aranguren Amézola, Teresa",
         "slug": "aranguren-amezola-teresa",
         "titles": [
-            "Palestina: la existencia negada",
-            "Contra el olvido"
+            "Contra el olvido",
+            "Palestina: la existencia negada"
         ],
         "books": 2
     },
@@ -7184,8 +6897,8 @@
         "shop_name": "Le Boucher, Timothé",
         "slug": "le-boucher-timothe",
         "titles": [
-            "Esos días que desaparecen",
-            "47 Cuerdas"
+            "47 Cuerdas",
+            "Esos días que desaparecen"
         ],
         "books": 2
     },
@@ -7204,8 +6917,8 @@
         "shop_name": "Wolfe, Tom",
         "slug": "wolfe-tom",
         "titles": [
-            "El Nuevo Periodismo",
-            "Bloody Miami"
+            "Bloody Miami",
+            "El Nuevo Periodismo"
         ],
         "books": 2
     },
@@ -7224,8 +6937,8 @@
         "shop_name": "Vegas, Valeria",
         "slug": "vegas-valeria",
         "titles": [
-            "Vestidas de azul",
-            "Libérate"
+            "Libérate",
+            "Vestidas de azul"
         ],
         "books": 2
     },
@@ -7284,8 +6997,8 @@
         "shop_name": "Vaccaro García, Victoria",
         "slug": "vaccaro-garcia-victoria",
         "titles": [
-            "Árbol ginecológico",
-            "Breve mitología del cuerpo original"
+            "Breve mitología del cuerpo original",
+            "Árbol ginecológico"
         ],
         "books": 2
     },
@@ -7306,16 +7019,6 @@
         "titles": [
             "Austerlitz",
             "Del natural"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Washington Irving",
-        "shop_name": "Irving, Washington",
-        "slug": "irving-washington",
-        "titles": [
-            "La leyenda de Sleepy Hollow",
-            "La leyenda de Sleepy Hollow"
         ],
         "books": 2
     },
@@ -7344,8 +7047,8 @@
         "shop_name": "Godwin, William",
         "slug": "godwin-william",
         "titles": [
-            "St. Léon",
-            "Memorias de la autora de Vindicación de los derechos de la mujer"
+            "Memorias de la autora de Vindicación de los derechos de la mujer",
+            "St. Léon"
         ],
         "books": 2
     },
@@ -7436,16 +7139,6 @@
         "titles": [
             "Historia de un arroyo seguido de Historia de una montaña",
             "Historia de una montaña"
-        ],
-        "books": 2
-    },
-    {
-        "name": "Étienne De La Boétie",
-        "shop_name": "De La Boétie, Étienne",
-        "slug": "de-la-boetie-etienne",
-        "titles": [
-            "Discurso de la servidumbre voluntaria",
-            "Discurso de la servidumbre voluntaria"
         ],
         "books": 2
     },
@@ -8760,6 +8453,15 @@
         "slug": "maalouf-amin",
         "titles": [
             "El laberinto de los extraviados"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Amor Towles",
+        "shop_name": "Towles, Amor",
+        "slug": "towles-amor",
+        "titles": [
+            "Normas de cortesía"
         ],
         "books": 1
     },
@@ -11491,6 +11193,15 @@
         "books": 1
     },
     {
+        "name": "Carmen Gallardo Tomé",
+        "shop_name": "Gallardo Tomé, Carmen",
+        "slug": "gallardo-tome-carmen",
+        "titles": [
+            "La reina de las lavanderas"
+        ],
+        "books": 1
+    },
+    {
         "name": "Carmen García Iglesias",
         "shop_name": "García Iglesias, Carmen",
         "slug": "garcia-iglesias-carmen",
@@ -11801,7 +11512,7 @@
         "shop_name": "Mann, Charles C.",
         "slug": "mann-charles-c",
         "titles": [
-            "1493"
+            1493
         ],
         "books": 1
     },
@@ -14434,6 +14145,15 @@
         "books": 1
     },
     {
+        "name": "Emily Brontë",
+        "shop_name": "Brontë, Emily",
+        "slug": "bronte-emily",
+        "titles": [
+            "Cumbres borrascosas"
+        ],
+        "books": 1
+    },
+    {
         "name": "Emily Katz Anhalt",
         "shop_name": "Katz Anhalt, Emily",
         "slug": "katz-anhalt-emily",
@@ -15136,6 +14856,15 @@
         "books": 1
     },
     {
+        "name": "Fernando Aramburu",
+        "shop_name": "Aramburu, Fernando",
+        "slug": "aramburu-fernando",
+        "titles": [
+            "El niño"
+        ],
+        "books": 1
+    },
+    {
         "name": "Fernando Benzo",
         "shop_name": "Benzo, Fernando",
         "slug": "benzo-fernando",
@@ -15258,6 +14987,15 @@
         "slug": "birules-fina",
         "titles": [
             "Hannah Arendt: el mundo en juego"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Fiodor Mijaïlovich Dostoevskiï",
+        "shop_name": "Dostoevskiï, Fiodor Mijaïlovich",
+        "slug": "dostoevskii-fiodor-mijailovich",
+        "titles": [
+            "El jugador"
         ],
         "books": 1
     },
@@ -16275,6 +16013,15 @@
         "slug": "maguire-gregory",
         "titles": [
             "Wicked. Memorias de una bruja mala (Ed. Película)"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Greta Alonso",
+        "shop_name": "Alonso, Greta",
+        "slug": "alonso-greta",
+        "titles": [
+            "La dama y la muerte"
         ],
         "books": 1
     },
@@ -17647,6 +17394,15 @@
         "books": 1
     },
     {
+        "name": "Jacqueline Harpman",
+        "shop_name": "Harpman, Jacqueline",
+        "slug": "harpman-jacqueline",
+        "titles": [
+            "Yo que nunca supe de los hombres"
+        ],
+        "books": 1
+    },
+    {
         "name": "Jacques Brosse",
         "shop_name": "Brosse, Jacques",
         "slug": "brosse-jacques",
@@ -18088,6 +17844,15 @@
         "books": 1
     },
     {
+        "name": "Javier Padilla",
+        "shop_name": "Padilla, Javier",
+        "slug": "padilla-javier",
+        "titles": [
+            "A finales de enero"
+        ],
+        "books": 1
+    },
+    {
         "name": "Javier Prado Coronel",
         "shop_name": "Prado Coronel, Javier",
         "slug": "prado-coronel-javier",
@@ -18327,6 +18092,15 @@
         "slug": "ostende-jean-pierre",
         "titles": [
             "Breve tratado cocinado a fuego lento"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Jeanette Winterson",
+        "shop_name": "Winterson, Jeanette",
+        "slug": "winterson-jeanette",
+        "titles": [
+            "¿Por qué ser feliz cuando puedes ser normal?"
         ],
         "books": 1
     },
@@ -18952,6 +18726,15 @@
         "books": 1
     },
     {
+        "name": "Jokin Azpiazu Carballo",
+        "shop_name": "Azpiazu Carballo, Jokin",
+        "slug": "azpiazu-carballo-jokin",
+        "titles": [
+            "Masculinidades y feminismo"
+        ],
+        "books": 1
+    },
+    {
         "name": "Jon Klassen",
         "shop_name": "Klassen, Jon",
         "slug": "klassen-jon",
@@ -19308,6 +19091,15 @@
         "slug": "graham-jorie",
         "titles": [
             "Al 2040"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Josan Hatero",
+        "shop_name": "Hatero, Josan",
+        "slug": "hatero-josan",
+        "titles": [
+            "La memoria de las bicicletas"
         ],
         "books": 1
     },
@@ -20459,7 +20251,7 @@
         "shop_name": "Sanz López, Julio",
         "slug": "sanz-lopez-julio",
         "titles": [
-            "1992"
+            1992
         ],
         "books": 1
     },
@@ -20730,15 +20522,6 @@
         "slug": "lei-karin",
         "titles": [
             "Dumplings y otros dim sum"
-        ],
-        "books": 1
-    },
-    {
-        "name": "Karl Ove Knausgard",
-        "shop_name": "Knausgard, Karl Ove",
-        "slug": "knausgard-karl-ove",
-        "titles": [
-            "La estrella de la mañana"
         ],
         "books": 1
     },
@@ -22894,6 +22677,15 @@
         "books": 1
     },
     {
+        "name": "Manuel Moreno Herranz",
+        "shop_name": "Moreno Herranz, Manuel",
+        "slug": "moreno-herranz-manuel",
+        "titles": [
+            "Todo era posible"
+        ],
+        "books": 1
+    },
+    {
         "name": "Manuel Moyano",
         "shop_name": "Moyano, Manuel",
         "slug": "moyano-manuel",
@@ -23191,6 +22983,15 @@
         "books": 1
     },
     {
+        "name": "Marga Sánchez Romero",
+        "shop_name": "Sánchez Romero, Marga",
+        "slug": "sanchez-romero-marga",
+        "titles": [
+            "Prehistorias de mujeres"
+        ],
+        "books": 1
+    },
+    {
         "name": "Margaret Laurence",
         "shop_name": "Laurence, Margaret",
         "slug": "laurence-margaret",
@@ -23448,6 +23249,15 @@
         "slug": "sanmartin-marina",
         "titles": [
             "La doble desaparición de Abril del Pino"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Marina Sáez",
+        "shop_name": "Sáez, Marina",
+        "slug": "saez-marina",
+        "titles": [
+            "Aguagim"
         ],
         "books": 1
     },
@@ -24865,9 +24675,9 @@
         "books": 1
     },
     {
-        "name": "Merethe Lindstr M",
-        "shop_name": "Lindstr M, Merethe",
-        "slug": "lindstr-m-merethe",
+        "name": "Merethe Lindstrøm",
+        "shop_name": "Lindstrøm, Merethe",
+        "slug": "lindstrom-merethe",
         "titles": [
             "Días en la historia del silencio"
         ],
@@ -26008,6 +25818,15 @@
         "books": 1
     },
     {
+        "name": "Nicolás Maquiavelo",
+        "shop_name": "Maquiavelo, Nicolás",
+        "slug": "maquiavelo-nicolas",
+        "titles": [
+            "El príncipe"
+        ],
+        "books": 1
+    },
+    {
         "name": "Nicolás Sesma",
         "shop_name": "Sesma, Nicolás",
         "slug": "sesma-nicolas",
@@ -26058,6 +25877,15 @@
         "slug": "maak-niklas",
         "titles": [
             "Technophoria"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Niklas Natt Och Dag",
+        "shop_name": "Natt Och Dag, Niklas",
+        "slug": "natt-och-dag-niklas",
+        "titles": [
+            "1793 (Trilogía de Estocolmo 1)"
         ],
         "books": 1
     },
@@ -26193,6 +26021,15 @@
         "slug": "casquet-noemi",
         "titles": [
             "Pirómanas"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Nohda Tatsuki",
+        "shop_name": "Tatsuki, Nohda",
+        "slug": "tatsuki-nohda",
+        "titles": [
+            "Agente de fútbol"
         ],
         "books": 1
     },
@@ -26575,6 +26412,15 @@
         "books": 1
     },
     {
+        "name": "Oscar Wilde",
+        "shop_name": "Wilde, Oscar",
+        "slug": "wilde-oscar",
+        "titles": [
+            "El retrato de Dorian Gray"
+        ],
+        "books": 1
+    },
+    {
         "name": "Otegha Uwagba",
         "shop_name": "Uwagba, Otegha",
         "slug": "uwagba-otegha",
@@ -26733,6 +26579,15 @@
         "slug": "villar-paco",
         "titles": [
             "Cuando la riqueza se codeaba con el hambre. Vida nocturna en la Barcelona de la postguerra (1939-1952)"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Paloma Sánchez-Garnica",
+        "shop_name": "Sánchez-Garnica, Paloma",
+        "slug": "sanchez-garnica-paloma",
+        "titles": [
+            "Últimos días en Berlín"
         ],
         "books": 1
     },
@@ -27092,7 +26947,7 @@
         "shop_name": "Bonet, Paula",
         "slug": "bonet-paula",
         "titles": [
-            "813"
+            813
         ],
         "books": 1
     },
@@ -27111,6 +26966,15 @@
         "slug": "hoyos-paula",
         "titles": [
             "Dormir fuera de casa"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Paula Melchor",
+        "shop_name": "Melchor, Paula",
+        "slug": "melchor-paula",
+        "titles": [
+            "Amor y pan"
         ],
         "books": 1
     },
@@ -27682,6 +27546,15 @@
         "books": 1
     },
     {
+        "name": "Polly Barton",
+        "shop_name": "Barton, Polly",
+        "slug": "barton-polly",
+        "titles": [
+            "Porno"
+        ],
+        "books": 1
+    },
+    {
         "name": "Popy Blasco",
         "shop_name": "Blasco, Popy",
         "slug": "blasco-popy",
@@ -27903,6 +27776,15 @@
         "slug": "sanchez-ferlosio-rafael",
         "titles": [
             "El Jarama"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Rafael Tarradas Bultó",
+        "shop_name": "Tarradas Bultó, Rafael",
+        "slug": "tarradas-bulto-rafael",
+        "titles": [
+            "El hijo del Reich"
         ],
         "books": 1
     },
@@ -28253,7 +28135,7 @@
         "shop_name": "Gómez Gil, Ricardo",
         "slug": "gomez-gil-ricardo",
         "titles": [
-            "3336"
+            3336
         ],
         "books": 1
     },
@@ -28443,6 +28325,15 @@
         "slug": "thorogood-robert",
         "titles": [
             "El club del crimen de Marlow"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Robert W. Chambers",
+        "shop_name": "W. Chambers, Robert",
+        "slug": "w-chambers-robert",
+        "titles": [
+            "El Rey de Amarillo"
         ],
         "books": 1
     },
@@ -29104,9 +28995,9 @@
         "books": 1
     },
     {
-        "name": "Samuel Bj Rk",
-        "shop_name": "Bj Rk, Samuel",
-        "slug": "bj-rk-samuel",
+        "name": "Samuel Bjørk",
+        "shop_name": "Bjørk, Samuel",
+        "slug": "bjork-samuel",
         "titles": [
             "Viajo sola"
         ],
@@ -29905,6 +29796,15 @@
         "books": 1
     },
     {
+        "name": "Simone De Beauvoir",
+        "shop_name": "De Beauvoir, Simone",
+        "slug": "de-beauvoir-simone",
+        "titles": [
+            "El segundo sexo"
+        ],
+        "books": 1
+    },
+    {
         "name": "Simone Ortega",
         "shop_name": "Ortega, Simone",
         "slug": "ortega-simone",
@@ -30211,6 +30111,15 @@
         "books": 1
     },
     {
+        "name": "Sun-Tzu",
+        "shop_name": "Sun-Tzu",
+        "slug": "sun-tzu",
+        "titles": [
+            "El arte de la guerra"
+        ],
+        "books": 1
+    },
+    {
         "name": "Susan Faludi",
         "shop_name": "Faludi, Susan",
         "slug": "faludi-susan",
@@ -30234,6 +30143,15 @@
         "slug": "neiman-susan",
         "titles": [
             "El mal en el pensamiento moderno"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Susan Sontag",
+        "shop_name": "Sontag, Susan",
+        "slug": "sontag-susan",
+        "titles": [
+            "De las mujeres"
         ],
         "books": 1
     },
@@ -30585,6 +30503,15 @@
         "slug": "caldwell-taylor",
         "titles": [
             "La columna de hierro"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Taylor Jenkins Reid",
+        "shop_name": "Jenkins Reid, Taylor",
+        "slug": "jenkins-reid-taylor",
+        "titles": [
+            "Los siete maridos de Evelyn Hugo"
         ],
         "books": 1
     },
@@ -31822,6 +31749,15 @@
         "books": 1
     },
     {
+        "name": "Washington Irving",
+        "shop_name": "Irving, Washington",
+        "slug": "irving-washington",
+        "titles": [
+            "La leyenda de Sleepy Hollow"
+        ],
+        "books": 1
+    },
+    {
         "name": "Weike Wang",
         "shop_name": "Wang, Weike",
         "slug": "wang-weike",
@@ -32592,6 +32528,15 @@
         "slug": "battut-eric",
         "titles": [
             "Apetito de elefante"
+        ],
+        "books": 1
+    },
+    {
+        "name": "Étienne De La Boétie",
+        "shop_name": "De La Boétie, Étienne",
+        "slug": "de-la-boetie-etienne",
+        "titles": [
+            "Discurso de la servidumbre voluntaria"
         ],
         "books": 1
     },
