@@ -10,6 +10,7 @@ use App\Support\BookMetadata\CasaDelLibroProvider;
 use App\Support\BookMetadata\ChainedBookMetadataProvider;
 use App\Support\BookMetadata\GoogleBooksProvider;
 use App\Support\BookMetadata\OpenLibraryProvider;
+use App\Support\Correos\FakeCorreos;
 use App\Support\Cupida\CupidaCatalog;
 use App\Support\Portraits\PortraitSource;
 use App\Support\Portraits\WikidataPortraitSource;
@@ -57,6 +58,15 @@ class AppServiceProvider extends ServiceProvider
          | one decode per request rather than one per call.
          */
         $this->app->singleton(CupidaCatalog::class);
+
+        /*
+         | Correos has no sandbox to sign up for, so until the pre-production
+         | credentials arrive the SDK is answered from memory instead of over
+         | the wire. Guarded twice: the flag, and never in production.
+         */
+        if (FakeCorreos::enabled() && ! $this->app->isProduction()) {
+            FakeCorreos::install($this->app);
+        }
     }
 
     /**
