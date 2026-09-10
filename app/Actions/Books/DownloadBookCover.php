@@ -3,6 +3,7 @@
 namespace App\Actions\Books;
 
 use App\Support\RemoteImage;
+use App\Support\WorkTrail;
 use GdImage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -45,6 +46,8 @@ class DownloadBookCover
             return null;
         }
 
+        $trail = WorkTrail::start('cover', ['isbn13' => $isbn13, 'url' => $url]);
+
         try {
             $response = Http::timeout(config('books.metadata.timeout'))
                 ->withUserAgent(config('books.metadata.user_agent'))
@@ -54,26 +57,48 @@ class DownloadBookCover
         } catch (Throwable $exception) {
             Log::warning('Cover download failed.', ['isbn13' => $isbn13, 'exception' => $exception->getMessage()]);
 
+            $trail->finish(['failed' => $exception->getMessage()]);
+
             return null;
         }
 
         if (! $response->successful()) {
+            $trail->finish(['status' => $response->status()]);
+
             return null;
         }
 
         $body = $response->body();
 
         if ($body === '' || strlen($body) > (int)config('books.covers.max_bytes')) {
+            $trail->finish(['bytes' => strlen($body), 'refused' => 'size']);
+
             return null;
         }
+
+        /* The one step in the whole import that holds a decoded bitmap in
+           memory -- a 2000px cover is around 24MB of truecolor before anything
+           is resampled, and a source that answers with something much larger
+           takes the heap with it. A fatal there is invisible to the catch
+           above, so the size that went in is written before the decode rather
+           than reported after it. */
+        $trail->step('decoding', ['bytes' => strlen($body)]);
 
         $image = $this->decode($body, $isbn13);
 
         if (! $image instanceof GdImage) {
+            $trail->finish(['refused' => 'not a usable cover']);
+
             return null;
         }
 
-        return $this->encode($image);
+        $trail->step('encoding', ['width' => imagesx($image), 'height' => imagesy($image)]);
+
+        $jpeg = $this->encode($image);
+
+        $trail->finish(['bytes' => strlen($jpeg)]);
+
+        return $jpeg;
     }
 
     /**

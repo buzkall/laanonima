@@ -5,6 +5,7 @@ namespace App\Actions\Books;
 use App\Models\Book;
 use App\Support\BookMetadata\BookMetadata;
 use App\Support\Isbn;
+use App\Support\WorkTrail;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -41,14 +42,25 @@ class EnrichImportedBook
 
     public function __invoke(Book $book): void
     {
+        /* Opened before the try, closed in the finally: the point of the trail
+           is the failures a catch never sees, so it must outlive the block that
+           only catches exceptions. */
+        $trail = WorkTrail::start('enrich', ['isbn13' => $book->isbn13, 'book_id' => $book->id]);
+
         try {
             $this->ownTimeBudget();
-            $this->enrich($book);
+            $this->enrich($book, $trail);
         } catch (Throwable $exception) {
             Log::warning('Could not enrich a book filed from the shop catalog.', [
                 'isbn13'    => $book->isbn13,
                 'exception' => $exception->getMessage(),
             ]);
+        } finally {
+            /* Nothing is read back here. A trail closed with a query is a trail
+               that throws inside its own `finally` on the afternoon the database
+               is the thing going wrong, and takes the report with it. What the
+               cover did was already written by its own step. */
+            $trail->finish();
         }
     }
 
@@ -74,8 +86,10 @@ class EnrichImportedBook
         }
     }
 
-    private function enrich(Book $book): void
+    private function enrich(Book $book, WorkTrail $trail): void
     {
+        $trail->step('metadata lookup');
+
         $metadata = Isbn::isValid($book->isbn13)
             ? ($this->fetchMetadata)($book->isbn13)
             : null;
@@ -83,6 +97,8 @@ class EnrichImportedBook
         if ($metadata instanceof BookMetadata) {
             $book->fill($this->gaps($book, $metadata))->save();
         }
+
+        $trail->step('metadata done', ['found' => $metadata instanceof BookMetadata]);
 
         /* Roughly one Spanish ISBN in six has no cover at any free source, and
            the shop resizes on demand for every EAN it stocks -- so its own
@@ -97,7 +113,15 @@ class EnrichImportedBook
            guarded by the host allowlist in config/books.php, and the color is
            read from whatever lands by the media listener in AppServiceProvider,
            so nothing here computes a palette. */
-        ($this->attachCover)($book);
+        $trail->step('cover download', ['url' => $book->cover_source_url]);
+
+        $outcome = ($this->attachCover)($book);
+
+        /* The one step that decodes and re-encodes an image, and so the one
+           that can exhaust the heap rather than merely the clock. Its own line,
+           with the peak, because a trail that stops between the two above is a
+           slow provider and a trail that stops here is a large JPEG. */
+        $trail->step('cover done', ['outcome' => $outcome->name]);
 
         /* Stamped whatever happened, because it records that we looked and not
            that we found. Most of these books are recent Spanish titles no free
