@@ -257,7 +257,6 @@ return [
             'heading' => 'It is on the new releases table.',
             'body'    => 'Come by and leaf through it, or we will keep it aside with your name on it.',
             'cta'     => 'Keep it for me',
-            'subject' => 'Reserve :title',
         ],
 
         'out_of_stock' => [

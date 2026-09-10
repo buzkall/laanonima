@@ -87,6 +87,8 @@ return [
         'intro'        => 'Tell us what you are after and we will order it. We let you know the moment it reaches the shop, and asking costs you nothing.',
         'book_kicker'  => 'Order it',
         'book_intro'   => 'We order it from the distributor and let you know when it arrives. It usually takes two days.',
+        'held_kicker'  => 'Keep a copy',
+        'held_intro'   => 'It is on the table. Tell us you want it and we put it aside with your name on it until you come by.',
         'submit'       => 'Find me the book',
         'back'         => 'Back to the shelf',
         'required'     => 'A title is enough. Anything else you know saves us time.',
@@ -94,6 +96,7 @@ return [
         'phone_note'   => 'We keep it on your account so we can call if we need to.',
         'optional'     => 'optional',
         'sent'         => [
+            'kicker'  => 'Request sent',
             'heading' => 'Noted. We are on it.',
             'body'    => 'We will write to you as soon as we know anything about “:title”.',
         ],

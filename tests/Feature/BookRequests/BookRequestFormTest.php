@@ -8,9 +8,11 @@ use App\Models\Book;
 use App\Models\BookRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 beforeEach(function(): void {
     Mail::fake();
+    Storage::fake('public');
 
     $this->reader = User::factory()->client()->create(['name' => 'Marta Ruiz', 'email' => 'marta@example.com']);
 });
@@ -63,17 +65,81 @@ it('writes down the request and tells the shop about it', function(): void {
         && $mail->bookRequest->is($request));
 });
 
-it('tells the reader it has been noted', function(): void {
+it('tells the reader it has been noted, and says it once', function(): void {
     $this->actingAs($this->reader)->post(route('book-requests.store'), [
         'title' => 'El maestro y Margarita',
+    ]);
+
+    $page = $this->actingAs($this->reader)
+        ->get(route('book-requests.create'))
+        ->assertOk()
+        ->assertSee(__('book_requests.public.sent.body', ['title' => 'El maestro y Margarita']), false)
+        ->assertDontSee(__('book_requests.public.submit'))
+        ->assertDontSee(__('book_requests.public.required'))
+        ->content();
+
+    /* The receipt took the page over rather than being added under it, so it
+       is written once and offers one way back to the shelf. */
+    expect(substr_count($page, __('book_requests.public.sent.heading')))->toBe(1)
+        ->and(substr_count($page, __('book_requests.public.back')))->toBe(1);
+});
+
+it('keeps a receipt to the reader it belongs to', function(): void {
+    $this->actingAs($this->reader)->post(route('book-requests.store'), [
+        'title' => 'El maestro y Margarita',
+    ]);
+
+    $stranger = User::factory()->client()->create();
+
+    $this->actingAs($stranger)
+        ->withSession(['book_request_sent' => BookRequest::sole()->id])
+        ->get(route('book-requests.create'))
+        ->assertOk()
+        ->assertDontSee('El maestro y Margarita')
+        ->assertSee(__('book_requests.public.submit'));
+});
+
+it('shows the cover of the book the request was made from', function(): void {
+    $book = Book::factory()->create(['title' => 'Cuaderno de faros']);
+    $book->addCoverFromString(fakeCover());
+
+    $this->actingAs($this->reader)->post(route('book-requests.store'), [
+        'title'   => $book->title,
+        'book_id' => $book->id,
     ]);
 
     $this->actingAs($this->reader)
         ->get(route('book-requests.create'))
         ->assertOk()
-        ->assertSee(__('book_requests.public.sent.heading'))
-        ->assertSee(__('book_requests.public.sent.body', ['title' => 'El maestro y Margarita']), false)
-        ->assertDontSee(__('book_requests.public.submit'));
+        ->assertSee($book->coverUrl(), escape: false);
+});
+
+it('finds the cover from the ISBN a reader typed by hand', function(): void {
+    $book = Book::factory()->create(['isbn13' => '9788417059552']);
+    $book->addCoverFromString(fakeCover());
+
+    /* Hyphens and an ISBN-10 off an older edition both reach the same record. */
+    $this->actingAs($this->reader)->post(route('book-requests.store'), [
+        'title' => 'Cuaderno de faros',
+        'isbn'  => '978-84-17059-55-2',
+    ]);
+
+    $this->actingAs($this->reader)
+        ->get(route('book-requests.create'))
+        ->assertOk()
+        ->assertSee($book->coverUrl(), escape: false);
+});
+
+it('has no cover to show for a book nobody has a record of', function(): void {
+    $this->actingAs($this->reader)->post(route('book-requests.store'), [
+        'title' => 'El maestro y Margarita',
+        'isbn'  => '9788491046332',
+    ]);
+
+    $this->actingAs($this->reader)
+        ->get(route('book-requests.create'))
+        ->assertOk()
+        ->assertSee(__('book_requests.public.sent.heading'));
 });
 
 it('needs a title and nothing else', function(): void {
@@ -154,6 +220,32 @@ it('attaches the book the request was made from', function(): void {
     ]);
 
     expect(BookRequest::sole()->book->is($book))->toBeTrue();
+});
+
+it('tells a reader we are putting a copy aside rather than ordering one', function(): void {
+    $held = Book::factory()->create(['stock' => 3]);
+
+    $this->actingAs($this->reader)
+        ->get(route('book-requests.create.book', $held))
+        ->assertOk()
+        ->assertSee(__('book_requests.public.held_intro'))
+        ->assertDontSee(__('book_requests.public.book_intro'));
+
+    $ordered = Book::factory()->create(['stock' => 0]);
+
+    $this->actingAs($this->reader)
+        ->get(route('book-requests.create.book', $ordered))
+        ->assertOk()
+        ->assertSee(__('book_requests.public.book_intro'))
+        ->assertDontSee(__('book_requests.public.held_intro'));
+});
+
+it('sends a reader with a book we still have on the table to the form too', function(): void {
+    $book = Book::factory()->create(['stock' => 3]);
+
+    $this->get(route('books.show', $book))
+        ->assertOk()
+        ->assertSee(route('book-requests.create.book', $book));
 });
 
 it('sends a reader with a book we have run out of to the form', function(): void {

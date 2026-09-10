@@ -87,6 +87,8 @@ return [
         'intro'        => 'Dinos qué buscas y lo encargamos. Te avisamos en cuanto llegue a la librería, y no te cobramos nada por pedirlo.',
         'book_kicker'  => 'Encargar',
         'book_intro'   => 'Te lo encargamos a la distribuidora y te avisamos cuando llegue. Suele tardar dos días.',
+        'held_kicker'  => 'Guardar un ejemplar',
+        'held_intro'   => 'Lo tenemos en la mesa. Dinos que lo quieres y lo apartamos con tu nombre hasta que te pases.',
         'submit'       => 'Encontradme el libro',
         'back'         => 'Volver a la estantería',
         'required'     => 'Con el título nos basta. Lo demás, si lo sabes, nos ahorra tiempo.',
@@ -94,6 +96,7 @@ return [
         'phone_note'   => 'Lo guardamos en tu cuenta para avisarte antes si hace falta.',
         'optional'     => 'opcional',
         'sent'         => [
+            'kicker'  => 'Solicitud enviada',
             'heading' => 'Apuntado. Vamos a por él.',
             'body'    => 'Te escribiremos a tu correo en cuanto sepamos algo de «:title».',
         ],

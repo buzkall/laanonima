@@ -259,7 +259,6 @@ return [
             'heading' => 'Lo tenemos en la mesa de novedades.',
             'body'    => 'Pásate y hojéalo, o te lo guardamos con tu nombre en un papelito.',
             'cta'     => 'Guardádmelo',
-            'subject' => 'Reservar :title',
         ],
 
         'out_of_stock' => [

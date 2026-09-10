@@ -59,7 +59,8 @@ it('offers to keep a book aside while it is in stock', function(): void {
     $this->get(route('books.show', $book))
         ->assertOk()
         ->assertSee(__('books.public.in_stock.cta'))
-        ->assertSee(rawurlencode(__('books.public.in_stock.subject', ['title' => $book->title])), escape: false)
+        ->assertSee(route('book-requests.create.book', $book))
+        ->assertDontSee('mailto:' . config('site.contact_email') . '?subject=', escape: false)
         ->assertDontSee(__('books.public.out_of_stock.cta'));
 });
 

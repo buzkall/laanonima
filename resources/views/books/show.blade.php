@@ -9,14 +9,10 @@
     $inStock = $book->stock > 0;
     $stock = $inStock ? 'in_stock' : 'out_of_stock';
 
-    /* Only the in-stock "keep it for me" is still an email; ordering goes
-       through the form below. */
-    $mailto = 'mailto:' . config('site.contact_email')
-        . '?subject=' . rawurlencode(__('books.public.in_stock.subject', ['title' => $book->title]));
-
-    /* A book we have is still put aside by writing to us; one we have run out
-       of goes through the request form, which reaches the panel with this book
-       already attached. */
+    /* Both ways of asking for this book end on the same form, which reaches
+       the panel with the book already attached: putting a copy aside is a note
+       to the bookseller just as much as ordering one we have run out of is, and
+       an email was a request nobody could follow up in the panel. */
     $orderUrl = route('book-requests.create.book', $book);
 
     $cta = $inStock
@@ -406,7 +402,7 @@
 
         @if ($inStock)
             <a
-                href="{{ $mailto }}"
+                href="{{ $orderUrl }}"
                 class="mt-[34px] inline-block border-b-2 border-[var(--accent)] pb-[3px] text-[18px] font-semibold tracking-[0.08em] text-[var(--accent)] uppercase transition-opacity duration-150 hover:opacity-65"
             >
                 {{ __('books.public.in_stock.cta') }}

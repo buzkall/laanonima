@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Models\BookRequest;
 use App\Models\User;
 use App\Support\CoverPalette;
+use App\Support\Isbn;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -33,10 +34,42 @@ class BookRequestController extends Controller
             Gate::authorize('view', $book);
         }
 
+        /* The receipt for a request just sent takes the page over, so it is
+           resolved here rather than read off a flashed string: it is what the
+           page is about, and it brings a book with it. Scoped to the reader
+           because the key is an id, and an id is guessable. */
+        $sent = BookRequest::query()
+            ->whereKey(session('book_request_sent'))
+            ->whereBelongsTo(auth()->user())
+            ->with('book')
+            ->first();
+
+        $sentBook = $sent?->book ?? $this->catalogBookFor($sent);
+
         return view('books.request', [
-            'book'    => $book,
-            'palette' => CoverPalette::fromCover($book?->cover_color),
+            'book'     => $book,
+            'sent'     => $sent,
+            'sentBook' => $sentBook,
+            'palette'  => CoverPalette::fromCover(($book ?? $sentBook)?->cover_color),
         ]);
+    }
+
+    /**
+     * The book on our own shelves a request is about, when nobody attached one.
+     *
+     * A reader who filled the empty form in from the back cover of a book gave
+     * us the one thing that identifies it, so the receipt can still show the
+     * cover. `toIsbn13()` is what makes it worth trying: it takes the hyphens
+     * out and lifts a 10-digit number off an older edition to the 13 the
+     * catalog is keyed on.
+     */
+    private function catalogBookFor(?BookRequest $request): ?Book
+    {
+        $isbn13 = Isbn::toIsbn13($request?->isbn);
+
+        return $isbn13 === null
+            ? null
+            : Book::query()->where('is_active', true)->firstWhere('isbn13', $isbn13);
     }
 
     /**
@@ -63,7 +96,7 @@ class BookRequestController extends Controller
 
         return redirect()
             ->route('book-requests.create')
-            ->with('book_request_sent', $bookRequest->title);
+            ->with('book_request_sent', $bookRequest->id);
     }
 
     /**

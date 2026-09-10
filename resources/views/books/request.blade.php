@@ -1,8 +1,18 @@
 @php
-    /* The same form both ways in: from a book page it arrives filled in with
-       that book, from the footer it arrives empty. Only the copy changes. */
-    $sent = session('book_request_sent');
+    /* The same form every way in: from a book page it arrives filled in with
+       that book, from the footer it arrives empty. Only the copy changes.
+
+       A book still on the table is the third way in -- "guardadmelo" -- and it
+       is the same note to the bookseller, so it is the same form. It only has
+       to stop promising to order from the distributor a book we already hold. */
     $user = auth()->user();
+    $held = (bool) $book?->stock;
+
+    /* Once the request is in, the receipt IS the page: the colored band said
+       "dinos que buscas" over a receipt that said the opposite, and each of
+       them offered its own way back to the shelf. So the band carries the
+       receipt and the form's half of the page goes away entirely. */
+    $sentCover = $sentBook?->coverUrl();
 
     /* The account already holds a name, an address and -- once it has been
        given once -- a telephone, so the form asks for none of them again. */
@@ -23,52 +33,83 @@
 @endphp
 
 <x-layouts.shelf
-    :title="__('book_requests.public.kicker')"
+    :title="$sent ? __('book_requests.public.sent.kicker') : __('book_requests.public.kicker')"
     :description="__('book_requests.public.intro')"
     :palette="$palette"
     :footer-cta="false"
 >
-    <section class="bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(48px,7vw,104px)] pb-[clamp(52px,6vw,96px)] text-[var(--on-cover)]">
-        <p class="m-0 mb-[18px] text-[14px] font-bold tracking-[0.26em] uppercase">
-            {{ $book ? __('book_requests.public.book_kicker') : __('book_requests.public.kicker') }}
-        </p>
+    @if ($sent)
+        <section class="flex grow flex-col justify-center bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(48px,7vw,104px)] pb-[clamp(52px,6vw,96px)] text-[var(--on-cover)]">
+            <div @class([
+                'flex flex-col-reverse items-start gap-[clamp(28px,4vw,64px)]',
+                'wide:flex-row wide:items-center' => $sentCover,
+            ])>
+                <div class="min-w-0 grow">
+                    <p class="m-0 mb-[18px] text-[14px] font-bold tracking-[0.26em] uppercase">
+                        {{ __('book_requests.public.sent.kicker') }}
+                    </p>
 
-        <h1 class="font-display m-0 max-w-[16ch] text-[clamp(44px,6vw,96px)]/[0.96] font-normal tracking-[-0.01em] text-balance">
-            {{ $book ? $book->title : __('book_requests.public.heading') }}
-        </h1>
-
-        <p class="mt-9 mb-0 max-w-[620px] border-t border-[var(--rule)] pt-8 text-[clamp(20px,2.1vw,26px)]/[1.5] italic">
-            {{ $book ? __('book_requests.public.book_intro') : __('book_requests.public.intro') }}
-        </p>
-
-        <a
-            href="{{ $book ? route('books.show', $book) : route('home') }}"
-            class="mt-8 inline-block border-b-2 border-current pb-[3px] text-[15px] font-semibold tracking-[0.12em] uppercase transition-opacity duration-150 hover:opacity-65"
-        >
-            {{ $book ? __('books.public.shelf_back') : __('book_requests.public.back') }}
-        </a>
-    </section>
-
-    <main class="bg-paper text-ink px-[clamp(22px,5vw,80px)] pt-[clamp(44px,5vw,76px)] pb-[clamp(56px,6vw,96px)]">
-        <div class="mx-auto max-w-[720px]">
-            @if ($sent)
-                {{-- The receipt: the shelf is one page back, so there is nothing to do here but read it. --}}
-                <div class="border-l-4 border-[var(--accent)] pl-6">
-                    <p class="font-display m-0 text-[clamp(30px,4vw,44px)]/[1.1]">
+                    <h1 class="font-display m-0 max-w-[16ch] text-[clamp(44px,6vw,96px)]/[0.96] font-normal tracking-[-0.01em] text-balance">
                         {{ __('book_requests.public.sent.heading') }}
+                    </h1>
+
+                    <p class="mt-9 mb-0 max-w-[620px] border-t border-[var(--rule)] pt-8 text-[clamp(20px,2.1vw,26px)]/[1.5] italic">
+                        {{ __('book_requests.public.sent.body', ['title' => $sent->title]) }}
                     </p>
-                    <p class="mt-4 mb-0 text-[20px] italic">
-                        {{ __('book_requests.public.sent.body', ['title' => $sent]) }}
-                    </p>
+
+                    <a
+                        href="{{ route('home') }}"
+                        class="mt-8 inline-block border-b-2 border-current pb-[3px] text-[15px] font-semibold tracking-[0.12em] uppercase transition-opacity duration-150 hover:opacity-65"
+                    >
+                        {{ __('book_requests.public.back') }}
+                    </a>
                 </div>
 
-                <a
-                    href="{{ route('home') }}"
-                    class="text-paper mt-10 inline-block bg-[var(--accent)] px-6 py-3 text-[18px] font-semibold tracking-[0.08em] uppercase transition-opacity duration-150 hover:opacity-85"
-                >
-                    {{ __('book_requests.public.back') }}
-                </a>
-            @else
+                @if ($sentCover)
+                    {{-- The book we are going after, so the receipt is about a
+                     thing rather than about a sentence. Only a book we hold a
+                     record of has one: either the request came from its page,
+                     or the ISBN the reader typed found it. --}}
+                    <img
+                        src="{{ $sentCover }}"
+                        alt="{{ __('books.fields.cover') }}: {{ $sentBook->title }}"
+                        class="wide:mx-0 wide:w-[clamp(180px,20vw,260px)] mx-auto block h-auto w-full max-w-[200px] shrink-0 shadow-[0_2px_8px_rgba(33,21,17,0.18),0_26px_60px_rgba(33,21,17,0.34)]"
+                    />
+                @endif
+            </div>
+        </section>
+    @else
+        <section class="bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(48px,7vw,104px)] pb-[clamp(52px,6vw,96px)] text-[var(--on-cover)]">
+            <p class="m-0 mb-[18px] text-[14px] font-bold tracking-[0.26em] uppercase">
+                @if ($held)
+                    {{ __('book_requests.public.held_kicker') }}
+                @else
+                    {{ $book ? __('book_requests.public.book_kicker') : __('book_requests.public.kicker') }}
+                @endif
+            </p>
+
+            <h1 class="font-display m-0 max-w-[16ch] text-[clamp(44px,6vw,96px)]/[0.96] font-normal tracking-[-0.01em] text-balance">
+                {{ $book ? $book->title : __('book_requests.public.heading') }}
+            </h1>
+
+            <p class="mt-9 mb-0 max-w-[620px] border-t border-[var(--rule)] pt-8 text-[clamp(20px,2.1vw,26px)]/[1.5] italic">
+                @if ($held)
+                    {{ __('book_requests.public.held_intro') }}
+                @else
+                    {{ $book ? __('book_requests.public.book_intro') : __('book_requests.public.intro') }}
+                @endif
+            </p>
+
+            <a
+                href="{{ $book ? route('books.show', $book) : route('home') }}"
+                class="mt-8 inline-block border-b-2 border-current pb-[3px] text-[15px] font-semibold tracking-[0.12em] uppercase transition-opacity duration-150 hover:opacity-65"
+            >
+                {{ $book ? __('books.public.shelf_back') : __('book_requests.public.back') }}
+            </a>
+        </section>
+
+        <main class="bg-paper text-ink px-[clamp(22px,5vw,80px)] pt-[clamp(44px,5vw,76px)] pb-[clamp(56px,6vw,96px)]">
+            <div class="mx-auto max-w-[720px]">
                 <p class="mt-0 mb-10 text-[18px] italic opacity-75">
                     {{ __('book_requests.public.required') }} {{ __('book_requests.public.signed_in_as', ['email' => $user->email]) }}
                 </p>
@@ -207,7 +248,7 @@
                         </button>
                     </div>
                 </form>
-            @endif
-        </div>
-    </main>
+            </div>
+        </main>
+    @endif
 </x-layouts.shelf>
