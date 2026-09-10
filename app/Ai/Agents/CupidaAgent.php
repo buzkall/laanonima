@@ -210,6 +210,12 @@ class CupidaAgent implements Agent, HasStructuredOutput
      * field is what the field is written against, so the language belongs in
      * both places.
      *
+     * The pitch's description also changes when every card was passed. The
+     * instruction is in the prompt beside the answers as well, and it was not
+     * enough on its own: three sessions on the live site that passed all
+     * eighteen cards came back with pitches that never mentioned it. What is
+     * written next to the field is what the field is written against.
+     *
      * `pitch` carries the extra clause because both misses landed there and one
      * of them is not a translated sentence at all: a single English adjective
      * inside a Spanish one ("es confessional, rabiosa"), which reads as Spanish
@@ -228,7 +234,7 @@ class CupidaAgent implements Agent, HasStructuredOutput
                 ->required(),
 
             'pitch' => $schema->string()
-                ->description('En español. Tres o cuatro frases, como quien le presenta a alguien con quien va a saltar la chispa: cómo se lee este libro y por qué se lo das a ella justamente, con la seguridad de quien lo ha leído. Sin empezar por el título ni por quien lo escribió, que están justo encima: la primera palabra nunca es un nombre propio. Sin "porque dijiste" ni "porque buscas". Debajo ya se ve la sinopsis, así que no cuentes el argumento. Sin repetir el título. Ni una frase ni un adjetivo en inglés.')
+                ->description(($this->likedNothing() ? 'En español. Ha dicho que no a todas las cartas: la primera frase lo reconoce, con gracia y sin reproche, y el resto le presenta este libro a contracorriente de todo lo que ha rechazado. ' : 'En español. ') . 'Tres o cuatro frases, como quien le presenta a alguien con quien va a saltar la chispa: cómo se lee este libro y por qué se lo das a ella justamente, con la seguridad de quien lo ha leído. Sin empezar por el título ni por quien lo escribió, que están justo encima: la primera palabra nunca es un nombre propio. Sin "porque dijiste" ni "porque buscas". Debajo ya se ve la sinopsis, así que no cuentes el argumento. Sin repetir el título. Ni una frase ni un adjetivo en inglés.')
                 ->required(),
 
             'match_line' => $schema->string()

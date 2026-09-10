@@ -8,6 +8,14 @@
          its own, and none of them meant for a stranger who did not get the
          link. --}}
     :indexable="false"
+    {{-- The reader is standing in front of one book, so the footer's "pídenoslo"
+         must ask for that one: the form arrives filled in, exactly as it does
+         from the book's own page. It is the only route from here to the form,
+         and landing on an empty one after a page about a single book is asking
+         the reader to type back what we already know. Null when La Cupida found
+         the book at the shop but we hold no record of it -- there is nothing to
+         fill the form in from, and the empty form still takes the request. --}}
+    :footer-book="$recommendation->book"
 >
     {{-- The same panel the reader saw at the end of their session, drawn from
          the row it was written to. Not `fits-viewport`: that page is a screen

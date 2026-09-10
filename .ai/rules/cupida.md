@@ -471,3 +471,8 @@ A reader who passes every card still gets a book (the shortlist falls back to th
 
 ## The kind label is what holds the top of a swipe card
 The card `<article>` is `flex flex-col justify-between`, and its children are: the kind label, an optional portrait or mood icon, then the title block. A theme card has neither face nor icon, so hiding the label (it was `hidden wide:block` for a while) left it with a single child — and a lone child in a `justify-between` column sits at the *start*. The title climbed to the head of the card and the whole lower half stood empty, which is how it was reported on a phone. Keep the label rendered at every width. `CupidaDeckTest` pins both the label's class (no `hidden`) and that it precedes the heading in the markup.
+
+## Ties are broken by the session seed, never by pool order
+`for()` takes `?int $seed` and shuffles the scored set with a seeded `Random\Randomizer` before the stable sort, so the seed only ever decides between equal scores; `RecommendBook` passes the session seed. Without it a reader who passed every card was nothing but ties -- every in-stock book matching no passed card scores the same -- so the thirty were the first thirty of books.json every time, and the live site handed three sessions in a row the same novel (Aguamarina) with the same "Sin IA" pick (Hamnet). `null` keeps pool order, which is what the tests and any replay of an old row rely on; do not shuffle unconditionally.
+
+The all-passed acknowledgment also lives in the `pitch` schema description (`CupidaAgent::schema()` reads `likedNothing()`), not only in the prompt line beside the answers: the committed prompt line alone was deployed and three live sessions ignored it. Field descriptions are what Haiku actually writes against.

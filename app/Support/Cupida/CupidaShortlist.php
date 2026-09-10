@@ -2,6 +2,9 @@
 
 namespace App\Support\Cupida;
 
+use Random\Engine\Mt19937;
+use Random\Randomizer;
+
 /**
  * Turns eighteen swipes into the handful of books the model gets to choose from.
  *
@@ -86,6 +89,7 @@ final readonly class CupidaShortlist
      * @param  array<int, string>  $passes
      * @param  array<int, string>  $withoutAuthors  author slugs whose books are left out
      * @param  int|null  $perAuthor  at most this many books by one author; null reads the config
+     * @param  int|null  $seed  breaks ties between equal scores; null keeps the pool's order
      * @return array<int, array<string, mixed>>
      */
     public function for(
@@ -95,6 +99,7 @@ final readonly class CupidaShortlist
         ?int $take = null,
         array $withoutAuthors = [],
         ?int $perAuthor = null,
+        ?int $seed = null,
     ): array {
         $take ??= (int)config('cupida.shortlist');
         $perAuthor ??= (int)config('cupida.shortlist_per_author');
@@ -162,8 +167,16 @@ final readonly class CupidaShortlist
                     || ! in_array($this->authorOf($book), $withoutAuthors, true),
             );
 
-            return $this->spread($rest, $take, $perAuthor);
+            return $this->spread($this->shuffled(array_values($rest), $seed), $take, $perAuthor);
         }
+
+        /* Shuffled before it is sorted, and the sort is stable, so the seed
+           only ever decides between equal scores. Without it, ties fall in
+           pool order -- and a reader who passes every card is nothing but
+           ties: every in-stock book that matches no passed card scores the
+           same, so the thirty were the same thirty every time, and the model
+           handed three sessions in a row the same novel out of them. */
+        $scored = $this->shuffled($scored, $seed);
 
         usort($scored, fn(array $a, array $b): int => $b['score'] <=> $a['score']);
 
@@ -172,6 +185,24 @@ final readonly class CupidaShortlist
             $take,
             $perAuthor,
         );
+    }
+
+    /**
+     * The same list in an order only the seed decides, or as it came with no
+     * seed -- which is what the tests and the panel's replays rely on.
+     *
+     * @template T
+     *
+     * @param  array<int, T>  $items
+     * @return array<int, T>
+     */
+    private function shuffled(array $items, ?int $seed): array
+    {
+        if ($seed === null) {
+            return $items;
+        }
+
+        return new Randomizer(new Mt19937($seed))->shuffleArray($items);
     }
 
     /**

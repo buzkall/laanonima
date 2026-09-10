@@ -49,7 +49,7 @@ class RecommendBook
      */
     public function __invoke(array $likes, array $passes, bool $write = true, ?int $seed = null, ?string $promise = null): ?Recommendation
     {
-        $shortlist = $this->shortlist->for($this->catalog, $likes, $passes);
+        $shortlist = $this->shortlist->for($this->catalog, $likes, $passes, seed: $seed);
 
         if ($shortlist === []) {
             return null;

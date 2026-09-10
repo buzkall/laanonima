@@ -19,6 +19,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Sign in to ask for a book
+    |--------------------------------------------------------------------------
+    |
+    | Printed under the heading of the login and register pages when a reader
+    | was sent there by the book request form, which is the only thing on the
+    | shop behind a sign-in.
+    |
+    */
+
+    'book_request' => [
+        'reason' => 'Para pedirnos un libro hace falta una cuenta. En cuanto entres te devolvemos al formulario.',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Demo
     |--------------------------------------------------------------------------
     |

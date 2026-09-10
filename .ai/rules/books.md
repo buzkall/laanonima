@@ -37,3 +37,8 @@ Once a request is in, the receipt takes the whole page: it lives in the colored 
 `SharedRecommendationController` deliberately runs no gate. `CupidaRecommendationPolicy` answers `isBookseller()` and takes a non-null `User`, so putting the public page behind it would refuse every reader who was handed a link. Unguessability *is* the access control, which is also why the page must render nothing about the reader: the book and the writing about it, never `user`, `likes` or `passes`. `SharedRecommendationPageTest` pins that.
 
 Replacing the key was contained because nothing points at this table — both its foreign keys point outwards, at `users` and `books`. That stops being true the moment something references a recommendation.
+
+## A form that arrives filled in says nothing about filling it in
+`book_requests.public.required` ("con el título nos basta") is an instruction for somebody facing an empty form; arriving from a book the title is already in the box, so the prefilled form uses `book_requests.public.prefilled` instead.
+
+The way back is dropped in the same case: only `! $book` renders the link to the shelf. A reader who came from a book page or a recommendation is two clicks from sending, and a link out sitting above the form invites them to leave before they have. Their way back is the browser's, and after sending it is the receipt's.

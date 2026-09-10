@@ -1,4 +1,4 @@
-@props(['title', 'description', 'palette', 'footerCta' => true, 'footerOnPhone' => true, 'fitsViewport' => false, 'ogImage' => null, 'ogImageAlt' => null, 'indexable' => true])
+@props(['title', 'description', 'palette', 'footerCta' => true, 'footerBook' => null, 'footerOnPhone' => true, 'fitsViewport' => false, 'ogImage' => null, 'ogImageAlt' => null, 'indexable' => true])
 
 {{-- A shelf of books: the home page, an author's page, an imprint's page.
      None of them belongs to a single book, so all three wear the house
@@ -98,6 +98,6 @@
          was not told breaks it for everything underneath. --}}
     <div @class(['flex flex-1 flex-col', 'min-h-0' => $fitsViewport])>{{ $slot }}</div>
 
-    <x-site-footer :cta="$footerCta" :on-phone="$footerOnPhone" />
+    <x-site-footer :cta="$footerCta" :book="$footerBook" :on-phone="$footerOnPhone" />
 </body>
 </html>

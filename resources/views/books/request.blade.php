@@ -100,18 +100,32 @@
                 @endif
             </p>
 
-            <a
-                href="{{ $book ? route('books.show', $book) : route('home') }}"
-                class="mt-8 inline-block border-b-2 border-current pb-[3px] text-[15px] font-semibold tracking-[0.12em] uppercase transition-opacity duration-150 hover:opacity-65"
-            >
-                {{ $book ? __('books.public.shelf_back') : __('book_requests.public.back') }}
-            </a>
+            {{-- Only the empty form offers a way out. A reader who arrived from a
+             book -- its page, or a recommendation of it -- came here to send
+             one form with two fields already filled in, and a link back to the
+             shelf sitting above it is the page inviting them to leave before
+             they have. The way back is the browser's, and after sending it is
+             the receipt's. --}}
+            @unless ($book)
+                <a
+                    href="{{ route('home') }}"
+                    class="mt-8 inline-block border-b-2 border-current pb-[3px] text-[15px] font-semibold tracking-[0.12em] uppercase transition-opacity duration-150 hover:opacity-65"
+                >
+                    {{ __('book_requests.public.back') }}
+                </a>
+            @endunless
         </section>
 
         <main class="bg-paper text-ink px-[clamp(22px,5vw,80px)] pt-[clamp(44px,5vw,76px)] pb-[clamp(56px,6vw,96px)]">
             <div class="mx-auto max-w-[720px]">
+                {{-- "Con el título nos basta" is an instruction for somebody facing
+                 an empty form. Arriving from a book the title is already in the
+                 box, so the same line reads as a request to type something that
+                 is on the screen -- `prefilled` says the only true thing left:
+                 send it. --}}
                 <p class="mt-0 mb-10 text-[18px] italic opacity-75">
-                    {{ __('book_requests.public.required') }} {{ __('book_requests.public.signed_in_as', ['email' => $user->email]) }}
+                    {{ $book ? __('book_requests.public.prefilled') : __('book_requests.public.required') }}
+                    {{ __('book_requests.public.signed_in_as', ['email' => $user->email]) }}
                 </p>
 
                 <form

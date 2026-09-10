@@ -5,11 +5,13 @@ namespace App\Filament\Auth;
 use App\Enums\UserRole;
 use App\Http\Responses\LoginResponse;
 use App\Models\User;
+use App\Support\BookRequestSignIn;
 use Arzcode\FilamentMagicLogin\Pages\Login as BaseLogin;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Support\Htmlable;
 
 /**
  * Accepts a sign-in from a user who belongs to another panel.
@@ -25,6 +27,17 @@ use Illuminate\Contracts\Auth\Authenticatable;
  */
 class Login extends BaseLogin
 {
+    /**
+     * Says why a reader who never asked to sign in is being asked to.
+     *
+     * Only when they were turned away from the book request form; everybody
+     * else gets Filament's own line. {@see BookRequestSignIn}
+     */
+    public function getSubheading(): string|Htmlable|null
+    {
+        return BookRequestSignIn::subheading(parent::getSubheading());
+    }
+
     protected function isUserAllowedToAccessPanel(Authenticatable $user): bool
     {
         if (parent::isUserAllowedToAccessPanel($user)) {

@@ -6,6 +6,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | --- | --- |
 | app/Ai/Agents/CupidaAgent.php | .ai/rules/agents.md |
 | app/** | .ai/rules/app.md |
+| app/Support/BookRequestSignIn.php,app/Filament/Auth/Login.php,app/Filament/Auth/Register.php | .ai/rules/auth-filament-auth.md |
 | app/Filament/Auth/** | .ai/rules/auth.md |
 | app/Models/Author.php,app/Models/Book.php,app/Filament/Resources/Authors/** | .ai/rules/authors.md |
 | app/Http/Controllers/BookRequestController.php, app/Models/BookRequest.php, app/Filament/Resources/BookRequests/**, app/Filament/Client/Resources/BookRequests/**, app/Policies/BookRequestPolicy.php, app/Http/Requests/StoreBookRequest.php, app/Mail/**, resources/views/books/request.blade.php, app/Policies/CupidaRecommendationPolicy.php, app/Models/CupidaRecommendation.php | .ai/rules/books.md |
@@ -33,3 +34,4 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Filament/Resources/Users/** | .ai/rules/users.md |
 | lang/vendor/** | .ai/rules/vendor.md |
 | app/Actions/Portraits/AttachAuthorPortrait.php,app/Console/Commands/FetchCupidaPortraits.php,app/Models/Author.php,resources/views/books/author.blade.php | .ai/rules/views-books.md |
+| resources/views/components/site-footer.blade.php,resources/views/components/layouts/shelf.blade.php,resources/views/cupida/shared.blade.php | .ai/rules/views-cupida.md |

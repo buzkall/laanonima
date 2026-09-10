@@ -18,6 +18,17 @@ beforeEach(function(): void {
     config(['ai.providers.anthropic.key' => null]);
 });
 
+/**
+ * @param  array<int, string>  $values
+ * @return array<int, string>
+ */
+function sort_values(array $values): array
+{
+    sort($values);
+
+    return $values;
+}
+
 it('puts what was liked at the top of the shortlist', function(): void {
     $shortlist = app(CupidaShortlist::class)->for(
         app(CupidaCatalog::class),
@@ -650,6 +661,51 @@ it('leaves the nothing-liked line out when something was liked', function(): voi
 
         return true;
     });
+});
+
+it('writes the eighteen noes into the pitch\'s own description', function(): void {
+    /* The prompt line was not enough: three live sessions that passed every
+       card came back with pitches that never said so. The field is written
+       against what sits beside it, so the description says it too. */
+    $fields = fn(CupidaAgent $agent): array => array_map(
+        Serializer::serialize(...),
+        $agent->schema(new JsonSchemaTypeFactory),
+    );
+
+    expect($fields(new CupidaAgent([], likes: [], passes: ['Fantasía']))['pitch']['description'])
+        ->toStartWith('En español. Ha dicho que no a todas las cartas: la primera frase lo reconoce')
+        ->and($fields(new CupidaAgent([], likes: ['Poesía'], passes: ['Fantasía']))['pitch']['description'])
+        ->toStartWith('En español. Tres o cuatro frases')
+        ->and($fields(new CupidaAgent([]))['pitch']['description'])
+        ->toStartWith('En español. Tres o cuatro frases');
+});
+
+it('breaks ties by the seed, so eighteen noes are not the same thirty every time', function(): void {
+    /* With nothing liked every in-stock book that matches no passed card
+       scores the same, and a stable sort left them in pool order: the same
+       thirty every session, and the model picked the same novel three times
+       running on the live site. */
+    $shortlist = app(CupidaShortlist::class);
+    $catalog = app(CupidaCatalog::class);
+
+    $eans = fn(?int $seed): array => array_column(
+        $shortlist->for($catalog, likes: [], passes: ['theme:FM'], seed: $seed),
+        'ean',
+    );
+
+    expect($eans(1))->toBe($eans(1))
+        ->and($eans(1))->not->toBe($eans(2))
+        ->and(sort_values($eans(1)))->toBe(sort_values($eans(null)));
+});
+
+it('leaves a clear winner alone whatever the seed', function(): void {
+    $catalog = app(CupidaCatalog::class);
+
+    foreach ([1, 2, 3] as $seed) {
+        $shortlist = app(CupidaShortlist::class)->for($catalog, likes: ['book:9788412976137'], passes: [], seed: $seed);
+
+        expect($shortlist[0]['ean'])->toBe('9788412976137');
+    }
 });
 
 it('owns the eighteen noes in the canned line too', function(): void {

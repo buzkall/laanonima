@@ -92,6 +92,7 @@ return [
         'submit'       => 'Encontradme el libro',
         'back'         => 'Volver a la estantería',
         'required'     => 'Con el título nos basta. Lo demás, si lo sabes, nos ahorra tiempo.',
+        'prefilled'    => 'Ya está todo rellenado. Añade lo que quieras y envíanoslo.',
         'signed_in_as' => 'Te escribiremos a :email.',
         'phone_note'   => 'Lo guardamos en tu cuenta para avisarte antes si hace falta.',
         'optional'     => 'opcional',

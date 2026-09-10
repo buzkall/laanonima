@@ -3,10 +3,12 @@
 namespace App\Filament\Auth;
 
 use App\Enums\UserRole;
+use App\Support\BookRequestSignIn;
 use Filament\Auth\Pages\Register as BaseRegister;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Schema;
+use Illuminate\Contracts\Support\Htmlable;
 use SensitiveParameter;
 
 /**
@@ -24,6 +26,18 @@ use SensitiveParameter;
  */
 class Register extends BaseRegister
 {
+    /**
+     * The same reason the login page gives, because the way here is a link on it.
+     *
+     * A reader with no account reaches the form through registration, and the
+     * intended URL survives the trip -- so the page can still say what it is
+     * they are opening an account in order to do. {@see BookRequestSignIn}
+     */
+    public function getSubheading(): string|Htmlable|null
+    {
+        return BookRequestSignIn::subheading(parent::getSubheading());
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema

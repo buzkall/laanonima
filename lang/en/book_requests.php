@@ -92,6 +92,7 @@ return [
         'submit'       => 'Find me the book',
         'back'         => 'Back to the shelf',
         'required'     => 'A title is enough. Anything else you know saves us time.',
+        'prefilled'    => 'It is all filled in already. Add anything you like and send it over.',
         'signed_in_as' => 'We will write to you at :email.',
         'phone_note'   => 'We keep it on your account so we can call if we need to.',
         'optional'     => 'optional',

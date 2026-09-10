@@ -39,6 +39,30 @@ it('opens for anybody holding the link', function(): void {
     $this->get(route('cupida.recommendation', $recommendation))->assertOk();
 });
 
+/* The footer's "pídenoslo" is the only way from this page to the request form,
+   and the page is about one book, so it has to carry it: an empty form after a
+   page about a single book asks the reader to type back what we already know. */
+it('sends the reader to the form filled in with the book it is about', function(): void {
+    $book = Book::factory()->create(['stock' => 0]);
+    $recommendation = CupidaRecommendation::factory()->for($book)->create();
+
+    $this->get(route('cupida.recommendation', $recommendation))
+        ->assertOk()
+        ->assertSee(route('book-requests.create.book', $book))
+        ->assertDontSee(route('book-requests.create'));
+});
+
+/* La Cupida recommends out of the shop's pool, and the shop holds books we have
+   no record of. There is nothing to fill a form in from then, and the empty one
+   still takes the request. */
+it('falls back to the empty form for a book we hold no record of', function(): void {
+    $recommendation = CupidaRecommendation::factory()->create(['book_id' => null]);
+
+    $this->get(route('cupida.recommendation', $recommendation))
+        ->assertOk()
+        ->assertSee(route('book-requests.create'));
+});
+
 it('404s on a key nobody was given', function(): void {
     CupidaRecommendation::factory()->create();
 

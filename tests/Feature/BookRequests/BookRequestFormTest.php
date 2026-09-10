@@ -211,6 +211,30 @@ it('fills the form in from the book a reader came from', function(): void {
         ->assertSee('value="' . $book->id . '"', false);
 });
 
+/* The lead and the way out were both written for somebody facing an empty form:
+   "con el título nos basta" asks for a title that is already in the box, and a
+   link to the shelf above it invites the reader out of a form they came here
+   with two clicks to send. */
+it('does not ask a reader to type in what the form already knows', function(): void {
+    $book = Book::factory()->create(['stock' => 0]);
+
+    $this->actingAs($this->reader)
+        ->get(route('book-requests.create.book', $book))
+        ->assertOk()
+        ->assertSee(__('book_requests.public.prefilled'))
+        ->assertDontSee(__('book_requests.public.required'))
+        ->assertDontSee(__('books.public.shelf_back'));
+});
+
+it('still tells a reader facing the empty form what the least of it is', function(): void {
+    $this->actingAs($this->reader)
+        ->get(route('book-requests.create'))
+        ->assertOk()
+        ->assertSee(__('book_requests.public.required'))
+        ->assertSee(__('book_requests.public.back'))
+        ->assertDontSee(__('book_requests.public.prefilled'));
+});
+
 it('attaches the book the request was made from', function(): void {
     $book = Book::factory()->create();
 
