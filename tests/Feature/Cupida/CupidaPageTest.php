@@ -6,6 +6,7 @@ use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\Str;
 
 use function Pest\Livewire\livewire;
 
@@ -98,10 +99,16 @@ it('keeps greeting the guest once the deck is running', function(): void {
  | The word is drawn from the deck's own seed, so which one turns up is not
  | this test's business -- that one of them does, and that no reader is left
  | looking at the raw `:match` placeholder, is.
+ |
+ | The opening card sets the promise one sentence per line, so only the last
+ | sentence -- the one carrying the word -- survives as a contiguous run of
+ | text in the markup. That is the sentence to look for.
  */
 it('promises the reader one of its four words for a book', function(): void {
     $lines = array_map(
-        fn(string $word): string => (string)__('cupida.start.promise', ['match' => $word]),
+        fn(string $word): string => (string)Str::of(__('cupida.start.promise', ['match' => $word]))
+            ->split('/(?<=\.)\s+/')
+            ->last(),
         (array)__('cupida.start.matches'),
     );
 

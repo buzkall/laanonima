@@ -30,6 +30,8 @@ final readonly class CupidaCard
         public CoverPalette $palette,
         /** Only an author card ever carries a face, and not all of those do. */
         public ?CupidaPortrait $portrait = null,
+        /** Only a mood card carries one: an outline Heroicon name, without its `heroicon-o-` prefix. */
+        public ?string $icon = null,
     ) {}
 
     public static function make(
@@ -39,6 +41,7 @@ final readonly class CupidaCard
         ?string $note,
         string $color,
         ?CupidaPortrait $portrait = null,
+        ?string $icon = null,
     ): self {
         return new self(
             kind: $kind,
@@ -47,6 +50,7 @@ final readonly class CupidaCard
             note: $note,
             palette: CoverPalette::fromCover($color),
             portrait: $portrait,
+            icon: $icon,
         );
     }
 

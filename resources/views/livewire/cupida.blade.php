@@ -82,19 +82,29 @@
                 {{ __('cupida.start.greeting', ['name' => $greeting]) }}
             </p>
 
-            {{-- Two lines, broken here rather than in the string: who she is, and
-             then what she is about to do. The break is the sentence's own and
-             not a wrap, so it holds at every width.
+            {{-- One sentence per line, broken here rather than in the string:
+             who she is, then how the deck works, then what she is about to
+             hand over. Every break is a full stop of the copy's own and not a
+             wrap, so it holds at every width, and the promise can be reworded
+             in `lang/` without the view having to be told about it.
 
-             Two blocks rather than one `<br />`, so each sentence balances
-             against itself. On a phone the promise does not fit on one line at
-             any size worth reading it at, and left to wrap it drops its last
-             word alone onto a third line -- `text-balance` on the paragraph as
-             a whole would weigh that orphan against the short line above it
-             instead of against the sentence it belongs to. --}}
-            <p class="mx-auto mt-6 mb-0 max-w-[34ch] text-[clamp(26px,2.2vw,28px)]/[1.45] italic">
-                <span class="block text-balance">{{ __('cupida.start.lead') }}</span>
-                <span class="block text-balance">{{ __('cupida.start.promise', ['match' => $match]) }}</span>
+             A block per sentence rather than `<br />`, so each balances
+             against itself. Below the measure a sentence still wraps -- a
+             phone has no width to give it -- and `text-balance` on the
+             paragraph as a whole would weigh that wrapped line against the
+             short sentence above it instead of against the sentence it
+             belongs to.
+
+             The measure is cut to the longest sentence either language has
+             (65 characters in Spanish, 66 in English once the longest match
+             word is substituted) so that on a laptop no sentence wraps and
+             the full stops are the only breaks on screen. A sentence written
+             longer than that will wrap rather than overflow, but it will have
+             left this shape behind -- widen the measure with it. --}}
+            <p class="mx-auto mt-6 mb-0 max-w-[66ch] text-[clamp(26px,2.2vw,28px)]/[1.45] italic">
+                @foreach (\Illuminate\Support\Str::of(__('cupida.start.lead').' '.__('cupida.start.promise', ['match' => $match]))->split('/(?<=\.)\s+/') as $sentence)
+                    <span class="block text-balance">{{ $sentence }}</span>
+                @endforeach
             </p>
 
             {{-- Two controls, one action, and only ever one of them on screen.
@@ -247,12 +257,23 @@
                                 {{ $recommendation->book ? __('cupida.result.read_more') : __('cupida.result.buy') }}
                             </a>
 
+                            {{-- The rule stays under the word alone. An icon
+                                 sitting on the same underline reads as a
+                                 second, empty letter of it -- so the border
+                                 moves onto the label and the glyph travels
+                                 beside it, the way the share control's does. --}}
                             <button
                                 type="button"
                                 wire:click="restart"
-                                class="text-[18px] cursor-pointer border-0 border-b-2 border-current bg-transparent pb-[3px] font-serif font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
+                                class="text-[18px] inline-flex cursor-pointer items-center gap-2 border-0 bg-transparent font-serif font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase transition-opacity duration-150 hover:opacity-65"
                             >
-                                {{ __('cupida.result.again') }}
+                                <svg class="size-[1.1em] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                                </svg>
+
+                                <span class="border-b-2 border-current pb-[3px]">
+                                    {{ __('cupida.result.again') }}
+                                </span>
                             </button>
 
                             {{-- A reader who has just been handed a book wants
@@ -502,19 +523,26 @@
                                                         ])
                                 style="--card: {{ $card->palette->background }}; --on-card: {{ $card->palette->foreground }}; --depth: {{ $depth }}"
                             >
-                                {{-- Hidden below `wide:`. The band above the deck already
-                                 asks the round's question -- "¿Y con quién?" over a
-                                 card that says AUTORÍA -- so on a phone the label is
-                                 a line of small caps charging the portrait a line of
-                                 height for something the reader has just read. On a
-                                 laptop the deck is at its drawn size and the room is
-                                 not the constraint, so the card keeps its heading.
+                                {{-- At every width. It was `hidden wide:block` for a
+                                 while, on the grounds that the band above the deck
+                                 has just asked the round's question -- "¿Y con
+                                 quién?" over a card that says AUTORÍA -- and the
+                                 label was a line of small caps charging the portrait
+                                 a line of height for something already read. What
+                                 that missed is that the card is `justify-between`
+                                 and this is the child holding its top: a theme card
+                                 carries no face and no icon, so with the label gone
+                                 it had one child, and a lone child in a
+                                 `justify-between` column sits at the start. The
+                                 title climbed to the head of the card and left the
+                                 whole lower half empty. The label is cheaper than
+                                 that room.
 
-                                 Hidden for every kind, not only the ones with a face:
-                                 it is the same card in the same round, and a heading
-                                 that comes and goes as the stack advances reads as a
-                                 bug. --}}
-                                <p class="wide:block m-0 hidden shrink-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-70">
+                                 Rendered for every kind, not only the ones with a
+                                 face: it is the same card in the same round, and a
+                                 heading that comes and goes as the stack advances
+                                 reads as a bug. --}}
+                                <p class="m-0 shrink-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-70">
                                     {{ __("cupida.kinds.{$card->kind}") }}
                                 </p>
 
@@ -541,6 +569,20 @@
                                         class="mx-auto min-h-0 w-[58%] rounded-[3px] object-cover shadow-[0_8px_0_-5px_rgba(33,21,17,0.16),0_18px_36px_-18px_rgba(33,21,17,0.55)]"
                                         @style(['background: ' . $card->portrait->color => filled($card->portrait->color)])
                                     />
+
+                                {{-- A mood card has no face and no note, so without
+                                 this it is a heading on a flat color with the room a
+                                 portrait takes standing empty. The icon sits in that
+                                 slot, sized to the card the way the portrait is, and
+                                 drawn thin and faded so it keeps company with the
+                                 display type rather than shouting over it.
+
+                                 `@svg` and not a static component tag: the name comes
+                                 from the config, one per mood. `pointer-events-none`
+                                 so an SVG can never swallow the drag -- the gesture
+                                 belongs to the stack. --}}
+                                @elseif ($card->icon)
+                                    @svg("heroicon-o-{$card->icon}", 'pointer-events-none mx-auto min-h-0 w-[42%] max-w-[180px] shrink [stroke-width:1] opacity-80', ['aria-hidden' => 'true'])
                                 @endif
 
                                 {{-- The card is the only thing that can say how big

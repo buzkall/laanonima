@@ -253,3 +253,73 @@ it('offers the recommendation to be shared, pointed at the book rather than at t
             'author' => $recommendation->author,
         ]));
 });
+
+/* A mood is defined in three places -- keywords in config, a label in lang,
+   an icon in config -- and a mood added to two of them is a card that
+   renders without its picture and says nothing about it. */
+it('has an icon for every mood, and every icon is a heroicon that exists', function(): void {
+    $moods = array_keys((array)config('cupida.moods'));
+    $icons = (array)config('cupida.mood_icons');
+
+    expect(array_keys($icons))->toEqualCanonicalizing($moods);
+
+    /* A name that resolves to no file throws from `svg()`, naming the icon:
+       that is the assertion. */
+    foreach ($icons as $icon) {
+        expect(svg("heroicon-o-{$icon}")->toHtml())->toContain('<svg');
+    }
+});
+
+it('draws the mood cards with an icon, and only those', function(): void {
+    $component = cupidaDeck();
+
+    foreach (range(0, 1) as $round) {
+        foreach ($component->viewData('cards') as $card) {
+            expect($card->icon)->toBeNull();
+        }
+
+        $component->assertDontSeeHtml('[stroke-width:1]');
+
+        swipeThroughRound($component);
+    }
+
+    $component->assertSet('round', 2);
+
+    foreach ($component->viewData('cards') as $card) {
+        expect($card->icon)->toBe(config("cupida.mood_icons.{$card->key}"))
+            ->and($card->icon)->not->toBeNull();
+    }
+
+    /* The icon is in the card and not a decoration on the page: it is the
+       one element with the thin stroke, and it is only there once the deck
+       is dealing moods. */
+    $component->assertSeeHtml('[stroke-width:1]');
+});
+
+/* The kind label is the card's top. The card is `justify-between`, and a theme
+   card carries neither face nor icon: with the label hidden it had a single
+   child, a lone child in a `justify-between` column sits at the start, and the
+   title climbed to the head of the card with the whole lower half left empty.
+   That is what `hidden wide:block` on the label bought a phone, so the label
+   is rendered at every width and the title is once again the last child. */
+it('heads every card with its kind at every width, and keeps the title under it', function(): void {
+    $component = cupidaDeck();
+
+    foreach (range(0, 2) as $round) {
+        $component->assertSeeHtml('class="m-0 shrink-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-70"');
+
+        /* Only the top three cards are in the DOM; the rest of the round is
+           dealt as those leave. */
+        foreach (array_slice($component->viewData('cards'), 0, 3) as $card) {
+            $html = $component->html();
+
+            expect($html)->toContain(__("cupida.kinds.{$card->kind}"))
+                /* The label before the heading, which is what puts the type at
+                   the foot of a card spread by `justify-between`. */
+                ->and(strpos($html, __("cupida.kinds.{$card->kind}")))
+                ->toBeLessThan(strpos($html, e($card->label)));
+        }
+
+        swipeThroughRound($component);
+    }
+});

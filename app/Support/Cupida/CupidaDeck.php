@@ -129,6 +129,7 @@ final readonly class CupidaDeck
                 'key'   => $key,
                 'label' => (string)__("cupida.moods.{$key}"),
                 'note'  => null,
+                'icon'  => config("cupida.mood_icons.{$key}"),
             ],
             array_slice($randomizer->shuffleArray($keys), 0, $size),
         ));
@@ -166,6 +167,7 @@ final readonly class CupidaDeck
                 note: is_string($card['note'] ?? null) ? $card['note'] : null,
                 color: $color,
                 portrait: ($card['portrait'] ?? null) instanceof CupidaPortrait ? $card['portrait'] : null,
+                icon: is_string($card['icon'] ?? null) ? $card['icon'] : null,
             );
 
             $previous = $color;

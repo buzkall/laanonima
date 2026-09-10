@@ -11,7 +11,7 @@ return [
         'greeting' => 'Hola, :name',
         'guest'    => 'Anónima',
         'lead'     => 'Soy La Cupida de los libros.',
-        'promise'  => 'Voy a hacerte 3 preguntas y te daré :match.',
+        'promise'  => 'Voy a hacerte 3 preguntas y tú respondes en la baraja. A la derecha las que te quedas, a la izquierda las que descartas. Con esto te daré :match.',
         /* The whole phrase and not the noun on its own: flechazo, crush and
            match are masculine and cita is not, so a shared "tu próxima" is
            wrong three times in four. */

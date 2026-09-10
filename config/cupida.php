@@ -326,8 +326,9 @@ return [
     | good one to meet once.
     |
     | The card a reader actually reads is in lang/es/cupida.php under
-    | `moods.<key>`; only the matching lives here. Add a mood in both places or
-    | TranslationsTest will say so.
+    | `moods.<key>`; only the matching lives here, and the icon the card is
+    | drawn with is in `mood_icons` below. Add a mood in all three places or
+    | TranslationsTest and CupidaDeckTest will say so.
     |
     | Keywords are matched without accents or case, so "corazon" catches
     | "corazón". Prefer stems -- "amist" reaches amistad and amistades.
@@ -372,6 +373,57 @@ return [
         'world'       => ['japon', 'corean', 'nordic', 'africa', 'arabe', 'chino'],
         'illustrated' => ['ilustrad', 'comic', 'novela grafica', 'dibujo', 'viñet', 'album'],
         'classic'     => ['clasico', 'canon', 'obra maestra', 'universal', 'imprescindible'],
+    ],
+
+    /*
+     | The picture on a mood card.
+     |
+     | A theme card carries its stocked count and an author card a face, and a
+     | mood card carried nothing: a heading on a flat color, with the room the
+     | portrait takes in round two standing empty. An outline Heroicon fills
+     | that room, one per mood, named here without its `heroicon-o-` prefix so
+     | the deck can hand the name straight to `svg()`. CupidaDeckTest checks
+     | that every mood has one and that every name resolves to a file.
+     */
+
+    'mood_icons' => [
+        'heartbreak'  => 'face-frown',
+        'laugh'       => 'face-smile',
+        'think'       => 'light-bulb',
+        'escape'      => 'paper-airplane',
+        'short'       => 'clock',
+        'doorstop'    => 'calendar-days',
+        'rage'        => 'fire',
+        'comfort'     => 'home',
+        'true_story'  => 'newspaper',
+        'strange'     => 'cube-transparent',
+        'love'        => 'heart',
+        'mystery'     => 'magnifying-glass',
+        'fear'        => 'exclamation-triangle',
+        'future'      => 'rocket-launch',
+        'past'        => 'building-library',
+        'learn'       => 'academic-cap',
+        'poetry'      => 'musical-note',
+        'women'       => 'user-circle',
+        'queer'       => 'flag',
+        'family'      => 'user-group',
+        'city'        => 'building-office-2',
+        'nature'      => 'sun',
+        'slow'        => 'pause',
+        'intense'     => 'lifebuoy',
+        'hope'        => 'sparkles',
+        'dark'        => 'moon',
+        'art'         => 'paint-brush',
+        'politics'    => 'megaphone',
+        'body'        => 'finger-print',
+        'mind'        => 'puzzle-piece',
+        'food'        => 'cake',
+        'work'        => 'briefcase',
+        'identity'    => 'map-pin',
+        'latin'       => 'globe-americas',
+        'world'       => 'globe-asia-australia',
+        'illustrated' => 'pencil',
+        'classic'     => 'film',
     ],
 
     /*
