@@ -179,6 +179,51 @@ class CupidaCatalog
     }
 
     /**
+     * Every name the shop stocks enough of to be worth a question.
+     *
+     * This is what `cupida:portraits:resolve` walks, and it is the list with
+     * the collectives still in it -- deciding that "Vv. Aa." is not a person is
+     * that command's job, and it cannot record a verdict about a name it was
+     * never handed. It reaches them without a request; see `isCollectiveName()`.
+     *
+     * Not memoized: it is a filter over a few thousand rows, and the floor is a
+     * config value a test moves.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function authorsAboveFloor(): array
+    {
+        $minimum = (int)config('cupida.deck.author_min_books');
+
+        return array_values(array_filter(
+            $this->authors(),
+            fn(array $author): bool => (int)$author['books'] >= $minimum,
+        ));
+    }
+
+    /**
+     * The writers a card can actually be dealt for.
+     *
+     * The same list with the collectives taken out, which is the deck's view of
+     * it. The two are one definition apart on purpose: the portraits command
+     * must reach a name the deck must not, and any wider gap between them is
+     * either an afternoon spent on faces no reader meets or a card dealt for a
+     * writer nobody looked up.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function dealableAuthors(): array
+    {
+        return array_values(array_filter(
+            $this->authorsAboveFloor(),
+            fn(array $author): bool => ! $this->isCollective(
+                (string)$author['slug'],
+                (string)$author['name'],
+            ),
+        ));
+    }
+
+    /**
      * @return array<int, array<string, mixed>>
      */
     public function books(): array
@@ -278,12 +323,11 @@ class CupidaCatalog
      * judgment, recorded while reviewing portraits, and it is the only thing
      * that catches a shared pen name with a real Wikidata item behind it. The
      * patterns catch the shop-ism, and they have to be asked here rather than
-     * only in `cupida:portraits:resolve`: author-photos.json reaches as far as
-     * `cupida.portraits.pool` and the deck reaches every writer above
-     * `cupida.deck.author_min_books`, which is several times further. Without
-     * the second half, "Vv.Aa.12" is a card the moment it turns up outside the
-     * portraits pool -- and it turns up under a new spelling every time the
-     * catalog grows.
+     * only in `cupida:portraits:resolve`, because that command is run by hand
+     * and always lags the pool: a scrape adds writers on the afternoon it runs
+     * and the rows arrive whenever somebody sits down to review faces. Without
+     * the patterns, "Vv.Aa.12" is a card for the whole of that gap -- and it
+     * turns up under a new spelling every time the catalog grows.
      */
     public function isCollective(string $slug, ?string $name = null): bool
     {

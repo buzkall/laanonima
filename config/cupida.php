@@ -194,22 +194,6 @@ return [
 
     'portraits' => [
         /*
-         | How many of the best-stocked names `cupida:portraits:resolve` asks
-         | about.
-         |
-         | Not the same number as the deck's pool, and deliberately so. Every
-         | name costs two requests to Wikidata and Commons whether or not it
-         | comes back with a face, and the answers are reviewed by hand -- so
-         | this is an afternoon's work, sized on purpose, while the deck's floor
-         | is sized on what makes a good card. The deck reaching a writer this
-         | has not reached yet is the ordinary case, and it deals them faceless.
-         |
-         | Raise it to buy more faces, a chunk at a time. The run resumes, so
-         | nothing already recorded is asked about twice.
-         */
-        'pool' => 150,
-
-        /*
          | Wikimedia answers an unidentified client with a 403, so this must
          | name the project and carry a contact address.
          |

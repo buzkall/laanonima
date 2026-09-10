@@ -44,6 +44,17 @@
                     {{ __('books.public.publisher.website') }}
                 </a>
             @endif
+
+            {{-- Same control as the book page, and the sentence it carries
+                 says whose shelf this is and which shop it is in. --}}
+            <x-share-button
+                :url="route('publishers.show', $publisher)"
+                :title="$publisher->name"
+                :text="__('books.public.share.publisher_message', ['publisher' => $publisher->name, 'shop' => config('app.name')])"
+                :label="__('books.public.share.action')"
+                :copied="__('books.public.share.copied')"
+                class="text-[15px] tracking-[0.12em] opacity-75 hover:opacity-100"
+            />
         </div>
     </section>
 

@@ -2,6 +2,19 @@
     /* The question a round is asking, in the order CupidaDeck builds them. */
     $questions = App\Support\Cupida\CupidaDeck::ROUNDS;
     $question = $questions[$round] ?? null;
+
+    /* The sentence that travels with the shared link, so what lands in
+       somebody's chat says where the book came from rather than being a bare
+       address. It is worked out up here and not beside the button on purpose:
+       the result panel opens a one-line PHP directive of the parenthesised
+       kind, and Blade pairs the next block-form close with that one instead --
+       so a second block down there stops compiling and prints itself. */
+    $shareMessage = $recommendation === null ? null : ($recommendation->author
+        ? __('cupida.result.share_message_by', [
+            'title'  => $recommendation->title,
+            'author' => $recommendation->author,
+        ])
+        : __('cupida.result.share_message', ['title' => $recommendation->title]));
 @endphp
 
 {{-- Every state of this page is one full-bleed panel, so it takes the whole
@@ -33,7 +46,17 @@
          while it does. It never grows beyond its natural size, because it is
          `flex: 0 1 auto` -- it can lose height, not gain it -- so a laptop and a
          tall phone get exactly the card that was drawn. --}}
-        <section class="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,56px)] pb-[clamp(36px,5vw,72px)] text-center text-[var(--on-cover)]">
+        {{-- Enter starts the deck, the way the arrow keys answer it once it is
+         running: the two controls below are one action, and a reader on a
+         laptop should not have to reach for the pointer to take it. `.prevent`
+         is what keeps the shortcut from firing twice when the button itself
+         happens to hold focus -- Enter on a focused button raises its click as
+         the keydown's default action. --}}
+        <section
+            x-data
+            @keydown.window.enter.prevent="$wire.start()"
+            class="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto bg-[var(--cover)] px-[clamp(22px,5vw,80px)] pt-[clamp(28px,4vw,56px)] pb-[clamp(36px,5vw,72px)] text-center text-[var(--on-cover)]"
+        >
             {{-- `object-contain` is not decoration: `max-h` on a replaced element
              whose width is set squashes it, and contain letterboxes it inside
              the shorter box at its own ratio instead. --}}
@@ -55,7 +78,7 @@
              its own, and the footer stopped taking a fifth of the window -- so
              the type is set to the room rather than to the smallest size that
              fits. --}}
-            <p class="font-display mx-auto mt-[clamp(22px,4vw,36px)] mb-0 max-w-[24ch] border-t border-[var(--rule)] pt-7 text-[clamp(44px,4.2vw,52px)]/[1.06] text-balance">
+            <p class="font-display mx-auto mt-[clamp(22px,4vw,36px)] mb-0 max-w-[24ch] pt-7 text-[clamp(44px,4.2vw,52px)]/[1.06] text-balance">
                 {{ __('cupida.start.greeting', ['name' => $greeting]) }}
             </p>
 
@@ -231,6 +254,23 @@
                             >
                                 {{ __('cupida.result.again') }}
                             </button>
+
+                            {{-- A reader who has just been handed a book wants
+                                 to tell somebody, and the panel is the only
+                                 place that book exists for them -- the page
+                                 keeps no session a link could reopen, so what
+                                 travels is `url`: our page for the book when it
+                                 is filed, the shop's when it is not. Lightest
+                                 of the three controls, and outside `wire:` on
+                                 purpose: it must not cost a round trip. --}}
+                            <x-share-button
+                                :url="$recommendation->url"
+                                :title="$recommendation->title"
+                                :text="$shareMessage"
+                                :label="__('cupida.result.share')"
+                                :copied="__('cupida.result.share_copied')"
+                                class="text-[18px] text-[var(--on-card)] opacity-70 hover:opacity-100"
+                            />
                         </div>
 
                         {{-- The old site, kept and demoted. The button above is
@@ -406,8 +446,18 @@
                  up the shell has no height, the question band is set at 5.6vw
                  and can take most of a laptop window on its own, and a deck free
                  to shrink there would shrink to nothing rather than let the page
-                 do what it has always done and scroll. --}}
-                <div class="flex min-h-0 flex-1 flex-col items-center">
+                 do what it has always done and scroll.
+
+                 `wide:flex-none` on the wrapper is what keeps the buttons under
+                 the card rather than under the leftover room. Once the deck is
+                 at its drawn 560px the growth buys nothing -- the ceiling
+                 already binds -- and every pixel the wrapper went on absorbing
+                 pushed the controls further down a window that had room to
+                 spare. Sized to the deck, it hands that room back to the
+                 column, whose `justify-center` then centers the card and its
+                 buttons as the one group they read as. Below `wide:` the growth
+                 is the whole mechanism and stays. --}}
+                <div class="wide:flex-none flex min-h-0 flex-1 flex-col items-center">
                     {{-- The gesture is bound here rather than on the card. Alpine
                      binds `@pointerdown` and registers `x-ref` when it initialises
                      an element, and Livewire's morph patches attributes onto
@@ -415,13 +465,30 @@
                      the top by a re-render never gets either, and every swipe after
                      the first silently does nothing. The stack is the same element
                      all the way through, so binding here always works and the
-                     script asks the DOM which card is on top. --}}
+                     script asks the DOM which card is on top.
+
+                     Only the *start* of the gesture is bound to the stack. The rest
+                     is bound to the window, because the end of a drag is not
+                     guaranteed to be delivered here: `setPointerCapture()` is what
+                     redirects a pointer that has long since left the card back to
+                     this element, and the browser drops that capture on its own --
+                     Safari especially, and any browser the moment the capturing
+                     element is replaced by a morph. When it goes, the `pointerup`
+                     lands on whatever is under the cursor instead, which by then is
+                     the page behind the card. `release()` never runs, `dragging`
+                     stays true, and the card sits wherever the last `pointermove`
+                     painted it: tilted, stamped, and impossible to drop. The
+                     keyboard still answers it, which is exactly how the bug reads
+                     from the outside.
+
+                     The window hears every pointer on the page, so each handler
+                     checks the id against the one that started the drag. --}}
                     <div
                         class="cupida-stack wide:min-h-[560px] relative aspect-[3/4] max-h-[560px] w-auto max-w-full min-h-0 flex-1"
                         @pointerdown="grab($event)"
-                        @pointermove="drag($event)"
-                        @pointerup="release()"
-                        @pointercancel="release()"
+                        @pointermove.window="drag($event)"
+                        @pointerup.window="release($event)"
+                        @pointercancel.window="cancel($event)"
                     >
                         @foreach (array_reverse($stack) as $index => $card)
                             @php($depth = count($stack) - 1 - $index)
@@ -470,6 +537,7 @@
                                         height="640"
                                         loading="eager"
                                         decoding="async"
+                                        draggable="false"
                                         class="mx-auto min-h-0 w-[58%] rounded-[3px] object-cover shadow-[0_8px_0_-5px_rgba(33,21,17,0.16),0_18px_36px_-18px_rgba(33,21,17,0.55)]"
                                         @style(['background: ' . $card->portrait->color => filled($card->portrait->color)])
                                     />

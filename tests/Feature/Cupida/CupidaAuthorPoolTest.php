@@ -55,11 +55,11 @@ it('draws from the whole pool rather than the top of the ranking', function(): v
 
 it('never deals a name that says it is not one writer', function(): void {
     /* The reviewed `no_person` row (ito-kaoru, covered in CupidaPortraitCardTest)
-       only reaches as far as author-photos.json, which is the top
-       `cupida.portraits.pool` names. The deck reaches several times further
-       down, so the shop-ism has to be caught by its spelling too -- otherwise
-       "Vv.Aa.12" is a card the moment it appears outside that pool. The fixture
-       has no collective the patterns match, so Guerriero stands in for one. */
+       only exists once somebody has sat down with `cupida:portraits:resolve`,
+       which is run by hand and always lags a scrape. The shop-ism has to be
+       caught by its spelling too, or "Vv.Aa.12" is a card for the whole of that
+       gap. The fixture has no collective the patterns match, so Guerriero
+       stands in for one. */
     config()->set('cupida.portraits.collective_patterns', ['leila*']);
 
     expect(authorsDealt())->not->toContain('guerriero-leila');

@@ -10,6 +10,7 @@ use App\Models\Book;
 use App\Models\CupidaRecommendation;
 use App\Models\User;
 use App\Settings\CupidaSettings;
+use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Ai\Ai;
@@ -265,9 +266,15 @@ it('keeps a row for every recommendation it gives', function(): void {
 
     $kept = CupidaRecommendation::query()->sole();
 
+    /* Against what the component chose, not the fake's EAN: every author card
+       is liked here and a liked writer's books are no longer offered, so the
+       fake can name a book that was not on the list and the top of it stands
+       in. The row has to carry whichever one the reader was given. */
+    $chosen = app(CupidaCatalog::class)->book((string)$component->get('chosen'));
+
     expect($kept)
-        ->ean->toBe('9788412976137')
-        ->title->toBe('Mientras pasan otras cosas')
+        ->ean->toBe($chosen['ean'])
+        ->title->toBe($chosen['title'])
         ->pitch->toBe('Se lee de una sentada.')
         ->match_line->toBe('Porque dijiste que sí a la poesía.')
         ->written->toBeTrue()

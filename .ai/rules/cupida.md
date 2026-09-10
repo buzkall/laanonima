@@ -24,6 +24,8 @@ paths:
   - 'app/Support/Cupida/**,config/cupida.php'
   - resources/views/components/site-footer.blade.php
   - resources/views/components/layouts/shelf.blade.php
+  - app/Support/Cupida/CupidaShortlist.php
+  - app/Actions/Cupida/RecommendBook.php
 ---
 
 # La Cupida
@@ -55,18 +57,24 @@ the card has to fall back to no face rather than to a broken one. One directory
 listing per request answers it for all six cards -- never a `Storage::exists()`
 per card.
 
+The resolve command walks `CupidaCatalog::authorsAboveFloor()` -- the deck's own
+floor, with the collectives still in it. That last part is not an oversight:
+deciding "Vv. Aa." is not a person is this command's job, and it cannot record a
+verdict about a name it was never handed. `dealableAuthors()` is the same list
+with them removed and is what the deck asks for. Keep the two exactly one
+definition apart. There was briefly a separate `cupida.portraits.pool` count
+here, and the problem with it is the problem with any second number: it drifts
+the moment stock moves, and then the command is spending an afternoon on faces
+no reader meets while a name a reader does meet is never asked about. `--limit`
+is the throttle, not the pool.
+
 A pool of seven hundred also means the deck reaches entities the shop files
 under an author name that are not writers at all -- "Shine", the production
 company behind the MasterChef books, was dealt as a card before it was marked
-`--none`. Most of the pool has never been through a portraits review, so nothing
-has said "not a person" about it. When one surfaces, `--none` is the answer; a
-spelling that will come back with the next scrape belongs in
-`collective_patterns` instead.
-
-`cupida.portraits.pool` is what the resolve command walks, and it is not the
-deck's floor. Every name costs two requests whether or not it comes back with a
-face, and the answers are reviewed by hand, so it is sized as an afternoon's work
-and raised a chunk at a time. The run resumes, so nothing recorded is asked twice.
+`--none`. Every name in the pool has a row today, but a scrape adds names and
+the review always lags it. When one surfaces, `--none` is the answer; a spelling
+that will come back with the next scrape belongs in `collective_patterns`
+instead.
 
 `status` carries five verdicts and the misses matter as much as the hits: without
 a `no_match`/`no_image` row, the names Wikidata will never answer cost two
@@ -81,10 +89,16 @@ silently. `--forget-pins` is how to mean it.
 a `P106` in `cupida.portraits.occupations`. Drop the second half and searching
 "Mary Oliver" reaches a Dutch jazz singer (who has a photo) instead of the poet
 (who does not), and "Michael McDowell" reaches an Irish politician instead of the
-novelist. Measured over the whole 150-name portraits pool it finds 118 faces; over a
-19-name sample checked by hand, unguarded gave thirteen photos of which two were
-the wrong person, guarded gave eleven and none wrong. Losing two faces to keep
+novelist. Measured over the 150 names the pool held at the time it finds 118
+faces; over a 19-name sample checked by hand, unguarded gave thirteen photos of
+which two were the wrong person, guarded gave eleven and none wrong. Losing two faces to keep
 two strangers off the cards is the trade. Do not relax it to raise the number.
+
+Measured again over the whole 679-name pool once the floor replaced the rank
+cut: 446 faces, 130 writers Wikidata knows with no photograph, and 102 it has no
+item for at all. Two thirds, over a pool four and a half times larger and much
+less well documented than the 150 the guard was tuned on -- so the deck averages
+four faces in a round of six, which is what it averaged before.
 
 What it cannot catch is a correctly identified writer whose only photograph is a
 statue, a book cover or a group shot -- and it cannot know that Carmen Mola is
@@ -103,11 +117,10 @@ The recurring shop-ism is matched by `cupida.portraits.collective_patterns`,
 because it comes back under a new spelling every time the catalog grows. That
 check lives in `CupidaCatalog::isCollectiveName()` and is asked twice: by
 `cupida:portraits:resolve` before any request is made, and by the deck on every
-draw. Both are needed. author-photos.json only reaches `cupida.portraits.pool`
-names and the deck reaches every writer above the floor -- several times
-further -- so a `no_person` row cannot be the only answer. A shared byline with
-a real Wikidata item is a judgment call no pattern expresses: mark it with
-`--none`.
+draw. Both are needed: the resolve command is run by hand and always lags a
+scrape, so for the whole of that gap there is no `no_person` row to read. A
+shared byline with a real Wikidata item is a judgment call no pattern expresses:
+mark it with `--none`.
 
 ## The photo credit sits under the deck, and is not a link
 
@@ -157,10 +170,10 @@ shelf, so more cards are names to be met rather than recognized. Do not read a
 run of unfamiliar cards as a bug -- that is the setting, and the lever is this
 number.
 
-`cupida.portraits.pool` is a **different** number on purpose (see below): raising
-the deck's reach costs nothing, raising the portraits' reach costs an afternoon
-of Wikidata requests reviewed by hand. Most of the pool is dealt faceless, which
-is the ordinary case the card was always built for.
+Raising the floor's reach costs nothing; getting a face onto each new card costs
+a Wikidata request and a human look, and `cupida:portraits:resolve` always lags
+the pool as a result. A card dealt faceless is the ordinary case it was built
+for, not a fault to chase.
 
 `useCupidaFixture()` lowers the floor to one, the way it lowers
 `deck.min_books`: the fixture is eleven authors and one of them has two books.
@@ -322,9 +335,9 @@ Two traps in that filter. It must order the query from `baseQuery()`, never `que
 Filters are applied before sorting, so the filter's `orderBy` is the primary one and the table's `defaultSort('created_at', 'desc')` follows it as the tiebreaker. Blank state is therefore newest-first, which is what the placeholder names. The value comes from the browser, so match the column against a whitelist before it reaches `orderBy()`.
 
 ## One writer does not get to be the whole shortlist
-A liked author is the heaviest weight in `CupidaShortlist`, so left alone the top of the list is that author's whole backlist. `withoutAuthors` drops a writer from the scoring entirely and `perAuthor` caps how many of one writer's books get through. Nothing in the app passes `withoutAuthors` today -- it was the covers round's -- and it is kept for whatever asks a second question off the same shortlist.
+`withoutAuthors` drops a writer from the scoring entirely and `perAuthor` caps how many of one writer's books get through. Nothing in the app passes `withoutAuthors` today -- it was the covers round's, and the liked writers are now folded into it inside `for()` (see "A liked writer is a shelf, never the answer" below) -- and it is kept for whatever asks a second question off the same shortlist.
 
-The model's thirty are capped at `cupida.shortlist_per_author` (3) per writer so three liked authors do not fill it with three backlists. Both the exclusion and the cap also apply to the nothing-scored fallback list, and a book with no author is never capped. Keep the exclusion in the shortlist (before scoring), not as a post-filter in the deck: a filter over the top 18 leaves too few once the liked authors are removed.
+The model's thirty are capped at `cupida.shortlist_per_author` (3) per writer so one shelf the reader pointed at does not come back as one writer's backlist. Both the exclusion and the cap also apply to the nothing-scored fallback list, and a book with no author is never capped. Keep the exclusion in the shortlist (before scoring), not as a post-filter in the deck: a filter over the top 18 leaves too few once the liked authors are removed.
 
 ## The opening card's promise, and its arrow on a phone
 
@@ -440,3 +453,18 @@ Why it matters: a minimum height bounds nothing. Flexbox can only take space awa
 Opt-in, because it is only right for a page that is a screen rather than a document: the shelf, author and publisher pages are lists that must run past the fold. And only below `wide:` — a laptop has room for a heading set at 5.6vw *and* everything under it, and squeezing a document into a window that was never the constraint costs the design without buying anything.
 
 A page that opts in owns the consequence: anything in it that can outgrow the window must say how it scrolls (`overflow-y-auto` on the panel), or it is cut off rather than scrolled. See `.ai/rules/cupida.md` for the worked example.
+
+## One parenthesised @php in this view means no block form below it
+The result panel uses the one-line `@php($palette = ...)` form. Blade extracts raw blocks with a non-greedy `@php ... @endphp` match before anything else compiles, so that inline directive pairs with the *next* `@endphp` anywhere below it: a block-form `@php ... @endphp` added further down stops compiling, prints itself, and every variable it was meant to define is undefined — with no error until something reads one.
+
+Put new view-local variables in the block at the top of the file, and never write the literal tokens `@php`/`@endphp` inside a comment in that block: they close it early and the view dies with a PHP syntax error.
+
+## A liked writer is a shelf, never the answer
+A yes to an author card no longer scores that author's books: they are left out of the shortlist altogether (folded into `withoutAuthors` inside `for()`), for the model and for the no-AI fallback alike. Nineteen of the first fifty-four written recommendations were a book by a writer the reader had just liked -- Sacks after a yes to Sacks -- which is what a search box does; the reader already knows that writer, and the prompt tells the model so ("no están en la lista, a propósito").
+
+What the yes still buys is the shelf: the subject codes that writer's books are filed under lift everybody else's books on those shelves at `LIKED_AUTHOR_SHELF` (6), lighter than a subject the reader named (10), once per liked writer per book. `LIKED_AUTHOR` (25) is gone; `PASSED_AUTHOR` stays.
+
+The shelves are collected in the same pass that slugs every book, and the slug is carried into a second scoring pass so `authorOf()` runs once per book. Measured on identical answers, a liked writer adds about 3ms to a pass the moods and subjects already put at 170ms -- so the shelf is not the hot part, and a slower recommendation after a change here is the mood keywords or the subject matching, not this.
+
+## Eighteen noes are an answer the pitch has to own
+A reader who passes every card still gets a book (the shortlist falls back to the shop's own picks), and the text under it must say so: she knows what she just did, and a pitch that carries on as if she had asked for this book reads as not having listened. `CupidaAgent::answers()` opens with "No ha dicho que sí a nada." in place of the "sí" line (so "Y que no a" never reads without a "sí" before it), `RecommendBook::promptFor()` adds the instruction beside the answers when `likedNothing()`, and the no-AI path uses `cupida.result.fallback_pitch_nothing_liked` instead of the hunch line. Keep the tone the prompt asks for: with grace, no reproach -- hard to please is a compliment here.

@@ -82,7 +82,7 @@ class RecommendBook
     private function decide(array $shortlist, array $likes, array $passes, bool $write, ?string $promise): Recommendation
     {
         if (! $write || ! $this->configured()) {
-            return $this->fallback($shortlist);
+            return $this->fallback($shortlist, $likes);
         }
 
         try {
@@ -99,7 +99,7 @@ class RecommendBook
                 $this->credit->afterRefusal();
             }
 
-            return $this->fallback($shortlist);
+            return $this->fallback($shortlist, $likes);
         }
     }
 
@@ -313,6 +313,17 @@ class RecommendBook
             $parts[] = "Esto es lo que ha respondido, y es para que elijas tú, no para recitárselo:\n\n{$answers}";
         }
 
+        /* Eighteen noes is an answer too, and the one the reader knows they
+           gave. A pitch that carries on as if she had asked for this book
+           reads as not having listened; the same rule as the answers -- say
+           it in the librera's words, not as a receipt -- applies. */
+        if ($agent->likedNothing()) {
+            $parts[] = 'No ha dicho que sí a nada: ha pasado de todas las cartas. Díselo en la '
+                . 'recomendación, con gracia y sin reproche -- es difícil de contentar, y eso te '
+                . 'gusta -- y que se note que este lo eliges a contracorriente de todo lo que ha '
+                . 'rechazado, no como si lo hubiera pedido.';
+        }
+
         $parts[] = "Estos son los libros entre los que puedes elegir:\n\n{$agent->catalog()}";
 
         return implode("\n\n", $parts);
@@ -321,13 +332,19 @@ class RecommendBook
     /**
      * The best-scoring book with the canned line, for when nothing writes.
      *
+     * A reader who passed every card gets the other canned line: the first
+     * one says the book was a hunch, and a hunch is exactly what she was not
+     * handed after saying no eighteen times -- she was handed the shop's own
+     * pick, and the line ought to own that.
+     *
      * @param  array<int, array<string, mixed>>  $shortlist
+     * @param  array<int, string>  $likes
      */
-    private function fallback(array $shortlist): Recommendation
+    private function fallback(array $shortlist, array $likes): Recommendation
     {
         return Recommendation::make(
             book: $shortlist[0],
-            pitch: (string)__('cupida.result.fallback_pitch'),
+            pitch: (string)__($likes === [] ? 'cupida.result.fallback_pitch_nothing_liked' : 'cupida.result.fallback_pitch'),
             matchLine: null,
             written: false,
         );

@@ -68,10 +68,13 @@ it('writes the recommendation with the model', function(): void {
         swipeThroughRound($component);
     }
 
+    /* Not the fake's EAN: every author card in the fixture is liked here,
+       and a liked writer's books are no longer offered, so the answer names
+       a book that was not on the list and the top of it stands in. Which book
+       the model is allowed to name is `CupidaRecommendationTest`'s. */
     $component->call('recommend')
-        ->assertSet('chosen', '9788412976137')
+        ->assertSet('chosen', fn(?string $ean): bool => $ean !== null)
         ->assertSet('written', true)
-        ->assertSee('Mientras pasan otras cosas')
         ->assertSee('Se lee de una sentada y se queda mucho más tiempo.')
         ->assertSee('Porque dijiste que sí a la poesía.');
 
@@ -222,4 +225,31 @@ it('deals again from nothing when a reader starts over', function(): void {
         ->assertSet('passes', [])
         ->assertSet('chosen', null)
         ->assertSee(__('cupida.questions.theme'));
+});
+
+/* A reader who has just been handed a book wants to tell somebody, and this
+   page keeps no session a link could reopen -- so what is shared is the book's
+   own address, which is ours when the book was filed and the shop's when it
+   was not. */
+it('offers the recommendation to be shared, pointed at the book rather than at the session', function(): void {
+    config(['ai.providers.anthropic.key' => null]);
+
+    $component = cupidaDeck();
+
+    foreach (range(0, 2) as $round) {
+        swipeThroughRound($component);
+    }
+
+    $component->call('recommend');
+
+    $recommendation = $component->viewData('recommendation');
+
+    expect($recommendation->author)->not->toBeNull();
+
+    $component->assertSee(__('cupida.result.share'))
+        ->assertSeeHtml('data-share-url="' . e($recommendation->url) . '"')
+        ->assertSee(__('cupida.result.share_message_by', [
+            'title'  => $recommendation->title,
+            'author' => $recommendation->author,
+        ]));
 });

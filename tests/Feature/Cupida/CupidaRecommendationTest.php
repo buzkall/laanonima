@@ -28,14 +28,33 @@ it('puts what was liked at the top of the shortlist', function(): void {
     expect($shortlist[0]['subjects'])->toContain('DC');
 });
 
-it('reads a liked author as the strongest thing a reader said', function(): void {
+it('never hands back the writer the reader said yes to', function(): void {
+    /* Nineteen of the first fifty-four written recommendations were a book by
+       an author the reader had just liked -- Sacks after a yes to Sacks. That
+       is what a search box does; the reader already knows this writer. */
     $shortlist = app(CupidaShortlist::class)->for(
         app(CupidaCatalog::class),
         likes: ['theme:FM', 'author:guerriero-leila'],
         passes: [],
     );
 
-    expect($shortlist[0]['author'])->toBe('Guerriero, Leila');
+    expect(array_column($shortlist, 'author'))->not->toContain('Guerriero, Leila')
+        ->and($shortlist)->not->toBeEmpty();
+});
+
+it('reads a liked writer as a shelf and lifts the neighbors', function(): void {
+    /* Guerriero is filed under DN and DC in the fixture. Saying yes to her is
+       saying where in the shop you stand, so the other DN and DC books come
+       first -- and hers are not among them. */
+    $shortlist = app(CupidaShortlist::class)->for(
+        app(CupidaCatalog::class),
+        likes: ['author:guerriero-leila'],
+        passes: [],
+    );
+
+    expect(array_column(array_slice($shortlist, 0, 2), 'ean'))
+        ->toContain('9788419490421')
+        ->toContain('9788412976137');
 });
 
 it('matches a subject through the codes filed under it', function(): void {
@@ -98,7 +117,7 @@ it('sends a reader to our own page for a book we stock too', function(): void {
         'isbn13' => '9788433922069',
     ]);
 
-    $recommendation = app(RecommendBook::class)(likes: ['author:guerriero-leila'], passes: []);
+    $recommendation = app(RecommendBook::class)(likes: ['book:9788433922069'], passes: []);
 
     expect($recommendation->ean)->toBe('9788433922069')
         ->and($recommendation->book?->is($ours))->toBeTrue()
@@ -158,12 +177,13 @@ it('never hands back a book whose cover was turned down', function(): void {
     expect(array_column($shortlist, 'ean'))->not->toContain('9788412976137');
 });
 
-it('lets a liked author through only so many times', function(): void {
+it('lets one writer through only so many times', function(): void {
     config()->set('cupida.shortlist_per_author', 1);
 
+    /* Both of Guerriero's books score the same on these two shelves. */
     $shortlist = app(CupidaShortlist::class)->for(
         app(CupidaCatalog::class),
-        likes: ['author:guerriero-leila'],
+        likes: ['theme:DN', 'theme:DC'],
         passes: [],
     );
 
@@ -469,7 +489,10 @@ it('holds what it says about the book to the synopsis', function(): void {
        explain the book instead of for the synopsis it was handed. */
     expect(new CupidaAgent([])->baseInstructions())
         ->toContain('Una carta a la que ha dicho que sí no es una prueba')
-        ->toContain('quién lo ilustra, qué premio tiene ni de qué edición es');
+        ->toContain('quién lo ilustra, qué premio tiene ni de qué edición es')
+        /* A pool entry with no author was credited to the writer the reader
+           had just liked: Blacksad, "Borja González sabe construir...". */
+        ->toContain('Si un libro viene sin autoría, no se la pongas tú');
 });
 
 it('sends her off to the date, not to a moral', function(): void {
@@ -541,4 +564,100 @@ it('says nothing about a promise when none was made', function(): void {
 
         return true;
     });
+});
+
+it('tells the model why the liked writers are missing from the list', function(): void {
+    expect(new CupidaAgent([])->baseInstructions())
+        ->toContain('no están en la lista, a propósito')
+        ->toContain('presentarle a alguien nuevo que se lea parecido');
+});
+
+it('takes the book the model named when it was on the list', function(): void {
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [[
+        'ean'        => '9788412976137',
+        'pitch'      => 'Se lee de una sentada.',
+        'match_line' => 'Que te dure toda la noche.',
+    ]]);
+
+    $recommendation = app(RecommendBook::class)(likes: ['theme:DC'], passes: []);
+
+    expect($recommendation->ean)->toBe('9788412976137')
+        ->and($recommendation->written)->toBeTrue();
+});
+
+it('falls back to the top of the list when the answer names a book that was not offered', function(): void {
+    /* The schema's enum makes this impossible against a real provider; a
+       provider that ignored the enum gets the scoring's pick and keeps the
+       prose. */
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [[
+        'ean'        => '0000000000000',
+        'pitch'      => 'Se lee de una sentada.',
+        'match_line' => 'Que te dure toda la noche.',
+    ]]);
+
+    $shortlist = app(CupidaShortlist::class)->for(app(CupidaCatalog::class), likes: ['theme:DC'], passes: []);
+
+    $recommendation = app(RecommendBook::class)(likes: ['theme:DC'], passes: []);
+
+    expect($recommendation->ean)->toBe((string)$shortlist[0]['ean'])
+        ->and($recommendation->pitch)->toBe('Se lee de una sentada.');
+});
+
+it('tells the model when the reader said no to every card', function(): void {
+    /* Eighteen noes is an answer, and the one the reader knows they gave. The
+       fact is stated first, in place of the "sí" line, and the prompt asks the
+       pitch to own it rather than carry on as if the book had been asked for. */
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [[
+        'ean'        => '9788412976137',
+        'pitch'      => 'Has dicho que no a todo, y por eso este.',
+        'match_line' => 'Que te dure toda la noche.',
+    ]]);
+
+    app(RecommendBook::class)(likes: [], passes: ['theme:FM', 'author:guerriero-leila']);
+
+    CupidaAgent::assertPrompted(function(AgentPrompt $prompt): bool {
+        expect($prompt->prompt)
+            ->toContain('No ha dicho que sí a nada. Ha dicho que no a: Fantasía, Leila Guerriero.')
+            ->not->toContain('Y que no a:')
+            ->toContain('ha pasado de todas las cartas. Díselo en la recomendación');
+
+        return true;
+    });
+});
+
+it('leaves the nothing-liked line out when something was liked', function(): void {
+    config()->set('ai.providers.anthropic.key', 'test-key');
+
+    Ai::fakeAgent(CupidaAgent::class, [[
+        'ean'        => '9788412976137',
+        'pitch'      => 'Se lee de una sentada.',
+        'match_line' => 'Que te dure toda la noche.',
+    ]]);
+
+    app(RecommendBook::class)(likes: ['theme:DC'], passes: ['theme:FM']);
+
+    CupidaAgent::assertPrompted(function(AgentPrompt $prompt): bool {
+        expect($prompt->prompt)
+            ->toContain('Y que no a: Fantasía.')
+            ->not->toContain('ha pasado de todas las cartas');
+
+        return true;
+    });
+});
+
+it('owns the eighteen noes in the canned line too', function(): void {
+    /* No key, nothing written: the reader still gets a book, and the line
+       under it has to know she said no to everything. */
+    $recommendation = app(RecommendBook::class)(likes: [], passes: ['theme:FM', 'theme:DC']);
+
+    expect($recommendation->written)->toBeFalse()
+        ->and($recommendation->pitch)->toBe(__('cupida.result.fallback_pitch_nothing_liked'))
+        ->and(app(RecommendBook::class)(likes: ['theme:DC'], passes: [])->pitch)
+        ->toBe(__('cupida.result.fallback_pitch'));
 });

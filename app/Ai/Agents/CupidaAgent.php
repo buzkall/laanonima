@@ -136,7 +136,8 @@ class CupidaAgent implements Agent, HasStructuredOutput
           ni que te han dado nada a elegir.
         - No inventes títulos, autorías ni argumentos: usa solo lo que te doy. Tampoco
           quién lo ilustra, qué premio tiene ni de qué edición es, si no está en lo que
-          te doy.
+          te doy. Si un libro viene sin autoría, no se la pongas tú ni se la cuelgues
+          a nadie de su lista: habla del libro sin nombrar a nadie.
         - No repitas el título dentro del texto de la recomendación; ya se ve encima.
 
         La recomendación hace dos cosas y las dos hacen falta: cuenta qué es este libro
@@ -182,6 +183,11 @@ class CupidaAgent implements Agent, HasStructuredOutput
         nunca una moraleja ni un deseo sobre su vida ("que encuentres tu verdad", "que
         te encuentres a ti misma"), ni un resumen de sus respuestas ni una promesa de
         que es el libro perfecto; el gusto de abrirlo.
+
+        Las autoras y autores a los que ha dicho que sí no están en la lista, a propósito:
+        ya los conoce, y para lo obvio no hace falta una librera. Ese sí te dice qué le
+        gusta; úsalo para presentarle a alguien nuevo que se lea parecido, y si te sirve
+        dilo ("si te gusta cómo escribe Sacks, este...").
 
         Elige el libro que mejor case con lo que ha dicho que sí, no el más famoso. Si dos
         encajan igual, quédate con el menos obvio: para lo obvio no hace falta una librera.
@@ -266,10 +272,23 @@ class CupidaAgent implements Agent, HasStructuredOutput
         }
 
         if ($this->passes !== []) {
-            $lines[] = 'Y que no a: ' . implode(', ', $this->passes) . '.';
+            /* "Y que no" only reads after a "sí". A reader who passed every
+               card gets the fact stated first, because it is the one thing
+               about this session the pitch has to know. */
+            $lines[] = $this->likes === []
+                ? 'No ha dicho que sí a nada. Ha dicho que no a: ' . implode(', ', $this->passes) . '.'
+                : 'Y que no a: ' . implode(', ', $this->passes) . '.';
         }
 
         return implode("\n", $lines);
+    }
+
+    /**
+     * Whether the reader turned down every card there was.
+     */
+    public function likedNothing(): bool
+    {
+        return $this->likes === [] && $this->passes !== [];
     }
 
     /**

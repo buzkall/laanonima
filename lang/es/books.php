@@ -198,16 +198,35 @@ return [
          | traduzca, y en la tarjeta se pega el logotipo tal cual.
          */
         'share' => [
-            'by'            => 'de :authors',
-            'count'         => '{0} Sin libros en la web|{1} :count libro en la librería|[2,*] :count libros en la librería',
-            'book_alt'      => 'Cubierta de :title',
+            'by'       => 'de :authors',
+            'count'    => '{0} Sin libros en la web|{1} :count libro en la librería|[2,*] :count libros en la librería',
+            'book_alt' => 'Cubierta de :title',
+
+            /*
+             | El botón de compartir. El nombre de la librería llega como
+             | parámetro y no escrito en la frase, por lo mismo que no está en
+             | las claves de arriba: es una marca, no una cadena que se traduzca.
+             */
+            'action'        => 'Compartir',
+            'copied'        => 'Enlace copiado',
+            'message'       => '«:title», en :shop',
+            'message_by'    => '«:title», de :authors, en :shop',
             'author_alt'    => 'Libros de :name en La Anónima',
             'publisher_alt' => 'Libros de :publisher en La Anónima',
+
+            /* La frase que acompaña a la página de una persona o de un sello. */
+            'author_message'    => 'Libros de :name, en :shop',
+            'publisher_message' => 'Libros de :publisher, en :shop',
         ],
 
         'author' => [
             'kicker' => 'Libros de',
             'intro'  => 'Todo lo que tenemos de :name en la librería. Si falta algo suyo, pídenoslo y lo encargamos.',
+
+            /* Las fotos de Wikimedia Commons piden nombrar a quien las hizo, la
+               licencia, y decir que las hemos recortado. */
+            'portrait_credit' => 'Foto: :artist · :license · recortada',
+            'unknown_artist'  => 'autoría desconocida',
         ],
 
         'publisher' => [

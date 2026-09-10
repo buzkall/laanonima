@@ -12,6 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * A person on a title page -- author, translator, illustrator -- with the
@@ -27,10 +31,18 @@ use Illuminate\Support\Str;
  */
 #[Fillable(['name', 'slug', 'bio'])]
 #[RouteKey('slug')]
-class Author extends Model
+class Author extends Model implements HasMedia
 {
+    /**
+     * One face per person, replaced rather than accumulated. Filed either by
+     * a bookseller in the panel or by `cupida:portraits:fetch`, which hands
+     * over the Commons photo it downloaded for the card -- with its credit in
+     * the media's custom properties, because the license asks for it.
+     */
+    public const PORTRAIT_COLLECTION = 'portrait';
+
     /** @use HasFactory<AuthorFactory> */
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected static function booted(): void
     {
@@ -106,6 +118,33 @@ class Author extends Model
         $text = Str::squish(html_entity_decode(strip_tags((string)$spaced)));
 
         return $text === '' ? null : Str::limit($text, $limit);
+    }
+
+    /**
+     * A portrait the panel is handed can be any size; the page draws it at
+     * the card's box, so the conversion is the same shape the downloaded ones
+     * already come in. Inline, like every other conversion here: there is no
+     * worker in front of the panel.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::PORTRAIT_COLLECTION)
+            ->singleFile()
+            ->registerMediaConversions(function(): void {
+                $this->addMediaConversion('thumb')
+                    ->nonQueued()
+                    ->fit(Fit::Contain, 480, 640);
+            });
+    }
+
+    public function portrait(): ?Media
+    {
+        return $this->getFirstMedia(self::PORTRAIT_COLLECTION);
+    }
+
+    public function portraitUrl(string $conversion = ''): ?string
+    {
+        return $this->portrait()?->getAvailableUrl([$conversion]);
     }
 
     /**

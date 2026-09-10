@@ -2,6 +2,7 @@
 
 use App\Models\Author;
 use App\Models\Book;
+use Illuminate\Support\Facades\Storage;
 
 it('lists everything on the shelf by one author', function(): void {
     $hers = Book::factory()->create([
@@ -129,4 +130,54 @@ it('rewrites the authors line of every book when a person is renamed', function(
     Author::firstWhere('slug', 'almudena-grande')->update(['name' => 'Almudena Grandes']);
 
     expect($book->refresh()->authors_line)->toBe('Almudena Grandes');
+});
+
+it('shows the portrait beside the name, and credits the photographer', function(): void {
+    Storage::fake('public');
+
+    $author = Author::factory()->create(['name' => 'Leila Guerriero']);
+    Book::factory()->create(['contributors' => [['name' => 'Leila Guerriero', 'role' => 'author']]]);
+
+    $author->addMediaFromString(fakeCover(480, 640))
+        ->usingFileName('guerriero-leila.jpg')
+        ->withCustomProperties(['credit' => ['artist' => 'Casa de América', 'license' => 'CC BY 2.0']])
+        ->toMediaCollection(Author::PORTRAIT_COLLECTION);
+
+    $this->get(route('authors.show', 'leila-guerriero'))
+        ->assertOk()
+        ->assertSee('alt="Leila Guerriero"', escape: false)
+        ->assertSee($author->fresh()->portraitUrl('thumb'))
+        ->assertSee(__('books.public.author.portrait_credit', ['artist' => 'Casa de América', 'license' => 'CC BY 2.0']));
+});
+
+it('says nothing about a photo the shop uploaded itself', function(): void {
+    Storage::fake('public');
+
+    $author = Author::factory()->create(['name' => 'Leila Guerriero']);
+    Book::factory()->create(['contributors' => [['name' => 'Leila Guerriero', 'role' => 'author']]]);
+
+    $author->addMediaFromString(fakeCover(480, 640))
+        ->usingFileName('leila.jpg')
+        ->toMediaCollection(Author::PORTRAIT_COLLECTION);
+
+    $this->get(route('authors.show', 'leila-guerriero'))
+        ->assertOk()
+        ->assertSee('alt="Leila Guerriero"', escape: false)
+        ->assertDontSee(__('books.public.author.portrait_credit', ['artist' => '', 'license' => '']));
+});
+
+/* The control is a button and not a link, so the only thing a request can
+   check is what it was handed: the page's own address and the sentence that
+   travels with it. What the browser does with them is `resources/js/share.js`. */
+it('offers the author\'s shelf to be shared, with a line that names the shop', function(): void {
+    Book::factory()->create(['contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']]]);
+
+    $this->get(route('authors.show', 'almudena-grandes'))
+        ->assertOk()
+        ->assertSee(__('books.public.share.action'))
+        ->assertSeeHtml('data-share-url="' . e(route('authors.show', 'almudena-grandes')) . '"')
+        ->assertSee(__('books.public.share.author_message', [
+            'name' => 'Almudena Grandes',
+            'shop' => config('app.name'),
+        ]));
 });

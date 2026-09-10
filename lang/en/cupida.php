@@ -90,16 +90,25 @@ return [
     ],
 
     'result' => [
-        'kickers'        => ['Your date', 'Your flechazo', 'Your crush', 'Your match'],
-        'heading'        => 'We think it is this one',
-        'by'             => 'by :author',
-        'read_more'      => 'See the book',
-        'buy'            => 'See it in the shop',
-        'at_the_shop'    => 'See it on the bookshop site',
-        'more'           => 'Read the rest',
-        'synopsis'       => 'Synopsis',
-        'again'          => 'Again',
-        'fallback_pitch' => 'This one is a hunch, which is how it works some of the time. Open it at any page and you will see.',
+        'kickers'     => ['Your date', 'Your flechazo', 'Your crush', 'Your match'],
+        'heading'     => 'We think it is this one',
+        'by'          => 'by :author',
+        'read_more'   => 'See the book',
+        'buy'         => 'See it in the shop',
+        'at_the_shop' => 'See it on the bookshop site',
+        'more'        => 'Read the rest',
+        'synopsis'    => 'Synopsis',
+        'again'       => 'Again',
+
+        /* What is shared is the book and not the session: the page keeps no
+           recommendation a link could reopen, so the link is the book's own and
+           the sentence is what says where it came from. */
+        'share'                        => 'Share',
+        'share_copied'                 => 'Link copied',
+        'share_message'                => 'La Cupida recommended me “:title”.',
+        'share_message_by'             => 'La Cupida recommended me “:title”, by :author.',
+        'fallback_pitch'               => 'This one is a hunch, which is how it works some of the time. Open it at any page and you will see.',
+        'fallback_pitch_nothing_liked' => 'You said no to everything, and we like people who are hard to please. This one is a hunch, to see if it is the one that makes you say yes. Open it at any page and you will see.',
     ],
 
     'empty' => [

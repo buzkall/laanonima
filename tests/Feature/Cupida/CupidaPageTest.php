@@ -18,6 +18,32 @@ it('opens on the section\'s own card, not on a question', function(): void {
         ->assertDontSee(__('cupida.questions.theme'));
 });
 
+/* The opening card is one action with two controls, and Enter is the third:
+   a reader on a laptop takes it from the keyboard without reaching for the
+   pointer, the way the arrow keys answer the deck once it is running. */
+it('starts the deck when a reader presses enter on the opening card', function(): void {
+    livewire(Cupida::class)
+        ->assertSeeHtml('@keydown.window.enter.prevent="$wire.start()"')
+        ->assertSet('started', false)
+        ->call('start')
+        ->assertSet('started', true);
+});
+
+/* The end of a drag is bound to the window, not to the stack, and it has to
+   stay that way. `setPointerCapture()` is the only reason a pointer that has
+   left the card still reports back to it, and the browser hands that capture
+   back on its own -- so a `pointerup` bound to the stack is a `pointerup` that
+   sometimes never arrives, and the card sits tilted and stamped and undroppable
+   until the arrow keys answer it. It looks like nothing, because nothing throws. */
+it('finishes the swipe on the window, so a lost pointer capture cannot strand a card', function(): void {
+    livewire(Cupida::class)
+        ->call('start')
+        ->assertSeeHtml('@pointerdown="grab($event)"')
+        ->assertSeeHtml('@pointermove.window="drag($event)"')
+        ->assertSeeHtml('@pointerup.window="release($event)"')
+        ->assertSeeHtml('@pointercancel.window="cancel($event)"');
+});
+
 it('greets a reader who is signed in by their first name', function(): void {
     $this->actingAs(User::factory()->create(['name' => 'Marta Llamas']));
 

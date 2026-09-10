@@ -1,6 +1,7 @@
 ---
 paths:
   - resources/views/components/site-header.blade.php
+  - resources/views/components/share-button.blade.php
 ---
 
 # Components
@@ -27,3 +28,10 @@ Below `wide:` the two nav links collapse into a `<details>` hamburger sitting be
 The links live in one `$links` array at the top of the file and are rendered twice (inline nav, disclosure panel). Never maintain two hand-written lists — that is how a link lands on a laptop and nowhere else. `tests/Feature/Books/SiteHeaderTest.php` asserts each route appears exactly twice inside `<header>`.
 
 The panel is `absolute inset-x-0 top-full z-50` off a `relative` header, never an element that grows the bar: `books/show.blade.php` measures the header into `--top-bar` on every paint, so a panel that made the header taller would shove the floating cover down the page each time it opened. `z-50` clears that cover (z-30).
+
+## One share control, driven by data attributes and a delegated listener
+`<x-share-button>` carries what it shares in `data-share-*`; the behaviour is `resources/js/share.js`, delegated from `document` and mounted unconditionally from `app.js`. That is what lets the same component sit inside La Cupida's result panel, which Livewire morphs on every round — a listener bound to the button itself would be replaced with it.
+
+`navigator.share` first (called before any `await`, or the sheet loses the click's activation), then the clipboard, then a textarea + `execCommand`. The modern clipboard is *present and refusing* more often than it is absent — an unfocused document and a denied permission both reject — so try it and fall through on rejection rather than feature-detecting. The label only flashes "copied" when a copy actually succeeded.
+
+No button is rendered without JavaScript, which is deliberate: there is nothing useful to degrade to.

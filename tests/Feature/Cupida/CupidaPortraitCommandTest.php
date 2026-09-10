@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Author;
+use App\Models\Book;
 use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +20,14 @@ beforeEach(function(): void {
     }
 
     config()->set('cupida.data_path', $this->pool);
+
+    /* The floor the command walks is the deck's, and it is written for the real
+       pool. Ten of the eleven fixture authors have one book, so left alone this
+       command would be handed Leila Guerriero and nobody else -- the same
+       reason `useCupidaFixture()` lowers it, which this file cannot call
+       because it needs a writable copy of the catalog. */
+    config()->set('cupida.deck.author_min_books', 1);
+
     app()->forgetInstance(CupidaCatalog::class);
 
     Storage::fake('portraits');
@@ -265,6 +275,66 @@ it('fetch downloads what the deploy is missing', function(): void {
     /* no_image and no_person rows have nothing to download. */
     Storage::disk('portraits')->assertMissing('vera-julia.jpg');
     Storage::disk('portraits')->assertMissing('ito-kaoru.jpg');
+});
+
+it('fetch files the portrait on the author page when the shop has the writer', function(): void {
+    Storage::fake('public');
+    Book::factory()->create(['contributors' => [['name' => 'Leila Guerriero', 'role' => 'author']]]);
+
+    Http::fake(['*' => Http::response(fakeCover(1200, 1600), 200, ['Content-Type' => 'image/jpeg'])]);
+
+    $this->artisan('cupida:portraits:fetch')->assertSuccessful();
+
+    $portrait = Author::firstWhere('slug', 'leila-guerriero')->portrait();
+
+    expect($portrait)->not->toBeNull()
+        ->and($portrait->file_name)->toBe('guerriero-leila.jpg')
+        ->and($portrait->getCustomProperty('credit.license'))->toBe('CC BY-SA 4.0')
+        ->and($portrait->getCustomProperty('credit.artist'))->toBe('Florenciac');
+
+    /* It links, it never creates: the other four faces have nobody to hang on. */
+    expect(Author::count())->toBe(1);
+});
+
+it('fetch files a portrait already on disk on an author who has none yet', function(): void {
+    Storage::fake('public');
+    Book::factory()->create(['contributors' => [['name' => 'Leila Guerriero', 'role' => 'author']]]);
+
+    foreach (matchedFixtureSlugs() as $slug) {
+        Storage::disk('portraits')->put("{$slug}.jpg", fakeCover(480, 640));
+    }
+
+    Http::fake();
+
+    $this->artisan('cupida:portraits:fetch')->assertSuccessful();
+
+    Http::assertNothingSent();
+
+    expect(Author::firstWhere('slug', 'leila-guerriero')->portrait())->not->toBeNull();
+});
+
+it('fetch leaves a portrait the bookseller chose alone unless it downloads again', function(): void {
+    Storage::fake('public');
+    Book::factory()->create(['contributors' => [['name' => 'Leila Guerriero', 'role' => 'author']]]);
+
+    $author = Author::firstWhere('slug', 'leila-guerriero');
+    $author->addMediaFromString(fakeCover(480, 640))
+        ->usingFileName('chosen.jpg')
+        ->toMediaCollection(Author::PORTRAIT_COLLECTION);
+
+    foreach (matchedFixtureSlugs() as $slug) {
+        Storage::disk('portraits')->put("{$slug}.jpg", fakeCover(480, 640));
+    }
+
+    Http::fake(['*' => Http::response(fakeCover(1200, 1600), 200, ['Content-Type' => 'image/jpeg'])]);
+
+    $this->artisan('cupida:portraits:fetch')->assertSuccessful();
+
+    expect($author->fresh()->portrait()->file_name)->toBe('chosen.jpg');
+
+    $this->artisan('cupida:portraits:fetch --force')->assertSuccessful();
+
+    expect($author->fresh()->portrait()->file_name)->toBe('guerriero-leila.jpg');
 });
 
 it('fetch exits zero when a download fails, so a deploy is never blocked', function(): void {

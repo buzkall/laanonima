@@ -46,7 +46,17 @@
 
             Alpine.data('cupidaDeck', () => ({
                 dragging: false,
-                pointer: 0,
+
+                /**
+                 * The pointer the drag belongs to, or null between drags.
+                 *
+                 * The gesture ends on the window rather than on the stack, so
+                 * every pointer on the page is heard and each one has to be
+                 * matched against this before it is allowed to move or drop the
+                 * card. `null` rather than `0`: a pointer id of zero is a real id
+                 * in some browsers, and a resting deck must not answer to it.
+                 */
+                pointer: null,
                 start: 0,
                 startedAt: 0,
                 dx: 0,
@@ -105,12 +115,29 @@
                     this.dragging = true;
                     this.pointer = event.pointerId;
                     this.start = event.clientX;
-                    this.startedAt = event.timeStamp;
+
+                    /* `performance.now()`, not `event.timeStamp`, because the other
+                   half of this subtraction is `performance.now()`. The two agree
+                   in every browser that matters, and on the day one of them does
+                   not the mistake is not a slightly wrong velocity -- it is a
+                   negative elapsed, clamped to a millisecond, and a card that
+                   flies off the screen on the gentlest nudge. */
+                    this.startedAt = performance.now();
                     this.dx = 0;
 
                     /* Keep receiving moves after the pointer leaves the card, which
-                   it does long before the throw is over. */
-                    event.currentTarget.setPointerCapture?.(event.pointerId);
+                   it does long before the throw is over. Best effort only: the
+                   browser is free to hand the capture back at any moment, and
+                   `setPointerCapture` itself throws if the pointer is already
+                   gone. Nothing below depends on it -- the drag is finished on
+                   the window either way -- so a failure here is not a reason to
+                   abandon a gesture that has already started. */
+                    try {
+                        event.currentTarget.setPointerCapture?.(event.pointerId);
+                    } catch {
+                        /* Fine. The window is listening. */
+                    }
+
                     this.paint(0, false);
                 },
 
@@ -119,16 +146,29 @@
                         return;
                     }
 
+                    /* The button came back up somewhere we were not told about --
+                   over the browser's own chrome, in another window, at the end
+                   of a native image drag. There is no `pointerup` coming for
+                   this gesture, so the next move is the one chance to finish
+                   it. Mouse only: `buttons` is 0 for a pen hovering and for a
+                   touch that is very much still down. */
+                    if (event.pointerType === 'mouse' && event.buttons === 0) {
+                        this.release(event);
+
+                        return;
+                    }
+
                     this.dx = event.clientX - this.start;
                     this.paint(this.dx, false);
                 },
 
-                release() {
-                    if (!this.dragging) {
+                release(event) {
+                    if (!this.dragging || (event && event.pointerId !== this.pointer)) {
                         return;
                     }
 
                     this.dragging = false;
+                    this.pointer = null;
 
                     const card = this.top();
                     const width = card?.offsetWidth || 1;
@@ -142,6 +182,27 @@
                     }
 
                     /* Under the threshold: spring back, and let the transition do it. */
+                    this.paint(0, true);
+                },
+
+                /**
+                 * The browser took the gesture away: a scroll it decided to own, a
+                 * native drag of the portrait, the page going to the background.
+                 *
+                 * Always springs back, never answers. A `pointercancel` is the one
+                 * ending that carries no intent -- the reader did not let go of the
+                 * card, something else let go of it for them -- and a round of six
+                 * is short enough that a swipe silently spent on a mis-read scroll
+                 * is worse than a card that comes back and asks again.
+                 */
+                cancel(event) {
+                    if (!this.dragging || (event && event.pointerId !== this.pointer)) {
+                        return;
+                    }
+
+                    this.dragging = false;
+                    this.pointer = null;
+                    this.dx = 0;
                     this.paint(0, true);
                 },
 
@@ -163,6 +224,13 @@
 
                     this.spentKey = key;
                     this.busy = true;
+
+                    /* Whatever asked, the drag is over: the buttons and the arrow
+                   keys can answer a card while a pointer is still down on it,
+                   and a gesture left running would go on painting a card that
+                   is already on its way off the screen. */
+                    this.dragging = false;
+                    this.pointer = null;
                     this.dx = 0;
 
                     const width = card.offsetWidth || 320;

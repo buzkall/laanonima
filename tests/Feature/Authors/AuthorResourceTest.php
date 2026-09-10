@@ -9,6 +9,8 @@ use App\Filament\Resources\Books\BookResource;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 use function Pest\Livewire\livewire;
 
@@ -151,4 +153,25 @@ it('sends the edit action of a listed book to the books resource', function(): v
         'pageClass'   => EditAuthor::class,
     ])
         ->assertTableActionHasUrl('edit', BookResource::getUrl('edit', ['record' => $book]), record: $book);
+});
+
+it('takes a portrait from the panel and shows it on the public page', function(): void {
+    Storage::fake('public');
+
+    $author = Author::factory()->create(['name' => 'Almudena Grandes']);
+    Book::factory()->create(['contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']]]);
+
+    livewire(EditAuthor::class, ['record' => $author->getRouteKey()])
+        ->fillForm(['portrait' => UploadedFile::fake()->image('almudena.jpg', 600, 800)])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    $portrait = $author->fresh()->portrait();
+
+    expect($portrait)->not->toBeNull()
+        ->and($portrait->disk)->toBe(config('media-library.disk_name'));
+
+    $this->get(route('authors.show', 'almudena-grandes'))
+        ->assertOk()
+        ->assertSee($author->fresh()->portraitUrl('thumb'));
 });

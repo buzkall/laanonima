@@ -19,8 +19,20 @@ namespace App\Support\Cupida;
 final readonly class CupidaShortlist
 {
     private const int LIKED_SUBJECT = 10;
-    private const int LIKED_AUTHOR = 25;
     private const int LIKED_MOOD = 4;
+
+    /*
+     | A yes to a writer is read as a shelf, not as an order for their backlist.
+     |
+     | Their own books never make the list: the reader has just said they know
+     | this writer, and handing them back Sacks after they said yes to Sacks is
+     | what a search box does. Nineteen of the first fifty-four written
+     | recommendations were exactly that. What the yes tells the scoring is
+     | where in the shop that reader stands, so the subjects the writer's books
+     | are filed under lift everybody else's books on those shelves -- lighter
+     | than a subject the reader named themselves, because it is inferred.
+     */
+    private const int LIKED_AUTHOR_SHELF = 6;
     private const int PASSED_SUBJECT = -4;
     private const int PASSED_AUTHOR = -8;
 
@@ -61,14 +73,14 @@ final readonly class CupidaShortlist
     /**
      * Score the pool and take the best of it.
      *
-     * A liked author is the heaviest weight in the scoring, so left alone the
-     * top of the list is that author's whole backlist: three names said yes to
-     * in round two and the thirty are twenty books by three people. `perAuthor`
-     * caps how many of one writer's books get through, so a liked author is
-     * still at the top and the rest of the list is the rest of the shop.
+     * A liked author's own books are left out (see `LIKED_AUTHOR_SHELF`), and
+     * what they are filed under scores the rest of the shop. `perAuthor` caps
+     * how many of one writer's books get through, so a shelf the reader has
+     * pointed at does not come back as one writer's backlist.
      *
-     * `withoutAuthors` leaves a writer out entirely: a reader who was just
-     * asked about Thoreau by name should not be offered Walden.
+     * `withoutAuthors` leaves a writer out entirely, whatever was answered:
+     * a reader who was just asked about Thoreau by name should not be offered
+     * Walden.
      *
      * @param  array<int, string>  $likes  answers as "kind:key"
      * @param  array<int, string>  $passes
@@ -92,22 +104,47 @@ final readonly class CupidaShortlist
 
         $likedBooks = $this->resolve($catalog, $liked['book']);
 
-        $scored = [];
+        /* The writers whose books are not on offer: the ones the reader was
+           told to leave out, and the ones the reader said yes to. */
+        $withoutAuthors = [...$withoutAuthors, ...$liked['author']];
+
+        /* Two passes over the pool rather than one, because a liked writer's
+           shelf has to be known before anything is scored against it. The
+           slug (a fold and a regex per book) is taken once here and carried
+           into the second pass rather than computed again. Measured at 5,400
+           books on the same answers: a liked writer adds about 3ms to a pass
+           the moods and subjects already put at 170ms. */
+        $shelves = array_fill_keys($liked['author'], []);
+        $candidates = [];
 
         foreach ($catalog->books() as $book) {
-            /* A book that was shown and turned down is out. Nothing else here
-               is an exclusion -- a passed genre only costs points -- but a
-               reader who has said no to this exact cover should not be handed
-               it back as the answer. */
+            $author = $this->authorOf($book);
+
+            if ($author !== '' && isset($shelves[$author])) {
+                /** @var array<int, string> $subjects */
+                $subjects = is_array($book['subjects'] ?? null) ? $book['subjects'] : [];
+
+                $shelves[$author] = array_values(array_unique([...$shelves[$author], ...$subjects]));
+            }
+
+            /* A book that was shown and turned down is out. A passed genre only
+               costs points, but a reader who has said no to this exact cover
+               should not be handed it back as the answer. */
             if (in_array((string)$book['ean'], $passed['book'], true)) {
                 continue;
             }
 
-            if ($withoutAuthors !== [] && in_array($this->authorOf($book), $withoutAuthors, true)) {
+            if ($withoutAuthors !== [] && in_array($author, $withoutAuthors, true)) {
                 continue;
             }
 
-            $score = $this->score($book, $liked, $passed) + $this->bookScore($book, $likedBooks);
+            $candidates[] = [$book, $author];
+        }
+
+        $scored = [];
+
+        foreach ($candidates as [$book, $author]) {
+            $score = $this->score($book, $author, $liked, $passed, $shelves) + $this->bookScore($book, $likedBooks);
 
             if ($score > 0) {
                 $scored[] = ['score' => $score, 'book' => $book];
@@ -248,8 +285,9 @@ final readonly class CupidaShortlist
      * @param  array<string, mixed>  $book
      * @param  array{theme: array<int, string>, author: array<int, string>, mood: array<int, string>, book: array<int, string>}  $liked
      * @param  array{theme: array<int, string>, author: array<int, string>, mood: array<int, string>, book: array<int, string>}  $passed
+     * @param  array<string, array<int, string>>  $shelves  subjects per liked writer
      */
-    private function score(array $book, array $liked, array $passed): int
+    private function score(array $book, string $author, array $liked, array $passed, array $shelves): int
     {
         $score = 0;
 
@@ -264,11 +302,21 @@ final readonly class CupidaShortlist
             $score += $this->matchesSubject($subjects, $code) ? self::PASSED_SUBJECT : 0;
         }
 
-        $author = $this->authorOf($book);
+        /* Once per liked writer whose shelf this book shares, however many of
+           their subjects it shares: a writer filed under five codes is not
+           five times the recommendation. */
+        foreach ($shelves as $codes) {
+            foreach ($codes as $code) {
+                if ($this->matchesSubject($subjects, $code)) {
+                    $score += self::LIKED_AUTHOR_SHELF;
 
-        if ($author !== '') {
-            $score += in_array($author, $liked['author'], true) ? self::LIKED_AUTHOR : 0;
-            $score += in_array($author, $passed['author'], true) ? self::PASSED_AUTHOR : 0;
+                    break;
+                }
+            }
+        }
+
+        if ($author !== '' && in_array($author, $passed['author'], true)) {
+            $score += self::PASSED_AUTHOR;
         }
 
         $score += $this->moodScore($book, $liked['mood']);

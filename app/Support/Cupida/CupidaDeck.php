@@ -89,25 +89,18 @@ final readonly class CupidaDeck
      * tie the scrape breaks alphabetically, so a fifth of the pool was frozen
      * and the writers on the far side of the alphabet were unreachable.
      *
-     * Collectives are dropped with it: see `CupidaCatalog::isCollective()`.
+     * The floor and the collectives are both `CupidaCatalog::dealableAuthors()`.
+     * `cupida:portraits:resolve` walks its sibling `authorsAboveFloor()`, which
+     * is the same list with the collectives still in it, because deciding one
+     * is a collective is that command's job. Keep them one definition apart:
+     * whose face is worth looking up and who a card can be dealt for are the
+     * same question asked twice.
      *
      * @return array<int, CupidaCard>
      */
     private static function authorCards(CupidaCatalog $catalog, Randomizer $randomizer, int $size): array
     {
-        $minimum = (int)config('cupida.deck.author_min_books');
-
-        /* The shop files anthologies under an author name, so the pool carries
-           "Vv. Aa." and "Varios Autores" among the writers, and a byline like
-           Carmen Mola is three people. None of them is a question a reader can
-           answer by swiping. */
-        $authors = array_values(array_filter(
-            $catalog->authors(),
-            fn(array $author): bool => (int)$author['books'] >= $minimum
-                && ! $catalog->isCollective((string)$author['slug'], (string)$author['name']),
-        ));
-
-        $authors = array_slice($randomizer->shuffleArray($authors), 0, $size);
+        $authors = array_slice($randomizer->shuffleArray($catalog->dealableAuthors()), 0, $size);
 
         /* The portrait is looked up here, after the shuffle, so the sequence
            of draws is untouched by whether we happen to have a face. */

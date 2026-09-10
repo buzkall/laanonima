@@ -15,11 +15,17 @@ return [
         'bio'         => 'Biografía',
         'books_count' => 'Libros',
         'created_at'  => 'Alta',
+        'portrait'    => 'Fotografía',
         'updated_at'  => 'Última modificación',
     ],
 
     'hints' => [
-        'slug' => 'Se genera a partir del nombre si lo dejas en blanco.',
+        'portrait' => 'Se muestra en la página pública del autor/a. Si La Cupida encuentra una foto en Wikimedia Commons la archiva aquí sola.',
+        'slug'     => 'Se genera a partir del nombre si lo dejas en blanco.',
+    ],
+
+    'sections' => [
+        'portrait' => 'Fotografía',
     ],
 
     'relations' => [

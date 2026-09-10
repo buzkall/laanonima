@@ -23,6 +23,16 @@
         ? ['label' => __('books.public.buy'), 'href' => '#comprar', 'note' => __('books.public.in_stock_note')]
         : ['label' => __('books.public.out_of_stock.cta'), 'href' => $orderUrl, 'note' => __('books.public.out_of_stock_note')];
 
+    /* What a reader sends somebody is the book, and the sentence that goes
+       with it says which shop it is in -- the address alone is a slug. */
+    $shareMessage = $book->authors_line
+        ? __('books.public.share.message_by', [
+            'title'   => $book->title,
+            'authors' => $book->authors_line,
+            'shop'    => config('app.name'),
+        ])
+        : __('books.public.share.message', ['title' => $book->title, 'shop' => config('app.name')]);
+
     $publishedOn = $book->published_on
         ?->locale(app()->getLocale())
         ->isoFormat(__('books.public.published_format'));
@@ -179,6 +189,18 @@
                     >
                         {{ $cta['label'] }}
                     </a>
+
+                    {{-- Third in the row and lightest of the three: buying is
+                         what the page is for, and this is the thing a reader
+                         does on the way out. --}}
+                    <x-share-button
+                        :url="route('books.show', $book)"
+                        :title="$book->title"
+                        :text="$shareMessage"
+                        :label="__('books.public.share.action')"
+                        :copied="__('books.public.share.copied')"
+                        class="text-[16px] tracking-[0.06em] text-[var(--on-cover)] opacity-75 hover:opacity-100"
+                    />
                 </div>
 
                 <p class="mt-4 mb-0 text-[15px] italic opacity-85">{{ $cta['note'] }}</p>
@@ -424,6 +446,22 @@
         >
             {{ $cta['label'] }}
         </a>
+
+        {{-- The bar's own share, and the one a phone actually uses: the icon
+             alone, because the row is already carrying a price and a button
+             and a fourth word would push the three of them into two lines.
+             `size-11` is the tap target rather than padding -- the base class
+             sets `p-0` and a competing `p-3` here would come down to which
+             utility Tailwind emitted last. --}}
+        <x-share-button
+            :url="route('books.show', $book)"
+            :title="$book->title"
+            :text="$shareMessage"
+            :label="__('books.public.share.action')"
+            :copied="__('books.public.share.copied')"
+            :labelled="false"
+            class="-mr-2 size-11 shrink-0 justify-center text-[20px] text-[var(--on-cover)] opacity-75"
+        />
     </div>
 
     <script>

@@ -243,3 +243,23 @@ it('links to the page from the book table', function(): void {
         ->assertActionExists(TestAction::make('viewOnSite')->table($book))
         ->assertActionHasUrl(TestAction::make('viewOnSite')->table($book), route('books.show', $book));
 });
+
+/* The control is a button and not a link, so the only thing a request can
+   check is what it was handed: the page's own address and the sentence that
+   travels with it. What the browser does with them is `resources/js/share.js`. */
+it('offers the book to be shared, with a line that names the shop', function(): void {
+    $book = Book::factory()->create([
+        'title'        => 'Instrucción de novicias',
+        'contributors' => [['name' => 'Ana Garriga', 'role' => 'author']],
+    ]);
+
+    $this->get(route('books.show', $book))
+        ->assertOk()
+        ->assertSee(__('books.public.share.action'))
+        ->assertSeeHtml('data-share-url="' . e(route('books.show', $book)) . '"')
+        ->assertSee(__('books.public.share.message_by', [
+            'title'   => 'Instrucción de novicias',
+            'authors' => 'Ana Garriga',
+            'shop'    => config('app.name'),
+        ]));
+});

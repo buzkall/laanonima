@@ -38,3 +38,20 @@ it('links to the imprint from the book page', function(): void {
         ->assertOk()
         ->assertSee(route('publishers.show', $blackie));
 });
+
+/* The control is a button and not a link, so the only thing a request can
+   check is what it was handed: the page's own address and the sentence that
+   travels with it. What the browser does with them is `resources/js/share.js`. */
+it('offers the imprint\'s shelf to be shared, with a line that names the shop', function(): void {
+    $blackie = Publisher::factory()->create(['name' => 'Blackie Books', 'slug' => 'blackie-books']);
+    Book::factory()->for($blackie)->create();
+
+    $this->get(route('publishers.show', $blackie))
+        ->assertOk()
+        ->assertSee(__('books.public.share.action'))
+        ->assertSeeHtml('data-share-url="' . e(route('publishers.show', $blackie)) . '"')
+        ->assertSee(__('books.public.share.publisher_message', [
+            'publisher' => 'Blackie Books',
+            'shop'      => config('app.name'),
+        ]));
+});

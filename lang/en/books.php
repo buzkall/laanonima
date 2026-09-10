@@ -198,16 +198,33 @@ return [
          | card pastes the wordmark itself.
          */
         'share' => [
-            'by'            => 'by :authors',
-            'count'         => '{0} Nothing on the shelf|{1} :count book in the shop|[2,*] :count books in the shop',
-            'book_alt'      => 'Cover of :title',
+            'by'       => 'by :authors',
+            'count'    => '{0} Nothing on the shelf|{1} :count book in the shop|[2,*] :count books in the shop',
+            'book_alt' => 'Cover of :title',
+
+            /*
+             | The share control. The shop's name arrives as a parameter rather
+             | than written into the sentence, for the same reason it is absent
+             | from the keys above: it is a mark, not a translatable string.
+             */
+            'action'        => 'Share',
+            'copied'        => 'Link copied',
+            'message'       => '“:title”, at :shop',
+            'message_by'    => '“:title” by :authors, at :shop',
             'author_alt'    => 'Books by :name at La Anónima',
             'publisher_alt' => 'Books from :publisher at La Anónima',
+
+            /* The sentence that travels with a person's or an imprint's page. */
+            'author_message'    => 'Books by :name, at :shop',
+            'publisher_message' => 'Books from :publisher, at :shop',
         ],
 
         'author' => [
             'kicker' => 'Books by',
             'intro'  => 'Everything we have by :name in the shop. If something of theirs is missing, ask us and we will order it.',
+
+            'portrait_credit' => 'Photo: :artist · :license · cropped',
+            'unknown_artist'  => 'photographer unknown',
         ],
 
         'publisher' => [

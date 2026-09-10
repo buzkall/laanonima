@@ -95,16 +95,28 @@ return [
     'result' => [
         /* Parallel to `start.matches` and picked by the same seed: the heading
            over the book says the same word the opening card promised. */
-        'kickers'        => ['Tu cita', 'Tu flechazo', 'Tu crush', 'Tu match'],
-        'heading'        => 'Creemos que es este',
-        'by'             => 'de :author',
-        'read_more'      => 'Ver el libro',
-        'buy'            => 'Verlo en la librería',
-        'at_the_shop'    => 'Verlo en la web de la librería',
-        'more'           => 'Seguir leyendo',
-        'synopsis'       => 'Sinopsis',
-        'again'          => 'Otra vez',
-        'fallback_pitch' => 'Este te lo damos a ojo, que es como se acierta algunas veces. Ábrelo por cualquier página y ya verás.',
+        'kickers'     => ['Tu cita', 'Tu flechazo', 'Tu crush', 'Tu match'],
+        'heading'     => 'Creemos que es este',
+        'by'          => 'de :author',
+        'read_more'   => 'Ver el libro',
+        'buy'         => 'Verlo en la librería',
+        'at_the_shop' => 'Verlo en la web de la librería',
+        'more'        => 'Seguir leyendo',
+        'synopsis'    => 'Sinopsis',
+        'again'       => 'Otra vez',
+
+        /* Lo que se comparte es el libro, no la partida: la página no guarda
+           una recomendación que se pueda volver a abrir desde un enlace, así
+           que el enlace es el del libro y la frase es la que dice de dónde
+           viene. */
+        'share'            => 'Compartir',
+        'share_copied'     => 'Enlace copiado',
+        'share_message'    => 'La Cupida me ha recomendado «:title».',
+        'share_message_by' => 'La Cupida me ha recomendado «:title», de :author.',
+        'fallback_pitch'   => 'Este te lo damos a ojo, que es como se acierta algunas veces. Ábrelo por cualquier página y ya verás.',
+        /* When every card was passed and nothing wrote: the reader knows
+           she said no to everything, so the canned line has to know it too. */
+        'fallback_pitch_nothing_liked' => 'Has dicho que no a todo, y nos gusta la gente difícil de contentar. Este te lo damos a ojo, a ver si es el que te hace decir que sí. Ábrelo por cualquier página y ya verás.',
     ],
 
     'empty' => [

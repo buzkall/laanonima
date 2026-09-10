@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Actions\Images\ColorOfImage;
+use App\Actions\Portraits\AttachAuthorPortrait;
 use App\Actions\Portraits\DownloadPortrait;
 use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Console\Attributes\Description;
@@ -22,6 +23,12 @@ use Illuminate\Support\Facades\Storage;
  * Commons was slow, and a portrait that did not arrive is already a faceless
  * card rather than a broken image: `CupidaCatalog::portrait()` checks the
  * disk, not just the metadata.
+ *
+ * Every portrait on the disk is also filed on the shop's own author record
+ * where there is one, so the public author page shows the same face. That
+ * pass runs over what was already on disk as well as what just arrived: a
+ * writer the shop files after the deploy gets their portrait on the next run
+ * rather than never.
  */
 #[Description('Download La Cupida author portraits onto this machine')]
 #[Signature('cupida:portraits:fetch
@@ -29,8 +36,12 @@ use Illuminate\Support\Facades\Storage;
         {--limit= : Download at most this many this run}')]
 class FetchCupidaPortraits extends Command
 {
-    public function handle(CupidaCatalog $catalog, DownloadPortrait $download, ColorOfImage $color): int
-    {
+    public function handle(
+        CupidaCatalog $catalog,
+        DownloadPortrait $download,
+        AttachAuthorPortrait $attach,
+        ColorOfImage $color,
+    ): int {
         $disk = Storage::disk(config('cupida.portraits.disk'));
 
         $matched = array_filter(
@@ -59,6 +70,7 @@ class FetchCupidaPortraits extends Command
         $had = count($matched) - count($wanted);
         $downloaded = 0;
         $failed = 0;
+        $linked = 0;
 
         foreach ($wanted as $slug => $entry) {
             $bytes = $download((string)$entry['image_url'], (string)$slug);
@@ -73,11 +85,27 @@ class FetchCupidaPortraits extends Command
             $disk->put((string)$entry['photo'], $bytes);
             $downloaded++;
 
+            /* A fresh download replaces whatever the author page had: the
+               metadata may have been re-resolved to a better photo. */
+            $linked += $attach($entry, $bytes, replace: true) ? 1 : 0;
+
             $this->components->twoColumnDetail((string)$entry['name'], '<fg=green>fetched</>');
         }
 
+        /* What was already on disk still needs filing on an author whose
+           record has no face yet -- the shop adds writers after the deploy. */
+        foreach (array_diff_key($matched, $wanted) as $entry) {
+            $bytes = $disk->get((string)$entry['photo']);
+
+            if ($bytes === null) {
+                continue;
+            }
+
+            $linked += $attach($entry, $bytes) ? 1 : 0;
+        }
+
         $this->newLine();
-        $this->components->info("Downloaded {$downloaded}, already had {$had}, {$failed} failed.");
+        $this->components->info("Downloaded {$downloaded}, already had {$had}, {$failed} failed, {$linked} filed on author pages.");
 
         return self::SUCCESS;
     }
