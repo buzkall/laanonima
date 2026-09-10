@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Settings\CupidaSettings;
 use App\Support\Cupida\CupidaCatalog;
 use App\Support\Cupida\CupidaShortlist;
+use App\Support\Cupida\Recommendation;
 use Illuminate\JsonSchema\JsonSchemaTypeFactory;
 use Illuminate\JsonSchema\Serializer;
 use Laravel\Ai\Ai;
@@ -104,13 +105,29 @@ it('sends a reader to our own page for a book we stock too', function(): void {
         ->and($recommendation->url)->toBe(route('books.show', $ours));
 });
 
-it('sends a reader to the shop for a book only they have', function(): void {
+it('files a book only the shop has and sends the reader to our page for it', function(): void {
+    /* This used to send the reader out to the old site, which is most readers:
+       the pool is five thousand books and our catalog is a fraction of it. The
+       book is filed on the way past instead, so the shop's page becomes the
+       second link rather than the only one. */
+    $recommendation = app(RecommendBook::class)(likes: ['theme:FM'], passes: []);
+
+    expect($recommendation->book)->not->toBeNull()
+        ->and($recommendation->book->isbn13)->toBe($recommendation->ean)
+        ->and($recommendation->url)->toBe(route('books.show', $recommendation->book))
+        ->and($recommendation->shopUrl)->toStartWith(config('cupida.scrape.base_url') . '/libros/')
+        ->and($recommendation->written)->toBeFalse()
+        ->and($recommendation->pitch)->toBe(__('cupida.result.fallback_pitch'));
+});
+
+it('sends a reader to the shop when the book could not be filed', function(): void {
+    config()->set('cupida.import.enabled', false);
+
     $recommendation = app(RecommendBook::class)(likes: ['theme:FM'], passes: []);
 
     expect($recommendation->book)->toBeNull()
         ->and($recommendation->url)->toStartWith(config('cupida.scrape.base_url') . '/libros/')
-        ->and($recommendation->written)->toBeFalse()
-        ->and($recommendation->pitch)->toBe(__('cupida.result.fallback_pitch'));
+        ->and($recommendation->url)->toBe($recommendation->shopUrl);
 });
 
 it('never offers a book the shop has taken off the site', function(): void {
@@ -214,6 +231,111 @@ it('asks for Spanish twice, in the prompt and beside each field it writes', func
 
     expect($fields['pitch']['description'])->toStartWith('En español.')
         ->and($fields['match_line']['description'])->toStartWith('En español.');
+});
+
+it('prefers our own synopsis to the shop\'s, which the scrape cuts at six hundred', function(): void {
+    /* `cupida:scrape` stores the shop's text through `Str::limit()`, so every
+       row in the pool stops at `cupida.synopsis_limit` and most stop mid-word.
+       A book that is also one of ours has the whole thing. */
+    $ours = 'La nuestra, entera y sin cortar a mitad de una palabra.';
+
+    $book = Book::factory()->create([
+        'isbn13'   => '9788412976137',
+        'synopsis' => $ours,
+    ]);
+
+    $pool = app(CupidaCatalog::class)->book('9788412976137');
+
+    expect(Recommendation::make($pool, 'x', null, false)->synopsis)->toBe($ours);
+
+    $book->update(['synopsis' => null]);
+
+    expect(Recommendation::make($pool, 'x', null, false)->synopsis)->toBe($pool['synopsis']);
+});
+
+it('drops the pool\'s half-sentence, and leaves a whole one alone', function(): void {
+    /* `Str::limit()` counts characters, so the six hundredth lands mid-word:
+       "sigue a un puñado de extraordin...". That did not matter while the
+       synopsis only fed the scoring and is the first thing a reader sees now
+       that the panel shows it. Its own "..." is what says it was cut, so a
+       synopsis that arrived whole keeps its last sentence. */
+    $pool = ['ean' => '9788412976137', 'slug' => 'x', 'title' => 'X'];
+
+    $cut = Recommendation::make(
+        [...$pool, 'synopsis' => 'Una primera frase entera. Y una segunda que se queda a medio decir...'],
+        'x',
+        null,
+        false,
+    );
+
+    expect($cut->synopsis)->toBe('Una primera frase entera.');
+
+    $whole = Recommendation::make(
+        [...$pool, 'synopsis' => 'Una primera frase entera. Y una segunda que termina.'],
+        'x',
+        null,
+        false,
+    );
+
+    expect($whole->synopsis)->toBe('Una primera frase entera. Y una segunda que termina.');
+
+    /* No sentence break to fall back to: half of something beats none of it. */
+    $unbroken = Recommendation::make(
+        [...$pool, 'synopsis' => 'Una sola frase larguísima que nunca llega a terminar...'],
+        'x',
+        null,
+        false,
+    );
+
+    expect($unbroken->synopsis)->toBe('Una sola frase larguísima que nunca llega a terminar...');
+});
+
+it('puts the space back where the shop ran two sentences together', function(): void {
+    /* Their listing pastes cover quotes onto the description with no space --
+       "que nunca.Un regalo para todos sus lectores" -- and a re-scrape brings
+       it back every time, so the repair is here and not in books.json. Narrow
+       on purpose: an abbreviation in capitals keeps its shape. */
+    $pool = ['ean' => '9788412976137', 'slug' => 'x', 'title' => 'X'];
+
+    $recommendation = Recommendation::make(
+        [...$pool, 'synopsis' => 'Una Isabel más Allende que nunca.Un regalo. Vivió en EE.UU. y volvió.'],
+        'x',
+        null,
+        false,
+    );
+
+    expect($recommendation->synopsis)
+        ->toBe('Una Isabel más Allende que nunca. Un regalo. Vivió en EE.UU. y volvió.');
+
+    /* And in our own row too. `ImportShopBook` files it from the same listing,
+       so the defect follows the text rather than the catalog it came from --
+       which a screenshot of a book we stock is what caught. */
+    Book::factory()->create([
+        'isbn13'   => '9788412976137',
+        'synopsis' => 'La más premiada de la temporada en Francia.En 1919, en un bosque.',
+    ]);
+
+    expect(Recommendation::make([...$pool, 'synopsis' => 'x'], 'x', null, false)->synopsis)
+        ->toBe('La más premiada de la temporada en Francia. En 1919, en un bosque.');
+});
+
+it('asks the pitch for why this one, and leaves the plot to the synopsis under it', function(): void {
+    /* Folding the reason into the pitch rather than adding a fourth field: the
+       page already shows the shop's synopsis below, so the librera's paragraph
+       is the half a catalog cannot write -- why she is handing this one to this
+       reader -- and repeating the plot would spend it on what is already there. */
+    $agent = new CupidaAgent([]);
+
+    expect($agent->baseInstructions())
+        ->toContain('por qué se lo das a ella justamente')
+        ->toContain('la página enseña la sinopsis de la librería');
+
+    $fields = array_map(
+        Serializer::serialize(...),
+        $agent->schema(new JsonSchemaTypeFactory),
+    );
+
+    expect($fields['pitch']['description'])->toContain('no cuentes el argumento');
 });
 
 it('bars the single English word as well as the English sentence', function(): void {

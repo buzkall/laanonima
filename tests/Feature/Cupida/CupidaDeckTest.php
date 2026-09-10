@@ -2,6 +2,7 @@
 
 use App\Ai\Agents\CupidaAgent;
 use App\Livewire\Cupida;
+use App\Support\Cupida\CupidaCatalog;
 use Laravel\Ai\Ai;
 
 use function Pest\Livewire\livewire;
@@ -114,6 +115,29 @@ it('still recommends a book with no key configured', function(): void {
         ->assertSee(__('cupida.result.fallback_pitch'));
 
     Ai::assertAgentNeverPrompted(CupidaAgent::class);
+});
+
+it('puts the shop\'s own synopsis under the pitch, on the written path and the canned one', function(): void {
+    /* The pitch is the librera telling you to read this; the synopsis is what
+       the book is about, in the catalog's words. A reader deciding wants both,
+       and the second one does not depend on anything having been written --
+       which is what makes the no-key panel worth reading at all. */
+    config(['ai.providers.anthropic.key' => null]);
+
+    $component = cupidaDeck();
+
+    foreach (range(0, 2) as $round) {
+        swipeThroughRound($component);
+    }
+
+    $component->call('recommend')->assertSet('written', false);
+
+    $book = app(CupidaCatalog::class)->book((string)$component->get('chosen'));
+
+    expect($book['synopsis'])->not->toBeEmpty();
+
+    $component->assertSee(__('cupida.result.synopsis'))
+        ->assertSee($book['synopsis']);
 });
 
 it('stops paying for a pitch once the address has had its share', function(): void {

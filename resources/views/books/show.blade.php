@@ -157,9 +157,9 @@
                     >
                         {{ $cta['label'] }}
                     </a>
-
-                    <span class="text-[15px] italic opacity-85">{{ $cta['note'] }}</span>
                 </div>
+
+                <p class="mt-4 mb-0 text-[15px] italic opacity-85">{{ $cta['note'] }}</p>
 
                 @if ($book->subtitle)
                     <p class="mt-[clamp(56px,6vw,84px)] mb-0 max-w-[620px] border-t border-[var(--rule)] pt-10 text-[clamp(26px,2.7vw,36px)]/[1.25] text-balance italic">
@@ -193,9 +193,28 @@
                     'max-w-[560px]',
                     'mt-[clamp(56px,6vw,88px)] border-t border-ink pt-11' => filled($book->synopsis),
                                     ])>
-                        <h2 class="m-0 mb-[30px] text-[14px] font-bold tracking-[0.26em] text-[var(--accent)] uppercase">
-                            {{ __('books.public.object_kicker') }}
-                        </h2>
+                        <div class="mb-[30px] flex items-baseline justify-between gap-4">
+                            <h2 class="m-0 text-[14px] font-bold tracking-[0.26em] text-[var(--accent)] uppercase">
+                                {{ __('books.public.object_kicker') }}
+                            </h2>
+
+                            {{-- Only a bookseller sees this, and only because
+                                 they are the one who can act on it: the book
+                                 they are reading about is one click from its
+                                 own record. The reverse of the "Ver en la web"
+                                 action on the edit screen. --}}
+                            @if (auth()->user()?->isBookseller())
+                                <a
+                                    href="{{ route('filament.admin.resources.books.edit', $book) }}"
+                                    class="inline-flex shrink-0 items-center gap-2 text-[14px] font-semibold tracking-[0.14em] text-[var(--accent)] uppercase transition-opacity duration-150 hover:opacity-65"
+                                >
+                                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125" />
+                                    </svg>
+                                    {{ __('books.actions.edit_in_panel') }}
+                                </a>
+                            @endif
+                        </div>
 
                         @if ($gallery->isNotEmpty())
                             <div class="mb-[34px] grid grid-cols-[repeat(auto-fill,minmax(min(100%,150px),1fr))] gap-3">

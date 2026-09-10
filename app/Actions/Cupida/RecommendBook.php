@@ -2,7 +2,10 @@
 
 namespace App\Actions\Cupida;
 
+use App\Actions\Books\EnrichImportedBook;
+use App\Actions\Books\ImportShopBook;
 use App\Ai\Agents\CupidaAgent;
+use App\Models\Book;
 use App\Models\CupidaRecommendation;
 use App\Support\Cupida\CupidaCatalog;
 use App\Support\Cupida\CupidaShortlist;
@@ -36,6 +39,7 @@ class RecommendBook
         private CupidaCatalog $catalog,
         private CupidaShortlist $shortlist,
         private WatchCupidaCredit $credit,
+        private ImportShopBook $import,
     ) {}
 
     /**
@@ -51,6 +55,11 @@ class RecommendBook
         }
 
         $recommendation = $this->decide($shortlist, $likes, $passes, $write);
+
+        /* Before the row, never after it: `record()` writes `book_id`, and a
+           book filed afterwards would leave every automatically catalogd
+           recommendation reading "not in our catalog" in the panel forever. */
+        $recommendation = $this->fileLocally($recommendation);
 
         $this->record($recommendation, $shortlist, $likes, $passes, $seed);
 
@@ -91,6 +100,79 @@ class RecommendBook
 
             return $this->fallback($shortlist);
         }
+    }
+
+    /**
+     * Put the book on our own shelf, so the reader is sent to our page for it.
+     *
+     * The shop's pool is five thousand books and this site's catalog is a small
+     * part of it, so left alone almost every reader is handed off to the old
+     * site at the moment the page has earned their attention. The pool entry
+     * carries everything a `books` row needs, so filing it costs a handful of
+     * queries and no network at all -- it fits inside the wait the reader is
+     * already spending on the model, and nothing on the page has to wait for it
+     * or poll for it afterwards.
+     *
+     * What the free ISBN sources can add -- binding, measurements, a cover --
+     * is three providers with a five-second timeout apiece, so it is deferred
+     * past the response. Nobody is waiting on it: the result panel is drawn
+     * once and the book page reads fine with a title over a flat color until
+     * the cover lands.
+     *
+     * Every failure here is swallowed. A book that could not be filed is a
+     * reader sent to the shop's page, which is where they were going anyway.
+     */
+    private function fileLocally(Recommendation $recommendation): Recommendation
+    {
+        if ($recommendation->book instanceof Book || ! $this->mayImport()) {
+            return $recommendation;
+        }
+
+        $entry = $this->catalog->book($recommendation->ean);
+
+        if ($entry === null) {
+            return $recommendation;
+        }
+
+        try {
+            $book = ($this->import)($entry);
+        } catch (Throwable $exception) {
+            Log::warning('La Cupida could not file a recommended book.', [
+                'ean'       => $recommendation->ean,
+                'exception' => $exception->getMessage(),
+            ]);
+
+            return $recommendation;
+        }
+
+        if (! $book instanceof Book) {
+            return $recommendation;
+        }
+
+        defer(fn() => app(EnrichImportedBook::class)($book));
+
+        return $recommendation->withLocalBook($book);
+    }
+
+    /**
+     * The page is public and unauthenticated, and `cupida.rate_limit` only
+     * guards the paid pitch -- a reader past it still gets a book. So without a
+     * ceiling of its own, a script walking the deck could put the shop's whole
+     * catalog on our shelf in an afternoon, unreviewed.
+     *
+     * Counted off the column rather than a cache key: the question is how many
+     * records were created today, and the table already answers it.
+     */
+    private function mayImport(): bool
+    {
+        if (! config('cupida.import.enabled')) {
+            return false;
+        }
+
+        return Book::query()
+            ->where('metadata_source', ImportShopBook::SOURCE)
+            ->whereDate('created_at', today())
+            ->count() < (int)config('cupida.import.daily_cap');
     }
 
     /**

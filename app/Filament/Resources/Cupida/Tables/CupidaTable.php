@@ -213,7 +213,6 @@ class CupidaTable
                             ->icon(Heroicon::Banknotes)
                             ->color('gray')
                             ->size(TextSize::Small)
-                            ->tooltip(fn(CupidaRecommendation $record): ?string => $record->tokenLabel())
                             ->placeholder(fn(CupidaRecommendation $record): string => match (true) {
                                 ! $record->written             => __('cupida.admin.cost_none'),
                                 $record->tokenLabel() !== null => __('cupida.admin.cost_unknown'),

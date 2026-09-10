@@ -474,6 +474,24 @@ return [
     ],
 
     /*
+     | Filing the recommended book as one of ours
+     |
+     | The result screen links to our page for the book rather than to the
+     | shop's, which means writing a `books` row for a title we did not have.
+     | It happens inside a reader's request and the reader is anonymous, so the
+     | cap is not about cost -- it is the only thing between a script walking
+     | the deck and five thousand unreviewed rows on the public shelf.
+     |
+     | Counted off `metadata_source` rather than kept in the cache: what matters
+     | is how many records were actually created today, and that question is
+     | already answered by the table.
+     */
+    'import' => [
+        'enabled'   => env('CUPIDA_IMPORT', true),
+        'daily_cap' => 200,
+    ],
+
+    /*
     |--------------------------------------------------------------------------
     | Watching the account
     |--------------------------------------------------------------------------

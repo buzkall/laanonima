@@ -23,3 +23,10 @@ Handing the model the reader's answers (so it would stop inventing a taste) made
 `match_line` is now the send-off before the date: eight words or less, wishing them the book, never a list and never opening with "Porque". `baseInstructions()` frames the whole thing as a cita a ciegas, bars reciting the answers, and -- where it needs one of them -- asks for it in the librera's words addressed to the reader ("te va a tener en vilo"), one at most. `RecommendBook::promptFor()` says the same thing where the list actually appears, because that is where the temptation is.
 
 What did NOT change: the answers still cross to the prompt (without them the model invents a taste), and "Nunca le atribuyas un tema, un gusto ni una identidad que no haya elegido" stays -- that is the fence against the shop's persona leaking into the reader's mouth. `CupidaRecommendationTest` holds both halves.
+
+## The pitch says why this one; the plot is the synopsis's job
+The reason for the choice is folded into `pitch` rather than being a fourth schema field: the panel already carries the match line and the shop's synopsis, and a third block of prose is a third thing to read on a screen measured to fit a phone.
+
+So the pitch does two jobs -- how the book reads, and why she is handing this one to this reader -- with the authority of somebody who has read it ("te lo doy porque..."), and it is told that the synopsis sits under it so it does not spend its three or four sentences retelling the plot. Both halves are in `baseInstructions()` and in the `pitch` description, because a field is written against what is written next to it.
+
+The fence from the match line still applies here: the reason comes out of the book, never out of reciting what the reader pressed. `CupidaRecommendationTest` holds it.

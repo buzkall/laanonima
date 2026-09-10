@@ -106,10 +106,83 @@ class Subject extends Model
     }
 
     /**
+     * Fills in the `parent` chain `path()` walks, for the whole result at once.
+     *
+     * Left alone, that walk is lazy: one query per level per subject, which the
+     * panel reports as an N+1 on a single record. Nesting `with('parent.parent
+     * ...')` only trades it for a query per level. But a code is its own path --
+     * the ancestors of `FMM` are the rows whose code is `F` or `FM` -- so every
+     * ancestor of every subject in the result is one `whereIn` on the codes,
+     * and the relations are set from what comes back. One query, whatever the
+     * depth and however many subjects were asked for.
+     *
+     * @param  Builder<$this>  $query
+     */
+    #[Scope]
+    protected function withAncestors(Builder $query): void
+    {
+        $query->afterQuery(static fn(Collection $subjects) => self::linkAncestors($subjects));
+    }
+
+    /**
+     * Sets `parent` all the way up on each of these, from one lookup.
+     *
+     * @param  Collection<int, self>  $subjects
+     */
+    private static function linkAncestors(Collection $subjects): void
+    {
+        $codes = $subjects->flatMap(fn(self $subject): array => $subject->ancestorCodes())->unique();
+
+        if ($codes->isEmpty()) {
+            $subjects->each(fn(self $subject) => $subject->setRelation('parent', null));
+
+            return;
+        }
+
+        /** @var Collection<string, self> $ancestors */
+        $ancestors = self::query()->whereIn('code', $codes)->get()->keyBy('code');
+
+        $subjects->each(function(self $subject) use ($ancestors): void {
+            /** @var \Illuminate\Support\Collection<int, self> $line */
+            $line = collect($subject->ancestorCodes())
+                ->map(fn(string $code): ?self => $ancestors->get($code))
+                ->filter()
+                ->push($subject)
+                ->values();
+
+            $line->each(fn(self $node, int $index) => $node->setRelation(
+                'parent',
+                $index === 0 ? null : $line->get($index - 1),
+            ));
+        });
+    }
+
+    /**
+     * Every code above this one, root first: `F` then `FM`, for `FMM`.
+     *
+     * Taken a character at a time rather than a character per level, so a code
+     * that ever spent two on a level still names all of its ancestors -- the
+     * ones that do not exist simply do not come back from the lookup.
+     *
+     * @return array<int, string>
+     */
+    public function ancestorCodes(): array
+    {
+        if (strlen($this->code) < 2) {
+            return [];
+        }
+
+        return array_map(
+            fn(int $length): string => substr($this->code, 0, $length),
+            range(1, strlen($this->code) - 1),
+        );
+    }
+
+    /**
      * Where this sits, written out: "Ficción y temas afines › Fantasía".
      *
-     * Walks `parent`, so eager-load it where a list of these is rendered. It is
-     * for a person reading a form, never for a query.
+     * Walks `parent`, so load these through `withAncestors()` wherever a path
+     * is rendered. It is for a person reading a form, never for a query.
      */
     public function path(): string
     {

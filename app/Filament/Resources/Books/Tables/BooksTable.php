@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Books\Tables;
 
+use App\Actions\Books\ImportShopBook;
 use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
 use App\Filament\Resources\Authors\RelationManagers\BooksRelationManager as AuthorBooksRelationManager;
@@ -139,6 +140,7 @@ class BooksTable
                     ->label(__('books.fields.subject'))
                     ->searchable()
                     ->getSearchResultsUsing(fn(string $search): array => Subject::query()
+                        ->withAncestors()
                         ->where('name', 'like', "%{$search}%")
                         ->orWhere('code', 'like', "{$search}%")
                         ->orderBy('code')
@@ -147,6 +149,7 @@ class BooksTable
                         ->mapWithKeys(fn(Subject $subject): array => [$subject->code => $subject->path()])
                         ->all())
                     ->getOptionLabelUsing(fn(string $value): ?string => Subject::query()
+                        ->withAncestors()
                         ->where('code', $value)
                         ->first()?->path())
                     ->query(fn(Builder $query, array $data): Builder => $query->when(
@@ -174,6 +177,19 @@ class BooksTable
 
                 TernaryFilter::make('is_active')
                     ->label(__('books.filters.active')),
+
+                /* La Cupida files the book it recommends when we do not have
+                   it, and those rows go on the web at once with a synopsis
+                   nobody has read. This is how a bookseller finds them. */
+                TernaryFilter::make('from_cupida')
+                    ->label(__('books.filters.from_cupida'))
+                    ->queries(
+                        true: fn(Builder $query): Builder => $query->where('metadata_source', ImportShopBook::SOURCE),
+                        false: fn(Builder $query): Builder => $query->where(fn(Builder $query): Builder => $query
+                            ->where('metadata_source', '!=', ImportShopBook::SOURCE)
+                            ->orWhereNull('metadata_source')),
+                        blank: fn(Builder $query): Builder => $query,
+                    ),
             ], layout: FiltersLayout::AboveContentCollapsible)
             /* Inside an author's or a publisher's tab one filter is hidden, so
                the five that remain fill the row instead of leaving a gap. */

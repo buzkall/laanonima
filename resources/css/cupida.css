@@ -290,6 +290,24 @@
     overflow: visible;
 }
 
+/*
+ * The shop's synopsis is six hundred characters -- `cupida:scrape` cuts every
+ * one of them there -- so on a phone it is the whole panel and then some, and
+ * the panel is measured to fit without a scroll. It waits behind the same
+ * control the pitch does: one "Seguir leyendo" opens both, because a reader who
+ * asked for the rest of the pitch asked for the rest of the book.
+ *
+ * Hidden here and shown by the class, the mirror of the pitch above: whatever
+ * happens to Alpine, nothing on the panel is left half-drawn.
+ */
+.cupida-synopsis {
+    display: none;
+}
+
+.cupida-synopsis--open {
+    display: block;
+}
+
 @media (width >= theme(--breakpoint-wide)) {
     .cupida-result {
         grid-template-columns: minmax(0, 240px) 1fr;
@@ -319,5 +337,11 @@
     .cupida-pitch {
         display: block;
         overflow: visible;
+    }
+
+    /* And room for the synopsis under it, which is why nothing here has to be
+       opened: the control that would do it is not on the page at this width. */
+    .cupida-synopsis {
+        display: block;
     }
 }

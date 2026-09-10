@@ -29,7 +29,7 @@
             alt="{{ config('app.name') }}"
             width="922"
             height="242"
-            class="h-[clamp(28px,4vw,36px)] w-auto"
+            class="h-[clamp(28px,4vw,36px)] w-auto drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
         />
     </a>
 

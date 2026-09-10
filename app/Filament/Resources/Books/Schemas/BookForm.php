@@ -27,6 +27,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 
 class BookForm
 {
@@ -350,13 +351,29 @@ class BookForm
                  */
                 Select::make('subject_id')
                     ->label(__('books.fields.subject'))
-                    ->relationship('subject', 'name')
+                    ->relationship(
+                        'subject',
+                        'name',
+                        self::withSubjectAncestors(...),
+                    )
                     ->getOptionLabelFromRecordUsing(fn(Subject $record): string => $record->path())
                     ->searchable(['code', 'name'])
                     ->preload(false)
                     ->columnSpanFull(),
             ])
             ->columns(1);
+    }
+
+    /**
+     * Eager-loads the ancestors `Subject::path()` writes out, both for the
+     * selected subject and for whatever a search turns up.
+     *
+     * @param  Builder<Subject>  $query
+     * @return Builder<Subject>
+     */
+    private static function withSubjectAncestors(Builder $query): Builder
+    {
+        return $query->withAncestors();
     }
 
     private static function commercialSection(): Section

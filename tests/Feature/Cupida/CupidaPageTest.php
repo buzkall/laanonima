@@ -108,6 +108,25 @@ it('deals a full deck for the round it is on', function(): void {
         ->assertViewHas('cards', fn(array $cards): bool => count($cards) === config('cupida.deck.size'));
 });
 
+it('keeps a long label inside the card it is written on', function(): void {
+    /* A card is about 197px wide on a phone and its heading's floor is 30px, so
+       a long word is wider than the box it is written in and has nowhere to go.
+       Measured on "Vidas contemporáneas" at that size: 357px of text in a 149px
+       column, and the card overflowing its own edge by 194px -- which paints
+       over the cards behind it in the stack, where a reader sees a stray "neas"
+       beside the top card.
+
+       `hyphens-auto` needs the page's `lang="es"` and breaks the word where
+       Spanish breaks it; `break-words` is the half that catches a name, which
+       is most of what round two deals and which no dictionary splits. Neither
+       is decorative, and `overflow-hidden` is what makes the bleed impossible
+       rather than unlikely -- so all three are pinned here. */
+    livewire(Cupida::class)
+        ->call('start')
+        ->assertSeeHtml('cupida-card overflow-hidden')
+        ->assertSeeHtml('text-balance hyphens-auto break-words');
+});
+
 it('says so plainly when there is no catalog to deal from', function(): void {
     config()->set('cupida.data_path', base_path('tests/Fixtures/cupida/nothing-here'));
 

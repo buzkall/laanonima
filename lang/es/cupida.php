@@ -94,9 +94,11 @@ return [
         'by'             => 'de :author',
         'read_more'      => 'Ver el libro',
         'buy'            => 'Verlo en la librería',
+        'at_the_shop'    => 'Verlo en la web de la librería',
         'more'           => 'Seguir leyendo',
+        'synopsis'       => 'Sinopsis',
         'again'          => 'Otra vez',
-        'fallback_pitch' => 'Nos jugamos la cita a este. Pásate por la librería y te contamos por qué.',
+        'fallback_pitch' => 'Este te lo damos a ojo, que es como se acierta algunas veces. Ábrelo por cualquier página y ya verás.',
     ],
 
     'empty' => [

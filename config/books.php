@@ -44,6 +44,22 @@ return [
         'timeout' => 5,
 
         /*
+         | Seconds a book filed off the Cupida pool gets to be enriched, once
+         | the reader's response has already gone out. It restarts the clock
+         | rather than adding to it: the request that dispatched it has usually
+         | already spent a while waiting on a model, and what is left of the
+         | default thirty does not cover this.
+         |
+         | Sized for the bad afternoon, not the good one. A lookup normally
+         | costs a second or two, but every provider retries twice, so a host
+         | that is unreachable rather than merely slow costs `timeout` x 3 each
+         | -- four calls plus the cover download is a bit over seventy-five
+         | seconds, and going over is a fatal in a terminating callback rather
+         | than a warning. Raise this if a provider is added.
+         */
+        'enrich_time_limit' => 120,
+
+        /*
          | Open Library asks API consumers to identify themselves, and grants a
          | higher rate limit to those who do.
          */
@@ -117,6 +133,14 @@ return [
             'books.google.com',
             '*.googleusercontent.com',
             '*.casadellibro.com',
+            /*
+             | Our own shop, and the one URL on this list we construct rather
+             | than read out of somebody's API response. It is the last resort
+             | for a book filed off the Cupida pool: the shop resizes on demand
+             | for every EAN it stocks, so it has a cover where the free ISBN
+             | sources have none, which is about one Spanish book in six.
+             */
+            'laanonimalibreria.com',
         ],
     ],
 

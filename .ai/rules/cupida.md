@@ -267,6 +267,19 @@ There is no balance to read. Anthropic publishes none, and the admin reports say
 
 **Both warnings are `ShouldQueue`, and that is the one thing here with a server dependency.** They are raised inside a reader's swipe, so an unreachable SMTP host would otherwise be added to the wait for their book. The price is that the site needs a queue worker: on Forge that is the site's Queue tab (a Supervisor `queue:work` daemon on the `database` connection), plus `php artisan queue:restart` in the deploy script so a worker does not keep serving the old code. Setting `QUEUE_CONNECTION=database` on its own runs nothing -- the job waits in `jobs`, no error, no log, and nobody is told the pitches have stopped. The rest of the app's mail (`BookRequest`) is still sent inline and does not depend on this.
 
+## The result panel carries two descriptions, and they are not the same voice
+
+The pitch is the librera telling you to read this; under it, `cupida.result.synopsis` heads the shop's own description of the book. A reader deciding wants both, and the second one does not depend on anything having been written -- which is what makes the no-key panel worth reading at all, and why the canned line no longer has to carry the whole screen on its own.
+
+`Recommendation::synopsis` prefers a `books` row's text to the pool's, the same order `url` and `coverUrl` use, and for a plainer reason: `cupida:scrape` stores the shop's through `Str::limit()` at `cupida.synopsis_limit`, so every row in the pool stops at six hundred characters. Nothing else had to care -- the scoring does not read -- so two defects in that text were invisible until the panel showed it, and both are repaired at the point of display rather than in books.json, because a re-scrape brings them back:
+
+- **It stops mid-word.** "sigue a un puñado de extraordin...". `lastWholeSentence()` drops back to the last sentence that finished, and only for text still carrying `Str::limit()`'s own "...", so a short synopsis that arrived whole keeps its last sentence.
+- **The shop runs sentences together.** "que nunca.Un regalo para todos sus lectores", usually where a cover quote was pasted onto the description. `spaced()` is deliberately narrow -- lower-case, full stop, upper-case -- so "EE.UU." keeps its shape.
+
+On a phone it rides the pitch's own "Seguir leyendo" rather than bringing a second control: one disclosure, because a reader who asked for the rest of the pitch asked for the rest of the book, and the panel still fits 402x874 with nothing open. Hidden in CSS and revealed by the class, the mirror of `.cupida-pitch`, so a failure leaves a panel that reads short rather than a dead button. From `wide:` up it is simply there.
+
+Because it is there, the prompt tells the model it is there: the pitch is asked for how the book reads and why this reader is getting it, and asked not to retell the plot the synopsis already carries.
+
 ## The prompt has two halves
 `CupidaAgent::baseInstructions()` is in code and changes with a deploy: it is what keeps the recommendation honest. `CupidaSettings::$extra_instructions` is what the bookseller edits from the header action, appended and announced as coming from the shop. Never move the baseline into the settings.
 
@@ -388,6 +401,29 @@ The pitch is `.cupida-pitch`, clamped to two lines with a `cupida.result.more` c
 The mobile panel is left-aligned throughout. It used to centre the head and left-align the body; a folded layout with two left edges reads as neither.
 
 Verified: 402x684 and 402x874 fit with no scroll, opening the pitch costs 2px, and desktop is unchanged (cover 240 in its own column, 56px gap, head above body).
+
+## A long word is wider than the card it is written on
+
+The heading's floor is 30px and a card is about 197px wide on a phone, so
+"contemporáneas" is 357px of text in a 149px column. Without somewhere to break
+it, the card overflows its own box by nearly 200px and paints over the cards
+behind it in the stack -- a stray "neas" beside the top card, which is what
+this was reported as.
+
+Three utilities on the card, and each does a different half:
+
+- `hyphens-auto` reads the shell's `lang="es"` and breaks the word where
+  Spanish breaks it ("contem-poráneas"). It is the one that looks right.
+- `break-words` catches what hyphenation will not, which is names -- and round
+  two is nothing but names. No dictionary splits "Sigurdardóttir". It only acts
+  after hyphenation has had its turn, so it costs the common case nothing.
+- `overflow-hidden` on `.cupida-card` is the guard. It is what makes a bleed
+  onto a neighbouring card impossible rather than unlikely, and it does not
+  touch the two box-shadows, which are painted outside the border box.
+
+Do not reach for a smaller clamp floor instead: 30px is the size the card was
+drawn at, and the longest label there is would need about 18px to fit on one
+line.
 
 ## The question is one line on a phone, and the footer is gone
 Two more lines the deck took back below `wide:`. Measured at 402x684 the card went from 206x274 to 292x389.

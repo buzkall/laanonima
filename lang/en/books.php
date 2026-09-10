@@ -121,8 +121,9 @@ return [
     ],
 
     'filters' => [
-        'featured' => 'Featured',
-        'active'   => 'Visible on the site',
+        'from_cupida' => 'Catalogued by La Cupida',
+        'featured'    => 'Featured',
+        'active'      => 'Visible on the site',
     ],
 
     'binding' => [
@@ -165,7 +166,8 @@ return [
     ],
 
     'actions' => [
-        'view_on_site' => 'See it on the site',
+        'view_on_site'  => 'See it on the site',
+        'edit_in_panel' => 'Edit in the panel',
     ],
 
     'public' => [

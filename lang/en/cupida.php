@@ -91,9 +91,11 @@ return [
         'by'             => 'by :author',
         'read_more'      => 'See the book',
         'buy'            => 'See it in the shop',
+        'at_the_shop'    => 'See it on the bookshop site',
         'more'           => 'Read the rest',
+        'synopsis'       => 'Synopsis',
         'again'          => 'Again',
-        'fallback_pitch' => 'This is the one we would bet the date on. Come by the shop and we will tell you why.',
+        'fallback_pitch' => 'This one is a hunch, which is how it works some of the time. Open it at any page and you will see.',
     ],
 
     'empty' => [

@@ -207,6 +207,23 @@ it('keeps a client out of a book that is not visible on the web', function(): vo
         ->assertNotFound();
 });
 
+it('offers a bookseller the record behind the page, and nobody else', function(): void {
+    $book = Book::factory()->create();
+    $edit = route('filament.admin.resources.books.edit', $book);
+
+    $this->get(route('books.show', $book))->assertDontSee($edit);
+
+    $this->actingAs(User::factory()->create())
+        ->get(route('books.show', $book))
+        ->assertDontSee($edit);
+
+    $this->actingAs(User::factory()->admin()->create())
+        ->get(route('books.show', $book))
+        ->assertOk()
+        ->assertSee($edit)
+        ->assertSee('Editar en el panel');
+});
+
 it('links to the page from the edit screen', function(): void {
     $book = Book::factory()->create(['availability' => BookAvailability::Available]);
 

@@ -179,6 +179,31 @@
                             {{ __('cupida.result.more') }}
                         </button>
 
+                        {{-- The shop's own description of the book, under the
+                         librera's. It is the other half of deciding: the pitch
+                         is somebody telling you to read this, and this is what
+                         it is about, in the catalog's words rather than hers.
+
+                         It rides the same `open` as the pitch instead of
+                         bringing a second control -- "Seguir leyendo" already
+                         means "there is more of this book below", and two
+                         disclosures stacked on a phone are two decisions where
+                         the reader wanted one. Hidden by CSS and revealed by
+                         the class, the way the pitch is clamped, so the failure
+                         is a panel that reads short rather than a dead button;
+                         from `wide:` up it is simply there. --}}
+                        @if ($recommendation->synopsis)
+                            <div :class="open && 'cupida-synopsis--open'" class="cupida-synopsis mt-8 border-t border-[var(--rule)] pt-6">
+                                <p class="m-0 text-[13px] font-bold tracking-[0.22em] uppercase opacity-60">
+                                    {{ __('cupida.result.synopsis') }}
+                                </p>
+
+                                <p class="mt-3 mb-0 max-w-[60ch] text-[16px]/[1.6] opacity-80">
+                                    {{ $recommendation->synopsis }}
+                                </p>
+                            </div>
+                        @endif
+
                         <div class="mt-9 gap-4 flex flex-wrap items-center">
                             <a
                                 href="{{ $recommendation->url }}"
@@ -196,6 +221,26 @@
                                 {{ __('cupida.result.again') }}
                             </button>
                         </div>
+
+                        {{-- The old site, kept and demoted. The button above is
+                         our own page for the book now -- La Cupida files what
+                         it recommends -- but the shop's page is where a reader
+                         who knows the site expects to end up, and it is the one
+                         that takes an order today. A line of text rather than a
+                         second button: two boxes of equal weight ask a question
+                         nobody came here to answer. --}}
+                        @if ($recommendation->book)
+                            <p class="mt-5 mb-0 text-[15px]">
+                                <a
+                                    href="{{ $recommendation->shopUrl }}"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="border-0 border-b border-current pb-[2px] font-serif font-semibold tracking-[0.08em] text-[var(--on-card)] uppercase no-underline opacity-70 transition-opacity duration-150 hover:opacity-100"
+                                >
+                                    {{ __('cupida.result.at_the_shop') }}
+                                </a>
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -329,7 +374,7 @@
                                 wire:key="{{ $card->answer() }}"
                                 data-depth="{{ $depth }}"
                                 @class([
-                                'cupida-card p-[clamp(22px,6vw,34px)] absolute inset-0 flex flex-col justify-between',
+                                'cupida-card overflow-hidden p-[clamp(22px,6vw,34px)] absolute inset-0 flex flex-col justify-between',
                                 'cupida-card--top' => $depth === 0,
                                                         ])
                                 style="--card: {{ $card->palette->background }}; --on-card: {{ $card->palette->foreground }}; --depth: {{ $depth }}"
@@ -362,13 +407,25 @@
                                     />
                                 @endif
 
-                                <div>
-                                    <h2 class="font-display text-[clamp(30px,8vw,46px)]/[1.02] m-0 font-normal text-balance">
+                                {{-- `hyphens-auto` and `break-words` together, and both are
+                                 needed. The card is a box about 150px wide inside its
+                                 padding on a phone and the heading's floor is 30px, so a
+                                 long word is wider than the card it is written on and has
+                                 nowhere to go: "Vidas contemporáneas" ran out of the side
+                                 of the card and over the ones behind it in the stack.
+                                 Hyphenation is the half that looks right -- the page
+                                 carries `lang="es"`, so "contem-poráneas" breaks where
+                                 Spanish breaks -- and it does nothing at all for a name,
+                                 which is most of what round two deals: no dictionary
+                                 splits "Sigurdardóttir". `break-words` is what catches
+                                 those, and only after hyphenation has had its turn. --}}
+                                <div class="min-w-0">
+                                    <h2 class="font-display text-[clamp(30px,8vw,46px)]/[1.02] m-0 font-normal text-balance hyphens-auto break-words">
                                         {{ $card->label }}
                                     </h2>
 
                                     @if ($card->note)
-                                        <p class="mt-3 text-[17px]/[1.35] mb-0 italic opacity-75">{{ $card->note }}</p>
+                                        <p class="mt-3 text-[17px]/[1.35] mb-0 italic opacity-75 hyphens-auto break-words">{{ $card->note }}</p>
                                     @endif
                                 </div>
 

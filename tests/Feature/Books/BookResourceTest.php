@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Rules\Isbn;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -370,6 +371,24 @@ it('files a book under one materia, chosen from the tree', function(): void {
         ->assertHasNoFormErrors();
 
     expect($book->fresh()->subject->code)->toBe('FM');
+});
+
+it('writes the subject path onto the form without walking the tree a query at a time', function(): void {
+    $fiction = Subject::factory()->create(['code' => 'F', 'name' => 'Ficción y temas afines']);
+    $fantasy = Subject::factory()->create(['code' => 'FM', 'name' => 'Fantasía', 'parent_id' => $fiction->id]);
+    $epic = Subject::factory()->create(['code' => 'FMM', 'name' => 'Fantasía épica', 'parent_id' => $fantasy->id]);
+    $book = Book::factory()->for($epic)->create();
+
+    DB::enableQueryLog();
+
+    livewire(EditBook::class, ['record' => $book->getRouteKey()])
+        ->assertFormSet(['subject_id' => $epic->id]);
+
+    /* The selected subject and its whole line, never a query per level. */
+    $subjectQueries = collect(DB::getQueryLog())
+        ->filter(fn(array $query): bool => str_contains($query['query'], 'subjects'));
+
+    expect($subjectQueries)->toHaveCount(2);
 });
 
 it('filters the shelf by a materia and everything filed under it', function(): void {
