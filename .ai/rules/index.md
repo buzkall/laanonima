@@ -35,3 +35,4 @@ Before planning or editing, find the row whose globs match the file's path and r
 | lang/vendor/** | .ai/rules/vendor.md |
 | app/Actions/Portraits/AttachAuthorPortrait.php,app/Console/Commands/FetchCupidaPortraits.php,app/Models/Author.php,resources/views/books/author.blade.php | .ai/rules/views-books.md |
 | resources/views/components/site-footer.blade.php,resources/views/components/layouts/shelf.blade.php,resources/views/cupida/shared.blade.php | .ai/rules/views-cupida.md |
+| resources/css/cupida.css,resources/views/livewire/cupida.blade.php | .ai/rules/views-livewire.md |

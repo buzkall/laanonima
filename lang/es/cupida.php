@@ -85,6 +85,9 @@ return [
         'like' => 'Me gusta',
         'pass' => 'Paso',
         'help' => 'Arrastra la carta, o usa los botones y las flechas del teclado.',
+        /* The info button between the two answers. What it shows is
+           `CupidaSettings::$coach_text`, the shop's own words. */
+        'explain' => '¿Cómo funciona?',
     ],
 
     'thinking' => [
@@ -239,6 +242,8 @@ return [
             'base_hint'    => 'Esto no se toca desde aquí: es lo que impide que se invente libros. Se cambia en el código.',
             'extra'        => 'Instrucciones extra',
             'extra_hint'   => 'En español: cómo es La Cupida y qué quiere la librería que recomiende. Describe a la librera, no a quien lee: sus gustos inclinan la elección, pero nunca se cuentan como respuestas de quien está jugando. Déjalo vacío para no añadir nada.',
+            'coach'        => 'Texto de la explicación',
+            'coach_hint'   => 'Lo que se lee sobre la primera carta mientras enseña cómo se responde, y cada vez que alguien pulsa el botón de información. Los saltos de línea se respetan. Déjalo vacío para no mostrar nada.',
             'save'         => 'Guardar',
             'saved'        => 'Guardado. La próxima recomendación ya lo tiene en cuenta.',
         ],

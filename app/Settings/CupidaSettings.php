@@ -43,6 +43,15 @@ class CupidaSettings extends Settings
     public ?string $extra_instructions = null;
 
     /**
+     * What the deck says over the first card while it shows how it is
+     * answered, and again whenever a reader presses the info button.
+     *
+     * Free text, line breaks kept. Empty is no strip: the card still
+     * demonstrates the gesture, it just does so without words.
+     */
+    public ?string $coach_text = null;
+
+    /**
      * What was last put on the Anthropic account, in dollars.
      *
      * Typed in because there is nothing to read: Anthropic publishes no balance,

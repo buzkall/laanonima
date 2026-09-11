@@ -44,8 +44,29 @@
             /** Degrees of tilt at the edge of the card, which is all the rotation there is. */
             const TILT = 14;
 
-            /** How far the opening hint pulls the card, as a fraction of its width. */
-            const REACH = 0.18;
+            /**
+             * How far the opening hint pulls the card, as a fraction of its width.
+             *
+             * Under DISTANCE, always: the hint shows the start of the gesture,
+             * not a completed one. At this reach the stamp comes up to about
+             * half strength, which is enough to read during the hold.
+             */
+            const REACH = 0.22;
+
+            /** How long the hint takes to carry the card out to one side... */
+            const GLIDE = 700;
+
+            /** ...and to bring it back to the centre. */
+            const RETURN = 500;
+
+            /**
+             * Where the browser remembers that it has shown the hint.
+             *
+             * The server's `coached` flag lasts one page load; this is what
+             * makes "once" mean once per browser. Both are kept: a browser
+             * with storage switched off falls back to the server's word.
+             */
+            const SEEN_KEY = 'cupida:coached';
 
             Alpine.data('cupidaDeck', (options = {}) => ({
                 dragging: false,
@@ -98,6 +119,14 @@
                 hints: [],
 
                 /**
+                 * The hint is on screen, in either of its two forms -- the
+                 * automatic one on the first card, or the one the info button
+                 * asks for. The strip of words over the deck shows while this
+                 * is true.
+                 */
+                coaching: false,
+
+                /**
                  * Show the reader, once, that the card moves.
                  *
                  * The deck has three inputs and only two of them announce
@@ -109,10 +138,11 @@
                  *
                  * `options.coach` comes from the server (`Cupida::$coached`),
                  * so a reader who has answered a card is never shown it again,
-                 * including after "Otra vez".
+                 * including after "Otra vez". `seen()` is the browser's own
+                 * memory of it, across page loads.
                  */
                 init() {
-                    if (! options.coach || this.reduced()) {
+                    if (! options.coach || this.seen() || this.reduced()) {
                         return;
                     }
 
@@ -126,6 +156,9 @@
                         return;
                     }
 
+                    /* Remembered when it starts, not when it ends: a reader who
+                       grabs the card halfway through has plainly got it. */
+                    this.remember();
                     this.coach();
                 },
 
@@ -320,7 +353,7 @@
                  * Write the drag onto the card: the offset, the tilt that follows
                  * from it, and how strongly each of the two stamps shows through.
                  */
-                paint(dx, animated) {
+                paint(dx, animated, duration = 220) {
                     const card = this.top();
 
                     if (!card) {
@@ -330,10 +363,44 @@
                     const width = card.offsetWidth || 1;
                     const ratio = Math.max(-1, Math.min(1, dx / width));
 
-                    card.style.transition = animated ? 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none';
+                    /* The default is the drag's spring-back, and `release()` and
+                       `cancel()` never say otherwise. Only the hint asks for
+                       longer, because only the hint is moving the card for
+                       somebody who is watching rather than doing. */
+                    card.style.transition = animated ? `transform ${duration}ms cubic-bezier(0.22, 1, 0.36, 1)` : 'none';
                     card.style.transform = `translateX(${dx}px) rotate(${ratio * TILT}deg)`;
                     card.style.setProperty('--like', String(Math.max(0, ratio) * 2.5));
                     card.style.setProperty('--pass', String(Math.max(0, -ratio) * 2.5));
+                },
+
+                /**
+                 * What the info button does: the same hint, on request.
+                 *
+                 * A second press while it is running starts it over rather
+                 * than stacking a second set of timers on the first. It waits
+                 * for a card that is flying to be gone -- `coach()` would
+                 * paint the one underneath, which is not on top yet.
+                 *
+                 * With motion turned off in the OS the words still show; the
+                 * setting is about movement, and the words are the part that
+                 * works without it. No `document.hidden` guard: the reader
+                 * just pressed the button, so the tab is in front.
+                 */
+                explain() {
+                    this.stopCoaching();
+
+                    if (this.busy) {
+                        return;
+                    }
+
+                    if (this.reduced()) {
+                        this.coaching = true;
+                        this.hints.push(window.setTimeout(() => this.stopCoaching(), 6400));
+
+                        return;
+                    }
+
+                    this.coach();
                 },
 
                 /**
@@ -361,6 +428,14 @@
                  * loops because nothing else on that panel moves and it is
                  * asking to be pressed; a card that keeps moving under somebody
                  * who is reading it is a card arguing with them.
+                 *
+                 * Slow, and held. The first cut of this used the drag's own
+                 * 220ms glides and was over in two seconds, which read as a
+                 * twitch: a reader who blinked had missed it and did not know
+                 * what they had missed. Now the card takes most of a second to
+                 * get out to the side and stays there a full second with the
+                 * stamp up before coming back -- long enough to read the word
+                 * and the words under the deck that go with it.
                  */
                 coach() {
                     const card = this.top();
@@ -375,14 +450,19 @@
                        the element is asking early -- and the fallback is the
                        same one `answer()` uses. */
                     const step = (at, run) => this.hints.push(window.setTimeout(run, at));
+                    const reach = () => (this.top()?.offsetWidth || 320) * REACH;
 
+                    /* The stylesheet reads this so the stamp fades in at the
+                       speed the card moves, rather than at the drag's. */
+                    card.style.setProperty('--cupida-glide', `${GLIDE}ms`);
                     card.classList.add('cupida-hint');
+                    this.coaching = true;
 
-                    step(600, () => this.paint((this.top()?.offsetWidth || 320) * REACH, true));
-                    step(1120, () => this.paint(0, true));
-                    step(1420, () => this.paint((this.top()?.offsetWidth || 320) * -REACH, true));
-                    step(1940, () => this.paint(0, true));
-                    step(2200, () => this.stopCoaching());
+                    step(900, () => this.paint(reach(), true, GLIDE));
+                    step(2600, () => this.paint(0, true, RETURN));
+                    step(3400, () => this.paint(-reach(), true, GLIDE));
+                    step(5100, () => this.paint(0, true, RETURN));
+                    step(6400, () => this.stopCoaching());
                 },
 
                 /**
@@ -396,7 +476,34 @@
                 stopCoaching() {
                     this.hints.forEach((id) => window.clearTimeout(id));
                     this.hints = [];
+                    this.coaching = false;
                     this.top()?.classList.remove('cupida-hint');
+                },
+
+                /**
+                 * Whether this browser has already shown the hint.
+                 *
+                 * Both halves in a try/catch, and both fail towards "no":
+                 * Safari in a private window throws on `setItem`, and a
+                 * browser with storage switched off throws on the read, and
+                 * an exception out of `init()` is a deck with no hint *and*
+                 * no drag. The worst a failure here can do is show the hint
+                 * one more time.
+                 */
+                seen() {
+                    try {
+                        return window.localStorage.getItem(SEEN_KEY) !== null;
+                    } catch {
+                        return false;
+                    }
+                },
+
+                remember() {
+                    try {
+                        window.localStorage.setItem(SEEN_KEY, '1');
+                    } catch {
+                        /* Fine. The server's flag still holds for this page load. */
+                    }
                 },
 
                 reduced() {

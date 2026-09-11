@@ -229,6 +229,19 @@ it('keeps what the shop wants said', function(): void {
     expect(app(CupidaSettings::class)->extra_instructions)->toBe('Este mes empujamos a las editoriales gallegas.');
 });
 
+/* The words over the first card are the shop's too, and they are edited from
+   the same modal, so a bookseller looking for one finds the other. */
+it('keeps what the deck says over the first card', function(): void {
+    livewire(ListCupida::class)
+        ->callAction(EditCupidaPromptAction::getDefaultName(), [
+            'extra_instructions' => null,
+            'coach_text'         => "Derecha: sí.\nIzquierda: no.",
+        ])
+        ->assertNotified();
+
+    expect(app(CupidaSettings::class)->coach_text)->toBe("Derecha: sí.\nIzquierda: no.");
+});
+
 it('says the shop\'s piece on top of its own, never instead of it', function(): void {
     $settings = app(CupidaSettings::class);
     $settings->extra_instructions = 'Este mes empujamos a las editoriales gallegas.';

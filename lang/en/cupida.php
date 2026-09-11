@@ -79,9 +79,10 @@ return [
     ],
 
     'swipe' => [
-        'like' => 'Yes',
-        'pass' => 'No',
-        'help' => 'Drag the card, or use the buttons and the arrow keys.',
+        'like'    => 'Yes',
+        'pass'    => 'No',
+        'help'    => 'Drag the card, or use the buttons and the arrow keys.',
+        'explain' => 'How does it work?',
     ],
 
     'thinking' => [
@@ -231,6 +232,8 @@ return [
             'base_hint'    => 'Not editable here: this is what stops it inventing books. It changes in the code.',
             'extra'        => 'Extra instructions',
             'extra_hint'   => 'In Spanish: who La Cupida is and what the shop wants her to recommend. It describes the bookseller, not the reader: her tastes tilt the choice, but they never count as the answers of whoever is playing. Leave it empty to add nothing.',
+            'coach'        => 'Explanation text',
+            'coach_hint'   => 'Shown over the first card while it demonstrates how it is answered, and whenever someone presses the info button. Line breaks are kept. Leave it empty to show nothing.',
             'save'         => 'Save',
             'saved'        => 'Saved. The next recommendation takes it into account.',
         ],

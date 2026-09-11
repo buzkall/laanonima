@@ -95,7 +95,12 @@ html:lang(es) {
  */
 .cupida-stamp {
     position: absolute;
-    top: clamp(18px, 5vw, 28px);
+
+    /* Under the kind label, not over it. The label sits at the card's own
+       padding (22-34px) and is one line of 13px small caps, so the stamp
+       starts clear of its baseline at every width: it was at the padding
+       itself for a while and PASO landed on top of GÉNERO. */
+    top: clamp(48px, 11vw, 70px);
 
     padding: 6px 12px;
     border: 3px solid currentColor;
@@ -155,6 +160,26 @@ html:lang(es) {
 .cupida-button--like:hover {
     background: var(--accent);
     border-color: var(--accent);
+}
+
+/* The info button between the two answers: smaller and quieter, because it
+   is a note and not a third choice. In the stylesheet rather than as
+   utilities because `.cupida-button` sets its width and height here,
+   unlayered, and an unlayered rule outranks anything in Tailwind's
+   `utilities` layer -- a `size-10` on the element would lose. */
+.cupida-button--info {
+    width: clamp(40px, 11vw, 46px);
+    height: clamp(40px, 11vw, 46px);
+    border-width: 1.5px;
+    opacity: 0.55;
+    transition:
+        opacity 150ms ease-out,
+        background-color 150ms ease-out,
+        color 150ms ease-out;
+}
+
+.cupida-button--info:hover {
+    opacity: 1;
 }
 
 .cupida-pulse {
@@ -226,10 +251,14 @@ html:lang(es) {
  * it trailing the card. The hint moves the card in two glides instead, and a
  * stamp that snapped to full while the card was still travelling reads as a
  * flash rather than as a stamp coming up. So it is scoped to a class that only
- * exists for those two seconds.
+ * exists for as long as the hint does.
+ *
+ * At the speed the hint moves the card: the script sets `--cupida-glide` on
+ * the card when it starts, so the stamp and the card arrive together. The
+ * fallback is the drag's own 220ms.
  */
 .cupida-hint .cupida-stamp {
-    transition: opacity 220ms ease-out;
+    transition: opacity var(--cupida-glide, 220ms) ease-out;
 }
 
 /*

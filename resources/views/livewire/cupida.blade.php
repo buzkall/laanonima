@@ -523,12 +523,59 @@
                                 @endif
                             </article>
                         @endforeach
+
+                        {{-- The words that go with the hint, in the shop's own
+                         voice: `CupidaSettings::$coach_text`, edited from the
+                         "Prompt IA" action, so nothing about them is assumed
+                         here beyond that they may run to several lines.
+                         `whitespace-pre-line` keeps the breaks the bookseller
+                         typed and `{{ }}` escapes the rest.
+
+                         Inside the stack, not beside it. The stack is already
+                         `relative` and the aspect box, so the strip sits in
+                         the middle of the top card at every width with nothing
+                         measured -- and it costs no height, which on a phone is
+                         the whole budget: anything that grows under the deck
+                         pushes the buttons off the screen. It covers the
+                         portrait for the six seconds the hint runs, and the
+                         stamps and the motion are the point for those six
+                         seconds.
+
+                         Centred and set large on purpose: it was a footnote
+                         along the bottom edge in small type, and a reader who
+                         needs the explanation is exactly the reader who will
+                         not read a footnote. It is the one thing on the card
+                         asking to be read, so it gets the middle and the size
+                         of the card's own title.
+
+                         The stack is also the drag surface, so a finger landing
+                         on this is a `pointerdown` the stack already hears:
+                         `grab()` calls the hint off and the strip goes with it.
+                         No handler of its own, and it can never swallow a drag.
+
+                         `x-show`, not a class the script toggles: Livewire's
+                         morph writes `class` back from the server's HTML on
+                         every swipe, while Alpine re-applies `x-show` from its
+                         own state after one. --}}
+                        @if (filled($coachText))
+                            <p
+                                x-show="coaching"
+                                x-transition.opacity.duration.400ms
+                                role="status"
+                                class="bg-ink/92 text-paper absolute inset-x-[5%] top-1/2 m-0 -translate-y-1/2 rounded-[4px] px-[clamp(18px,5vw,26px)] py-[clamp(18px,4vw,24px)] text-center text-[clamp(18px,5vw,23px)]/[1.45] whitespace-pre-line"
+                            >{{ $coachText }}</p>
+                        @endif
                     </div>
                 </div>
 
                 {{-- The buttons are the real control, not a fallback: they are what
                  a keyboard and a screen reader get, and what the tests press.
-                 The drag is decoration over the top of them. --}}
+                 The drag is decoration over the top of them.
+
+                 The small one in the middle is not an answer. It replays the
+                 opening hint -- the card showing itself each way, with the
+                 shop's words over it -- for a reader who blinked the first
+                 time, or who never saw it because this browser already had. --}}
                 <div class="mt-[clamp(22px,4vw,34px)] flex shrink-0 items-center justify-center gap-[clamp(20px,6vw,40px)]">
                     <button
                         type="button"
@@ -537,6 +584,15 @@
                         aria-label="{{ __('cupida.swipe.pass') }}"
                     >
                         <x-heroicon-o-x-mark class="size-8 shrink-0" />
+                    </button>
+
+                    <button
+                        type="button"
+                        @click="explain()"
+                        class="cupida-button cupida-button--info"
+                        aria-label="{{ __('cupida.swipe.explain') }}"
+                    >
+                        <x-heroicon-o-information-circle class="size-6 shrink-0" />
                     </button>
 
                     <button

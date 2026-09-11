@@ -21,7 +21,11 @@ use Filament\Support\Icons\Heroicon;
  * person -- and it changes with a deploy, not with a text box. The bottom half
  * is the shop's, and is appended to it.
  *
- * Deliberately not a settings resource. There is one row and one field; a
+ * The text the deck shows over the first card lives in the same modal. It is
+ * the other thing the shop says to a reader in its own words, and a
+ * bookseller looking for one will look where the other is.
+ *
+ * Deliberately not a settings resource. There is one row and two fields; a
  * resource for it would be three files and a navigation entry for a modal.
  */
 class EditCupidaPromptAction extends Action
@@ -44,6 +48,7 @@ class EditCupidaPromptAction extends Action
             ->modalWidth('2xl')
             ->fillForm(fn(): array => [
                 'extra_instructions' => app(CupidaSettings::class)->extra_instructions,
+                'coach_text'         => app(CupidaSettings::class)->coach_text,
             ])
             ->schema([
                 Section::make(__('cupida.admin.prompt.base_heading'))
@@ -67,11 +72,19 @@ class EditCupidaPromptAction extends Action
                     ->rows(8)
                     ->maxLength(2000)
                     ->autosize(),
+
+                Textarea::make('coach_text')
+                    ->label(__('cupida.admin.prompt.coach'))
+                    ->helperText(__('cupida.admin.prompt.coach_hint'))
+                    ->rows(4)
+                    ->maxLength(500)
+                    ->autosize(),
             ])
             ->action(function(array $data): void {
                 $settings = app(CupidaSettings::class);
 
                 $settings->extra_instructions = $data['extra_instructions'] ?? null;
+                $settings->coach_text = $data['coach_text'] ?? null;
                 $settings->save();
 
                 Notification::make()

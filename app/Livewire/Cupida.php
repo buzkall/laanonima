@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Actions\Cupida\RecommendBook;
+use App\Settings\CupidaSettings;
 use App\Support\Cupida\CupidaCard;
 use App\Support\Cupida\CupidaCatalog;
 use App\Support\Cupida\CupidaDeck;
@@ -270,6 +271,7 @@ class Cupida extends Component
             'match'          => $this->matchWord(),
             'kicker'         => $this->kicker(),
             'coach'          => ! $this->coached,
+            'coachText'      => app(CupidaSettings::class)->coach_text,
             'shareUrl'       => $this->shareUrl(),
         ]);
     }

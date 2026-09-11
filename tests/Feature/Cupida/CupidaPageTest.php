@@ -2,6 +2,7 @@
 
 use App\Livewire\Cupida;
 use App\Models\User;
+use App\Settings\CupidaSettings;
 use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -84,6 +85,31 @@ it('does not explain the gesture again to a reader asking for another book', fun
         ->call('restart')
         ->assertSet('coached', true)
         ->assertSeeHtml('cupidaDeck({ coach: false })');
+});
+
+/* The hint is over in a few seconds and a reader who blinked has no other
+   way back to it. The button between the two answers replays it, words and
+   all -- and the words are the shop's, out of the settings, which is what
+   the last assertion is really checking: that the seeded text reaches the
+   deck at all. */
+it('lets a reader ask for the explanation again', function(): void {
+    livewire(Cupida::class)
+        ->call('start')
+        ->assertSeeHtml('@click="explain()"')
+        ->assertSee(__('cupida.swipe.explain'))
+        ->assertSeeHtml('role="status"')
+        ->assertSee('Descartar también es elegir.');
+});
+
+it('shows no strip when the shop has left the text empty', function(): void {
+    $settings = app(CupidaSettings::class);
+    $settings->coach_text = '';
+    $settings->save();
+
+    livewire(Cupida::class)
+        ->call('start')
+        ->assertSeeHtml('@click="explain()"')
+        ->assertDontSeeHtml('role="status"');
 });
 
 it('greets a reader who is signed in by their first name', function(): void {
