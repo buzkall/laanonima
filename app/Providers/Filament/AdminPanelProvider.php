@@ -81,8 +81,8 @@ class AdminPanelProvider extends PanelProvider
                 FinisterrePlugin::make(),
 
                 EnvironmentIndicatorPlugin::make()
-                    ->visible(fn() => true) // override the plugin's check for the super_admin role
-                    ->color(fn() => match (app()->environment()) {
+                    ->visible(fn(): true => true) // override the plugin's check for the super_admin role
+                    ->color(fn(): array => match (app()->environment()) {
                         'production' => Color::Red,
                         'staging'    => Color::Lime,
                         default      => Color::Gray,
