@@ -57,3 +57,12 @@ Two things worth keeping from it:
   on one machine and not another. `Illuminate\Support\defer()` (and the other
   namespaced functions) are import-and-call, so `use function` is the immune
   form if this ever needs guarding in code again.
+
+## Demo mode blocks destructive abilities at the gate
+`config('site.demo_mode')` (env `DEMO_MODE`, **on unless set to false**) refuses the abilities listed in `DemoMode::BLOCKED_ABILITIES` — delete, deleteAny, forceDelete, forceDeleteAny, withdraw — to everybody, administrators included.
+
+It is enforced once, by a `Gate::before` hook in `AppServiceProvider::blockDestructiveAbilitiesInDemoMode()`, not per policy. That is deliberate: Author, Book and Publisher have no `delete()` in a policy to edit, and Filament's `get_authorization_response()` calls the gate's before callbacks directly when the policy method is missing, so the refusal reaches those resources too. A new resource is covered without opting in.
+
+The hook returns plain `false` rather than a `Response::deny($message)`, because Filament hides an action whose refusal carries no message and only disables the ones that explain themselves — the demo shows no delete buttons at all.
+
+`phpunit.xml` pins `DEMO_MODE=false` so the suite tests the shop as it works; `tests/Feature/DemoModeTest.php` turns it back on per test.

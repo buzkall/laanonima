@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Actions\Books\SyncCoverColor;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\RegistrationResponse;
+use App\Models\User;
 use App\Support\BookMetadata\BookMetadataProvider;
 use App\Support\BookMetadata\CasaDelLibroProvider;
 use App\Support\BookMetadata\ChainedBookMetadataProvider;
@@ -12,6 +13,7 @@ use App\Support\BookMetadata\GoogleBooksProvider;
 use App\Support\BookMetadata\OpenLibraryProvider;
 use App\Support\Correos\FakeCorreos;
 use App\Support\Cupida\CupidaCatalog;
+use App\Support\DemoMode;
 use App\Support\Portraits\PortraitSource;
 use App\Support\Portraits\WikidataPortraitSource;
 use Carbon\CarbonImmutable;
@@ -25,6 +27,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAddedEvent;
@@ -76,6 +79,32 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
         $this->syncBookCoverColors();
+        $this->blockDestructiveAbilitiesInDemoMode();
+    }
+
+    /**
+     * Refuse every ability `DemoMode` names, to everybody, while the demo is on.
+     *
+     * A `before` callback is checked ahead of any policy and also ahead of no
+     * policy at all, which is the reason for doing it here rather than in five
+     * policies: Author, Book and Publisher have no `delete` method to edit --
+     * Filament allows what a policy does not mention -- and a resource added
+     * next month would be open again. One hook covers both panels, every
+     * resource, and the bulk actions along with the row ones.
+     *
+     * It returns `false` rather than a denial carrying a message on purpose:
+     * Filament hides an action whose refusal says nothing and only disables the
+     * ones that explain themselves, and a demo reads better with no delete
+     * button than with a dead one.
+     *
+     * Typed `User`, so it is skipped for a guest and the policies answer as they
+     * always did. Nothing in the panels authorizes a guest anyway.
+     */
+    protected function blockDestructiveAbilitiesInDemoMode(): void
+    {
+        Gate::before(fn(User $user, string $ability): ?bool => DemoMode::forbids($ability)
+            ? false
+            : null);
     }
 
     /**

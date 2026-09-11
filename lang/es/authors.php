@@ -3,9 +3,9 @@
 return [
 
     'resource' => [
-        'label'            => 'Autor/a',
-        'plural_label'     => 'Autores/as',
-        'navigation_label' => 'Autores/as',
+        'label'            => 'Autora',
+        'plural_label'     => 'Autoras',
+        'navigation_label' => 'Autoras',
         'navigation_group' => 'Catálogo',
     ],
 

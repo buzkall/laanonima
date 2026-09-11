@@ -23,6 +23,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use pxlrbt\FilamentEnvironmentIndicator\EnvironmentIndicatorPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -78,6 +79,16 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(MagicLoginPlugin::make())
             ->plugins([
                 FinisterrePlugin::make(),
+
+                EnvironmentIndicatorPlugin::make()
+                    ->visible(fn() => true) // override the plugin's check for the super_admin role
+                    ->color(fn() => match (app()->environment()) {
+                        'production' => Color::Red,
+                        'staging'    => Color::Lime,
+                        default      => Color::Gray,
+                    })
+                    ->showBadge()
+                    ->showBorder(),
             ]);
     }
 }

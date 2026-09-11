@@ -36,6 +36,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Demo
+    |--------------------------------------------------------------------------
+    |
+    | The shop is showing the panels off to anyone with the address, so while
+    | this is on nobody -- administrator included -- may delete a record or
+    | withdraw a reader's request, whichever panel they are in. Filament hides
+    | an action it cannot authorize, so the buttons are simply not there.
+    |
+    | On unless the environment says otherwise: an open demo missing its
+    | variable loses the catalog, while a production box missing it only loses
+    | the delete buttons until someone notices. See App\Support\DemoMode.
+    |
+    */
+
+    'demo_mode' => (bool)env('DEMO_MODE', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Palette
     |--------------------------------------------------------------------------
     |
