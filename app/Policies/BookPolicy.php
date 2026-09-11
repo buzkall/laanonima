@@ -7,8 +7,14 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 /**
- * The shop window has one rule, and it is about the record rather than the
- * reader: a book is public once a bookseller has put it on the web.
+ * Two audiences, one model. The shop window has one rule, and it is about the
+ * record rather than the reader: a book is public once a bookseller has put it
+ * on the web. Everything else here is the counter's, and says so.
+ *
+ * `view()` is the public one and the only method a guest ever reaches. The rest
+ * exist because Filament allows what a policy does not mention: before they were
+ * written, a book could be deleted by anyone who got as far as the panel, and a
+ * `delete()` that is not there is not a rule anybody can read.
  */
 class BookPolicy
 {
@@ -28,5 +34,30 @@ class BookPolicy
         return $book->is_active || $user?->isBookseller()
             ? Response::allow()
             : Response::denyAsNotFound();
+    }
+
+    public function viewAny(User $user): bool
+    {
+        return $user->isBookseller();
+    }
+
+    public function create(User $user): bool
+    {
+        return $user->isBookseller();
+    }
+
+    public function update(User $user, Book $book): bool
+    {
+        return $user->isBookseller();
+    }
+
+    public function delete(User $user, Book $book): bool
+    {
+        return $user->isBookseller();
+    }
+
+    public function deleteAny(User $user): bool
+    {
+        return $user->isBookseller();
     }
 }

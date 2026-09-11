@@ -16,7 +16,9 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets\AccountWidget;
+use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -37,7 +39,7 @@ class ClientPanelProvider extends PanelProvider
             ->registration(Register::class)
             ->profile(EditProfile::class, isSimple: false)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Lime,
             ])
             // Resolved lazily: the panel is configured while the application
             // boots, before the Vite manifest is guaranteed to be readable.
@@ -47,6 +49,11 @@ class ClientPanelProvider extends PanelProvider
             // The same mark the shop's own pages wear; Filament renders a
             // single `rel="icon"`, so the .ico fallback has no place here.
             ->favicon(asset('favicon.svg'))
+            // A way back to the shop from the panel, beside the user menu.
+            ->renderHook(
+                PanelsRenderHook::USER_MENU_BEFORE,
+                fn(): View => view('filament.topbar.shop-link'),
+            )
             ->discoverResources(in: app_path('Filament/Client/Resources'), for: 'App\Filament\Client\Resources')
             ->discoverPages(in: app_path('Filament/Client/Pages'), for: 'App\Filament\Client\Pages')
             ->pages([
