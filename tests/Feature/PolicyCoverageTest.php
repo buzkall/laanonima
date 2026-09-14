@@ -1,5 +1,9 @@
 <?php
 
+use App\Filament\Resources\Authors\AuthorResource;
+use App\Filament\Resources\Books\BookResource;
+use App\Filament\Resources\Publishers\PublisherResource;
+use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Panel;
 use Filament\Resources\Resource;
@@ -76,3 +80,33 @@ it('is actually looking at every panel', function(): void {
         expect($panel->getResources())->not->toBeEmpty("Panel [{$id}] exposes no resources.");
     }
 });
+
+/**
+ * What the policies above actually changed. Until they were written, a reader
+ * account driving the Livewire component directly reached the catalog: the
+ * panel gate turns a client away at the HTTP door, but the component behind it
+ * asked nobody, and Filament reads an unmentioned ability as a yes.
+ */
+it('keeps a reader out of the catalog resources', function(string $resource): void {
+    $reader = User::factory()->client()->create();
+
+    expect($reader->can('viewAny', $resource::getModel()))->toBeFalse()
+        ->and($reader->can('create', $resource::getModel()))->toBeFalse()
+        ->and($reader->can('deleteAny', $resource::getModel()))->toBeFalse();
+})->with([
+    'books'      => [BookResource::class],
+    'authors'    => [AuthorResource::class],
+    'publishers' => [PublisherResource::class],
+]);
+
+it('lets the bookseller through the same door', function(string $resource): void {
+    $bookseller = User::factory()->admin()->create();
+
+    expect($bookseller->can('viewAny', $resource::getModel()))->toBeTrue()
+        ->and($bookseller->can('create', $resource::getModel()))->toBeTrue()
+        ->and($bookseller->can('deleteAny', $resource::getModel()))->toBeTrue();
+})->with([
+    'books'      => [BookResource::class],
+    'authors'    => [AuthorResource::class],
+    'publishers' => [PublisherResource::class],
+]);

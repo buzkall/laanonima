@@ -166,7 +166,6 @@ return [
     ],
 
     'actions' => [
-        'view_on_site'  => 'See it on the site',
         'edit_in_panel' => 'Edit in the panel',
     ],
 
@@ -228,11 +227,10 @@ return [
         ],
 
         'publisher' => [
-            'kicker'  => 'Imprint',
-            'intro'   => 'What we have in the shop published by :publisher.',
-            'empty'   => 'We have nothing by :publisher on the web right now. Ask us: we can almost always order it.',
-            'website' => 'Their website',
-            'all'     => 'See everything from :publisher',
+            'kicker' => 'Imprint',
+            'intro'  => 'What we have in the shop published by :publisher.',
+            'empty'  => 'We have nothing by :publisher on the web right now. Ask us: we can almost always order it.',
+            'all'    => 'See everything from :publisher',
         ],
 
         'shelf' => [

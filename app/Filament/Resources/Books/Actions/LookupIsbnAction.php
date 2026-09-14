@@ -97,10 +97,7 @@ class LookupIsbnAction extends Action
         $this->fillContributors($get, $set, $metadata);
 
         if (blank($get('publisher_id')) && filled($metadata->publisherName)) {
-            $set('publisher_id', Publisher::firstOrCreate(
-                ['slug' => Str::slug($metadata->publisherName)],
-                ['name' => $metadata->publisherName],
-            )->id);
+            $set('publisher_id', Publisher::named($metadata->publisherName)->id);
         }
 
         /*

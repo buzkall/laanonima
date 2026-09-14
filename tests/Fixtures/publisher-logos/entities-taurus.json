@@ -1,0 +1,564 @@
+{
+  "entities": {
+    "Q10570": {
+      "type": "item",
+      "id": "Q10570",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Taurus"
+        },
+        "es": {
+          "language": "es",
+          "value": "Tauro"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "ce5f46d399bae2272ac573383c3c1cf14495783c",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 8928,
+                  "id": "Q8928"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q10570$d64adb74-463a-7609-1430-28f383a47d7d",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "68ae6340f5bb3e4432f8d9a31f3b03904ec86712",
+                "snaks": {
+                  "P123": [
+                    {
+                      "snaktype": "value",
+                      "property": "P123",
+                      "hash": "a233a39080faad5981544c9d76bc9be52c143f71",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 6867,
+                          "id": "Q6867"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ],
+                  "P813": [
+                    {
+                      "snaktype": "value",
+                      "property": "P813",
+                      "hash": "e1321dbabfe05a647a26b2eaafeafde6d5fc091b",
+                      "datavalue": {
+                        "value": {
+                          "time": "+2014-03-28T00:00:00Z",
+                          "timezone": 0,
+                          "before": 0,
+                          "after": 0,
+                          "precision": 11,
+                          "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                        },
+                        "type": "time"
+                      },
+                      "datatype": "time"
+                    }
+                  ],
+                  "P407": [
+                    {
+                      "snaktype": "value",
+                      "property": "P407",
+                      "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 1860,
+                          "id": "Q1860"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ],
+                  "P854": [
+                    {
+                      "snaktype": "value",
+                      "property": "P854",
+                      "hash": "dfbd741f1d19503f8e89b4e494d57dea97f4a2e3",
+                      "datavalue": {
+                        "value": "http://www.iau.org/public/themes/constellations/",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ],
+                  "P1476": [
+                    {
+                      "snaktype": "value",
+                      "property": "P1476",
+                      "hash": "16154c2b24c987919b429fc2c1e83b589f2ce581",
+                      "datavalue": {
+                        "value": {
+                          "text": "The Constellations",
+                          "language": "en"
+                        },
+                        "type": "monolingualtext"
+                      },
+                      "datatype": "monolingualtext"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P123",
+                  "P813",
+                  "P407",
+                  "P854",
+                  "P1476"
+                ]
+              }
+            ]
+          },
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "26a0396c49d23fb6852727591e3c439eefd334d3",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 4193029,
+                  "id": "Q4193029"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q10570$12C7D6CD-9764-4E5C-AED5-E1702F9317C0",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q6139319": {
+      "type": "item",
+      "id": "Q6139319",
+      "labels": {
+        "es": {
+          "language": "es",
+          "value": "Taurus"
+        },
+        "en": {
+          "language": "en",
+          "value": "Taurus"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "bd78895b289899dec7e4d131afc9f6d4e434599c",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 2085381,
+                  "id": "Q2085381"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q6139319$E6396D17-18EE-4315-BD29-38F1156CCAD8",
+            "rank": "normal"
+          },
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "f587436bf8373dfcda69b3b54f6202d3dde1443a",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 2608849,
+                  "id": "Q2608849"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q6139319$c9d311c3-4a47-71bb-d24c-a4d25cde5333",
+            "rank": "normal"
+          }
+        ],
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "27ae1dc19a5a9a7fe79f5c44c89edc81ff6ab6aa",
+              "datavalue": {
+                "value": "https://www.penguinlibros.com/es/11335-taurus",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "ffe70325d10cfc55f0dca807ed80ca0b5b97c472",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1321,
+                      "id": "Q1321"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407"
+            ],
+            "id": "Q6139319$b938b06e-4839-3e0e-806f-9768410fcf2c",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q1063607": {
+      "type": "item",
+      "id": "Q1063607",
+      "labels": {
+        "es": {
+          "language": "es",
+          "value": "Taurus KEPD 350"
+        },
+        "en": {
+          "language": "en",
+          "value": "Taurus KEPD 350"
+        }
+      },
+      "claims": {
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "4f11b9bd2a0be2774f36bf805c3a52e9c295a511",
+              "datavalue": {
+                "value": "https://www.mbda-systems.com/product/taurus-kepd-350/",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "id": "Q1063607$5951fb5e-4856-bdbd-c566-fe9817396d62",
+            "rank": "normal"
+          },
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "41843236e70314afd7355985a214d0022986644a",
+              "datavalue": {
+                "value": "https://www.saab.com/products/taurus-kepd-350",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "id": "Q1063607$811dcaa4-446d-0f26-5dbd-45bfcc1d7a94",
+            "rank": "normal"
+          }
+        ],
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "e91d98d3f5f57a3cb62ed3471bff518679d3d4cc",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 18487055,
+                  "id": "Q18487055"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q1063607$8323ABF5-82D3-46F1-85A9-CBEE4C271503",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q10824118": {
+      "type": "item",
+      "id": "Q10824118",
+      "labels": {
+        "es": {
+          "language": "es",
+          "value": "Taurus"
+        },
+        "en": {
+          "language": "en",
+          "value": "Taurus"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 482994,
+                  "id": "Q482994"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q10824118$1F83C8CA-0D41-4063-8068-BC597FDB210F",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q201032": {
+      "type": "item",
+      "id": "Q201032",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Minotaur-C"
+        },
+        "es": {
+          "language": "es",
+          "value": "Taurus"
+        }
+      },
+      "claims": {
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "6ced13cf676ce0507ac396a12474dea8b98ee69f",
+              "datavalue": {
+                "value": "https://www.northropgrumman.com/space/minotaur-rocket/",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1860,
+                      "id": "Q1860"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407"
+            ],
+            "id": "Q201032$5c12f13b-44e8-e1fd-ef93-7c84c97cb080",
+            "rank": "normal"
+          },
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "4aa4b9d511f9c371ea3f134de4df9b477ee5fc9d",
+              "datavalue": {
+                "value": "http://www.orbital.com/SpaceLaunch/Taurus/",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1860,
+                      "id": "Q1860"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407"
+            ],
+            "id": "Q201032$B3BEA63B-3E79-40D6-8C6C-7E50EF7D4E1A",
+            "rank": "deprecated",
+            "references": [
+              {
+                "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 328,
+                          "id": "Q328"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ],
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "aa4ca0462bfb07ebd7a372c54b329b0a35cc9ad3",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 111722634,
+                  "id": "Q111722634"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q201032$70beb9e4-400a-852f-6794-38332e092adc",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q101250960": {
+      "type": "item",
+      "id": "Q101250960",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Taurus"
+        },
+        "es": {
+          "language": "es",
+          "value": "Taurus"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "477ef35019874affa392a3f6d7c7062f10a6d132",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 12308941,
+                  "id": "Q12308941"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q101250960$9fee7847-4f85-c385-d6bd-496d0510814d",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q108312391": {
+      "type": "item",
+      "id": "Q108312391",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Taurus"
+        },
+        "es": {
+          "language": "es",
+          "value": "Taurus"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "bda1ac4cabda917e7eede67007221ae560811ff3",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 777342,
+                  "id": "Q777342"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q108312391$b6538858-42b8-67cc-5a05-d6a539456bbf",
+            "rank": "normal"
+          }
+        ]
+      }
+    }
+  },
+  "success": 1
+}

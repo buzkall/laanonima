@@ -4,7 +4,7 @@ namespace App\Filament\Resources\Books\Pages;
 
 use App\Actions\Books\AttachBookCover;
 use App\Enums\BookCoverOutcome;
-use App\Filament\Resources\Books\Actions\ViewOnSiteAction;
+use App\Filament\Actions\ViewOnSiteAction;
 use App\Filament\Resources\Books\BookResource;
 use App\Models\Book;
 use Filament\Actions\DeleteAction;

@@ -1,0 +1,184 @@
+{
+  "searchinfo": {
+    "search": "Salamandra"
+  },
+  "search": [
+    {
+      "id": "Q2213845",
+      "title": "Q2213845",
+      "pageid": 2137782,
+      "concepturi": "http://www.wikidata.org/entity/Q2213845",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q2213845",
+      "display": {
+        "label": {
+          "value": "Salamandra",
+          "language": "es"
+        },
+        "description": {
+          "value": "revista científica",
+          "language": "es"
+        }
+      },
+      "label": "Salamandra",
+      "description": "revista científica",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Salamandra"
+      }
+    },
+    {
+      "id": "Q62181",
+      "title": "Q62181",
+      "pageid": 64922,
+      "concepturi": "http://www.wikidata.org/entity/Q62181",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q62181",
+      "display": {
+        "label": {
+          "value": "Salamandra",
+          "language": "es"
+        },
+        "description": {
+          "value": "género de anfibios",
+          "language": "es"
+        }
+      },
+      "label": "Salamandra",
+      "description": "género de anfibios",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Salamandra"
+      }
+    },
+    {
+      "id": "Q3945305",
+      "title": "Q3945305",
+      "pageid": 3762277,
+      "concepturi": "http://www.wikidata.org/entity/Q3945305",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q3945305",
+      "display": {
+        "label": {
+          "value": "Salamandra",
+          "language": "es"
+        },
+        "description": {
+          "value": "álbum de Miguel Bosé",
+          "language": "es"
+        }
+      },
+      "label": "Salamandra",
+      "description": "álbum de Miguel Bosé",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Salamandra"
+      }
+    },
+    {
+      "id": "Q111773368",
+      "title": "Q111773368",
+      "pageid": 106697355,
+      "concepturi": "http://www.wikidata.org/entity/Q111773368",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q111773368",
+      "display": {
+        "label": {
+          "value": "Salamandra",
+          "language": "es"
+        },
+        "description": {
+          "value": "apellido",
+          "language": "es"
+        }
+      },
+      "label": "Salamandra",
+      "description": "apellido",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Salamandra"
+      }
+    },
+    {
+      "id": "Q5818708",
+      "title": "Q5818708",
+      "pageid": 5587700,
+      "concepturi": "http://www.wikidata.org/entity/Q5818708",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q5818708",
+      "display": {
+        "label": {
+          "value": "Salamandra",
+          "language": "es"
+        },
+        "description": {
+          "value": "editorial española",
+          "language": "es"
+        }
+      },
+      "label": "Salamandra",
+      "description": "editorial española",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Salamandra"
+      }
+    },
+    {
+      "id": "Q7403560",
+      "title": "Q7403560",
+      "pageid": 7313332,
+      "concepturi": "http://www.wikidata.org/entity/Q7403560",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q7403560",
+      "display": {
+        "label": {
+          "value": "Salamandra",
+          "language": "es"
+        },
+        "description": {
+          "value": "Czech speed metal band",
+          "language": "en"
+        }
+      },
+      "label": "Salamandra",
+      "description": "Czech speed metal band",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Salamandra"
+      }
+    },
+    {
+      "id": "Q5479670",
+      "title": "Q5479670",
+      "pageid": 5240797,
+      "concepturi": "http://www.wikidata.org/entity/Q5479670",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q5479670",
+      "display": {
+        "label": {
+          "value": "Salamandra",
+          "language": "es"
+        },
+        "description": {
+          "value": "grupo musical paraguayo",
+          "language": "es"
+        }
+      },
+      "label": "Salamandra",
+      "description": "grupo musical paraguayo",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Salamandra"
+      }
+    }
+  ],
+  "search-continue": 7,
+  "success": 1
+}

@@ -1,0 +1,187 @@
+{
+  "searchinfo": {
+    "search": "Taurus"
+  },
+  "search": [
+    {
+      "id": "Q10570",
+      "title": "Q10570",
+      "pageid": 11988,
+      "concepturi": "http://www.wikidata.org/entity/Q10570",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q10570",
+      "display": {
+        "label": {
+          "value": "Tauro",
+          "language": "es"
+        },
+        "description": {
+          "value": "constelación zodiacal",
+          "language": "es"
+        }
+      },
+      "label": "Tauro",
+      "description": "constelación zodiacal",
+      "match": {
+        "type": "label",
+        "language": "en",
+        "text": "Taurus"
+      },
+      "aliases": [
+        "Taurus"
+      ]
+    },
+    {
+      "id": "Q6139319",
+      "title": "Q6139319",
+      "pageid": 5933084,
+      "concepturi": "http://www.wikidata.org/entity/Q6139319",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q6139319",
+      "display": {
+        "label": {
+          "value": "Taurus",
+          "language": "es"
+        },
+        "description": {
+          "value": "editorial española",
+          "language": "es"
+        }
+      },
+      "label": "Taurus",
+      "description": "editorial española",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Taurus"
+      }
+    },
+    {
+      "id": "Q1063607",
+      "title": "Q1063607",
+      "pageid": 1012278,
+      "concepturi": "http://www.wikidata.org/entity/Q1063607",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q1063607",
+      "display": {
+        "label": {
+          "value": "Taurus KEPD 350",
+          "language": "es"
+        },
+        "description": {
+          "value": "modelo de misil de crucero aerotransportado de largo alcance",
+          "language": "es"
+        }
+      },
+      "label": "Taurus KEPD 350",
+      "description": "modelo de misil de crucero aerotransportado de largo alcance",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Taurus KEPD 350"
+      }
+    },
+    {
+      "id": "Q10824118",
+      "title": "Q10824118",
+      "pageid": 12096823,
+      "concepturi": "http://www.wikidata.org/entity/Q10824118",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q10824118",
+      "display": {
+        "label": {
+          "value": "Taurus",
+          "language": "es"
+        },
+        "description": {
+          "value": "2010 studio album by Hiền Thục",
+          "language": "en"
+        }
+      },
+      "label": "Taurus",
+      "description": "2010 studio album by Hiền Thục",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Taurus"
+      }
+    },
+    {
+      "id": "Q201032",
+      "title": "Q201032",
+      "pageid": 197727,
+      "concepturi": "http://www.wikidata.org/entity/Q201032",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q201032",
+      "display": {
+        "label": {
+          "value": "Taurus",
+          "language": "es"
+        },
+        "description": {
+          "value": "vehículo de lanzamiento de combustible sólido de cuatro etapas",
+          "language": "es"
+        }
+      },
+      "label": "Taurus",
+      "description": "vehículo de lanzamiento de combustible sólido de cuatro etapas",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Taurus"
+      }
+    },
+    {
+      "id": "Q101250960",
+      "title": "Q101250960",
+      "pageid": 98708413,
+      "concepturi": "http://www.wikidata.org/entity/Q101250960",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q101250960",
+      "display": {
+        "label": {
+          "value": "Taurus",
+          "language": "es"
+        },
+        "description": {
+          "value": "nombre masculino",
+          "language": "es"
+        }
+      },
+      "label": "Taurus",
+      "description": "nombre masculino",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Taurus"
+      }
+    },
+    {
+      "id": "Q108312391",
+      "title": "Q108312391",
+      "pageid": 103575140,
+      "concepturi": "http://www.wikidata.org/entity/Q108312391",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q108312391",
+      "display": {
+        "label": {
+          "value": "Taurus",
+          "language": "es"
+        },
+        "description": {
+          "value": "cognomen de la Antigua Roma",
+          "language": "es"
+        }
+      },
+      "label": "Taurus",
+      "description": "cognomen de la Antigua Roma",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Taurus"
+      }
+    }
+  ],
+  "search-continue": 7,
+  "success": 1
+}

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Publishers\Tables;
 
+use App\Filament\Resources\Publishers\Actions\FetchLogoAction;
+use App\Filament\Resources\Publishers\Actions\MergePublishersAction;
 use App\Models\Publisher;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -62,6 +64,8 @@ class PublishersTable
                     ),
             ], layout: FiltersLayout::AboveContentCollapsible)
             ->recordActions([
+                FetchLogoAction::make()->iconButton(),
+                MergePublishersAction::make()->iconButton(),
                 EditAction::make()->iconButton(),
             ])
             ->toolbarActions([

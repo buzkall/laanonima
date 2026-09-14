@@ -2,6 +2,7 @@
 
 use App\Models\Book;
 use App\Models\Publisher;
+use Illuminate\Support\Facades\Storage;
 
 it('lists everything on the shelf from one imprint', function(): void {
     $blackie = Publisher::factory()->create(['name' => 'Blackie Books', 'slug' => 'blackie-books']);
@@ -54,4 +55,30 @@ it('offers the imprint\'s shelf to be shared, with a line that names the shop', 
             'publisher' => 'Blackie Books',
             'shop'      => config('app.name'),
         ]));
+});
+
+it('shows the imprint\'s logotype beside its name', function(): void {
+    Storage::fake('public');
+    $publisher = Publisher::factory()->create(['name' => 'Norma Editorial']);
+    $publisher->addMediaFromString(fakeLogo())->usingFileName('norma.png')->toMediaCollection(Publisher::LOGO_COLLECTION);
+
+    $this->get(route('publishers.show', $publisher))
+        ->assertOk()
+        ->assertSee('src="' . $publisher->fresh()->logoUrl() . '"', false);
+});
+
+it('shows no logotype for an imprint that has none', function(): void {
+    $publisher = Publisher::factory()->create(['name' => 'Norma Editorial']);
+
+    $this->get(route('publishers.show', $publisher))
+        ->assertOk()
+        ->assertDontSee('alt="Norma Editorial"', false);
+});
+
+it('never links a reader away to the imprint\'s own website', function(): void {
+    $publisher = Publisher::factory()->create(['website' => 'https://www.normaeditorial.com/']);
+
+    $this->get(route('publishers.show', $publisher))
+        ->assertOk()
+        ->assertDontSee('href="https://www.normaeditorial.com/"', false);
 });

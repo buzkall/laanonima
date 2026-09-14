@@ -9,7 +9,6 @@ use App\Models\Publisher;
 use App\Models\Subject;
 use App\Support\Cupida\CupidaCatalog;
 use Illuminate\Database\UniqueConstraintViolationException;
-use Illuminate\Support\Str;
 
 /**
  * File a book out of the scraped shop pool as one of ours.
@@ -139,7 +138,7 @@ class ImportShopBook
             return null;
         }
 
-        return Publisher::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name])->id;
+        return Publisher::named($name)->id;
     }
 
     /**

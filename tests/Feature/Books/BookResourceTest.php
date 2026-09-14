@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Validator;
 use function Pest\Livewire\livewire;
 
 beforeEach(function(): void {
-    $this->actingAs(User::factory()->create());
+    /* An administrator: the resource's policy is the bookseller's, and a
+       reader signed in here would be refused the page rather than the record. */
+    $this->actingAs(User::factory()->admin()->create());
     config()->set('books.metadata.google_books.key');
 });
 

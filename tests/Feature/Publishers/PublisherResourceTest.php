@@ -15,7 +15,9 @@ use function Pest\Livewire\livewire;
 
 beforeEach(function(): void {
     Storage::fake('public');
-    $this->actingAs(User::factory()->create());
+    /* An administrator: the resource's policy is the bookseller's, and a
+       reader signed in here would be refused the page rather than the record. */
+    $this->actingAs(User::factory()->admin()->create());
 });
 
 it('lists publishers', function(): void {
@@ -195,4 +197,11 @@ it('sends the edit action of a listed book to the books resource', function(): v
         'pageClass'   => EditPublisher::class,
     ])
         ->assertTableActionHasUrl('edit', BookResource::getUrl('edit', ['record' => $book]), record: $book);
+});
+
+it('links the edit page to the imprint\'s page on the site', function(): void {
+    $publisher = Publisher::factory()->create();
+
+    livewire(EditPublisher::class, ['record' => $publisher->getRouteKey()])
+        ->assertActionHasUrl('viewOnSite', route('publishers.show', $publisher));
 });

@@ -49,4 +49,17 @@ class PublisherPolicy
     {
         return $user->isBookseller();
     }
+
+    /**
+     * Fold duplicate publishers into one.
+     *
+     * Its own ability rather than `delete`, although a merge does delete the
+     * absorbed rows: nothing is lost with them -- the books, the website, the
+     * description and the logotype move to the survivor first -- so the demo's
+     * catch on `delete` has no reason to reach it (see `DemoMode`).
+     */
+    public function merge(User $user, Publisher $publisher): bool
+    {
+        return $user->isBookseller();
+    }
 }

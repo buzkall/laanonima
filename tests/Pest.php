@@ -1,7 +1,10 @@
 <?php
 
 use App\Support\Cupida\CupidaCatalog;
+use App\Support\PublisherLogos\HostResolver;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -206,4 +209,70 @@ function useCupidaFixture(): void
     Storage::fake('portraits');
 
     app()->forgetInstance(CupidaCatalog::class);
+}
+
+/**
+ * A real PNG with a transparent background and a dark block in the middle,
+ * which is the shape of a logotype as far as the pipeline can tell.
+ */
+function fakeLogo(int $width = 400, int $height = 200): string
+{
+    $image = imagecreatetruecolor($width, $height);
+    imagealphablending($image, false);
+    imagesavealpha($image, true);
+    imagefill($image, 0, 0, (int)imagecolorallocatealpha($image, 0, 0, 0, 127));
+    imagefilledrectangle($image, intdiv($width, 4), intdiv($height, 4), intdiv($width * 3, 4), intdiv($height * 3, 4), (int)imagecolorallocate($image, 20, 20, 20));
+
+    ob_start();
+    imagepng($image);
+
+    return (string)ob_get_clean();
+}
+
+/**
+ * Say what host names resolve to, so the SSRF guard never asks real DNS.
+ *
+ * @param  array<string, list<string>>  $addresses
+ */
+function fakeHosts(array $addresses): void
+{
+    app()->instance(HostResolver::class, new class($addresses) extends HostResolver
+    {
+        /**
+         * @param  array<string, list<string>>  $addresses
+         */
+        public function __construct(private readonly array $addresses) {}
+
+        public function resolve(string $host): array
+        {
+            return $this->addresses[$host] ?? [];
+        }
+    });
+}
+
+/**
+ * Answer Wikidata's search from the fixture named for each text searched, and
+ * nothing for any other text.
+ *
+ * One closure rather than URL patterns, because the legal-form retry is two
+ * searches on the same endpoint that differ only in the text.
+ *
+ * @param  array<string, string>  $searches  searched text => fixture under publisher-logos/
+ */
+function fakePublisherWikidata(array $searches, string $entities = 'entities-norma', bool $commons = true): void
+{
+    Http::fake([
+        'www.wikidata.org/*' => function(Request $request) use ($searches, $entities) {
+            if ($request['action'] !== 'wbsearchentities') {
+                return Http::response(apiFixture("publisher-logos/{$entities}"));
+            }
+
+            $fixture = $searches[$request['search']] ?? null;
+
+            return Http::response($fixture === null ? ['search' => []] : apiFixture("publisher-logos/{$fixture}"));
+        },
+        'commons.wikimedia.org/*' => $commons
+            ? Http::response(apiFixture('publisher-logos/imageinfo-norma'))
+            : Http::response('', 500),
+    ]);
 }

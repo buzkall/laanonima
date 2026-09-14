@@ -187,3 +187,26 @@ it('takes a portrait from the panel and shows it on the public page', function()
         ->assertOk()
         ->assertSee($author->fresh()->portraitUrl('thumb'));
 });
+
+it('links the edit page to the author\'s page on the site', function(): void {
+    $author = Author::factory()->create(['name' => 'Almudena Grandes']);
+    Book::factory()->create(['contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']]]);
+
+    livewire(EditAuthor::class, ['record' => $author->getRouteKey()])
+        ->assertActionHasUrl('viewOnSite', route('authors.show', $author));
+});
+
+/*
+ | The author page is a 404 while nothing of theirs is on the web, so a link
+ | to it would lead nowhere.
+ */
+it('offers no link to the site for an author with nothing on the web', function(): void {
+    $author = Author::factory()->create(['name' => 'Almudena Grandes']);
+    Book::factory()->create([
+        'is_active'    => false,
+        'contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']],
+    ]);
+
+    livewire(EditAuthor::class, ['record' => $author->getRouteKey()])
+        ->assertActionHidden('viewOnSite');
+});

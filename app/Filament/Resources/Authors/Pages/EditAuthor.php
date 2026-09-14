@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Authors\Pages;
 
+use App\Filament\Actions\ViewOnSiteAction;
 use App\Filament\Resources\Authors\AuthorResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
@@ -13,6 +14,7 @@ class EditAuthor extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            ViewOnSiteAction::make(),
             DeleteAction::make(),
         ];
     }

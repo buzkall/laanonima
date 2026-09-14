@@ -1,0 +1,563 @@
+{
+  "entities": {
+    "Q2213845": {
+      "type": "item",
+      "id": "Q2213845",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Salamandra"
+        },
+        "es": {
+          "language": "es",
+          "value": "Salamandra"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "79be89a40eb5519d22350a1eb211ad5c13106a0b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 5633421,
+                  "id": "Q5633421"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "q2213845$69D8CA90-BF9D-482F-A00E-ED1D42127E8C",
+            "rank": "normal"
+          }
+        ],
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "87f8d25cc7ccf122c5791be729f5a27aa79cce8d",
+              "datavalue": {
+                "value": "https://www.salamandra-journal.com/",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1860,
+                      "id": "Q1860"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407"
+            ],
+            "id": "Q2213845$8969A6CD-5810-44B0-A539-DA6C4E202756",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 48183,
+                          "id": "Q48183"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Q62181": {
+      "type": "item",
+      "id": "Q62181",
+      "labels": {
+        "es": {
+          "language": "es",
+          "value": "Salamandra"
+        },
+        "en": {
+          "language": "en",
+          "value": "Salamandra"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "06629d890d7ab0ff85c403d8aadf57ce9809c01f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 16521,
+                  "id": "Q16521"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q62181$CD4C8954-BC2A-4BA5-AE23-4BEC2D65A998",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q3945305": {
+      "type": "item",
+      "id": "Q3945305",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Salamandra"
+        },
+        "es": {
+          "language": "es",
+          "value": "Salamandra"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 482994,
+                  "id": "Q482994"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "q3945305$D4221B1C-F281-42FB-A821-4F1A503DA6A1",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 328,
+                          "id": "Q328"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Q111773368": {
+      "type": "item",
+      "id": "Q111773368",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Salamandra"
+        },
+        "es": {
+          "language": "es",
+          "value": "Salamandra"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "3a01d0950849b76433d9aeec3107b57e86bb6378",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 101352,
+                  "id": "Q101352"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q111773368$5C0A06D1-10E7-4BD1-856C-E099BC4DC736",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q5818708": {
+      "type": "item",
+      "id": "Q5818708",
+      "labels": {
+        "es": {
+          "language": "es",
+          "value": "Salamandra"
+        },
+        "en": {
+          "language": "en",
+          "value": "Salamandra"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "bd78895b289899dec7e4d131afc9f6d4e434599c",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 2085381,
+                  "id": "Q2085381"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q5818708$f5a21f84-499e-4a08-9605-3497b9cc7efd",
+            "rank": "normal"
+          }
+        ],
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "583d44005a7b83431aad22cce38198587c1ac58f",
+              "datavalue": {
+                "value": "http://www.salamandra.es/",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "ffe70325d10cfc55f0dca807ed80ca0b5b97c472",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1321,
+                      "id": "Q1321"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407"
+            ],
+            "id": "Q5818708$e2959a50-42dd-75e6-b410-9172adbe1643",
+            "rank": "deprecated"
+          },
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "1444cd0d5e4b0775e31e5d1b4607507c1fbfcd26",
+              "datavalue": {
+                "value": "https://www.penguinlibros.com/es/11942-salamandra",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "qualifiers": {
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "ffe70325d10cfc55f0dca807ed80ca0b5b97c472",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1321,
+                      "id": "Q1321"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "qualifiers-order": [
+              "P407"
+            ],
+            "id": "Q5818708$652a8873-4b6e-4cda-0e91-2f9351563f16",
+            "rank": "normal"
+          }
+        ],
+        "P154": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P154",
+              "hash": "8efeaa56f3db7716b7f87b3f51169de37b0ae5d9",
+              "datavalue": {
+                "value": "Ediciones Salamandra Logo.png",
+                "type": "string"
+              },
+              "datatype": "commonsMedia"
+            },
+            "type": "statement",
+            "id": "Q5818708$9fd9a808-4a6d-b724-7725-df40f82fbd90",
+            "rank": "normal"
+          }
+        ]
+      }
+    },
+    "Q7403560": {
+      "type": "item",
+      "id": "Q7403560",
+      "labels": {
+        "en": {
+          "language": "en",
+          "value": "Salamandra"
+        },
+        "es": {
+          "language": "es",
+          "value": "Salamandra"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 215380,
+                  "id": "Q215380"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q7403560$A37F2078-E7AC-49C6-A736-BEC0956651A7",
+            "rank": "normal"
+          }
+        ],
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "d0533b3bfeb6650a808b0d9f8cbc6a2b4f9596fa",
+              "datavalue": {
+                "value": "http://www.salamandra.cz",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "id": "Q7403560$9E069246-E55C-4D88-808B-6E25B031DDBD",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 328,
+                          "id": "Q328"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "Q5479670": {
+      "type": "item",
+      "id": "Q5479670",
+      "labels": {
+        "es": {
+          "language": "es",
+          "value": "Salamandra"
+        },
+        "en": {
+          "language": "en",
+          "value": "Salamandra"
+        }
+      },
+      "claims": {
+        "P31": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "20b3c9267c82af90c6e03e3b112a810207b32cc0",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 43229,
+                  "id": "Q43229"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q5479670$B5DAE89A-E1E5-4F7F-B757-E8726D75146C",
+            "rank": "normal"
+          },
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P31",
+              "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 215380,
+                  "id": "Q215380"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            "type": "statement",
+            "id": "Q5479670$507E1C24-5DF2-4527-9725-D7A98F75CB43",
+            "rank": "normal"
+          }
+        ],
+        "P856": [
+          {
+            "mainsnak": {
+              "snaktype": "value",
+              "property": "P856",
+              "hash": "2002e55c6c0150e886ca575c209a08289443fed0",
+              "datavalue": {
+                "value": "http://www.salamandrapy.com",
+                "type": "string"
+              },
+              "datatype": "url"
+            },
+            "type": "statement",
+            "id": "Q5479670$1E8C5356-910D-4596-B776-EAD55A003F95",
+            "rank": "normal",
+            "references": [
+              {
+                "hash": "a9db2843efc24482513f921b874651b6757b29ae",
+                "snaks": {
+                  "P143": [
+                    {
+                      "snaktype": "value",
+                      "property": "P143",
+                      "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                      "datavalue": {
+                        "value": {
+                          "entity-type": "item",
+                          "numeric-id": 8449,
+                          "id": "Q8449"
+                        },
+                        "type": "wikibase-entityid"
+                      },
+                      "datatype": "wikibase-item"
+                    }
+                  ],
+                  "P4656": [
+                    {
+                      "snaktype": "value",
+                      "property": "P4656",
+                      "hash": "e1cf66f77b9686a7dab0fdb683c83805fec18d14",
+                      "datavalue": {
+                        "value": "https://es.wikipedia.org/w/index.php?title=Salamandra_(banda)&oldid=119468995",
+                        "type": "string"
+                      },
+                      "datatype": "url"
+                    }
+                  ]
+                },
+                "snaks-order": [
+                  "P143",
+                  "P4656"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "success": 1
+}

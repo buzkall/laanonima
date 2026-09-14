@@ -1,0 +1,33 @@
+{
+  "searchinfo": {
+    "search": "Norma Editorial"
+  },
+  "search": [
+    {
+      "id": "Q2309266",
+      "title": "Q2309266",
+      "pageid": 2230747,
+      "concepturi": "http://www.wikidata.org/entity/Q2309266",
+      "repository": "wikidata",
+      "url": "//www.wikidata.org/wiki/Q2309266",
+      "display": {
+        "label": {
+          "value": "Norma Editorial",
+          "language": "es"
+        },
+        "description": {
+          "value": "editorial española de historietas",
+          "language": "es"
+        }
+      },
+      "label": "Norma Editorial",
+      "description": "editorial española de historietas",
+      "match": {
+        "type": "label",
+        "language": "es",
+        "text": "Norma Editorial"
+      }
+    }
+  ],
+  "success": 1
+}

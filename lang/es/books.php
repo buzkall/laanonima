@@ -166,7 +166,6 @@ return [
     ],
 
     'actions' => [
-        'view_on_site'  => 'Ver en la web',
         'edit_in_panel' => 'Editar en el panel',
     ],
 
@@ -230,11 +229,10 @@ return [
         ],
 
         'publisher' => [
-            'kicker'  => 'Editorial',
-            'intro'   => 'Lo que tenemos en la librería publicado por :publisher.',
-            'empty'   => 'Ahora mismo no tenemos nada de :publisher en la web. Pregúntanos: casi siempre podemos encargarlo.',
-            'website' => 'Su web',
-            'all'     => 'Ver todo de :publisher',
+            'kicker' => 'Editorial',
+            'intro'  => 'Lo que tenemos en la librería publicado por :publisher.',
+            'empty'  => 'Ahora mismo no tenemos nada de :publisher en la web. Pregúntanos: casi siempre podemos encargarlo.',
+            'all'    => 'Ver todo de :publisher',
         ],
 
         'shelf' => [

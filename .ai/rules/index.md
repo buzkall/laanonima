@@ -25,12 +25,15 @@ Before planning or editing, find the row whose globs match the file's path and r
 | app/Models/Author.php, app/Support/Og/OgCard.php, tests/** | .ai/rules/og.md |
 | app/Filament/Pages/CorreosPlayground.php,config/correos.php,config/laravel-correos.php | .ai/rules/pages.md |
 | app/Providers/** | .ai/rules/providers.md |
+| app/Models/Publisher.php,app/Support/PublisherName.php,app/Support/PublisherLogos/**,app/Actions/Publishers/**,app/Actions/Books/ImportShopBook.php,app/Filament/Resources/Publishers/**,app/Console/Commands/FetchPublisherLogos.php,config/publishers.php | .ai/rules/publishers.md |
+| app/Filament/Resources/** | .ai/rules/resources.md |
 | app/Filament/Resources/Users/Schemas/UserForm.php | .ai/rules/schemas.md |
 | app/Models/Subject.php, app/Models/Book.php, app/Console/Commands/ImportBookSubjects.php, database/seeders/SubjectSeeder.php, app/Support/BookMetadata/**, app/Support/Shop/**, app/Filament/Resources/Books/** | .ai/rules/subjects.md |
 | app/Actions/Books/ImportShopBook.php,app/Actions/Books/EnrichImportedBook.php,app/Console/Commands/EnrichShopBooks.php,app/Actions/Cupida/RecommendBook.php,app/Support/Cupida/Recommendation.php | .ai/rules/support-cupida.md |
 | resources/views/books/shelf.blade.php,resources/js/shelf.js,resources/css/shelf.css,app/Support/ShelfBook.php | .ai/rules/support.md |
 | app/Filament/Resources/**/Tables/*.php | .ai/rules/tables.md |
 | tests/** | .ai/rules/tests.md |
+| app/Providers/Filament/**,resources/views/filament/topbar/** | .ai/rules/topbar.md |
 | app/Filament/Resources/Users/** | .ai/rules/users.md |
 | lang/vendor/** | .ai/rules/vendor.md |
 | app/Actions/Portraits/AttachAuthorPortrait.php,app/Console/Commands/FetchCupidaPortraits.php,app/Models/Author.php,resources/views/books/author.blade.php | .ai/rules/views-books.md |
