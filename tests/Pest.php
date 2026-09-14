@@ -123,7 +123,7 @@ function expectColorNear(?string $color, string $expected): void
  */
 function langVendorPath(): string
 {
-    return dirname(__DIR__) . '/lang/vendor';
+    return __DIR__ . '/../lang/vendor';
 }
 
 /**
