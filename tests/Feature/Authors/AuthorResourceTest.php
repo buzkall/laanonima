@@ -15,13 +15,25 @@ use Illuminate\Support\Facades\Storage;
 use function Pest\Livewire\livewire;
 
 beforeEach(function(): void {
-    $this->actingAs(User::factory()->create());
+    /* An administrator: the resource's policy is the bookseller's, and a
+       reader signed in here would be refused the page rather than the record. */
+    $this->actingAs(User::factory()->admin()->create());
 });
 
 it('lists authors', function(): void {
     $authors = Author::factory()->count(3)->create();
 
     livewire(ListAuthors::class)->assertCanSeeTableRecords($authors);
+});
+
+it('shows the portrait in the listing', function(): void {
+    $author = Author::factory()->create();
+    $portrait = $author->addMediaFromString(fakeCover(480, 640))
+        ->usingFileName('retrato.jpg')
+        ->toMediaCollection(Author::PORTRAIT_COLLECTION);
+
+    livewire(ListAuthors::class)
+        ->assertTableColumnStateSet('portrait', [$portrait->uuid], $author);
 });
 
 it('searches by name', function(): void {

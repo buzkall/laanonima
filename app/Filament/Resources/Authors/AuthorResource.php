@@ -19,7 +19,7 @@ use UnitEnum;
 class AuthorResource extends Resource
 {
     protected static ?string $model = Author::class;
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPencil;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
     protected static ?string $recordTitleAttribute = 'name';
     protected static ?int $navigationSort = 15;
 

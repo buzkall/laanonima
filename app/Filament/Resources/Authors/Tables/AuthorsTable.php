@@ -6,6 +6,7 @@ use App\Models\Author;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\TernaryFilter;
@@ -18,6 +19,14 @@ class AuthorsTable
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('portrait')
+                    ->label(__('authors.fields.portrait'))
+                    ->collection(Author::PORTRAIT_COLLECTION)
+                    ->conversion('thumb')
+                    ->circular()
+                    ->imageHeight(56)
+                    ->sortable(false),
+
                 TextColumn::make('name')
                     ->label(__('authors.fields.name'))
                     ->description(fn(Author $record): ?string => $record->bioExcerpt(90))
