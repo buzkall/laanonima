@@ -41,7 +41,7 @@ return [
         'public' => [
             'driver'     => 'local',
             'root'       => storage_path('app/public'),
-            'url'        => rtrim((string)env('APP_URL', 'http://localhost'), '/') . '/storage',
+            'url'        => rtrim((string)env('APP_URL'), '/') . '/storage',
             'visibility' => 'public',
             'throw'      => false,
             'report'     => false,
@@ -59,7 +59,7 @@ return [
         'portraits' => [
             'driver'     => 'local',
             'root'       => storage_path('app/public/cupida/authors'),
-            'url'        => rtrim((string)env('APP_URL', 'http://localhost'), '/') . '/storage/cupida/authors',
+            'url'        => rtrim((string)env('APP_URL'), '/') . '/storage/cupida/authors',
             'visibility' => 'public',
             'throw'      => false,
             'report'     => false,
@@ -78,7 +78,7 @@ return [
         'og' => [
             'driver'     => 'local',
             'root'       => storage_path('app/public/og'),
-            'url'        => rtrim((string)env('APP_URL', 'http://localhost'), '/') . '/storage/og',
+            'url'        => rtrim((string)env('APP_URL'), '/') . '/storage/og',
             'visibility' => 'public',
             'throw'      => false,
             'report'     => false,
@@ -95,6 +95,16 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw'                   => false,
             'report'                  => false,
+        ],
+
+        // Finisterre's attachments. Outside public/, so the web server cannot hand
+        // them out: the package serves them only to users who can see their task.
+        'finisterre' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/finisterre-files'),
+            'url'        => rtrim((string)env('APP_URL'), '/') . '/storage/finisterre-files',
+            'visibility' => 'public',
+            'throw'      => false,
         ],
 
     ],

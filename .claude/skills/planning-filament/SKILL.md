@@ -21,6 +21,12 @@ making decisions. Do not implement the feature.
    requested feature.
 3. Inspect the application for existing structure and conventions that affect
    the plan.
-4. Verify Filament and Laravel syntax using `search-docs` before finalizing.
-5. Read `vendor/filament/blueprint/resources/markdown/planning/checklist.md` and
+4. Verify APIs and affected lifecycle ordering against documentation and
+   resolved installed framework behavior; follow the overview's fallback if
+   `search-docs` is unavailable.
+5. Reconcile related requirements across affected state transitions using the
+   overview's consistency check. Resolve consequential domain choices with the
+   user; specify discriminating tests and their prerequisites using
+   `testing.md`.
+6. Read `vendor/filament/blueprint/resources/markdown/planning/checklist.md` and
    ensure every required implementation detail is copied into the plan.

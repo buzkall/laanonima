@@ -27,6 +27,7 @@
         "debugging-output-and-previewing-html-using-ray",
         "debug-using-debugbar",
         "filament-security-audit",
-        "planning-filament"
+        "planning-filament",
+        "reviewing-filament-plans"
     ]
 }
