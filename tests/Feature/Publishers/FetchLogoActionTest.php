@@ -38,6 +38,19 @@ it('warns when nothing usable is found', function(): void {
     expect($publisher->refresh()->hasMedia(Publisher::LOGO_COLLECTION))->toBeFalse();
 });
 
+it('looks straight away for a publisher with no logotype, even one already checked', function(): void {
+    /* The regression: a heading and a description of the action's own make
+       Filament open the modal regardless, so every row was asked whether to
+       replace a logotype it did not have. */
+    fakePublisherWikidata([]);
+    $publisher = Publisher::factory()->create(['website' => null]);
+    $publisher->forceFill(['logo_checked_at' => now()->subDay()])->saveQuietly();
+
+    livewire(ListPublishers::class)
+        ->mountAction(TestAction::make('fetchLogo')->table($publisher))
+        ->assertNotified(__('publishers.logo_fetch.missing_title'));
+});
+
 it('asks before looking again for a publisher that has a logotype', function(): void {
     Http::fake();
     $publisher = Publisher::factory()->create();
