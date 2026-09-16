@@ -65,7 +65,8 @@ class EditProfile extends BaseEditProfile
      * The picture the panel shows in the user menu, in place of the initials.
      *
      * It opens the section so the fields below still pair up evenly: avatar
-     * and name, address and telephone, then the two password boxes.
+     * and name, address and telephone, then the two password boxes. The circle
+     * is centered in its cell rather than hugging the label's edge.
      */
     protected function getAvatarFormComponent(): Component
     {
@@ -78,7 +79,8 @@ class EditProfile extends BaseEditProfile
             ->disk(config('media-library.disk_name'))
             ->avatar()
             ->imageEditor()
-            ->circleCropper();
+            ->circleCropper()
+            ->alignCenter();
     }
 
     protected function getPhoneFormComponent(): Component
