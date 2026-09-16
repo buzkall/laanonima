@@ -224,6 +224,9 @@ class AppServiceProvider extends ServiceProvider
      * filter out of the indicators. And `->default('')` is what lights that
      * button on a page that arrives with no filter set, because the filter's own
      * state is `null` there while the option's value is `''`.
+     *
+     * The `fi-ternary-filter` class is what the panel theme hangs the "blank button
+     * never looks selected" rule on, so the filter rows stay quiet until one is set.
      */
     protected function configureTernaryFilters(): void
     {
@@ -232,6 +235,7 @@ class AppServiceProvider extends ServiceProvider
                 ToggleButtons::make('value')
                     ->label($filter->getLabel())
                     ->grouped()
+                    ->extraAttributes(['class' => 'fi-ternary-filter'])
                     ->options([
                         ''  => $filter->getPlaceholder(),
                         '1' => $filter->getTrueLabel(),

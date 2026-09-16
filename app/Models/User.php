@@ -7,6 +7,7 @@ use App\Enums\UserRole;
 use Arzcode\Finisterre\Traits\FinisterreUserTrait;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -19,6 +20,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @property int $id
@@ -35,12 +39,17 @@ use Illuminate\Support\Str;
  */
 #[Fillable(['name', 'email', 'phone', 'role', 'password'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasMedia
 {
+    /**
+     * A user has one picture of themselves, replaced rather than accumulated.
+     */
+    public const AVATAR_COLLECTION = 'avatar';
+
     use FinisterreUserTrait;
 
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, InteractsWithMedia, Notifiable;
 
     /**
      * Get the attributes that should be cast.
@@ -54,6 +63,30 @@ class User extends Authenticatable implements FilamentUser
             'password'          => 'hashed',
             'role'              => UserRole::class,
         ];
+    }
+
+    /**
+     * The panel draws the avatar at a few dozen pixels, so it reads a square
+     * thumbnail rather than whatever size the photo was uploaded at. The
+     * conversion runs inline: there is no worker in front of the panel.
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(self::AVATAR_COLLECTION)
+            ->singleFile()
+            ->registerMediaConversions(function(): void {
+                $this->addMediaConversion('thumb')
+                    ->nonQueued()
+                    ->fit(Fit::Crop, 160, 160);
+            });
+    }
+
+    /**
+     * Null falls back to Filament's generated initials.
+     */
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->getFirstMedia(self::AVATAR_COLLECTION)?->getAvailableUrl(['thumb']);
     }
 
     /**

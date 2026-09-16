@@ -4,7 +4,9 @@ use App\Filament\Auth\EditProfile;
 use App\Models\User;
 use Filament\Actions\Testing\TestAction;
 use Filament\Facades\Filament;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 beforeEach(function(): void {
@@ -108,4 +110,23 @@ it('does not store the password confirmation', function(): void {
         ->assertHasNoFormErrors();
 
     expect($this->client->refresh()->getAttributes())->not->toHaveKey('passwordConfirmation');
+});
+
+it('uploads an avatar to the media library and shows it in the panel', function(): void {
+    Storage::fake('public');
+
+    Livewire::test(EditProfile::class)
+        ->fillForm(['avatar' => UploadedFile::fake()->image('retrato.jpg', 400, 400)])
+        ->call('save')
+        ->assertHasNoFormErrors();
+
+    $avatar = $this->client->refresh()->getFirstMedia(User::AVATAR_COLLECTION);
+
+    expect($avatar)->not->toBeNull()
+        ->and($avatar->disk)->toBe(config('media-library.disk_name'))
+        ->and(Filament::getUserAvatarUrl($this->client))->toEndWith($avatar->getAvailableUrl(['thumb']));
+});
+
+it('falls back to generated initials without an avatar', function(): void {
+    expect($this->client->getFilamentAvatarUrl())->toBeNull();
 });

@@ -11,6 +11,7 @@ return [
     ],
 
     'fields' => [
+        'avatar'                => 'Foto de perfil',
         'name'                  => 'Nombre',
         'role'                  => 'Rol',
         'email'                 => 'Correo electrónico',

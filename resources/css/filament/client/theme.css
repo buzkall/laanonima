@@ -4,3 +4,21 @@
 @source '../../../../resources/views/filament/client/**/*';
 @source '../../../../vendor/arzcode/finisterre/resources/views/**/*.blade.php';
 @source '../../../../vendor/relaticle/flowforge/resources/views/**/*.blade.php';
+
+/* Ternary filters: the blank "-" button means "no filter", so keep it looking
+   unselected when checked instead of painting every filter row in the primary
+   color. The class is set in AppServiceProvider::configureTernaryFilters(). */
+.fi-ternary-filter input[value='']:checked + label {
+    background-color: var(--color-white);
+    color: var(--gray-950);
+}
+.fi-ternary-filter input[value='']:checked + label:hover {
+    background-color: var(--gray-50);
+}
+.fi-ternary-filter input[value='']:checked + label:where(.dark, .dark *) {
+    background-color: color-mix(in oklab, var(--color-white) 5%, transparent);
+    color: var(--color-white);
+}
+.fi-ternary-filter input[value='']:checked + label:where(.dark, .dark *):hover {
+    background-color: color-mix(in oklab, var(--color-white) 10%, transparent);
+}

@@ -3,8 +3,10 @@
 namespace App\Filament\Auth;
 
 use App\Filament\Actions\GeneratePasswordAction;
+use App\Models\User;
 use App\Support\AccountPassword;
 use Filament\Auth\Pages\EditProfile as BaseEditProfile;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Section;
@@ -39,6 +41,7 @@ class EditProfile extends BaseEditProfile
                     ->columns(2)
                     ->columnSpanFull()
                     ->schema([
+                        $this->getAvatarFormComponent(),
                         $this->getNameFormComponent(),
                         $this->getEmailFormComponent(),
                         $this->getPhoneFormComponent(),
@@ -56,6 +59,26 @@ class EditProfile extends BaseEditProfile
     public function defaultForm(Schema $schema): Schema
     {
         return parent::defaultForm($schema)->inlineLabel(false);
+    }
+
+    /**
+     * The picture the panel shows in the user menu, in place of the initials.
+     *
+     * It opens the section so the fields below still pair up evenly: avatar
+     * and name, address and telephone, then the two password boxes.
+     */
+    protected function getAvatarFormComponent(): Component
+    {
+        return SpatieMediaLibraryFileUpload::make('avatar')
+            ->label(__('user.fields.avatar'))
+            ->collection(User::AVATAR_COLLECTION)
+            ->conversion('thumb')
+            /* Filament would otherwise upload to FILESYSTEM_DISK rather than
+               the disk the media library reads back from. */
+            ->disk(config('media-library.disk_name'))
+            ->avatar()
+            ->imageEditor()
+            ->circleCropper();
     }
 
     protected function getPhoneFormComponent(): Component
