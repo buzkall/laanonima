@@ -26,6 +26,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use pxlrbt\FilamentEnvironmentIndicator\EnvironmentIndicatorPlugin;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -86,6 +87,15 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(MagicLoginPlugin::make())
             ->plugins([
                 FinisterrePlugin::make(),
+
+                // The page lists, makes, downloads and deletes backups; each of
+                // those is a gate ability defined in AppServiceProvider. The job
+                // runs on the default queue the worker already listens to, and
+                // its timeout has to stay under the connection's retry_after
+                // (90s) or the worker starts a second copy of a slow backup.
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->authorize(fn(): bool => auth()->user()?->isBookseller() ?? false)
+                    ->timeout(80),
 
                 EnvironmentIndicatorPlugin::make()
                     ->visible(fn(): true => true) // override the plugin's check for the super_admin role

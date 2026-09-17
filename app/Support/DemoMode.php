@@ -34,6 +34,10 @@ class DemoMode
      * and neither half of that is something a stranger poking at the demo
      * should be able to do to a real reader's order.
      *
+     * The backup abilities are the rest. Downloading one hands a stranger every
+     * reader's details and the `.env`, deleting one is a delete, and making one
+     * on demand is a way to fill the disk.
+     *
      * @var list<string>
      */
     public const array BLOCKED_ABILITIES = [
@@ -42,6 +46,18 @@ class DemoMode
         'forceDelete',
         'forceDeleteAny',
         'withdraw',
+        ...self::BACKUP_ABILITIES,
+    ];
+
+    /**
+     * The abilities the backup plugin asks for, defined in `AppServiceProvider`.
+     *
+     * @var list<string>
+     */
+    public const array BACKUP_ABILITIES = [
+        'create-backup',
+        'download-backup',
+        'delete-backup',
     ];
 
     /**

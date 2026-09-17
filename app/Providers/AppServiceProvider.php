@@ -80,6 +80,23 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDefaults();
         $this->syncBookCoverColors();
         $this->blockDestructiveAbilitiesInDemoMode();
+        $this->defineBackupAbilities();
+    }
+
+    /**
+     * Who may make, download and delete backups on the admin panel's Backups page.
+     *
+     * The plugin asks these by name and hides each action when the answer is
+     * no, and an ability nobody defined is a no -- so without them the page
+     * lists backups with nothing to do about them. A backup holds every
+     * reader's name, email and telephone plus the `.env`, which is why they
+     * are the shop's alone and why `DemoMode` refuses all three.
+     */
+    protected function defineBackupAbilities(): void
+    {
+        foreach (DemoMode::BACKUP_ABILITIES as $ability) {
+            Gate::define($ability, fn(User $user): bool => $user->isBookseller());
+        }
     }
 
     /**

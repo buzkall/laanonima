@@ -59,7 +59,7 @@ Two things worth keeping from it:
   form if this ever needs guarding in code again.
 
 ## Demo mode blocks destructive abilities at the gate
-`config('site.demo_mode')` (env `DEMO_MODE`, **on unless set to false**) refuses the abilities listed in `DemoMode::BLOCKED_ABILITIES` — delete, deleteAny, forceDelete, forceDeleteAny, withdraw — to everybody, administrators included.
+`config('site.demo_mode')` (env `DEMO_MODE`, **on unless set to false**) refuses the abilities listed in `DemoMode::BLOCKED_ABILITIES` — delete, deleteAny, forceDelete, forceDeleteAny, withdraw, plus the backup plugin's create-backup, download-backup and delete-backup — to everybody, administrators included.
 
 It is enforced once, by a `Gate::before` hook in `AppServiceProvider::blockDestructiveAbilitiesInDemoMode()`, not per policy. That is deliberate: Author, Book and Publisher have no `delete()` in a policy to edit, and Filament's `get_authorization_response()` calls the gate's before callbacks directly when the policy method is missing, so the refusal reaches those resources too. A new resource is covered without opting in.
 
