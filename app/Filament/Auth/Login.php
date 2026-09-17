@@ -8,8 +8,14 @@ use App\Models\User;
 use App\Support\BookRequestSignIn;
 use Arzcode\FilamentMagicLogin\Pages\Login as BaseLogin;
 use Filament\Facades\Filament;
-use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Livewire;
+use Filament\Schemas\Components\RenderHook;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Support\Htmlable;
 
@@ -35,7 +41,57 @@ class Login extends BaseLogin
      */
     public function getSubheading(): string|Htmlable|null
     {
+        if ($this->hasRegisterBeside()) {
+            return BookRequestSignIn::subheading(null);
+        }
+
         return BookRequestSignIn::subheading(parent::getSubheading());
+    }
+
+    /**
+     * On the client panel the page carries no heading of its own: each column has one.
+     */
+    public function getHeading(): string|Htmlable|null
+    {
+        return $this->hasRegisterBeside() ? null : parent::getHeading();
+    }
+
+    public function getMaxWidth(): Width|string|null
+    {
+        return $this->hasRegisterBeside() ? Width::FiveExtraLarge : parent::getMaxWidth();
+    }
+
+    /**
+     * A reader who has no account yet sees the sign-up form beside the sign-in one,
+     * instead of a link to a second page. Each sits in its own card; the client theme
+     * strips the page's own card around them (`.fi-auth-split`). The register column hides while a
+     * multi-factor challenge is on screen, like the login form itself.
+     */
+    public function content(Schema $schema): Schema
+    {
+        if (! $this->hasRegisterBeside()) {
+            return parent::content($schema);
+        }
+
+        return $schema
+            ->components([
+                Grid::make(['default' => 1, 'lg' => 2])
+                    ->extraAttributes(['class' => 'fi-auth-split'])
+                    ->schema([
+                        Section::make(parent::getHeading())
+                            ->schema([
+                                RenderHook::make(PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE),
+                                $this->getFormContentComponent(),
+                                $this->getMultiFactorChallengeFormContentComponent(),
+                                RenderHook::make(PanelsRenderHook::AUTH_LOGIN_FORM_AFTER),
+                            ]),
+                        Section::make(__('filament-panels::auth/pages/register.heading'))
+                            ->schema([
+                                Livewire::make(Register::class, ['isBesideLogin' => true]),
+                            ])
+                            ->visible(fn(): bool => blank($this->userUndertakingMultiFactorAuthentication)),
+                    ]),
+            ]);
     }
 
     protected function isUserAllowedToAccessPanel(Authenticatable $user): bool
@@ -69,25 +125,19 @@ class Login extends BaseLogin
     }
 
     /**
-     * The password is not written down, only pointed at: the riddle under the field
-     * is enough for anybody in the room and no use to anybody outside it. It goes below
-     * the box rather than in the hint slot beside the label, where it is too long to sit.
-     */
-    protected function getPasswordFormComponent(): Component
-    {
-        $password = parent::getPasswordFormComponent();
-
-        if ($password instanceof TextInput && $this->isDemoLogin()) {
-            $password->helperText(__('auth.demo.password_hint'));
-        }
-
-        return $password;
-    }
-
-    /**
      * Only the client panel is dressed for the demo; the admin form stays blank.
      */
     protected function isDemoLogin(): bool
+    {
+        return $this->isClientPanel();
+    }
+
+    protected function hasRegisterBeside(): bool
+    {
+        return $this->isClientPanel() && Filament::hasRegistration();
+    }
+
+    protected function isClientPanel(): bool
     {
         return Filament::getCurrentOrDefaultPanel()?->getId() === UserRole::Client->panelId();
     }

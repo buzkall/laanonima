@@ -32,18 +32,4 @@ return [
         'reason' => 'Asking us for a book needs an account. As soon as you are in we take you back to the form.',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Demo
-    |--------------------------------------------------------------------------
-    |
-    | The client panel's login form arrives with the shop's own address already
-    | filled in; this is the riddle printed under the password box in its place.
-    |
-    */
-
-    'demo' => [
-        'password_hint' => 'the woman who knew who Anonymous was (lowercase, no spaces)',
-    ],
-
 ];

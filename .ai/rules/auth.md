@@ -22,3 +22,8 @@ Both panels register `->profile(EditProfile::class, isSimple: false)`. `isSimple
 Registration signs the new user straight in, so it hits the shared-session intended-URL trap: `App\Http\Responses\RegistrationResponse` extends `LoginResponse` and is bound in `AppServiceProvider` so signing up follows the same redirect rule as signing in.
 
 Both pages carry a `phone` field (`__('user.fields.phone')`): the shop reads the number off `users` when calling a reader back about a request, so the profile is where a mistyped one is corrected.
+
+## The client login shows the register form beside it
+On the client panel `Login::content()` lays out two contained `Section`s in a one-column / `lg` two-column `Grid`: the sign-in form (with the magic-link button) and `Register` embedded through `Filament\Schemas\Components\Livewire` with `isBesideLogin: true`. The register form is embedded, never copied, so the client role and the phone field stay in one place. `isBesideLogin` turns off `Register`'s logo, heading and subheading, which the login page and the section heading already provide; `/client/register` still works on its own. The admin login is untouched (`hasRegisterBeside()` needs the client panel and registration enabled).
+
+The register column hides while a multi-factor challenge is on screen, mirroring the login form. The page is widened with `getMaxWidth()` (5xl), and `resources/css/filament/client/theme.css` drops the simple page's own card via `.fi-simple-main:has(.fi-auth-split)` so the two cards are not nested in a third. `extraAttributes()` puts `fi-auth-split` on the grid's wrapper, not the `.fi-grid` itself, so the gap rule targets `.fi-auth-split > .fi-grid`. Theme changes need `npm run build`.

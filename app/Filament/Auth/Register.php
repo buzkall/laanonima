@@ -27,6 +27,12 @@ use SensitiveParameter;
 class Register extends BaseRegister
 {
     /**
+     * Set when the form is embedded in the client login page, which already
+     * shows the logo, the heading and the reason for signing in.
+     */
+    public bool $isBesideLogin = false;
+
+    /**
      * The same reason the login page gives, because the way here is a link on it.
      *
      * A reader with no account reaches the form through registration, and the
@@ -35,7 +41,21 @@ class Register extends BaseRegister
      */
     public function getSubheading(): string|Htmlable|null
     {
+        if ($this->isBesideLogin) {
+            return null;
+        }
+
         return BookRequestSignIn::subheading(parent::getSubheading());
+    }
+
+    public function getHeading(): string|Htmlable|null
+    {
+        return $this->isBesideLogin ? null : parent::getHeading();
+    }
+
+    public function hasLogo(): bool
+    {
+        return ! $this->isBesideLogin;
     }
 
     public function form(Schema $schema): Schema

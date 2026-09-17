@@ -6,7 +6,7 @@ paths:
 # Auth Filament Auth
 
 ## The auth pages say why a guest is being asked to sign in
-Asking for a book is the only thing on the shop behind `auth`, so a guest pressing "pídenoslo" lands on the client panel's login with no reason on it. `BookRequestSignIn::subheading()` prepends `auth.book_request.reason` to Filament's own subheading, and both `Login` and `Register` call it from `getSubheading()` — the register page too, because the way there is a link on the login form and `url.intended` survives the trip.
+Asking for a book is the only thing on the shop behind `auth`, so a guest pressing "pídenoslo" lands on the client panel's login with no reason on it. `BookRequestSignIn::subheading()` prepends `auth.book_request.reason` to Filament's own subheading, and both `Login` and `Register` call it from `getSubheading()`. On the client panel the login page carries the reason alone (`subheading(null)`), since the register form sits beside it and needs no "o regístrate" link; the standalone `/client/register` page still prints it, because `url.intended` survives any trip there.
 
 It reads the reason off `url.intended` and matches it against the two request-form routes with `Route::matches()`, never against a path spelled out in the class: renaming `/pedir-libro` must not quietly turn the explanation off. Reading `url.intended` rather than flashing is what makes it survive login → register.
 

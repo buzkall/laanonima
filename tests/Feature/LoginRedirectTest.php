@@ -1,6 +1,7 @@
 <?php
 
 use App\Filament\Auth\Login;
+use App\Filament\Auth\Register;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Livewire\Features\SupportTesting\Testable;
@@ -122,18 +123,27 @@ it('renders both login pages', function(string $url): void {
     get($url)->assertOk();
 })->with(['/admin/login', '/client/login']);
 
-it('opens the client login with the shop address filled in and a hint under the password', function(): void {
+it('opens the client login with the shop address filled in', function(): void {
     Filament::setCurrentPanel('client');
 
     Livewire::test(Login::class)
-        ->assertSchemaStateSet(['email' => config('site.contact_email')], 'form')
-        ->assertSee(__('auth.demo.password_hint'));
+        ->assertSchemaStateSet(['email' => config('site.contact_email')], 'form');
 });
 
-it('leaves the admin login empty and unhinted', function(): void {
+it('leaves the admin login empty', function(): void {
     Filament::setCurrentPanel('admin');
 
     Livewire::test(Login::class)
-        ->assertSchemaStateSet(['email' => null], 'form')
-        ->assertDontSee(__('auth.demo.password_hint'));
+        ->assertSchemaStateSet(['email' => null], 'form');
 });
+
+it('shows the register form beside the login form on the client panel only', function(string $url, bool $hasRegister): void {
+    $response = get($url)->assertOk();
+
+    $hasRegister
+        ? $response->assertSeeLivewire(Register::class)
+        : $response->assertDontSeeLivewire(Register::class);
+})->with([
+    'client' => ['/client/login', true],
+    'admin'  => ['/admin/login', false],
+]);
