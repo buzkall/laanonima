@@ -2,7 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use UnitEnum;
 use App\Support\Qr\QrGenerator;
 use BackedEnum;
 use Closure;
@@ -13,6 +12,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use UnitEnum;
 
 /**
  * @property-read Schema $form
