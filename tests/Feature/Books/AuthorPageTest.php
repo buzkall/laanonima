@@ -124,6 +124,21 @@ it('tells the reader who the author is, in the shop\'s own words', function(): v
         ->assertSee(__('books.public.author.intro', ['name' => 'Almudena Grandes']));
 });
 
+it('prints a biography without the markup that could run in a reader\'s browser', function(): void {
+    Author::factory()->create([
+        'name' => 'Almudena Grandes',
+        'bio'  => '<p>Escritora <a href="javascript:alert(1)" onmouseover="alert(2)">madrileña</a>.</p><script>alert(3)</script>',
+    ]);
+    Book::factory()->create(['contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']]]);
+
+    $this->get(route('authors.show', 'almudena-grandes'))
+        ->assertOk()
+        ->assertSee('madrileña')
+        ->assertDontSee('alert(1)', escape: false)
+        ->assertDontSee('alert(2)', escape: false)
+        ->assertDontSee('alert(3)', escape: false);
+});
+
 it('rewrites the authors line of every book when a person is renamed', function(): void {
     $book = Book::factory()->create(['contributors' => [['name' => 'Almudena Grande', 'role' => 'author']]]);
 

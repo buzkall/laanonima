@@ -30,9 +30,9 @@
                 {{ $author->name }}
             </h1>
 
-            @if ($author->bio)
+            @if ($author->safeBio())
                 <div class="rich-text mt-9 max-w-[620px] border-t border-[var(--rule)] pt-8 text-[clamp(20px,2.1vw,26px)]/[1.5] italic">
-                    {!! $author->bio !!}
+                    {!! $author->safeBio() !!}
                 </div>
 
                 <p class="mt-5 mb-0 max-w-[620px] text-[17px]/[1.5]">

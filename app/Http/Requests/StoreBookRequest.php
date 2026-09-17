@@ -33,7 +33,10 @@ class StoreBookRequest extends FormRequest
             'publisher' => ['nullable', 'string', 'max:255'],
             'isbn'      => ['nullable', 'string', 'max:20', new Isbn],
             'notes'     => ['nullable', 'string', 'max:2000'],
-            'book_id'   => ['nullable', Rule::exists('books', 'id')],
+            /* Only a book on the web: the receipt shows the attached book's
+               cover and title, so an id guessed at would otherwise preview a
+               book still being catalogd. */
+            'book_id' => ['nullable', Rule::exists('books', 'id')->where('is_active', true)],
         ];
     }
 

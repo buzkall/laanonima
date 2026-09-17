@@ -35,6 +35,16 @@ class SharedRecommendationController extends Controller
     {
         $recommendation->loadMissing('book.media');
 
+        /* A book un-published since the game was played is a 404 on its own
+           page, so this one must not keep showing its synopsis and cover or
+           link to it. Dropped from the relation rather than checked in each
+           place that reads it -- the page, the share card and the footer's
+           request link all fall back to the copy on the row, as they do for a
+           book we never catalogd. */
+        if ($recommendation->book?->is_active === false) {
+            $recommendation->setRelation('book', null);
+        }
+
         $drawn = Recommendation::fromRecord($recommendation);
 
         return view('cupida.shared', [

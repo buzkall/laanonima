@@ -129,6 +129,17 @@ it('says a word about each person on the title page, translator included', funct
         ->assertSee('<p>Traductora del inglés al castellano.</p>', escape: false);
 });
 
+it('prints the people\'s biographies without the markup that could run in a reader\'s browser', function(): void {
+    Author::factory()->create(['name' => 'Gillian Anderson', 'bio' => '<p>Actriz <img src="x" onerror="alert(1)">.</p><script>alert(2)</script>']);
+    $book = Book::factory()->create(['contributors' => [['name' => 'Gillian Anderson', 'role' => 'author']]]);
+
+    $this->get(route('books.show', $book))
+        ->assertOk()
+        ->assertSee('Actriz')
+        ->assertDontSee('alert(1)', escape: false)
+        ->assertDontSee('alert(2)', escape: false);
+});
+
 it('points at other books by the same people', function(): void {
     $book = Book::factory()->create([
         'contributors' => [['name' => 'Almudena Grandes', 'role' => 'author']],

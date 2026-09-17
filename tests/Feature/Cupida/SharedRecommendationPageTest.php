@@ -120,6 +120,26 @@ it('links to our page for the book when we have one, and offers a game when we d
         ->assertSee(__('cupida.shared.cta'));
 });
 
+/* A book un-published after the game is a 404 on its own page, so the shared
+   page reads as if we never catalogd it: no link, no synopsis of ours, and the
+   footer's request form empty rather than filled in from it. */
+it('stops pointing at a book that has been taken off the web since', function(): void {
+    $withdrawn = Book::factory()->create([
+        'title'     => 'Ollis',
+        'synopsis'  => 'Una sinopsis que solo tenemos nosotros.',
+        'is_active' => false,
+    ]);
+    $recommendation = CupidaRecommendation::factory()->for($withdrawn)->create(['title' => 'Ollis']);
+
+    $this->get(route('cupida.recommendation', $recommendation))
+        ->assertOk()
+        ->assertSee('Ollis')
+        ->assertDontSee(route('books.show', $withdrawn))
+        ->assertDontSee('Una sinopsis que solo tenemos nosotros.')
+        ->assertDontSee(route('book-requests.create.book', $withdrawn))
+        ->assertSee(route('book-requests.create'));
+});
+
 /* The panel it is drawn from measures itself against a phone screen; this page
    is a document and has nothing to fit, so the pitch is simply open. */
 it('does not clamp the pitch it exists to show', function(): void {

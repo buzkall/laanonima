@@ -246,6 +246,17 @@ it('attaches the book the request was made from', function(): void {
     expect(BookRequest::sole()->book->is($book))->toBeTrue();
 });
 
+it('refuses to attach a book that is not on the web yet', function(): void {
+    $draft = Book::factory()->create(['is_active' => false, 'title' => 'Borrador secreto']);
+
+    $this->actingAs($this->reader)
+        ->post(route('book-requests.store'), ['title' => 'Cualquiera', 'book_id' => $draft->id])
+        ->assertSessionHasErrors('book_id');
+
+    expect(BookRequest::count())->toBe(0);
+    Mail::assertNothingSent();
+});
+
 it('tells a reader we are putting a copy aside rather than ordering one', function(): void {
     $held = Book::factory()->create(['stock' => 3]);
 

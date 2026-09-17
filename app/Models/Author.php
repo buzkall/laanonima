@@ -108,6 +108,21 @@ class Author extends Model implements HasMedia
     }
 
     /**
+     * The biography as markup a public page may print.
+     *
+     * The rich editor stores HTML and the pages echo it unescaped, so it goes
+     * through Filament's sanitizer first: the same allowlist the editor itself
+     * renders with, which keeps paragraphs, emphasis and links and drops
+     * scripts, event handlers and `javascript:` URLs. The panel is the only
+     * writer today, but a bio filled in by an import would otherwise be stored
+     * XSS on every page that names the person.
+     */
+    public function safeBio(): ?string
+    {
+        return blank($this->bio) ? null : Str::sanitizeHtml($this->bio);
+    }
+
+    /**
      * The biography as plain words, for a listing or a meta description: the
      * rich editor stores HTML, and neither place can show markup.
      */
@@ -116,7 +131,10 @@ class Author extends Model implements HasMedia
         /* A block closing tag becomes a space, or two paragraphs run into one
            another as "...posguerra.Murió en 2021." once the markup is gone.
            Inline tags are left alone so a full stop stays against its word. */
-        $spaced = preg_replace('/<(?:br\s*\/?|\/(?:p|div|li|blockquote|h[1-6]))>/i', ' ', (string)$this->bio);
+        /* Read off the sanitized markup: `strip_tags()` alone keeps the text
+           inside a <script> or <style>, which would then land as words in a
+           meta description. */
+        $spaced = preg_replace('/<(?:br\s*\/?|\/(?:p|div|li|blockquote|h[1-6]))>/i', ' ', (string)$this->safeBio());
 
         $text = Str::squish(html_entity_decode(strip_tags((string)$spaced)));
 

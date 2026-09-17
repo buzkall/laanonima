@@ -56,7 +56,7 @@
     /* Everyone on the title page has a shelf of their own, so every name links. */
     $contributors = $book->contributors->map(fn(BookContributor $contributor): array => [
         'name' => $contributor->author->name,
-        'bio'  => $contributor->author->bio,
+        'bio'  => $contributor->author->safeBio(),
         'role' => $contributor->role,
         'href' => route('authors.show', $contributor->author),
     ]);
