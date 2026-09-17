@@ -33,6 +33,7 @@ use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
+use UnitEnum;
 
 /**
  * Drives every method of the Correos SDK by hand, so the integration can be
@@ -76,6 +77,8 @@ class CorreosPlayground extends Page
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTruck;
     protected string $view = 'filament.pages.correos-playground';
+    protected static string|UnitEnum|null $navigationGroup = 'Experimentos';
+    protected static ?int $navigationSort = 100;
 
     /** @var array<string, mixed> */
     public ?array $data = [];

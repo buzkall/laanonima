@@ -22,12 +22,19 @@ use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as RegistrationR
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Schema;
+use Filament\Support\Facades\FilamentView;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Middleware\TrustProxies;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Spatie\MediaLibrary\MediaCollections\Events\MediaHasBeenAddedEvent;
@@ -78,9 +85,61 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureTrustedProxies();
+        $this->configureRateLimiting();
         $this->syncBookCoverColors();
         $this->blockDestructiveAbilitiesInDemoMode();
         $this->defineBackupAbilities();
+        $this->registerConsoleSignature();
+    }
+
+    /**
+     * Believe X-Forwarded-For only from the proxies `site.trusted_proxies` names.
+     *
+     * Here rather than in bootstrap/app.php because that file runs before the
+     * configuration is loaded, and an `env()` there reads nothing once the
+     * config is cached. The middleware reads the static list per request, so
+     * setting it while the application boots is early enough.
+     */
+    protected function configureTrustedProxies(): void
+    {
+        $proxies = trim((string)config('site.trusted_proxies'));
+
+        if ($proxies === '') {
+            return;
+        }
+
+        TrustProxies::at($proxies === '*'
+            ? '*'
+            : array_map(trim(...), explode(',', $proxies)));
+    }
+
+    /**
+     * A reader account gets a fixed number of book requests an hour.
+     *
+     * Keyed by the account rather than the address: the route is behind a
+     * sign-in, and the mail each request sends is what is being protected.
+     */
+    protected function configureRateLimiting(): void
+    {
+        RateLimiter::for('book-requests', fn(Request $request): Limit => Limit::perSecond(
+            (int)config('site.book_requests.rate_limit.attempts'),
+            (int)config('site.book_requests.rate_limit.per'),
+        )->by((string)$request->user()?->getAuthIdentifier()));
+    }
+
+    /**
+     * Print the arzcode signature in the browser console of every panel page.
+     *
+     * One render hook covers both panels; the public layouts include the
+     * component themselves.
+     */
+    protected function registerConsoleSignature(): void
+    {
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::HEAD_END,
+            fn(): string => Blade::render('<x-console-signature />'),
+        );
     }
 
     /**

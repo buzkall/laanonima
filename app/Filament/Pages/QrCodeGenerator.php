@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use UnitEnum;
 use App\Support\Qr\QrGenerator;
 use BackedEnum;
 use Closure;
@@ -20,6 +21,8 @@ class QrCodeGenerator extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQrCode;
     protected string $view = 'filament.pages.qr-code-generator';
+    protected static string|null|UnitEnum $navigationGroup = 'Experimentos';
+    protected static ?int $navigationSort = 100;
 
     /** @var array<string, mixed> */
     public ?array $data = [];

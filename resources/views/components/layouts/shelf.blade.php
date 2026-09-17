@@ -58,6 +58,8 @@
     @fonts(['gloock', 'crimson-pro'])
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <x-console-signature />
 </head>
 {{-- A column as tall as the window, so a page with little on it -- an author
      with two books, La Cupida with one -- does not leave the footer floating in

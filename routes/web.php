@@ -40,6 +40,6 @@ Route::get('/la-cupida/{guest}', CupidaController::class)->name('cupida.guest');
 
 Route::middleware('auth')->controller(BookRequestController::class)->group(function(): void {
     Route::get('/pedir-libro', 'create')->name('book-requests.create');
-    Route::post('/pedir-libro', 'store')->name('book-requests.store');
+    Route::post('/pedir-libro', 'store')->middleware('throttle:book-requests')->name('book-requests.store');
     Route::get('/libro/{book}/pedir', 'create')->name('book-requests.create.book');
 });

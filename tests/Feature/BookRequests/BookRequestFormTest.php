@@ -317,3 +317,29 @@ it('writes the shop a note it can act on', function(): void {
         ->and($rendered)->toContain(route('books.show', $book))
         ->and($rendered)->toContain(BookRequestResource::getUrl('edit', ['record' => $request], panel: 'admin'));
 });
+
+it('stops a reader who keeps sending requests, and tells the shop nothing more', function(): void {
+    config(['site.book_requests.rate_limit.attempts' => 2]);
+
+    $send = fn() => $this->actingAs($this->reader)
+        ->post(route('book-requests.store'), ['title' => 'El maestro y Margarita']);
+
+    $send()->assertRedirect(route('book-requests.create'));
+    $send()->assertRedirect(route('book-requests.create'));
+    $send()->assertTooManyRequests();
+
+    expect(BookRequest::count())->toBe(2);
+    Mail::assertSentCount(2);
+});
+
+it('counts requests per reader, not for everybody at once', function(): void {
+    config(['site.book_requests.rate_limit.attempts' => 1]);
+
+    $this->actingAs($this->reader)
+        ->post(route('book-requests.store'), ['title' => 'El maestro y Margarita'])
+        ->assertRedirect(route('book-requests.create'));
+
+    $this->actingAs(User::factory()->client()->create())
+        ->post(route('book-requests.store'), ['title' => 'Cuaderno de faros'])
+        ->assertRedirect(route('book-requests.create'));
+});

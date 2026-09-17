@@ -115,6 +115,8 @@
     @fonts(['gloock', 'crimson-pro'])
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <x-console-signature />
 </head>
 <body
     class="bg-paper text-ink selection:text-paper font-serif text-[20px]/[1.65] antialiased selection:bg-[var(--accent)]"

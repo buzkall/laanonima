@@ -36,6 +36,44 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Trusted proxies
+    |--------------------------------------------------------------------------
+    |
+    | The addresses allowed to tell us who the visitor really is, through
+    | X-Forwarded-For. Anything that limits by address -- La Cupida's hourly
+    | pitches above all -- reads the proxy's own address instead of the
+    | reader's when the site sits behind one and this is empty, and every
+    | reader then shares a single allowance.
+    |
+    | Comma-separated addresses or CIDR ranges, or `*` to trust whatever is in
+    | front. Only `*` when nothing can reach PHP except through that proxy:
+    | otherwise anybody can write the header and pick their own address. Empty
+    | trusts nobody, which is right for a box that answers the internet itself.
+    |
+    */
+
+    'trusted_proxies' => env('TRUSTED_PROXIES'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Book requests
+    |--------------------------------------------------------------------------
+    |
+    | Every request sends the shop a mail there and then, and anybody can open
+    | a reader account, so one account gets this many an hour. Nobody asks for
+    | more books than that in earnest.
+    |
+    */
+
+    'book_requests' => [
+        'rate_limit' => [
+            'attempts' => 10,
+            'per'      => 3600,
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Demo
     |--------------------------------------------------------------------------
     |

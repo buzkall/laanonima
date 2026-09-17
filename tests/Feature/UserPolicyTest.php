@@ -2,27 +2,41 @@
 
 use App\Models\User;
 
-it('allows managing other users', function(string $ability): void {
-    $user = User::factory()->create();
+it('allows an administrator to manage other users', function(string $ability): void {
+    $admin = User::factory()->admin()->create();
     $other = User::factory()->create();
 
-    expect($user->can($ability, $other))->toBeTrue();
+    expect($admin->can($ability, $other))->toBeTrue();
 })->with(['view', 'update', 'delete']);
 
-it('allows viewing the list and creating users', function(string $ability): void {
-    $user = User::factory()->create();
+it('allows an administrator to list and create users', function(string $ability): void {
+    $admin = User::factory()->admin()->create();
 
-    expect($user->can($ability, User::class))->toBeTrue();
+    expect($admin->can($ability, User::class))->toBeTrue();
 })->with(['viewAny', 'create', 'deleteAny']);
 
-it('never allows a user to delete their own account', function(): void {
-    $user = User::factory()->create();
+it('never allows an administrator to delete their own account', function(): void {
+    $admin = User::factory()->admin()->create();
 
-    expect($user->can('delete', $user))->toBeFalse();
+    expect($admin->can('delete', $admin))->toBeFalse();
 });
 
-it('still allows a user to update their own account', function(): void {
-    $user = User::factory()->create();
+it('still allows an administrator to update their own account', function(): void {
+    $admin = User::factory()->admin()->create();
 
-    expect($user->can('update', $user))->toBeTrue();
+    expect($admin->can('update', $admin))->toBeTrue();
 });
+
+it('refuses a reader every user ability, over their own account too', function(string $ability): void {
+    $reader = User::factory()->client()->create();
+    $other = User::factory()->create();
+
+    expect($reader->can($ability, $other))->toBeFalse()
+        ->and($reader->can($ability, $reader))->toBeFalse();
+})->with(['view', 'update', 'delete']);
+
+it('refuses a reader the user list and creating users', function(string $ability): void {
+    $reader = User::factory()->client()->create();
+
+    expect($reader->can($ability, User::class))->toBeFalse();
+})->with(['viewAny', 'create', 'deleteAny']);
