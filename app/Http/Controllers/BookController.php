@@ -9,10 +9,12 @@ use App\Support\CoverPalette;
 use App\Support\Og\OgCard;
 use App\Support\Og\OgCardKey;
 use App\Support\Og\OgCardStore;
+use App\Support\SearchText;
 use App\Support\ShelfArrangement;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class BookController extends Controller
@@ -40,6 +42,44 @@ class BookController extends Controller
         return view('books.shelf', [
             'arrangement' => ShelfArrangement::of(Book::query()->onStage()->get()),
             'palette'     => CoverPalette::fromCover(null),
+        ]);
+    }
+
+    /**
+     * The shelf, narrowed to what a reader typed into the header's search box.
+     *
+     * An empty query is not the whole catalog -- that is the home page -- so
+     * the page then just offers the box again. A query that finds nothing word
+     * for word is tried once more for what is spelled like it, and the page
+     * says that is what it is showing.
+     */
+    public function search(Request $request): View
+    {
+        $validated = $request->validate(['q' => ['nullable', 'string', 'max:100']]);
+        $query = trim((string)($validated['q'] ?? ''));
+
+        $books = $query === ''
+            ? null
+            : Book::query()->onShelf()->search($query)->paginate($this->perPage())->withQueryString();
+
+        $resembling = false;
+
+        if ($books?->total() === 0 && SearchText::isbn($query) === null) {
+            $closest = Book::query()->active()->with('media')->resembling($query)
+                ->paginate($this->perPage())
+                ->withQueryString();
+
+            if ($closest->total() > 0) {
+                $books = $closest;
+                $resembling = true;
+            }
+        }
+
+        return view('books.search', [
+            'query'      => $query,
+            'books'      => $books,
+            'resembling' => $resembling,
+            'palette'    => CoverPalette::fromCover(null),
         ]);
     }
 

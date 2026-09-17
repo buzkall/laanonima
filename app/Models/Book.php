@@ -6,6 +6,7 @@ use App\Enums\BookAvailability;
 use App\Enums\BookBinding;
 use App\Enums\BookLanguage;
 use App\Enums\ContributorRole;
+use App\Support\SearchText;
 use Database\Factories\BookFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
@@ -36,6 +37,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @property string|null $subtitle
  * @property string|null $original_title
  * @property string|null $authors_line
+ * @property string|null $search_text
  * @property int|null $publisher_id
  * @property int|null $subject_id
  * @property string|null $imprint
@@ -122,6 +124,12 @@ class Book extends Model implements HasMedia
         static::saving(function(self $book): void {
             if (blank($book->slug)) {
                 $book->slug = Str::slug(Str::limit($book->title, 80, '')) . '-' . $book->isbn13;
+            }
+        });
+
+        static::saved(function(self $book): void {
+            if ($book->wasRecentlyCreated || $book->wasChanged(['title', 'subtitle', 'original_title', 'isbn13', 'isbn10', 'publisher_id'])) {
+                $book->syncSearchText();
             }
         });
     }
@@ -384,6 +392,36 @@ class Book extends Model implements HasMedia
     }
 
     /**
+     * Rewrite what the public search matches against: every name a reader
+     * might look the book up by, folded (see SearchText), so the query is a
+     * plain `like` that behaves the same on every driver.
+     *
+     * Written straight to the row, like the authors line, and for the same
+     * reason: it runs from the contributors', authors' and publishers' own
+     * model events.
+     */
+    public function syncSearchText(): void
+    {
+        $text = SearchText::fold(implode(' ', array_filter([
+            $this->title,
+            $this->subtitle,
+            $this->original_title,
+            ...$this->contributors()->with('author')->get()->map(fn(BookContributor $contributor): string => $contributor->author->name),
+            $this->publisher()->value('name'),
+            $this->isbn13,
+            $this->isbn10,
+        ])));
+
+        if ($text === $this->search_text) {
+            return;
+        }
+
+        $this->newQuery()->whereKey($this->getKey())->update(['search_text' => $text]);
+        $this->search_text = $text;
+        $this->syncOriginalAttribute('search_text');
+    }
+
+    /**
      * @param  Builder<$this>  $query
      */
     #[Scope]
@@ -448,6 +486,84 @@ class Book extends Model implements HasMedia
             'collection_name',
             self::COVERS_COLLECTION,
         ));
+    }
+
+    /**
+     * What a reader typed into the search box.
+     *
+     * Something shaped like an ISBN is looked up as one, hyphens and all.
+     * Anything else is split into words and every word has to appear, so
+     * "cien marquez" finds the book whichever order it was typed in.
+     *
+     * @param  Builder<$this>  $query
+     */
+    #[Scope]
+    protected function search(Builder $query, string $term): void
+    {
+        $isbn = SearchText::isbn($term);
+
+        $query->when(
+            $isbn,
+            fn(Builder $query): Builder => $query->where(fn(Builder $query): Builder => $query
+                ->where('isbn13', $isbn)
+                ->orWhere('isbn10', $isbn)),
+            function(Builder $query) use ($term): void {
+                $words = SearchText::terms($term);
+
+                /* Nothing but punctuation is not a request for the whole shelf. */
+                if ($words === []) {
+                    $query->whereRaw('1 = 0');
+                }
+
+                foreach ($words as $word) {
+                    $query->where('search_text', 'like', "%{$word}%");
+                }
+            },
+        );
+    }
+
+    /**
+     * What is spelled most like a search that found nothing, best match first.
+     *
+     * Postgres only: word_similarity comes from pg_trgm, which SQLite has no
+     * equivalent of, so on any other driver this finds nothing and the page
+     * simply says so. Short words are not guessed at (see config/site.php) and
+     * still have to appear as typed.
+     *
+     * @param  Builder<$this>  $query
+     */
+    #[Scope]
+    protected function resembling(Builder $query, string $term): void
+    {
+        $words = SearchText::terms($term);
+
+        if ($words === [] || $this->getConnection()->getDriverName() !== 'pgsql') {
+            $query->whereRaw('1 = 0');
+
+            return;
+        }
+
+        $threshold = (float)config('site.search.fuzzy_threshold');
+        $guessed = [];
+
+        foreach ($words as $word) {
+            if (mb_strlen($word) < (int)config('site.search.fuzzy_min_length')) {
+                $query->where('search_text', 'like', "%{$word}%");
+
+                continue;
+            }
+
+            $query->whereRaw('word_similarity(?, search_text) >= ?', [$word, $threshold]);
+            $guessed[] = $word;
+        }
+
+        $query->when(
+            $guessed !== [],
+            fn(Builder $query): Builder => $query->orderByRaw(
+                implode(' + ', array_fill(0, count($guessed), 'word_similarity(?, search_text)')) . ' desc',
+                $guessed,
+            ),
+        )->orderByDesc('id');
     }
 
     /**

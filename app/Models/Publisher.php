@@ -54,6 +54,15 @@ class Publisher extends Model implements HasMedia
                 $publisher->slug = Str::slug($publisher->name);
             }
         });
+
+        /* Every book's search text carries the imprint's name, so a rename follows. */
+        static::saved(function(self $publisher): void {
+            if (! $publisher->wasChanged('name')) {
+                return;
+            }
+
+            $publisher->books()->each(fn(Book $book) => $book->syncSearchText());
+        });
     }
 
     /**

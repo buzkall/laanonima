@@ -38,13 +38,16 @@ class BookContributor extends Model
     }
 
     /**
-     * The authors line on the book is a denormalization of these rows, so it
-     * is rewritten whenever one is filed, moved or removed.
+     * The authors line and the search text on the book are denormalizations
+     * of these rows, so both are rewritten whenever one is filed, moved or
+     * removed. The search text also carries translators, who never reach the
+     * authors line.
      */
     protected static function booted(): void
     {
         $sync = function(self $contributor): void {
             $contributor->book->syncAuthorsLine();
+            $contributor->book->syncSearchText();
         };
 
         static::saved($sync);

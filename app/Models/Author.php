@@ -61,7 +61,7 @@ class Author extends Model implements HasMedia
             $author->contributions()->get()->each->delete();
         });
 
-        /* The authors line on every book quotes the name, so a rename follows. */
+        /* The authors line and the search text on every book quote the name, so a rename follows. */
         static::saved(function(self $author): void {
             if (! $author->wasChanged('name')) {
                 return;
@@ -70,7 +70,10 @@ class Author extends Model implements HasMedia
             $author->contributions()->with('book')->get()
                 ->pluck('book')
                 ->unique('id')
-                ->each(fn(Book $book) => $book->syncAuthorsLine());
+                ->each(function(Book $book): void {
+                    $book->syncAuthorsLine();
+                    $book->syncSearchText();
+                });
         });
     }
 

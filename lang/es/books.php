@@ -253,6 +253,17 @@ return [
             'next'         => 'Siguiente',
         ],
 
+        'search' => [
+            'label'       => 'Buscar',
+            'placeholder' => 'Título, nombre, editorial o ISBN',
+            'submit'      => 'Buscar',
+            'heading'     => 'Buscar en la librería',
+            'results_for' => 'Resultados para «:query»',
+            'empty'       => 'No tenemos nada en la web que responda a «:query». Escríbenos y lo buscamos por ti.',
+            'resembling'  => 'No hay nada que diga exactamente «:query». Esto es lo que más se le parece.',
+            'prompt'      => 'Escribe un título, un nombre, una editorial o un ISBN.',
+        ],
+
         'in_stock' => [
             'heading' => 'Lo tenemos en la mesa de novedades.',
             'body'    => 'Pásate y hojéalo, o te lo guardamos con tu nombre en un papelito.',

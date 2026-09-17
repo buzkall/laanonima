@@ -251,6 +251,17 @@ return [
             'next'         => 'Next',
         ],
 
+        'search' => [
+            'label'       => 'Search',
+            'placeholder' => 'Title, name, publisher or ISBN',
+            'submit'      => 'Search',
+            'heading'     => 'Search the shop',
+            'results_for' => 'Results for “:query”',
+            'empty'       => 'We have nothing on the web that matches “:query”. Write to us and we will look for it.',
+            'resembling'  => 'Nothing says exactly “:query”. This is the closest we have.',
+            'prompt'      => 'Type a title, a name, a publisher or an ISBN.',
+        ],
+
         'in_stock' => [
             'heading' => 'It is on the new releases table.',
             'body'    => 'Come by and leaf through it, or we will keep it aside with your name on it.',

@@ -9,12 +9,14 @@
  * time anything here executes, so the deck registers itself from an inline
  * script in `resources/views/cupida/index.blade.php` instead.
  */
-import mountShare from './share.js';
+import mountSearch from "./search.js";
+import mountShare from "./share.js";
 
+mountSearch();
 mountShare();
 
-const shelf = document.querySelector('[data-shelf]');
+const shelf = document.querySelector("[data-shelf]");
 
 if (shelf) {
-    import('./shelf.js').then(({ default: mountShelf }) => mountShelf(shelf));
+    import("./shelf.js").then(({ default: mountShelf }) => mountShelf(shelf));
 }

@@ -17,6 +17,8 @@ Route::controller(BookController::class)->group(function(): void {
 
     Route::get('/estanteria', 'shelf')->name('books.shelf');
 
+    Route::get('/buscar', 'search')->name('books.search');
+
     Route::get('/libro/{book}', 'show')->name('books.show');
 
     Route::get('/autor/{author}', 'author')->name('authors.show');

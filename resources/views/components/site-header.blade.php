@@ -82,6 +82,47 @@
             </nav>
         </details>
 
+        {{-- The search box, folded behind an icon at every width and hung off
+             the bottom of the bar like the phone menu, for the same two
+             reasons: it works with no script, and a header must never grow
+             taller. `data-site-search` is what `resources/js/search.js` focuses
+             the field on when it opens. The results page carries its own box,
+             so it is left out there. --}}
+        @unless (request()->routeIs('books.search'))
+            <details data-site-search class="group/search">
+                <summary
+                    aria-label="{{ __('books.public.search.label') }}"
+                    title="{{ __('books.public.search.label') }}"
+                    class="flex cursor-pointer list-none items-center transition-opacity duration-150 hover:opacity-65 [&::-webkit-details-marker]:hidden"
+                >
+                    <x-heroicon-o-magnifying-glass class="size-[22px] shrink-0 group-open/search:hidden" />
+                    <x-heroicon-o-x-mark class="hidden size-[22px] shrink-0 group-open/search:block" />
+                </summary>
+
+                <form
+                    method="GET"
+                    action="{{ route('books.search') }}"
+                    role="search"
+                    class="absolute inset-x-0 top-full z-50 flex items-stretch gap-3 border-b border-[var(--rule)] bg-[var(--cover)] px-[clamp(22px,4vw,44px)] py-4 shadow-lg"
+                >
+                    <label for="site-search-q" class="sr-only">{{ __('books.public.search.label') }}</label>
+                    <input
+                        id="site-search-q"
+                        name="q"
+                        type="search"
+                        maxlength="100"
+                        enterkeyhint="search"
+                        placeholder="{{ __('books.public.search.placeholder') }}"
+                        class="text-ink bg-paper placeholder:text-ink/50 min-w-0 flex-1 border border-[var(--rule)] px-4 py-2 text-[18px] focus:outline-2 focus:outline-offset-0 focus:outline-[var(--accent)]"
+                    />
+                    <button
+                        type="submit"
+                        class="text-paper bg-ink px-4 py-2 text-[13px] font-semibold tracking-[0.22em] uppercase transition-opacity duration-150 hover:opacity-85"
+                    >{{ __('books.public.search.submit') }}</button>
+                </form>
+            </details>
+        @endunless
+
         {{-- Clients sign in here to reach their own pages in the client panel;
              an administrator already signed in is sent to the admin panel. --}}
         <a

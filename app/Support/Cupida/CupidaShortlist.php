@@ -2,6 +2,7 @@
 
 namespace App\Support\Cupida;
 
+use App\Support\SearchText;
 use Random\Engine\Mt19937;
 use Random\Randomizer;
 
@@ -60,18 +61,6 @@ final readonly class CupidaShortlist
 
     /** A book the shop has on the table beats one it would have to order. */
     private const int IN_STOCK = 2;
-
-    /**
-     * Every accent a Spanish catalog actually contains, plus the Catalan and
-     * French ones the shop's imprints bring with them.
-     */
-    private const array ACCENTS = [
-        'á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u',
-        'à' => 'a', 'è' => 'e', 'ì' => 'i', 'ò' => 'o', 'ù' => 'u',
-        'â' => 'a', 'ê' => 'e', 'î' => 'i', 'ô' => 'o', 'û' => 'u',
-        'ä' => 'a', 'ë' => 'e', 'ï' => 'i', 'ö' => 'o', 'ü' => 'u',
-        'ñ' => 'n', 'ç' => 'c',
-    ];
 
     /**
      * Score the pool and take the best of it.
@@ -401,7 +390,7 @@ final readonly class CupidaShortlist
             return 0;
         }
 
-        $haystack = $this->fold(
+        $haystack = SearchText::fold(
             (is_string($book['title'] ?? null) ? $book['title'] : '') . ' ' .
             (is_string($book['synopsis'] ?? null) ? $book['synopsis'] : ''),
         );
@@ -417,7 +406,7 @@ final readonly class CupidaShortlist
             $keywords = (array)config("cupida.moods.{$mood}", []);
 
             foreach ($keywords as $keyword) {
-                if (str_contains($haystack, $this->fold($keyword))) {
+                if (str_contains($haystack, SearchText::fold($keyword))) {
                     $score += self::LIKED_MOOD;
 
                     /* One hit per mood. A synopsis that says "muerte" nine
@@ -453,25 +442,8 @@ final readonly class CupidaShortlist
 
     private function slug(string $name): string
     {
-        $folded = $this->fold($name);
+        $folded = SearchText::fold($name);
 
         return $folded === '' ? '' : trim((string)preg_replace('/[^a-z0-9]+/', '-', $folded), '-');
-    }
-
-    /**
-     * Lowercase, unaccented, for comparing Spanish prose written by several
-     * different publishers' catalog departments.
-     *
-     * Spelled out rather than done with `Str::ascii()`, which is a general
-     * transliterator with a large table behind it. This runs on the title and
-     * synopsis of every book in the pool on every recommendation -- a few
-     * thousand strings of several hundred characters -- and at that size the
-     * general answer costs about seven times what this one does, which is most
-     * of the time it takes to make a recommendation. Spanish has a short and
-     * closed list of accents; nothing here needs Cyrillic.
-     */
-    private function fold(string $text): string
-    {
-        return strtr(mb_strtolower($text), self::ACCENTS);
     }
 }

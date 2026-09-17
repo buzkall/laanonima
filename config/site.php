@@ -122,6 +122,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Search
+    |--------------------------------------------------------------------------
+    |
+    | When a search finds nothing word for word, Postgres' pg_trgm looks for
+    | what is spelled most like it, so "intruccion" still finds "Instrucción".
+    | `fuzzy_threshold` is the word_similarity a word has to reach, measured
+    | on the real catalog: 0.5 catches one letter dropped or swapped
+    | ("istrucion", "novisias", "corason") and 0.6 already misses all three.
+    | Words shorter than `fuzzy_min_length` are never guessed at -- "sol"
+    | resembles half the shelf -- and still have to appear as typed.
+    |
+    */
+
+    'search' => [
+        'fuzzy_threshold'  => 0.5,
+        'fuzzy_min_length' => 4,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Shelf
     |--------------------------------------------------------------------------
     |

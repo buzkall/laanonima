@@ -73,3 +73,14 @@ it('no longer prints the tagline in the header', function(): void {
     expect(str((string)$page)->between('<header', '</header>')->toString())
         ->not->toContain(__('books.public.tagline'));
 });
+
+it('offers the search box on every page but the results page', function(): void {
+    $this->get(route('home'))
+        ->assertSee('action="' . route('books.search') . '"', escape: false);
+
+    $page = str($this->get(route('books.search', ['q' => 'faros']))->getContent())
+        ->between('<header', '</header>')
+        ->toString();
+
+    expect($page)->not->toContain(route('books.search'));
+});
